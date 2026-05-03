@@ -1,0 +1,18 @@
+# Cargo
+target/
+Cargo.lock
+
+# Python
+*.pyc
+__pycache__
+
+# VSCode
+.vscode
+
+# Clangd
+.cache/
+
+tmp
+*.swp
+
+build
