@@ -1,15 +1,14 @@
 OS := $(shell uname)
-LIBSOURCES = $(wildcard c/common/*.c) $(wildcard c/dec/*.c) \
-             $(wildcard c/enc/*.c)
-SOURCES = $(LIBSOURCES) c/tools/brotli.c
+LIBSOURCES = $(wildcard common/*.c) $(wildcard dec/*.c) $(wildcard enc/*.c)
+SOURCES = $(LIBSOURCES) tools/bro.c
 BINDIR = bin
 OBJDIR = $(BINDIR)/obj
 LIBOBJECTS = $(addprefix $(OBJDIR)/, $(LIBSOURCES:.c=.o))
 OBJECTS = $(addprefix $(OBJDIR)/, $(SOURCES:.c=.o))
 LIB_A = libbrotli.a
-EXECUTABLE = brotli
-DIRS = $(OBJDIR)/c/common $(OBJDIR)/c/dec $(OBJDIR)/c/enc \
-       $(OBJDIR)/c/tools $(BINDIR)/tmp
+EXECUTABLE = bro
+DIRS = $(OBJDIR)/common $(OBJDIR)/dec $(OBJDIR)/enc \
+       $(OBJDIR)/tools $(BINDIR)/tmp
 CFLAGS += -O2
 ifeq ($(os), Darwin)
   CPPFLAGS += -DOS_MACOSX
@@ -39,5 +38,5 @@ clean:
 
 .SECONDEXPANSION:
 $(OBJECTS): $$(patsubst %.o,%.c,$$(patsubst $$(OBJDIR)/%,%,$$@)) | $(DIRS)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -Ic/include \
+	$(CC) $(CFLAGS) $(CPPFLAGS) -Iinclude \
         -c $(patsubst %.o,%.c,$(patsubst $(OBJDIR)/%,%,$@)) -o $@

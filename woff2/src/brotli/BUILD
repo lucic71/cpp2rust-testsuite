@@ -9,70 +9,6 @@ licenses(["notice"])  # MIT
 
 exports_files(["LICENSE"])
 
-# >>> JNI headers
-
-config_setting(
-    name = "darwin",
-    values = {"cpu": "darwin"},
-    visibility = ["//visibility:public"],
-)
-
-config_setting(
-    name = "darwin_x86_64",
-    values = {"cpu": "darwin_x86_64"},
-    visibility = ["//visibility:public"],
-)
-
-config_setting(
-    name = "windows",
-    values = {"cpu": "x64_windows"},
-    visibility = ["//visibility:public"],
-)
-
-config_setting(
-    name = "windows_msvc",
-    values = {"cpu": "x64_windows_msvc"},
-    visibility = ["//visibility:public"],
-)
-
-config_setting(
-    name = "windows_msys",
-    values = {"cpu": "x64_windows_msys"},
-    visibility = ["//visibility:public"],
-)
-
-genrule(
-    name = "copy_link_jni_header",
-    srcs = ["@openjdk_linux//:jni_h"],
-    outs = ["jni/jni.h"],
-    cmd = "cp -f $< $@",
-)
-
-genrule(
-    name = "copy_link_jni_md_header",
-    srcs = select({
-        ":darwin": ["@openjdk_macos//:jni_md_h"],
-        ":darwin_x86_64": ["@openjdk_macos//:jni_md_h"],
-        ":windows_msys": ["@openjdk_win//:jni_md_h"],
-        ":windows_msvc": ["@openjdk_win//:jni_md_h"],
-        ":windows": ["@openjdk_win//:jni_md_h"],
-        "//conditions:default": ["@openjdk_linux//:jni_md_h"],
-    }),
-    outs = ["jni/jni_md.h"],
-    cmd = "cp -f $< $@",
-)
-
-cc_library(
-    name = "jni_inc",
-    hdrs = [
-        ":jni/jni.h",
-        ":jni/jni_md.h",
-    ],
-    includes = ["jni"],
-)
-
-# <<< JNI headers
-
 STRICT_C_OPTIONS = [
     "--pedantic-errors",
     "-Wall",
@@ -89,44 +25,44 @@ STRICT_C_OPTIONS = [
 
 filegroup(
     name = "public_headers",
-    srcs = glob(["c/include/brotli/*.h"]),
+    srcs = glob(["include/brotli/*.h"]),
 )
 
 filegroup(
     name = "common_headers",
-    srcs = glob(["c/common/*.h"]),
+    srcs = glob(["common/*.h"]),
 )
 
 filegroup(
     name = "common_sources",
-    srcs = glob(["c/common/*.c"]),
+    srcs = glob(["common/*.c"]),
 )
 
 filegroup(
     name = "dec_headers",
-    srcs = glob(["c/dec/*.h"]),
+    srcs = glob(["dec/*.h"]),
 )
 
 filegroup(
     name = "dec_sources",
-    srcs = glob(["c/dec/*.c"]),
+    srcs = glob(["dec/*.c"]),
 )
 
 filegroup(
     name = "enc_headers",
-    srcs = glob(["c/enc/*.h"]),
+    srcs = glob(["enc/*.h"]),
 )
 
 filegroup(
     name = "enc_sources",
-    srcs = glob(["c/enc/*.c"]),
+    srcs = glob(["enc/*.c"]),
 )
 
 cc_library(
-    name = "brotli_inc",
+    name = "brotli",
     hdrs = [":public_headers"],
     copts = STRICT_C_OPTIONS,
-    includes = ["c/include"],
+    includes = ["include"],
 )
 
 cc_library(
@@ -134,7 +70,7 @@ cc_library(
     srcs = [":common_sources"],
     hdrs = [":common_headers"],
     copts = STRICT_C_OPTIONS,
-    deps = [":brotli_inc"],
+    deps = [":brotli"],
 )
 
 cc_library(
@@ -155,68 +91,14 @@ cc_library(
 )
 
 cc_binary(
-    name = "brotli",
-    srcs = ["c/tools/brotli.c"],
+    name = "bro",
+    srcs = ["tools/bro.c"],
     copts = STRICT_C_OPTIONS,
     linkstatic = 1,
     deps = [
         ":brotlidec",
         ":brotlienc",
     ],
-)
-
-########################################################
-# WARNING: do not (transitively) depend on this target!
-########################################################
-cc_binary(
-    name = "brotli_jni.dll",
-    srcs = [
-        ":common_headers",
-        ":common_sources",
-        ":dec_headers",
-        ":dec_sources",
-        ":enc_headers",
-        ":enc_sources",
-        "//java/org/brotli/wrapper/common:jni_src",
-        "//java/org/brotli/wrapper/dec:jni_src",
-        "//java/org/brotli/wrapper/enc:jni_src",
-    ],
-    deps = [
-        ":brotli_inc",
-        ":jni_inc",
-    ],
-    linkshared = 1,
-)
-
-########################################################
-# WARNING: do not (transitively) depend on this target!
-########################################################
-cc_binary(
-    name = "brotli_jni_no_dictionary_data.dll",
-    srcs = [
-        ":common_headers",
-        ":common_sources",
-        ":dec_headers",
-        ":dec_sources",
-        ":enc_headers",
-        ":enc_sources",
-        "//java/org/brotli/wrapper/common:jni_src",
-        "//java/org/brotli/wrapper/dec:jni_src",
-        "//java/org/brotli/wrapper/enc:jni_src",
-    ],
-    defines = [
-        "BROTLI_EXTERNAL_DICTIONARY_DATA=",
-    ],
-    deps = [
-        ":brotli_inc",
-        ":jni_inc",
-    ],
-    linkshared = 1,
-)
-
-filegroup(
-    name = "dictionary",
-    srcs = ["c/common/dictionary.bin"],
 )
 
 load("@io_bazel_rules_go//go:def.bzl", "go_prefix")

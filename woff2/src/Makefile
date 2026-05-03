@@ -31,7 +31,7 @@ OUROBJ = font.o glyph.o normalize.o table_tags.o transform.o \
          variable_length.o
 
 BROTLI = brotli
-BROTLIOBJ = $(BROTLI)/bin/obj/c
+BROTLIOBJ = $(BROTLI)/bin/obj
 ENCOBJ = $(BROTLIOBJ)/enc/*.o
 DECOBJ = $(BROTLIOBJ)/dec/*.o
 COMMONOBJ = $(BROTLIOBJ)/common/*.o

@@ -1,11 +1,10 @@
 -- A solution contains projects, and defines the available configurations
 solution "brotli"
 configurations { "Release", "Debug" }
-platforms { "x64", "x86" }
 targetdir "bin"
 location "buildfiles"
 flags "RelativeLinks"
-includedirs { "c/include" }
+includedirs { "include" }
 
 filter "configurations:Release"
   optimize "Speed"
@@ -13,12 +12,6 @@ filter "configurations:Release"
 
 filter "configurations:Debug"
   flags { "Symbols" }
-
-filter { "platforms:x64" }
-   architecture "x86_64"
-
-filter { "platforms:x86" }
-   architecture "x86"
 
 configuration { "gmake" }
   buildoptions { "-Wall -fno-omit-frame-pointer" }
@@ -36,43 +29,43 @@ configuration { "macosx" }
 project "brotlicommon"
   kind "SharedLib"
   language "C"
-  files { "c/common/**.h", "c/common/**.c" }
+  files { "common/**.h", "common/**.c" }
 
 project "brotlicommon_static"
   kind "StaticLib"
   targetname "brotlicommon"
   language "C"
-  files { "c/common/**.h", "c/common/**.c" }
+  files { "common/**.h", "common/**.c" }
 
 project "brotlidec"
   kind "SharedLib"
   language "C"
-  files { "c/dec/**.h", "c/dec/**.c" }
+  files { "dec/**.h", "dec/**.c" }
   links "brotlicommon"
 
 project "brotlidec_static"
   kind "StaticLib"
   targetname "brotlidec"
   language "C"
-  files { "c/dec/**.h", "c/dec/**.c" }
+  files { "dec/**.h", "dec/**.c" }
   links "brotlicommon_static"
 
 project "brotlienc"
   kind "SharedLib"
   language "C"
-  files { "c/enc/**.h", "c/enc/**.c" }
+  files { "enc/**.h", "enc/**.c" }
   links "brotlicommon"
 
 project "brotlienc_static"
   kind "StaticLib"
   targetname "brotlienc"
   language "C"
-  files { "c/enc/**.h", "c/enc/**.c" }
+  files { "enc/**.h", "enc/**.c" }
   links "brotlicommon_static"
 
-project "brotli"
+project "bro"
   kind "ConsoleApp"
   language "C"
   linkoptions "-static"
-  files { "c/tools/brotli.c" }
+  files { "tools/bro.c" }
   links { "brotlicommon_static", "brotlidec_static", "brotlienc_static" }
