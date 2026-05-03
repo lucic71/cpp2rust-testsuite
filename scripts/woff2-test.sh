@@ -52,6 +52,7 @@ for model in "${MODELS[@]}"; do
   done
 
   # Decompress and compare ttf roundtrip
+  rm -f "$MODEL_DIR"/*.ttf
   for f in "$MODEL_DIR"/*.woff2; do
     "$RUST_BIN"/woff2_decompress "$f" &
   done
