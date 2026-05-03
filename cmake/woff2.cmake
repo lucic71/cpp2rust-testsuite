@@ -39,6 +39,7 @@ add_custom_target("config-woff2"
           ${WOFF2_SRC_DIR}/build/compile_commands.json
           ${WOFF2_SRC_DIR}/build/cmd_woff2_decompress/compile_commands.json
           ${WOFF2_DECOMPRESS_FILES}
+  DEPENDS "build-woff2-original"
 )
 
 foreach(_model IN LISTS CPP2RUST_MODELS)
