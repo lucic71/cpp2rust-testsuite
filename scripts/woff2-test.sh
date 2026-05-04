@@ -25,8 +25,15 @@ done
 wait
 
 for f in "$TMP_DIR"/original/*.woff2; do
-  "$SRC_DIR/src/woff2_info" "$f" | tail -n2 > "$TMP_DIR/original/$(basename "$f" .woff2).info"
+  "$SRC_DIR/src/woff2_info" "$f" | tail -n +2 > "$TMP_DIR/original/$(basename "$f" .woff2).info"
 done
+
+mkdir -p "$TMP_DIR/cc-decompressed"
+cp "$TMP_DIR"/original/*.woff2 "$TMP_DIR/cc-decompressed/"
+for f in "$TMP_DIR/cc-decompressed"/*.woff2; do
+  "$SRC_DIR/src/woff2_decompress" "$f" &
+done
+wait
 
 # Run each model and compare against original
 
@@ -60,14 +67,14 @@ for model in "${MODELS[@]}"; do
 
   for f in "$MODEL_DIR"/*.ttf; do
     base=$(basename "$f" .ttf)
-    diff "$f" "$TMP_DIR/original/$base.ttf" \
+    diff "$f" "$TMP_DIR/cc-decompressed/$base.ttf" \
       || { echo "FAIL [$model]: ttf mismatch on $base"; exit 1; }
   done
 
   # Compare woff2_info output
   for f in "$MODEL_DIR"/*.woff2; do
     base=$(basename "$f" .woff2)
-    "$RUST_BIN"/woff2_info "$f" | tail -n2 > "$MODEL_DIR/$base.info"
+    "$RUST_BIN"/woff2_info "$f" | tail -n +2 > "$MODEL_DIR/$base.info"
     diff "$MODEL_DIR/$base.info" "$TMP_DIR/original/$base.info" \
       || { echo "FAIL [$model]: info mismatch on $base"; exit 1; }
   done
