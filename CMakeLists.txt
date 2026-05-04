@@ -65,7 +65,7 @@ list(TRANSFORM CPP2RUST_PROGRAMS PREPEND "check-"     OUTPUT_VARIABLE _check_tar
 list(TRANSFORM CPP2RUST_PROGRAMS PREPEND "regen-"     OUTPUT_VARIABLE _regen_targets)
 list(TRANSFORM CPP2RUST_PROGRAMS PREPEND "benchmark-" OUTPUT_VARIABLE _bench_targets)
 
-add_custom_target("build"     DEPENDS ${_check_targets})
+add_custom_target("build"     DEPENDS ${_build_targets})
 add_custom_target("check"     DEPENDS ${_check_targets})
 add_custom_target("regen"     DEPENDS ${_regen_targets})
 add_custom_target("benchmark" DEPENDS ${_bench_targets})
