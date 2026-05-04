@@ -25,7 +25,7 @@ done
 wait
 
 for f in "$TMP_DIR"/original/*.woff2; do
-  "$SRC_DIR/src/woff2_info" "$f" | tail -n2 > "$TMP_DIR/original/$(basename "$f" .woff2).info"
+  "$SRC_DIR/src/woff2_info" "$f" | tail -n +2 > "$TMP_DIR/original/$(basename "$f" .woff2).info"
 done
 
 # Run each model and compare against original
@@ -67,7 +67,7 @@ for model in "${MODELS[@]}"; do
   # Compare woff2_info output
   for f in "$MODEL_DIR"/*.woff2; do
     base=$(basename "$f" .woff2)
-    "$RUST_BIN"/woff2_info "$f" | tail -n2 > "$MODEL_DIR/$base.info"
+    "$RUST_BIN"/woff2_info "$f" | tail -n +2 > "$MODEL_DIR/$base.info"
     diff "$MODEL_DIR/$base.info" "$TMP_DIR/original/$base.info" \
       || { echo "FAIL [$model]: info mismatch on $base"; exit 1; }
   done
