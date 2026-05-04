@@ -23,7 +23,6 @@ foreach(_prog IN LISTS CPP2RUST_PROGRAMS)
     add_custom_target("build-${_prog}-${_model}"
       COMMAND ${CMAKE_COMMAND} -E env RUSTFLAGS=-Awarnings cargo build --release
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${_prog}/out/${_model}"
-      USES_TERMINAL
     )
 
     list(APPEND _model_regen_targets "regen-${_prog}-${_model}")

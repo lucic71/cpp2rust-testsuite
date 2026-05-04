@@ -18,7 +18,6 @@ add_custom_target("build-woff2-original"
   # Important so the compressed files match perfectly
   COMMAND make
   WORKING_DIRECTORY "${WOFF2_SRC_DIR}"
-  USES_TERMINAL
 )
 
 add_custom_target("config-woff2"
@@ -54,6 +53,5 @@ foreach(_model IN LISTS CPP2RUST_MODELS)
             -model ${_model}
             -o ${WOFF2_OUT_DIR}/${_model}/src/bin/woff2_decompress.rs
     DEPENDS "config-woff2"
-    USES_TERMINAL
   )
 endforeach()
