@@ -28,6 +28,11 @@ for f in "$TMP_DIR"/original/*.woff2; do
   "$SRC_DIR/src/woff2_info" "$f" | tail -n +2 > "$TMP_DIR/original/$(basename "$f" .woff2).info"
 done
 
+for f in "$TMP_DIR/original"/*.woff2; do
+  "$SRC_DIR/src/woff2_decompress" "$f" &
+done
+wait
+
 # Run each model and compare against original
 
 for model in "${MODELS[@]}"; do
