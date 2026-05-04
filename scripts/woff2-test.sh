@@ -28,7 +28,9 @@ for f in "$TMP_DIR"/original/*.woff2; do
   "$SRC_DIR/src/woff2_info" "$f" | tail -n +2 > "$TMP_DIR/original/$(basename "$f" .woff2).info"
 done
 
-for f in "$TMP_DIR/original"/*.woff2; do
+mkdir -p "$TMP_DIR/cc-decompressed"
+cp "$TMP_DIR"/original/*.woff2 "$TMP_DIR/cc-decompressed/"
+for f in "$TMP_DIR/cc-decompressed"/*.woff2; do
   "$SRC_DIR/src/woff2_decompress" "$f" &
 done
 wait
@@ -65,7 +67,7 @@ for model in "${MODELS[@]}"; do
 
   for f in "$MODEL_DIR"/*.ttf; do
     base=$(basename "$f" .ttf)
-    diff "$f" "$TMP_DIR/original/$base.ttf" \
+    diff "$f" "$TMP_DIR/cc-decompressed/$base.ttf" \
       || { echo "FAIL [$model]: ttf mismatch on $base"; exit 1; }
   done
 
