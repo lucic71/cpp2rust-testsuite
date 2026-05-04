@@ -21,7 +21,7 @@ foreach(_prog IN LISTS CPP2RUST_PROGRAMS)
     write_rust_toolchain(${CMAKE_CURRENT_SOURCE_DIR}/${_prog}/out/${_model})
 
     add_custom_target("build-${_prog}-${_model}"
-      COMMAND bash -c "RUSTFLAGS='-Awarnings -Adangerous-implicit-autorefs' cargo build --release"
+      COMMAND ${CMAKE_COMMAND} -E env RUSTFLAGS=-Awarnings cargo build --release
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${_prog}/out/${_model}"
       USES_TERMINAL
     )
