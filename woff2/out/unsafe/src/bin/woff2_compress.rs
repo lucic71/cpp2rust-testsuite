@@ -227,7 +227,7 @@ impl woff2_Buffer {
     }
     pub unsafe fn Skip(&mut self, mut n_bytes: u64) -> bool {
         return (unsafe {
-            let _data: *mut u8 = Default::default();
+            let _data: *mut u8 = std::ptr::null_mut();
             let _n_bytes: u64 = n_bytes;
             self.Read(_data, _n_bytes)
         });
@@ -696,7 +696,7 @@ impl woff2_Font {
         return if it
             == UnsafeMapIterator::end(&self.tables as *const BTreeMap<u32, Box<woff2_Font_Table>>)
         {
-            Default::default()
+            std::ptr::null_mut()
         } else {
             (&mut *it.second() as *mut woff2_Font_Table)
         };
@@ -711,7 +711,7 @@ impl woff2_Font {
         return if it
             == UnsafeMapIterator::end(&self.tables as *const BTreeMap<u32, Box<woff2_Font_Table>>)
         {
-            Default::default()
+            std::ptr::null()
         } else {
             (&*it.second() as *const woff2_Font_Table)
         };
@@ -796,7 +796,7 @@ pub unsafe fn ReadTrueTypeFont_15(
     'loop_: while ((i as i32) < ((*font).num_tables as i32)) {
         let mut table: woff2_Font_Table = <woff2_Font_Table>::default();
         table.flag_byte = 0_u8;
-        table.reuse_of = Default::default();
+        table.reuse_of = std::ptr::null_mut();
         if (((!(unsafe {
             let _value: *mut u32 = (&mut table.tag as *mut u32);
             (*file).ReadU32(_value)
@@ -846,7 +846,7 @@ pub unsafe fn ReadTrueTypeFont_15(
         (*font).FindTable_u32(_tag)
     })
     .cast_const();
-    if ((head_table) != (Default::default())) && (((*head_table).length) < (52_u32)) {
+    if ((head_table) != (std::ptr::null())) && (((*head_table).length) < (52_u32)) {
         return false;
     }
     return true;
@@ -1324,7 +1324,7 @@ pub unsafe fn NumGlyphs_27(font: *const woff2_Font) -> i32 {
         let _tag: u32 = woff2_kLocaTableTag;
         (*font).FindTable_u32_const(_tag)
     });
-    if (((head_table) == (Default::default())) || ((loca_table) == (Default::default())))
+    if (((head_table) == (std::ptr::null())) || ((loca_table) == (std::ptr::null())))
         || (((*head_table).length) < (52_u32))
     {
         return 0;
@@ -1345,14 +1345,14 @@ pub unsafe fn IndexFormat_28(font: *const woff2_Font) -> i32 {
         let _tag: u32 = woff2_kHeadTableTag;
         (*font).FindTable_u32_const(_tag)
     });
-    if ((head_table) == (Default::default())) {
+    if ((head_table) == (std::ptr::null())) {
         return 0;
     }
     return ((*(*head_table).data.offset((51) as isize)) as i32);
 }
 impl woff2_Font_Table {
     pub unsafe fn IsReused(&self) -> bool {
-        return ((self.reuse_of) != (Default::default()));
+        return ((self.reuse_of) != (std::ptr::null_mut()));
     }
 }
 pub unsafe fn GetGlyphData_29(
@@ -1376,8 +1376,8 @@ pub unsafe fn GetGlyphData_29(
         let _tag: u32 = woff2_kGlyfTableTag;
         (*font).FindTable_u32_const(_tag)
     });
-    if ((((head_table) == (Default::default())) || ((loca_table) == (Default::default())))
-        || ((glyf_table) == (Default::default())))
+    if ((((head_table) == (std::ptr::null())) || ((loca_table) == (std::ptr::null())))
+        || ((glyf_table) == (std::ptr::null())))
         || (((*head_table).length) < (52_u32))
     {
         return false;
@@ -1475,10 +1475,10 @@ impl woff2_Glyph {
             y_min: 0_i16,
             y_max: 0_i16,
             instructions_size: 0_u16,
-            instructions_data: Default::default(),
+            instructions_data: std::ptr::null(),
             overlap_simple_flag_set: false,
             contours: Vec::new(),
-            composite_data: Default::default(),
+            composite_data: std::ptr::null(),
             composite_data_size: 0_u32,
             have_instructions: false,
         };
@@ -2122,7 +2122,7 @@ pub unsafe fn WriteNormalizedLoca_42(
     let mut glyf_dst: *mut u8 = if (num_glyphs != 0) {
         (&mut (&mut (*glyf_table)).buffer[(0_u64) as usize] as *mut u8)
     } else {
-        Default::default()
+        std::ptr::null_mut()
     };
     let mut loca_dst: *mut u8 = (&mut (&mut (*loca_table)).buffer[(0_u64) as usize] as *mut u8);
     let mut glyf_offset: u32 = 0_u32;
@@ -2137,7 +2137,7 @@ pub unsafe fn WriteNormalizedLoca_42(
             StoreLoca_41(_index_fmt, _value, _offset, _dst)
         });
         let mut glyph: woff2_Glyph = woff2_Glyph::woff2_Glyph();
-        let mut glyph_data: *const u8 = Default::default();
+        let mut glyph_data: *const u8 = std::ptr::null();
         let mut glyph_size: u64 = 0_u64;
         if (!(unsafe {
             let _font: *const woff2_Font = &(*font) as *const woff2_Font;
@@ -2193,14 +2193,14 @@ pub unsafe fn WriteNormalizedLoca_42(
     (*glyf_table).data = if (glyf_offset != 0) {
         (&mut (&mut (*glyf_table)).buffer[(0_u64) as usize] as *mut u8)
     } else {
-        Default::default()
+        std::ptr::null_mut()
     }
     .cast_const();
     (*glyf_table).length = glyf_offset;
     (*loca_table).data = if (loca_offset != 0) {
         (&mut (&mut (*loca_table)).buffer[(0_u64) as usize] as *mut u8)
     } else {
-        Default::default()
+        std::ptr::null_mut()
     }
     .cast_const();
     return true;
@@ -2210,7 +2210,7 @@ pub unsafe fn MakeEditableBuffer_43(mut font: *mut woff2_Font, mut tableTag: i32
         let _tag: u32 = (tableTag as u32);
         (*font).FindTable_u32(_tag)
     });
-    if ((table) == (Default::default())) {
+    if ((table) == (std::ptr::null_mut())) {
         return false;
     }
     if (unsafe { (*table.cast_const()).IsReused() }) {
@@ -2261,14 +2261,14 @@ pub unsafe fn NormalizeGlyphs_44(mut font: *mut woff2_Font) -> bool {
         let _tag: u32 = woff2_kLocaTableTag;
         (*font).FindTable_u32(_tag)
     });
-    if ((head_table) == (Default::default())) {
+    if ((head_table) == (std::ptr::null_mut())) {
         return false;
     }
-    if ((loca_table) == (Default::default())) && ((glyf_table) == (Default::default())) {
+    if ((loca_table) == (std::ptr::null_mut())) && ((glyf_table) == (std::ptr::null_mut())) {
         return true;
     }
-    if ((((glyf_table) == (Default::default())) as i32)
-        != (((loca_table) == (Default::default())) as i32))
+    if ((((glyf_table) == (std::ptr::null_mut())) as i32)
+        != (((loca_table) == (std::ptr::null_mut())) as i32))
     {
         return false;
     }
@@ -2369,10 +2369,10 @@ pub unsafe fn FixChecksums_47(mut font: *mut woff2_Font) -> bool {
         let _tag: u32 = woff2_kHeadTableTag;
         (*font).FindTable_u32(_tag)
     });
-    if ((head_table) == (Default::default())) {
+    if ((head_table) == (std::ptr::null_mut())) {
         return false;
     }
-    if (((*head_table).reuse_of) != (Default::default())) {
+    if (((*head_table).reuse_of) != (std::ptr::null_mut())) {
         head_table = (*head_table).reuse_of;
     }
     if (((*head_table).length) < (12_u32)) {
@@ -2425,10 +2425,10 @@ pub unsafe fn MarkTransformed_48(mut font: *mut woff2_Font) -> bool {
         let _tag: u32 = woff2_kHeadTableTag;
         (*font).FindTable_u32(_tag)
     });
-    if ((head_table) == (Default::default())) {
+    if ((head_table) == (std::ptr::null_mut())) {
         return false;
     }
-    if (((*head_table).reuse_of) != (Default::default())) {
+    if (((*head_table).reuse_of) != (std::ptr::null_mut())) {
         head_table = (*head_table).reuse_of;
     }
     if (((*head_table).length) < (17_u32)) {
@@ -2971,11 +2971,11 @@ pub unsafe fn TransformGlyfAndLocaTables_56(mut font: *mut woff2_Font) -> bool {
         (*font).FindTable_u32(_tag)
     })
     .cast_const();
-    if ((loca_table) == (Default::default())) && ((glyf_table) == (Default::default())) {
+    if ((loca_table) == (std::ptr::null())) && ((glyf_table) == (std::ptr::null())) {
         return true;
     }
-    if ((((glyf_table) == (Default::default())) as i32)
-        != (((loca_table) == (Default::default())) as i32))
+    if ((((glyf_table) == (std::ptr::null())) as i32)
+        != (((loca_table) == (std::ptr::null())) as i32))
     {
         return false;
     }
@@ -3005,7 +3005,7 @@ pub unsafe fn TransformGlyfAndLocaTables_56(mut font: *mut woff2_Font) -> bool {
     let mut i: i32 = 0;
     'loop_: while ((i) < (num_glyphs)) {
         let mut glyph: woff2_Glyph = woff2_Glyph::woff2_Glyph();
-        let mut glyph_data: *const u8 = Default::default();
+        let mut glyph_data: *const u8 = std::ptr::null();
         let mut glyph_size: u64 = 0_u64;
         if (!(unsafe {
             let _font: *const woff2_Font = &(*font) as *const woff2_Font;
@@ -3039,7 +3039,7 @@ pub unsafe fn TransformGlyfAndLocaTables_56(mut font: *mut woff2_Font) -> bool {
         (*font).FindTable_u32(_tag)
     })
     .cast_const();
-    if ((head_table) == (Default::default())) || (((*head_table).length) < (52_u32)) {
+    if ((head_table) == (std::ptr::null())) || (((*head_table).length) < (52_u32)) {
         return false;
     }
     (&mut (*transformed_glyf)).buffer[(7_u64) as usize] =
@@ -3049,7 +3049,7 @@ pub unsafe fn TransformGlyfAndLocaTables_56(mut font: *mut woff2_Font) -> bool {
     (*transformed_glyf).data = (*transformed_glyf).buffer.as_mut_ptr().cast_const();
     (*transformed_loca).tag = ((woff2_kLocaTableTag) ^ (2155905152_u32));
     (*transformed_loca).length = 0_u32;
-    (*transformed_loca).data = Default::default();
+    (*transformed_loca).data = std::ptr::null();
     return true;
 }
 pub unsafe fn TransformHmtxTable_57(mut font: *mut woff2_Font) -> bool {
@@ -3068,10 +3068,10 @@ pub unsafe fn TransformHmtxTable_57(mut font: *mut woff2_Font) -> bool {
         (*font).FindTable_u32(_tag)
     })
     .cast_const();
-    if ((hmtx_table) == (Default::default())) || ((glyf_table) == (Default::default())) {
+    if ((hmtx_table) == (std::ptr::null())) || ((glyf_table) == (std::ptr::null())) {
         return true;
     }
-    if ((hhea_table) == (Default::default())) {
+    if ((hhea_table) == (std::ptr::null())) {
         return false;
     }
     let mut hhea_buf: woff2_Buffer =
@@ -3103,7 +3103,7 @@ pub unsafe fn TransformHmtxTable_57(mut font: *mut woff2_Font) -> bool {
     let mut i: i32 = 0;
     'loop_: while ((i) < (num_glyphs)) {
         let mut glyph: woff2_Glyph = woff2_Glyph::woff2_Glyph();
-        let mut glyph_data: *const u8 = Default::default();
+        let mut glyph_data: *const u8 = std::ptr::null();
         let mut glyph_size: u64 = 0_u64;
         if (!(unsafe {
             let _font: *const woff2_Font = &(*font) as *const woff2_Font;
@@ -3663,7 +3663,7 @@ pub unsafe fn ConvertTTFToWOFF2_73(
                 let _tag: u32 = ((tag) ^ (2155905152_u32));
                 (*font).FindTable_u32_const(_tag)
             });
-            if ((table_to_store) == (Default::default())) {
+            if ((table_to_store) == (std::ptr::null())) {
                 table_to_store = (original);
             }
             (unsafe {
@@ -3748,7 +3748,7 @@ pub unsafe fn ConvertTTFToWOFF2_73(
                 let _tag: u32 = (((*src_table).tag) ^ (2155905152_u32));
                 (*font).FindTable_u32_const(_tag)
             });
-            if ((transformed_table) != (Default::default())) {
+            if ((transformed_table) != (std::ptr::null())) {
                 table.flags = ((*transformed_table).flag_byte as u32);
                 table.flags = ((table.flags as u32) | woff2_kWoff2FlagsTransform) as u32;
                 table.transform_length = (*transformed_table).length;

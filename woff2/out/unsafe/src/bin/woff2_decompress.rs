@@ -227,7 +227,7 @@ impl woff2_Buffer {
     }
     pub unsafe fn Skip(&mut self, mut n_bytes: u64) -> bool {
         return (unsafe {
-            let _data: *mut u8 = Default::default();
+            let _data: *mut u8 = std::ptr::null_mut();
             let _n_bytes: u64 = n_bytes;
             self.Read(_data, _n_bytes)
         });
@@ -1319,7 +1319,7 @@ pub unsafe fn ReconstructGlyf_25(
         substreams[(6_u64) as usize].0,
         substreams[(6_u64) as usize].1,
     );
-    let mut overlap_bitmap: *const u8 = Default::default();
+    let mut overlap_bitmap: *const u8 = std::ptr::null();
     let mut overlap_bitmap_length: u32 = 0_u32;
     if has_overlap_bitmap {
         overlap_bitmap_length = (((((*info).num_glyphs as i32) + (7)) >> (3)) as u32);
@@ -1774,7 +1774,7 @@ pub unsafe fn FindTable_26(
             return table;
         }
     }
-    return Default::default();
+    return std::ptr::null_mut();
 }
 pub unsafe fn ReadNumHMetrics_27(
     mut data: *const u8,
@@ -2180,7 +2180,7 @@ pub unsafe fn ReconstructFont_35(
         printf(b"Cannot have just one of glyf/loca\n\0".as_ptr() as *const i8);
         return false;
     }
-    if ((glyf_table) != (Default::default())) {
+    if ((glyf_table) != (std::ptr::null())) {
         if ((((((*glyf_table).flags) & (woff2_kWoff2FlagsTransform))
             != (((*loca_table).flags) & (woff2_kWoff2FlagsTransform))) as i64)
             != 0)
