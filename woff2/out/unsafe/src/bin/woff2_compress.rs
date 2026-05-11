@@ -8,15 +8,15 @@ use std::os::fd::{AsFd, FromRawFd, IntoRawFd};
 use std::rc::Rc;
 
 // table_tags.rs
-pub static woff2_kGlyfTableTag: u32 = 1735162214_u32;
-pub static woff2_kHeadTableTag: u32 = 1751474532_u32;
-pub static woff2_kLocaTableTag: u32 = 1819239265_u32;
-pub static woff2_kDsigTableTag: u32 = 1146308935_u32;
-pub static woff2_kCffTableTag: u32 = 1128678944_u32;
-pub static woff2_kHmtxTableTag: u32 = 1752003704_u32;
-pub static woff2_kHheaTableTag: u32 = 1751672161_u32;
-pub static woff2_kMaxpTableTag: u32 = 1835104368_u32;
-pub static woff2_kKnownTags: [u32; 63] = [
+pub static mut woff2_kGlyfTableTag: u32 = 1735162214_u32;
+pub static mut woff2_kHeadTableTag: u32 = 1751474532_u32;
+pub static mut woff2_kLocaTableTag: u32 = 1819239265_u32;
+pub static mut woff2_kDsigTableTag: u32 = 1146308935_u32;
+pub static mut woff2_kCffTableTag: u32 = 1128678944_u32;
+pub static mut woff2_kHmtxTableTag: u32 = 1752003704_u32;
+pub static mut woff2_kHheaTableTag: u32 = 1751672161_u32;
+pub static mut woff2_kMaxpTableTag: u32 = 1835104368_u32;
+pub static mut woff2_kKnownTags: [u32; 63] = [
     ((((((('c' as u8) as i32) << (24)) | ((('m' as u8) as i32) << (16)))
         | ((('a' as u8) as i32) << (8)))
         | (('p' as u8) as i32)) as u32),
@@ -422,10 +422,10 @@ pub unsafe fn Store255UShort_2(mut val: i32, mut offset: *mut u64, mut dst: *mut
     }
 }
 pub unsafe fn Read255UShort_3(mut buf: *mut woff2_Buffer, mut value: *mut u32) -> bool {
-    static kWordCode: i32 = 253;;
-    static kOneMoreByteCode2: i32 = 254;;
-    static kOneMoreByteCode1: i32 = 255;;
-    static kLowestUCode: i32 = 253;;
+    static mut kWordCode: i32 = 253;;
+    static mut kOneMoreByteCode2: i32 = 254;;
+    static mut kOneMoreByteCode1: i32 = 255;;
+    static mut kLowestUCode: i32 = 253;;
     let mut code: u8 = 0_u8;
     if !(unsafe {
         let _value: *mut u8 = (&mut code as *mut u8);
@@ -521,11 +521,11 @@ pub unsafe fn StoreBase128_6(mut len: u64, mut offset: *mut u64, mut dst: *mut u
     }
 }
 // woff2_common.rs
-pub static woff2_kWoff2Signature: u32 = 2001684018_u32;
-pub static woff2_kWoff2FlagsTransform: u32 = (((1) << (8)) as u32);
-pub static woff2_kTtcFontFlavor: u32 = 1953784678_u32;
-pub static woff2_kSfntHeaderSize: u64 = 12_u64;
-pub static woff2_kSfntEntrySize: u64 = 16_u64;
+pub static mut woff2_kWoff2Signature: u32 = 2001684018_u32;
+pub static mut woff2_kWoff2FlagsTransform: u32 = (((1) << (8)) as u32);
+pub static mut woff2_kTtcFontFlavor: u32 = 1953784678_u32;
+pub static mut woff2_kSfntHeaderSize: u64 = 12_u64;
+pub static mut woff2_kSfntEntrySize: u64 = 16_u64;
 #[repr(C)]
 #[derive(Copy, Clone, Default)]
 pub struct woff2_Point {
@@ -1490,19 +1490,19 @@ impl Default for woff2_Glyph {
         unsafe { woff2_Glyph::woff2_Glyph() }
     }
 }
-pub static woff2_kFLAG_ONCURVE: i32 = 1;
-pub static woff2_kFLAG_XSHORT: i32 = ((1) << (1));
-pub static woff2_kFLAG_YSHORT: i32 = ((1) << (2));
-pub static woff2_kFLAG_REPEAT: i32 = ((1) << (3));
-pub static woff2_kFLAG_XREPEATSIGN: i32 = ((1) << (4));
-pub static woff2_kFLAG_YREPEATSIGN: i32 = ((1) << (5));
-pub static woff2_kFLAG_OVERLAP_SIMPLE: i32 = ((1) << (6));
-pub static woff2_kFLAG_ARG_1_AND_2_ARE_WORDS: i32 = ((1) << (0));
-pub static woff2_kFLAG_WE_HAVE_A_SCALE: i32 = ((1) << (3));
-pub static woff2_kFLAG_MORE_COMPONENTS: i32 = ((1) << (5));
-pub static woff2_kFLAG_WE_HAVE_AN_X_AND_Y_SCALE: i32 = ((1) << (6));
-pub static woff2_kFLAG_WE_HAVE_A_TWO_BY_TWO: i32 = ((1) << (7));
-pub static woff2_kFLAG_WE_HAVE_INSTRUCTIONS: i32 = ((1) << (8));
+pub static mut woff2_kFLAG_ONCURVE: i32 = 1;
+pub static mut woff2_kFLAG_XSHORT: i32 = ((1) << (1));
+pub static mut woff2_kFLAG_YSHORT: i32 = ((1) << (2));
+pub static mut woff2_kFLAG_REPEAT: i32 = ((1) << (3));
+pub static mut woff2_kFLAG_XREPEATSIGN: i32 = ((1) << (4));
+pub static mut woff2_kFLAG_YREPEATSIGN: i32 = ((1) << (5));
+pub static mut woff2_kFLAG_OVERLAP_SIMPLE: i32 = ((1) << (6));
+pub static mut woff2_kFLAG_ARG_1_AND_2_ARE_WORDS: i32 = ((1) << (0));
+pub static mut woff2_kFLAG_WE_HAVE_A_SCALE: i32 = ((1) << (3));
+pub static mut woff2_kFLAG_MORE_COMPONENTS: i32 = ((1) << (5));
+pub static mut woff2_kFLAG_WE_HAVE_AN_X_AND_Y_SCALE: i32 = ((1) << (6));
+pub static mut woff2_kFLAG_WE_HAVE_A_TWO_BY_TWO: i32 = ((1) << (7));
+pub static mut woff2_kFLAG_WE_HAVE_INSTRUCTIONS: i32 = ((1) << (8));
 pub unsafe fn ReadCompositeGlyphData_31(
     mut buffer: *mut woff2_Buffer,
     mut glyph: *mut woff2_Glyph,
@@ -2526,9 +2526,9 @@ pub unsafe fn NormalizeFontCollection_51(mut font_collection: *mut woff2_FontCol
     return true;
 }
 // transform.rs
-pub static woff2_FLAG_ARG_1_AND_2_ARE_WORDS: i32 = ((1) << (0));
-pub static woff2_FLAG_WE_HAVE_INSTRUCTIONS: i32 = ((1) << (8));
-pub static woff2_FLAG_OVERLAP_SIMPLE_BITMAP: i32 = ((1) << (0));
+pub static mut woff2_FLAG_ARG_1_AND_2_ARE_WORDS: i32 = ((1) << (0));
+pub static mut woff2_FLAG_WE_HAVE_INSTRUCTIONS: i32 = ((1) << (8));
+pub static mut woff2_FLAG_OVERLAP_SIMPLE_BITMAP: i32 = ((1) << (0));
 pub unsafe fn WriteBytes_52(mut out: *mut Vec<u8>, mut data: *const u8, mut len: u64) {
     if ((len) == (0_u64)) {
         return;
@@ -3263,8 +3263,8 @@ impl Default for woff2_WOFF2Params {
         unsafe { woff2_WOFF2Params::woff2_WOFF2Params() }
     }
 }
-pub static woff2_kWoff2HeaderSize: u64 = 48_u64;
-pub static woff2_kWoff2EntrySize: u64 = 20_u64;
+pub static mut woff2_kWoff2HeaderSize: u64 = 48_u64;
+pub static mut woff2_kWoff2EntrySize: u64 = 20_u64;
 pub unsafe fn Compress_58(
     mut data: *const u8,
     len: u64,
