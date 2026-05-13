@@ -846,7 +846,7 @@ pub unsafe fn ReadTrueTypeFont_15(
         (*font).FindTable_u32(_tag)
     })
     .cast_const();
-    if ((head_table) != (std::ptr::null())) && (((*head_table).length) < (52_u32)) {
+    if (!((head_table).is_null())) && (((*head_table).length) < (52_u32)) {
         return false;
     }
     return true;
@@ -1324,8 +1324,7 @@ pub unsafe fn NumGlyphs_27(font: *const woff2_Font) -> i32 {
         let _tag: u32 = woff2_kLocaTableTag;
         (*font).FindTable_u32_const(_tag)
     });
-    if (((head_table) == (std::ptr::null())) || ((loca_table) == (std::ptr::null())))
-        || (((*head_table).length) < (52_u32))
+    if (((head_table).is_null()) || ((loca_table).is_null())) || (((*head_table).length) < (52_u32))
     {
         return 0;
     }
@@ -1345,14 +1344,14 @@ pub unsafe fn IndexFormat_28(font: *const woff2_Font) -> i32 {
         let _tag: u32 = woff2_kHeadTableTag;
         (*font).FindTable_u32_const(_tag)
     });
-    if ((head_table) == (std::ptr::null())) {
+    if (head_table).is_null() {
         return 0;
     }
     return ((*(*head_table).data.offset((51) as isize)) as i32);
 }
 impl woff2_Font_Table {
     pub unsafe fn IsReused(&self) -> bool {
-        return ((self.reuse_of) != (std::ptr::null_mut()));
+        return !((self.reuse_of).is_null());
     }
 }
 pub unsafe fn GetGlyphData_29(
@@ -1376,8 +1375,7 @@ pub unsafe fn GetGlyphData_29(
         let _tag: u32 = woff2_kGlyfTableTag;
         (*font).FindTable_u32_const(_tag)
     });
-    if ((((head_table) == (std::ptr::null())) || ((loca_table) == (std::ptr::null())))
-        || ((glyf_table) == (std::ptr::null())))
+    if ((((head_table).is_null()) || ((loca_table).is_null())) || ((glyf_table).is_null()))
         || (((*head_table).length) < (52_u32))
     {
         return false;

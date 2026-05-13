@@ -248,7 +248,7 @@ impl woff2_Buffer {
     pub fn Skip(&self, n_bytes: u64) -> bool {
         let n_bytes: Value<u64> = Rc::new(RefCell::new(n_bytes));
         return ({
-            let _data: Ptr<u8> = Default::default();
+            let _data: Ptr<u8> = Ptr::<u8>::null();
             let _n_bytes: u64 = (*n_bytes.borrow());
             self.Read(_data, _n_bytes)
         });
@@ -954,7 +954,7 @@ impl woff2_Font {
             == RefcountMapIter::end(
                 (self.tables.as_pointer() as Ptr<BTreeMap<u32, Value<woff2_Font_Table>>>),
             ) {
-            Default::default()
+            Ptr::<woff2_Font_Table>::null()
         } else {
             ((*it.borrow()).second().as_pointer())
         };
@@ -972,7 +972,7 @@ impl woff2_Font {
             == RefcountMapIter::end(
                 (self.tables.as_pointer() as Ptr<BTreeMap<u32, Value<woff2_Font_Table>>>),
             ) {
-            Default::default()
+            Ptr::<woff2_Font_Table>::null()
         } else {
             ((*it.borrow()).second().as_pointer())
         };
@@ -1124,7 +1124,7 @@ pub fn ReadTrueTypeFont_15(
     } {
         let table: Value<woff2_Font_Table> = Rc::new(RefCell::new(<woff2_Font_Table>::default()));
         (*(*table.borrow()).flag_byte.borrow_mut()) = 0_u8;
-        (*(*table.borrow()).reuse_of.borrow_mut()) = Default::default();
+        (*(*table.borrow()).reuse_of.borrow_mut()) = Ptr::<woff2_Font_Table>::null();
         if (((!({
             let _value: Ptr<u32> = ((*table.borrow()).tag.as_pointer());
             (*(*file.borrow()).upgrade().deref()).ReadU32(_value)
@@ -1202,7 +1202,7 @@ pub fn ReadTrueTypeFont_15(
             (*(*font.borrow()).upgrade().deref()).FindTable_u32(_tag)
         }),
     ));
-    if ((*head_table.borrow()) != Default::default())
+    if (!((*head_table.borrow()).is_null()))
         && ((*(*(*head_table.borrow()).upgrade().deref()).length.borrow()) < 52_u32)
     {
         return false;
@@ -1829,8 +1829,7 @@ pub fn NumGlyphs_27(font: Ptr<woff2_Font>) -> i32 {
             (*font.upgrade().deref()).FindTable_u32_const(_tag)
         }),
     ));
-    if (((*head_table.borrow()) == Default::default())
-        || ((*loca_table.borrow()) == Default::default()))
+    if (((*head_table.borrow()).is_null()) || ((*loca_table.borrow()).is_null()))
         || ((*(*(*head_table.borrow()).upgrade().deref()).length.borrow()) < 52_u32)
     {
         return 0;
@@ -1861,7 +1860,7 @@ pub fn IndexFormat_28(font: Ptr<woff2_Font>) -> i32 {
             (*font.upgrade().deref()).FindTable_u32_const(_tag)
         }),
     ));
-    if ((*head_table.borrow()) == Default::default()) {
+    if (*head_table.borrow()).is_null() {
         return 0;
     }
     return (((*(*(*head_table.borrow()).upgrade().deref()).data.borrow())
@@ -1870,7 +1869,7 @@ pub fn IndexFormat_28(font: Ptr<woff2_Font>) -> i32 {
 }
 impl woff2_Font_Table {
     pub fn IsReused(&self) -> bool {
-        return ((*self.reuse_of.borrow()) != Default::default());
+        return (!((*self.reuse_of.borrow()).is_null())).clone();
     }
 }
 pub fn GetGlyphData_29(
@@ -1903,9 +1902,8 @@ pub fn GetGlyphData_29(
             (*font.upgrade().deref()).FindTable_u32_const(_tag)
         }),
     ));
-    if ((((*head_table.borrow()) == Default::default())
-        || ((*loca_table.borrow()) == Default::default()))
-        || ((*glyf_table.borrow()) == Default::default()))
+    if ((((*head_table.borrow()).is_null()) || ((*loca_table.borrow()).is_null()))
+        || ((*glyf_table.borrow()).is_null()))
         || ((*(*(*head_table.borrow()).upgrade().deref()).length.borrow()) < 52_u32)
     {
         return false;

@@ -248,7 +248,7 @@ impl woff2_Buffer {
     pub fn Skip(&self, n_bytes: u64) -> bool {
         let n_bytes: Value<u64> = Rc::new(RefCell::new(n_bytes));
         return ({
-            let _data: Ptr<u8> = Default::default();
+            let _data: Ptr<u8> = Ptr::<u8>::null();
             let _n_bytes: u64 = (*n_bytes.borrow());
             self.Read(_data, _n_bytes)
         });
@@ -1995,7 +1995,7 @@ pub fn ReconstructGlyf_25(
             .1
             .borrow()),
         )));
-    let overlap_bitmap: Value<Ptr<u8>> = Rc::new(RefCell::new(Default::default()));
+    let overlap_bitmap: Value<Ptr<u8>> = Rc::new(RefCell::new(Ptr::<u8>::null()));
     let overlap_bitmap_length: Value<u32> = Rc::new(RefCell::new(0_u32));
     if (*has_overlap_bitmap.borrow()) {
         (*overlap_bitmap_length.borrow_mut()) =
@@ -2507,7 +2507,7 @@ pub fn FindTable_26(tables: Ptr<Vec<Ptr<woff2_Table>>>, tag: u32) -> Ptr<woff2_T
             return (*table.borrow()).clone();
         }
     }
-    return Default::default();
+    return Ptr::<woff2_Table>::null();
 }
 pub fn ReadNumHMetrics_27(data: Ptr<u8>, data_size: u64, num_hmetrics: Ptr<u16>) -> bool {
     let data: Value<Ptr<u8>> = Rc::new(RefCell::new(data));
@@ -3042,7 +3042,7 @@ pub fn ReconstructFont_35(
         eprintln!("Cannot have just one of glyf/loca");
         return false;
     }
-    if ((*glyf_table.borrow()) != Default::default()) {
+    if !((*glyf_table.borrow()).is_null()) {
         if ((({
             let _lhs = ({
                 let _lhs = (*(*(*glyf_table.borrow()).upgrade().deref()).flags.borrow());

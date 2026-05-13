@@ -2180,7 +2180,7 @@ pub unsafe fn ReconstructFont_35(
         printf(b"Cannot have just one of glyf/loca\n\0".as_ptr() as *const i8);
         return false;
     }
-    if ((glyf_table) != (std::ptr::null())) {
+    if !((glyf_table).is_null()) {
         if ((((((*glyf_table).flags) & (woff2_kWoff2FlagsTransform))
             != (((*loca_table).flags) & (woff2_kWoff2FlagsTransform))) as i64)
             != 0)
