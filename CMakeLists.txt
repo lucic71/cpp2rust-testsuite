@@ -18,10 +18,8 @@ foreach(_prog IN LISTS CPP2RUST_PROGRAMS)
   set(_model_regen_targets "")
   set(_model_build_targets "")
   foreach(_model IN LISTS CPP2RUST_MODELS)
-    write_rust_toolchain(${CMAKE_CURRENT_SOURCE_DIR}/${_prog}/out/${_model})
-
     add_custom_target("build-${_prog}-${_model}"
-      COMMAND ${CMAKE_COMMAND} -E env RUSTFLAGS=-Awarnings cargo build --release
+      COMMAND ${CMAKE_COMMAND} -E env RUSTFLAGS=-Awarnings cargo +${RUST_STABLE_VERSION} build --release
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${_prog}/out/${_model}"
     )
 
