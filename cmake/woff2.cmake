@@ -16,6 +16,7 @@ add_custom_target("build-woff2-original"
                            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
   # Only the Makefile build links against the bundled Brotli
   # Important so the compressed files match perfectly
+  COMMAND make clean
   COMMAND make
   WORKING_DIRECTORY "${WOFF2_SRC_DIR}"
 )

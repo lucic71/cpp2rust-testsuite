@@ -9,7 +9,7 @@ CXX ?= g++
 # It's helpful to be able to turn these off for fuzzing
 CANONICAL_PREFIXES ?= -no-canonical-prefixes
 NOISY_LOGGING ?= -DFONT_COMPRESSION_BIN
-COMMON_FLAGS = -fno-omit-frame-pointer $(CANONICAL_PREFIXES) $(NOISY_LOGGING) -D __STDC_FORMAT_MACROS
+COMMON_FLAGS = -fno-omit-frame-pointer $(CANONICAL_PREFIXES) $(NOISY_LOGGING) -D __STDC_FORMAT_MACROS -O2
 
 ARFLAGS = crf
 

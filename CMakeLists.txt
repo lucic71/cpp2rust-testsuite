@@ -47,13 +47,10 @@ foreach(_prog IN LISTS CPP2RUST_PROGRAMS)
   )
 
   add_custom_target("benchmark-${_prog}"
-    COMMAND python3
-            "${CPP2RUST_TESTS_DIR}/scripts/${_prog}_bench.py"
-            "${CMAKE_BINARY_DIR}"
-            --models ${CPP2RUST_MODELS}
-            --csv "${CMAKE_BINARY_DIR}/bench_${_prog}.csv"
-            --warmup 2
-            --runs 3
+    COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/scripts/${_prog}-bench.sh"
+            ${CMAKE_BINARY_DIR}
+            ${CMAKE_CURRENT_SOURCE_DIR}
+            ${CPP2RUST_MODELS}
     DEPENDS "build-${_prog}"
     USES_TERMINAL
   )
