@@ -22,34 +22,26 @@ add_custom_target("build-woff2-original"
 
 add_custom_target("config-woff2"
   # Filter: split compile_commands.json per binary
-  COMMAND ${CMAKE_COMMAND} -E make_directory
-          ${WOFF2_SRC_DIR}/build/cmd_woff2_info
-          ${WOFF2_SRC_DIR}/build/cmd_woff2_compress
-          ${WOFF2_SRC_DIR}/build/cmd_woff2_decompress
-  COMMAND python3 ${FILTER_SCRIPT}
-          ${WOFF2_SRC_DIR}/build/compile_commands.json
-          ${WOFF2_SRC_DIR}/build/cmd_woff2_info/compile_commands.json
+  COMMAND ${CMAKE_COMMAND} -E make_directory woff2_info woff2_compress woff2_decompress
+  COMMAND python3 ${FILTER_SCRIPT} compile_commands.json woff2_info/compile_commands.json
           ${WOFF2_INFO_FILES}
-  COMMAND python3 ${FILTER_SCRIPT}
-          ${WOFF2_SRC_DIR}/build/compile_commands.json
-          ${WOFF2_SRC_DIR}/build/cmd_woff2_compress/compile_commands.json
+  COMMAND python3 ${FILTER_SCRIPT} compile_commands.json woff2_compress/compile_commands.json
           ${WOFF2_COMPRESS_FILES}
-  COMMAND python3 ${FILTER_SCRIPT}
-          ${WOFF2_SRC_DIR}/build/compile_commands.json
-          ${WOFF2_SRC_DIR}/build/cmd_woff2_decompress/compile_commands.json
+  COMMAND python3 ${FILTER_SCRIPT} compile_commands.json woff2_decompress/compile_commands.json
           ${WOFF2_DECOMPRESS_FILES}
+  WORKING_DIRECTORY ${WOFF2_SRC_DIR}/build
   DEPENDS "build-woff2-original"
 )
 
 foreach(_model IN LISTS CPP2RUST_MODELS)
   add_custom_target("regen-woff2-${_model}"
-    COMMAND ${CPP2RUST_BINARY} -dir ${WOFF2_SRC_DIR}/build/cmd_woff2_info
+    COMMAND ${CPP2RUST_BINARY} -dir ${WOFF2_SRC_DIR}/build/woff2_info
             -model ${_model}
             -o ${WOFF2_OUT_DIR}/${_model}/src/bin/woff2_info.rs
-    COMMAND ${CPP2RUST_BINARY} -dir ${WOFF2_SRC_DIR}/build/cmd_woff2_compress
+    COMMAND ${CPP2RUST_BINARY} -dir ${WOFF2_SRC_DIR}/build/woff2_compress
             -model ${_model}
             -o ${WOFF2_OUT_DIR}/${_model}/src/bin/woff2_compress.rs
-    COMMAND ${CPP2RUST_BINARY} -dir ${WOFF2_SRC_DIR}/build/cmd_woff2_decompress
+    COMMAND ${CPP2RUST_BINARY} -dir ${WOFF2_SRC_DIR}/build/woff2_decompress
             -model ${_model}
             -o ${WOFF2_OUT_DIR}/${_model}/src/bin/woff2_decompress.rs
     DEPENDS "config-woff2"
