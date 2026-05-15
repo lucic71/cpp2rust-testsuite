@@ -54,15 +54,13 @@ PROGRAMS = {
         "Compression": {
             "cpp_dir": ".",
             "bin": "woff2_compress",
-            ##'tests': '**/*.ttf',
-            "tests": "Aller/*.ttf",
+            'tests': '**/*.ttf',
             "cleanup": woff2_cleanup,
         },
         "Decompression": {
             "cpp_dir": ".",
             "bin": "woff2_decompress",
-            #'tests': '**/*.ttf',
-            "tests": "Aller/*.ttf",
+            'tests': '**/*.ttf',
             "cleanup": woff2_cleanup,
             "setup": woff2_decompress_setup,
             "final_cleanup": woff2_decompress_cleanup,
