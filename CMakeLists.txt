@@ -46,12 +46,9 @@ foreach(_prog IN LISTS CPP2RUST_PROGRAMS)
 
   add_custom_target("benchmark-${_prog}"
     COMMAND python3
-            "${CPP2RUST_TESTS_DIR}/scripts/${_prog}_bench.py"
-            "${CMAKE_BINARY_DIR}"
-            --models ${CPP2RUST_MODELS}
+            "${CMAKE_CURRENT_SOURCE_DIR}/scripts/benchmark.py"
+            --programs ${_prog}
             --csv "${CMAKE_BINARY_DIR}/bench_${_prog}.csv"
-            --warmup 2
-            --runs 3
     DEPENDS "build-${_prog}"
     USES_TERMINAL
   )
@@ -60,9 +57,15 @@ endforeach()
 list(TRANSFORM CPP2RUST_PROGRAMS PREPEND "build-"     OUTPUT_VARIABLE _build_targets)
 list(TRANSFORM CPP2RUST_PROGRAMS PREPEND "check-"     OUTPUT_VARIABLE _check_targets)
 list(TRANSFORM CPP2RUST_PROGRAMS PREPEND "regen-"     OUTPUT_VARIABLE _regen_targets)
-list(TRANSFORM CPP2RUST_PROGRAMS PREPEND "benchmark-" OUTPUT_VARIABLE _bench_targets)
 
 add_custom_target("build"     DEPENDS ${_build_targets})
 add_custom_target("check"     DEPENDS ${_check_targets})
 add_custom_target("regen"     DEPENDS ${_regen_targets})
-add_custom_target("benchmark" DEPENDS ${_bench_targets})
+
+add_custom_target("benchmark"
+  COMMAND python3
+          "${CMAKE_CURRENT_SOURCE_DIR}/scripts/benchmark.py"
+          --csv "${CMAKE_BINARY_DIR}/bench.csv"
+  DEPENDS "build"
+  USES_TERMINAL
+)
