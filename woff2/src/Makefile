@@ -9,15 +9,13 @@ CXX ?= g++
 # It's helpful to be able to turn these off for fuzzing
 CANONICAL_PREFIXES ?= -no-canonical-prefixes
 NOISY_LOGGING ?= -DFONT_COMPRESSION_BIN
-COMMON_FLAGS = -fno-omit-frame-pointer $(CANONICAL_PREFIXES) $(NOISY_LOGGING) -D __STDC_FORMAT_MACROS
+COMMON_FLAGS = -O2 $(NOISY_LOGGING) -D __STDC_FORMAT_MACROS
 
 ARFLAGS = crf
 
 ifeq ($(OS), Darwin)
   CPPFLAGS += -DOS_MACOSX
   ARFLAGS = cr
-else
-  COMMON_FLAGS += -fno-tree-vrp
 endif
 
 
