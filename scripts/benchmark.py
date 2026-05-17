@@ -51,13 +51,13 @@ def woff2_decompress_setup(files, base_dir):
 
 PROGRAMS = {
     "woff2": {
-        "Compression": {
+        "Compress": {
             "cpp_dir": ".",
             "bin": "woff2_compress",
             'tests': '**/*.ttf',
             "cleanup": woff2_cleanup,
         },
-        "Decompression": {
+        "Decompress": {
             "cpp_dir": ".",
             "bin": "woff2_decompress",
             'tests': '**/*.ttf',
@@ -215,7 +215,7 @@ def main():
         }
 
     table = Table(
-        title="\nRun Totals Statistics (Sum of all files per run)",
+        title="\nStatistics",
         show_header=True,
         header_style="bold",
     )
@@ -228,10 +228,9 @@ def main():
     table.add_column("StdDev", justify="right")
 
     for (prog, test, model), data in stats_map.items():
-        baseline_avg = stats_map.get((prog, test, "cpp"), {}).get("avg")
         diff_str = "-"
-
-        if model != "cpp" and baseline_avg:
+        if model != "cpp":
+            baseline_avg = stats_map.get((prog, test, "cpp"), {}).get("avg")
             percent_change = ((data["avg"] - baseline_avg) / baseline_avg) * 100
             color = "red" if percent_change > 2 else "green"
             diff_str = f"[{color}]{percent_change:+.1f}%[/{color}]"
