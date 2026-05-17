@@ -1348,18 +1348,16 @@ pub fn Append_10(dst: Ptr<Vec<u8>>, begin: Ptr<u8>, end: Ptr<u8>) {
     let begin: Value<Ptr<u8>> = Rc::new(RefCell::new(begin));
     let end: Value<Ptr<u8>> = Rc::new(RefCell::new(end));
     {
-        let mut __idx = ((*dst.borrow()).to_strong().as_pointer() as Ptr<u8>)
+        let start_idx = ((*dst.borrow()).to_strong().as_pointer() as Ptr<u8>)
             .to_end()
             .clone()
-            .get_offset() as usize;
-        let mut __a2 = (*begin.borrow()).clone();
-        while __a2 != (*end.borrow()) {
-            ((*dst.borrow()).to_strong().as_pointer() as Ptr<Vec<u8>>)
-                .with_mut(|__v: &mut Vec<u8>| __v.insert(__idx, __a2.read()));
-            __idx += 1;
-            __a2 += 1;
-        }
-        ((*dst.borrow()).to_strong().as_pointer() as Ptr<Vec<u8>>)
+            .get_offset();
+        let count = (*end.borrow()).get_offset() - (*begin.borrow()).get_offset();
+        let temp_vec: Vec<u8> = PtrValueIter::new((*begin.borrow()), count).collect();
+        ((*dst.borrow()).to_strong().as_pointer() as Ptr<Vec<u8>>).with_mut(|v: &mut Vec<u8>| {
+            v.splice(start_idx..start_idx, temp_vec);
+        });
+        ((*dst.borrow()).to_strong().as_pointer() as Ptr<Vec<u8>>) + start_idx
     };
 }
 pub fn Append_11(dst: Ptr<Vec<u8>>, begin: Ptr<u8>, length: u64) {
@@ -5355,21 +5353,15 @@ pub fn DecodeLimitedVarint_51(
 pub fn GenerateApp0Marker_52(app0_status: u8) -> Vec<u8> {
     let app0_status: Value<u8> = Rc::new(RefCell::new(app0_status));
     let app0_marker: Value<Vec<u8>> = Rc::new(RefCell::new({
-        let mut __a0 = (brunsli_AppData_0xe0.with(Value::clone).as_pointer() as Ptr<u8>).clone();
-        let mut __out = Vec::with_capacity(
-            (brunsli_AppData_0xe0.with(Value::clone).as_pointer() as Ptr<u8>)
-                .offset((17) as isize)
-                .get_offset()
-                - __a0.get_offset(),
-        );
-        while __a0
-            != (brunsli_AppData_0xe0.with(Value::clone).as_pointer() as Ptr<u8>)
-                .offset((17) as isize)
-        {
-            __out.push(__a0.read());
-            __a0 += 1;
-        }
-        __out
+        let __count = (brunsli_AppData_0xe0.with(Value::clone).as_pointer() as Ptr<u8>)
+            .offset((17) as isize)
+            .get_offset()
+            - (brunsli_AppData_0xe0.with(Value::clone).as_pointer() as Ptr<u8>).get_offset();
+        PtrValueIter::new(
+            (brunsli_AppData_0xe0.with(Value::clone).as_pointer() as Ptr<u8>),
+            __count,
+        )
+        .collect::<Vec<_>>()
     }));
     (app0_marker.as_pointer() as Ptr<u8>)
         .offset(9_u64 as isize)
@@ -5420,44 +5412,30 @@ pub fn GenerateAppMarker_53(marker: u8, code: u8) -> Vec<u8> {
     let s: Value<Vec<u8>> = Rc::new(RefCell::new(Vec::new()));
     if (((*marker.borrow()) as i32) == 128) {
         (s.as_pointer() as Ptr<Vec<u8>>).write({
-            let mut __a0 =
-                (brunsli_AppData_0xe2.with(Value::clone).as_pointer() as Ptr<u8>).clone();
-            let mut __out = Vec::with_capacity(
-                (brunsli_AppData_0xe2.with(Value::clone).as_pointer() as Ptr<u8>)
-                    .offset((3161) as isize)
-                    .get_offset()
-                    - __a0.get_offset(),
-            );
-            while __a0
-                != (brunsli_AppData_0xe2.with(Value::clone).as_pointer() as Ptr<u8>)
-                    .offset((3161) as isize)
-            {
-                __out.push(__a0.read());
-                __a0 += 1;
-            }
-            __out
+            let __count = (brunsli_AppData_0xe2.with(Value::clone).as_pointer() as Ptr<u8>)
+                .offset((3161) as isize)
+                .get_offset()
+                - (brunsli_AppData_0xe2.with(Value::clone).as_pointer() as Ptr<u8>).get_offset();
+            PtrValueIter::new(
+                (brunsli_AppData_0xe2.with(Value::clone).as_pointer() as Ptr<u8>),
+                __count,
+            )
+            .collect::<Vec<_>>()
         });
         (s.as_pointer() as Ptr<u8>)
             .offset(84_u64 as isize)
             .write((*code.borrow()));
     } else if (((*marker.borrow()) as i32) == 129) {
         (s.as_pointer() as Ptr<Vec<u8>>).write({
-            let mut __a0 =
-                (brunsli_AppData_0xec.with(Value::clone).as_pointer() as Ptr<u8>).clone();
-            let mut __out = Vec::with_capacity(
-                (brunsli_AppData_0xec.with(Value::clone).as_pointer() as Ptr<u8>)
-                    .offset((18) as isize)
-                    .get_offset()
-                    - __a0.get_offset(),
-            );
-            while __a0
-                != (brunsli_AppData_0xec.with(Value::clone).as_pointer() as Ptr<u8>)
-                    .offset((18) as isize)
-            {
-                __out.push(__a0.read());
-                __a0 += 1;
-            }
-            __out
+            let __count = (brunsli_AppData_0xec.with(Value::clone).as_pointer() as Ptr<u8>)
+                .offset((18) as isize)
+                .get_offset()
+                - (brunsli_AppData_0xec.with(Value::clone).as_pointer() as Ptr<u8>).get_offset();
+            PtrValueIter::new(
+                (brunsli_AppData_0xec.with(Value::clone).as_pointer() as Ptr<u8>),
+                __count,
+            )
+            .collect::<Vec<_>>()
         });
         (s.as_pointer() as Ptr<u8>)
             .offset(15_u64 as isize)
@@ -5475,22 +5453,15 @@ pub fn GenerateAppMarker_53(marker: u8, code: u8) -> Vec<u8> {
             'loop_: while true {}
         };
         (s.as_pointer() as Ptr<Vec<u8>>).write({
-            let mut __a0 =
-                (brunsli_AppData_0xee.with(Value::clone).as_pointer() as Ptr<u8>).clone();
-            let mut __out = Vec::with_capacity(
-                (brunsli_AppData_0xee.with(Value::clone).as_pointer() as Ptr<u8>)
-                    .offset((15) as isize)
-                    .get_offset()
-                    - __a0.get_offset(),
-            );
-            while __a0
-                != (brunsli_AppData_0xee.with(Value::clone).as_pointer() as Ptr<u8>)
-                    .offset((15) as isize)
-            {
-                __out.push(__a0.read());
-                __a0 += 1;
-            }
-            __out
+            let __count = (brunsli_AppData_0xee.with(Value::clone).as_pointer() as Ptr<u8>)
+                .offset((15) as isize)
+                .get_offset()
+                - (brunsli_AppData_0xee.with(Value::clone).as_pointer() as Ptr<u8>).get_offset();
+            PtrValueIter::new(
+                (brunsli_AppData_0xee.with(Value::clone).as_pointer() as Ptr<u8>),
+                __count,
+            )
+            .collect::<Vec<_>>()
         });
         (s.as_pointer() as Ptr<u8>)
             .offset(10_u64 as isize)
@@ -5692,25 +5663,21 @@ pub fn ProcessMetaData_54(
                     (*dest.borrow()).to_strong().as_pointer().with_mut(
                         |__v: &mut Vec<Value<Vec<u8>>>| {
                             __v.push(Rc::new(RefCell::new({
-                                let mut __a0 = (head.as_pointer() as Ptr<u8>).clone();
-                                let mut __out = Vec::with_capacity(
-                                    (head.as_pointer() as Ptr<u8>)
-                                        .offset((3) as isize)
-                                        .get_offset()
-                                        - __a0.get_offset(),
-                                );
-                                while __a0 != (head.as_pointer() as Ptr<u8>).offset((3) as isize) {
-                                    __out.push(u8::try_from(__a0.read()).ok().unwrap());
-                                    __a0 += 1;
-                                }
-                                __out
+                                let __count = (head.as_pointer() as Ptr<u8>)
+                                    .offset((3) as isize)
+                                    .get_offset()
+                                    - (head.as_pointer() as Ptr<u8>).get_offset();
+                                PtrValueIter::new((head.as_pointer() as Ptr<u8>).clone(), __count)
+                                    .map(|item| u8::try_from(item).ok().unwrap())
+                                    .collect::<Vec<_>>()
                             })))
                         },
                     );
                     (*(*(*state.borrow()).upgrade().deref())
                         .multibyte_sink
-                        .borrow_mut()) =
-                        ((*dest.borrow())[(*dest.borrow()).len() - 1].as_pointer());
+                        .borrow_mut()) = ((*(*dest.borrow()).upgrade().deref())
+                        [(*(*dest.borrow()).upgrade().deref()).len() - 1]
+                        .as_pointer());
                     let __rhs = (if ((*(*(*state.borrow()).upgrade().deref())
                         .remaining_multibyte_length
                         .borrow())
@@ -6006,53 +5973,39 @@ pub fn DecodeHuffmanCode_55(
                                 .borrow())
                             {
                                 {
-                                    let mut __a0 =
-                                        (brunsli_kDefaultDCValues.with(Value::clone).as_pointer()
+                                    let __count = (brunsli_kDefaultDCValues
+                                        .with(Value::clone)
+                                        .as_pointer()
+                                        as Ptr<u8>)
+                                        .to_end()
+                                        .get_offset()
+                                        - (brunsli_kDefaultDCValues.with(Value::clone).as_pointer()
                                             as Ptr<u8>)
-                                            .clone();
-                                    let mut __out = Vec::with_capacity(
-                                        brunsli_kDefaultDCValues
-                                            .with(Value::clone)
-                                            .as_pointer()
-                                            .to_end()
-                                            .get_offset()
-                                            - __a0.get_offset(),
-                                    );
-                                    while __a0
-                                        != brunsli_kDefaultDCValues
-                                            .with(Value::clone)
-                                            .as_pointer()
-                                            .to_end()
-                                    {
-                                        __out.push(__a0.read());
-                                        __a0 += 1;
-                                    }
-                                    __out
+                                            .get_offset();
+                                    PtrValueIter::new(
+                                        (brunsli_kDefaultDCValues.with(Value::clone).as_pointer()
+                                            as Ptr<u8>),
+                                        __count,
+                                    )
+                                    .collect::<Vec<_>>()
                                 }
                             } else {
                                 {
-                                    let mut __a0 =
-                                        (brunsli_kDefaultACValues.with(Value::clone).as_pointer()
+                                    let __count = (brunsli_kDefaultACValues
+                                        .with(Value::clone)
+                                        .as_pointer()
+                                        as Ptr<u8>)
+                                        .to_end()
+                                        .get_offset()
+                                        - (brunsli_kDefaultACValues.with(Value::clone).as_pointer()
                                             as Ptr<u8>)
-                                            .clone();
-                                    let mut __out = Vec::with_capacity(
-                                        brunsli_kDefaultACValues
-                                            .with(Value::clone)
-                                            .as_pointer()
-                                            .to_end()
-                                            .get_offset()
-                                            - __a0.get_offset(),
-                                    );
-                                    while __a0
-                                        != brunsli_kDefaultACValues
-                                            .with(Value::clone)
-                                            .as_pointer()
-                                            .to_end()
-                                    {
-                                        __out.push(__a0.read());
-                                        __a0 += 1;
-                                    }
-                                    __out
+                                            .get_offset();
+                                    PtrValueIter::new(
+                                        (brunsli_kDefaultACValues.with(Value::clone).as_pointer()
+                                            as Ptr<u8>),
+                                        __count,
+                                    )
+                                    .collect::<Vec<_>>()
                                 }
                             };
                             (*(*js.upgrade().deref()).p.borrow()).Init(_values)
@@ -10834,17 +10787,20 @@ pub fn DecodeOriginalJpg_95(
                         .read()),
                     ));
                     {
-                        let mut __idx = ((*fs.upgrade().deref()).storage.as_pointer() as Ptr<u8>)
+                        let start_idx = ((*fs.upgrade().deref()).storage.as_pointer() as Ptr<u8>)
                             .to_end()
-                            .get_offset() as usize;
-                        let mut __a2 = (*src.borrow()).clone();
-                        while __a2 != (*src.borrow()).offset((*to_copy.borrow()) as isize) {
-                            ((*fs.upgrade().deref()).storage.as_pointer() as Ptr<Vec<u8>>)
-                                .with_mut(|__v: &mut Vec<u8>| __v.insert(__idx, __a2.read()));
-                            __idx += 1;
-                            __a2 += 1;
-                        }
-                        ((*fs.upgrade().deref()).storage.as_pointer() as Ptr<Vec<u8>>)
+                            .get_offset();
+                        let count = (*src.borrow())
+                            .offset((*to_copy.borrow()) as isize)
+                            .get_offset()
+                            - (*src.borrow()).get_offset();
+                        let temp_vec: Vec<u8> = PtrValueIter::new((*src.borrow()), count).collect();
+                        ((*fs.upgrade().deref()).storage.as_pointer() as Ptr<Vec<u8>>).with_mut(
+                            |v: &mut Vec<u8>| {
+                                v.splice(start_idx..start_idx, temp_vec);
+                            },
+                        );
+                        ((*fs.upgrade().deref()).storage.as_pointer() as Ptr<Vec<u8>>) + start_idx
                     };
                     ({
                         let _state: Ptr<brunsli_internal_dec_State> = (*state.borrow()).clone();
@@ -12650,7 +12606,7 @@ pub fn ReadHistogram_92(
         while __a0 != ((*counts.borrow()).to_strong().as_pointer() as Ptr<u32>).to_end() {
             let v = 0.clone();
             __a0.write(v);
-            __a0.postfix_inc();
+            __a0 += 1;
         }
     };
     let histogram: Value<Ptr<u32>> = Rc::new(RefCell::new(
@@ -13543,21 +13499,16 @@ impl brunsli_HuffmanDecodingData {
             }),
         ));
         (self.table_.as_pointer() as Ptr<Vec<brunsli_HuffmanCode>>).write({
-            let mut __a0 = ({ (*(*arena.borrow()).upgrade().deref()).data() }).clone();
-            let mut __out = Vec::with_capacity(
-                ({ (*(*arena.borrow()).upgrade().deref()).data() })
-                    .offset((*table_size.borrow()) as isize)
-                    .get_offset()
-                    - __a0.get_offset(),
-            );
-            while __a0
-                != ({ (*(*arena.borrow()).upgrade().deref()).data() })
-                    .offset((*table_size.borrow()) as isize)
-            {
-                __out.push(brunsli_HuffmanCode::try_from(__a0.read()).ok().unwrap());
-                __a0 += 1;
-            }
-            __out
+            let __count = ({ (*(*arena.borrow()).upgrade().deref()).data() })
+                .offset((*table_size.borrow()) as isize)
+                .get_offset()
+                - ({ (*(*arena.borrow()).upgrade().deref()).data() }).get_offset();
+            PtrValueIter::new(
+                ({ (*(*arena.borrow()).upgrade().deref()).data() }).clone(),
+                __count,
+            )
+            .map(|item| brunsli_HuffmanCode::try_from(item).ok().unwrap())
+            .collect::<Vec<_>>()
         });
         return ((*table_size.borrow()) > 0_u32);
     }

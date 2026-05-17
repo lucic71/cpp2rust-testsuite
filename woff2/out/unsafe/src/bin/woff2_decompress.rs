@@ -8,205 +8,207 @@ use std::os::fd::{AsFd, FromRawFd, IntoRawFd};
 use std::rc::Rc;
 
 // table_tags.rs
-pub static mut woff2_kGlyfTableTag: u32 = 1735162214_u32;
-pub static mut woff2_kHeadTableTag: u32 = 1751474532_u32;
-pub static mut woff2_kLocaTableTag: u32 = 1819239265_u32;
-pub static mut woff2_kDsigTableTag: u32 = 1146308935_u32;
-pub static mut woff2_kCffTableTag: u32 = 1128678944_u32;
-pub static mut woff2_kHmtxTableTag: u32 = 1752003704_u32;
-pub static mut woff2_kHheaTableTag: u32 = 1751672161_u32;
-pub static mut woff2_kMaxpTableTag: u32 = 1835104368_u32;
-pub static mut woff2_kKnownTags: [u32; 63] = [
-    ((((((('c' as u8) as i32) << (24)) | ((('m' as u8) as i32) << (16)))
-        | ((('a' as u8) as i32) << (8)))
-        | (('p' as u8) as i32)) as u32),
-    ((((((('h' as u8) as i32) << (24)) | ((('e' as u8) as i32) << (16)))
-        | ((('a' as u8) as i32) << (8)))
-        | (('d' as u8) as i32)) as u32),
-    ((((((('h' as u8) as i32) << (24)) | ((('h' as u8) as i32) << (16)))
-        | ((('e' as u8) as i32) << (8)))
-        | (('a' as u8) as i32)) as u32),
-    ((((((('h' as u8) as i32) << (24)) | ((('m' as u8) as i32) << (16)))
-        | ((('t' as u8) as i32) << (8)))
-        | (('x' as u8) as i32)) as u32),
-    ((((((('m' as u8) as i32) << (24)) | ((('a' as u8) as i32) << (16)))
-        | ((('x' as u8) as i32) << (8)))
-        | (('p' as u8) as i32)) as u32),
-    ((((((('n' as u8) as i32) << (24)) | ((('a' as u8) as i32) << (16)))
-        | ((('m' as u8) as i32) << (8)))
-        | (('e' as u8) as i32)) as u32),
-    ((((((('O' as u8) as i32) << (24)) | ((('S' as u8) as i32) << (16)))
-        | ((('/' as u8) as i32) << (8)))
-        | (('2' as u8) as i32)) as u32),
-    ((((((('p' as u8) as i32) << (24)) | ((('o' as u8) as i32) << (16)))
-        | ((('s' as u8) as i32) << (8)))
-        | (('t' as u8) as i32)) as u32),
-    ((((((('c' as u8) as i32) << (24)) | ((('v' as u8) as i32) << (16)))
-        | ((('t' as u8) as i32) << (8)))
-        | ((' ' as u8) as i32)) as u32),
-    ((((((('f' as u8) as i32) << (24)) | ((('p' as u8) as i32) << (16)))
-        | ((('g' as u8) as i32) << (8)))
-        | (('m' as u8) as i32)) as u32),
-    ((((((('g' as u8) as i32) << (24)) | ((('l' as u8) as i32) << (16)))
-        | ((('y' as u8) as i32) << (8)))
-        | (('f' as u8) as i32)) as u32),
-    ((((((('l' as u8) as i32) << (24)) | ((('o' as u8) as i32) << (16)))
-        | ((('c' as u8) as i32) << (8)))
-        | (('a' as u8) as i32)) as u32),
-    ((((((('p' as u8) as i32) << (24)) | ((('r' as u8) as i32) << (16)))
-        | ((('e' as u8) as i32) << (8)))
-        | (('p' as u8) as i32)) as u32),
-    ((((((('C' as u8) as i32) << (24)) | ((('F' as u8) as i32) << (16)))
-        | ((('F' as u8) as i32) << (8)))
-        | ((' ' as u8) as i32)) as u32),
-    ((((((('V' as u8) as i32) << (24)) | ((('O' as u8) as i32) << (16)))
-        | ((('R' as u8) as i32) << (8)))
-        | (('G' as u8) as i32)) as u32),
-    ((((((('E' as u8) as i32) << (24)) | ((('B' as u8) as i32) << (16)))
-        | ((('D' as u8) as i32) << (8)))
-        | (('T' as u8) as i32)) as u32),
-    ((((((('E' as u8) as i32) << (24)) | ((('B' as u8) as i32) << (16)))
-        | ((('L' as u8) as i32) << (8)))
-        | (('C' as u8) as i32)) as u32),
-    ((((((('g' as u8) as i32) << (24)) | ((('a' as u8) as i32) << (16)))
-        | ((('s' as u8) as i32) << (8)))
-        | (('p' as u8) as i32)) as u32),
-    ((((((('h' as u8) as i32) << (24)) | ((('d' as u8) as i32) << (16)))
-        | ((('m' as u8) as i32) << (8)))
-        | (('x' as u8) as i32)) as u32),
-    ((((((('k' as u8) as i32) << (24)) | ((('e' as u8) as i32) << (16)))
-        | ((('r' as u8) as i32) << (8)))
-        | (('n' as u8) as i32)) as u32),
-    ((((((('L' as u8) as i32) << (24)) | ((('T' as u8) as i32) << (16)))
-        | ((('S' as u8) as i32) << (8)))
-        | (('H' as u8) as i32)) as u32),
-    ((((((('P' as u8) as i32) << (24)) | ((('C' as u8) as i32) << (16)))
-        | ((('L' as u8) as i32) << (8)))
-        | (('T' as u8) as i32)) as u32),
-    ((((((('V' as u8) as i32) << (24)) | ((('D' as u8) as i32) << (16)))
-        | ((('M' as u8) as i32) << (8)))
-        | (('X' as u8) as i32)) as u32),
-    ((((((('v' as u8) as i32) << (24)) | ((('h' as u8) as i32) << (16)))
-        | ((('e' as u8) as i32) << (8)))
-        | (('a' as u8) as i32)) as u32),
-    ((((((('v' as u8) as i32) << (24)) | ((('m' as u8) as i32) << (16)))
-        | ((('t' as u8) as i32) << (8)))
-        | (('x' as u8) as i32)) as u32),
-    ((((((('B' as u8) as i32) << (24)) | ((('A' as u8) as i32) << (16)))
-        | ((('S' as u8) as i32) << (8)))
-        | (('E' as u8) as i32)) as u32),
-    ((((((('G' as u8) as i32) << (24)) | ((('D' as u8) as i32) << (16)))
-        | ((('E' as u8) as i32) << (8)))
-        | (('F' as u8) as i32)) as u32),
-    ((((((('G' as u8) as i32) << (24)) | ((('P' as u8) as i32) << (16)))
-        | ((('O' as u8) as i32) << (8)))
-        | (('S' as u8) as i32)) as u32),
-    ((((((('G' as u8) as i32) << (24)) | ((('S' as u8) as i32) << (16)))
-        | ((('U' as u8) as i32) << (8)))
-        | (('B' as u8) as i32)) as u32),
-    ((((((('E' as u8) as i32) << (24)) | ((('B' as u8) as i32) << (16)))
-        | ((('S' as u8) as i32) << (8)))
-        | (('C' as u8) as i32)) as u32),
-    ((((((('J' as u8) as i32) << (24)) | ((('S' as u8) as i32) << (16)))
-        | ((('T' as u8) as i32) << (8)))
-        | (('F' as u8) as i32)) as u32),
-    ((((((('M' as u8) as i32) << (24)) | ((('A' as u8) as i32) << (16)))
-        | ((('T' as u8) as i32) << (8)))
-        | (('H' as u8) as i32)) as u32),
-    ((((((('C' as u8) as i32) << (24)) | ((('B' as u8) as i32) << (16)))
-        | ((('D' as u8) as i32) << (8)))
-        | (('T' as u8) as i32)) as u32),
-    ((((((('C' as u8) as i32) << (24)) | ((('B' as u8) as i32) << (16)))
-        | ((('L' as u8) as i32) << (8)))
-        | (('C' as u8) as i32)) as u32),
-    ((((((('C' as u8) as i32) << (24)) | ((('O' as u8) as i32) << (16)))
-        | ((('L' as u8) as i32) << (8)))
-        | (('R' as u8) as i32)) as u32),
-    ((((((('C' as u8) as i32) << (24)) | ((('P' as u8) as i32) << (16)))
-        | ((('A' as u8) as i32) << (8)))
-        | (('L' as u8) as i32)) as u32),
-    ((((((('S' as u8) as i32) << (24)) | ((('V' as u8) as i32) << (16)))
-        | ((('G' as u8) as i32) << (8)))
-        | ((' ' as u8) as i32)) as u32),
-    ((((((('s' as u8) as i32) << (24)) | ((('b' as u8) as i32) << (16)))
-        | ((('i' as u8) as i32) << (8)))
-        | (('x' as u8) as i32)) as u32),
-    ((((((('a' as u8) as i32) << (24)) | ((('c' as u8) as i32) << (16)))
-        | ((('n' as u8) as i32) << (8)))
-        | (('t' as u8) as i32)) as u32),
-    ((((((('a' as u8) as i32) << (24)) | ((('v' as u8) as i32) << (16)))
-        | ((('a' as u8) as i32) << (8)))
-        | (('r' as u8) as i32)) as u32),
-    ((((((('b' as u8) as i32) << (24)) | ((('d' as u8) as i32) << (16)))
-        | ((('a' as u8) as i32) << (8)))
-        | (('t' as u8) as i32)) as u32),
-    ((((((('b' as u8) as i32) << (24)) | ((('l' as u8) as i32) << (16)))
-        | ((('o' as u8) as i32) << (8)))
-        | (('c' as u8) as i32)) as u32),
-    ((((((('b' as u8) as i32) << (24)) | ((('s' as u8) as i32) << (16)))
-        | ((('l' as u8) as i32) << (8)))
-        | (('n' as u8) as i32)) as u32),
-    ((((((('c' as u8) as i32) << (24)) | ((('v' as u8) as i32) << (16)))
-        | ((('a' as u8) as i32) << (8)))
-        | (('r' as u8) as i32)) as u32),
-    ((((((('f' as u8) as i32) << (24)) | ((('d' as u8) as i32) << (16)))
-        | ((('s' as u8) as i32) << (8)))
-        | (('c' as u8) as i32)) as u32),
-    ((((((('f' as u8) as i32) << (24)) | ((('e' as u8) as i32) << (16)))
-        | ((('a' as u8) as i32) << (8)))
-        | (('t' as u8) as i32)) as u32),
-    ((((((('f' as u8) as i32) << (24)) | ((('m' as u8) as i32) << (16)))
-        | ((('t' as u8) as i32) << (8)))
-        | (('x' as u8) as i32)) as u32),
-    ((((((('f' as u8) as i32) << (24)) | ((('v' as u8) as i32) << (16)))
-        | ((('a' as u8) as i32) << (8)))
-        | (('r' as u8) as i32)) as u32),
-    ((((((('g' as u8) as i32) << (24)) | ((('v' as u8) as i32) << (16)))
-        | ((('a' as u8) as i32) << (8)))
-        | (('r' as u8) as i32)) as u32),
-    ((((((('h' as u8) as i32) << (24)) | ((('s' as u8) as i32) << (16)))
-        | ((('t' as u8) as i32) << (8)))
-        | (('y' as u8) as i32)) as u32),
-    ((((((('j' as u8) as i32) << (24)) | ((('u' as u8) as i32) << (16)))
-        | ((('s' as u8) as i32) << (8)))
-        | (('t' as u8) as i32)) as u32),
-    ((((((('l' as u8) as i32) << (24)) | ((('c' as u8) as i32) << (16)))
-        | ((('a' as u8) as i32) << (8)))
-        | (('r' as u8) as i32)) as u32),
-    ((((((('m' as u8) as i32) << (24)) | ((('o' as u8) as i32) << (16)))
-        | ((('r' as u8) as i32) << (8)))
-        | (('t' as u8) as i32)) as u32),
-    ((((((('m' as u8) as i32) << (24)) | ((('o' as u8) as i32) << (16)))
-        | ((('r' as u8) as i32) << (8)))
-        | (('x' as u8) as i32)) as u32),
-    ((((((('o' as u8) as i32) << (24)) | ((('p' as u8) as i32) << (16)))
-        | ((('b' as u8) as i32) << (8)))
-        | (('d' as u8) as i32)) as u32),
-    ((((((('p' as u8) as i32) << (24)) | ((('r' as u8) as i32) << (16)))
-        | ((('o' as u8) as i32) << (8)))
-        | (('p' as u8) as i32)) as u32),
-    ((((((('t' as u8) as i32) << (24)) | ((('r' as u8) as i32) << (16)))
-        | ((('a' as u8) as i32) << (8)))
-        | (('k' as u8) as i32)) as u32),
-    ((((((('Z' as u8) as i32) << (24)) | ((('a' as u8) as i32) << (16)))
-        | ((('p' as u8) as i32) << (8)))
-        | (('f' as u8) as i32)) as u32),
-    ((((((('S' as u8) as i32) << (24)) | ((('i' as u8) as i32) << (16)))
-        | ((('l' as u8) as i32) << (8)))
-        | (('f' as u8) as i32)) as u32),
-    ((((((('G' as u8) as i32) << (24)) | ((('l' as u8) as i32) << (16)))
-        | ((('a' as u8) as i32) << (8)))
-        | (('t' as u8) as i32)) as u32),
-    ((((((('G' as u8) as i32) << (24)) | ((('l' as u8) as i32) << (16)))
-        | ((('o' as u8) as i32) << (8)))
-        | (('c' as u8) as i32)) as u32),
-    ((((((('F' as u8) as i32) << (24)) | ((('e' as u8) as i32) << (16)))
-        | ((('a' as u8) as i32) << (8)))
-        | (('t' as u8) as i32)) as u32),
-    ((((((('S' as u8) as i32) << (24)) | ((('i' as u8) as i32) << (16)))
-        | ((('l' as u8) as i32) << (8)))
-        | (('l' as u8) as i32)) as u32),
-];
+pub static mut woff2_kGlyfTableTag: u32 = unsafe { 1735162214_u32 };
+pub static mut woff2_kHeadTableTag: u32 = unsafe { 1751474532_u32 };
+pub static mut woff2_kLocaTableTag: u32 = unsafe { 1819239265_u32 };
+pub static mut woff2_kDsigTableTag: u32 = unsafe { 1146308935_u32 };
+pub static mut woff2_kCffTableTag: u32 = unsafe { 1128678944_u32 };
+pub static mut woff2_kHmtxTableTag: u32 = unsafe { 1752003704_u32 };
+pub static mut woff2_kHheaTableTag: u32 = unsafe { 1751672161_u32 };
+pub static mut woff2_kMaxpTableTag: u32 = unsafe { 1835104368_u32 };
+pub static mut woff2_kKnownTags: [u32; 63] = unsafe {
+    [
+        ((((((('c' as u8) as i32) << (24)) | ((('m' as u8) as i32) << (16)))
+            | ((('a' as u8) as i32) << (8)))
+            | (('p' as u8) as i32)) as u32),
+        ((((((('h' as u8) as i32) << (24)) | ((('e' as u8) as i32) << (16)))
+            | ((('a' as u8) as i32) << (8)))
+            | (('d' as u8) as i32)) as u32),
+        ((((((('h' as u8) as i32) << (24)) | ((('h' as u8) as i32) << (16)))
+            | ((('e' as u8) as i32) << (8)))
+            | (('a' as u8) as i32)) as u32),
+        ((((((('h' as u8) as i32) << (24)) | ((('m' as u8) as i32) << (16)))
+            | ((('t' as u8) as i32) << (8)))
+            | (('x' as u8) as i32)) as u32),
+        ((((((('m' as u8) as i32) << (24)) | ((('a' as u8) as i32) << (16)))
+            | ((('x' as u8) as i32) << (8)))
+            | (('p' as u8) as i32)) as u32),
+        ((((((('n' as u8) as i32) << (24)) | ((('a' as u8) as i32) << (16)))
+            | ((('m' as u8) as i32) << (8)))
+            | (('e' as u8) as i32)) as u32),
+        ((((((('O' as u8) as i32) << (24)) | ((('S' as u8) as i32) << (16)))
+            | ((('/' as u8) as i32) << (8)))
+            | (('2' as u8) as i32)) as u32),
+        ((((((('p' as u8) as i32) << (24)) | ((('o' as u8) as i32) << (16)))
+            | ((('s' as u8) as i32) << (8)))
+            | (('t' as u8) as i32)) as u32),
+        ((((((('c' as u8) as i32) << (24)) | ((('v' as u8) as i32) << (16)))
+            | ((('t' as u8) as i32) << (8)))
+            | ((' ' as u8) as i32)) as u32),
+        ((((((('f' as u8) as i32) << (24)) | ((('p' as u8) as i32) << (16)))
+            | ((('g' as u8) as i32) << (8)))
+            | (('m' as u8) as i32)) as u32),
+        ((((((('g' as u8) as i32) << (24)) | ((('l' as u8) as i32) << (16)))
+            | ((('y' as u8) as i32) << (8)))
+            | (('f' as u8) as i32)) as u32),
+        ((((((('l' as u8) as i32) << (24)) | ((('o' as u8) as i32) << (16)))
+            | ((('c' as u8) as i32) << (8)))
+            | (('a' as u8) as i32)) as u32),
+        ((((((('p' as u8) as i32) << (24)) | ((('r' as u8) as i32) << (16)))
+            | ((('e' as u8) as i32) << (8)))
+            | (('p' as u8) as i32)) as u32),
+        ((((((('C' as u8) as i32) << (24)) | ((('F' as u8) as i32) << (16)))
+            | ((('F' as u8) as i32) << (8)))
+            | ((' ' as u8) as i32)) as u32),
+        ((((((('V' as u8) as i32) << (24)) | ((('O' as u8) as i32) << (16)))
+            | ((('R' as u8) as i32) << (8)))
+            | (('G' as u8) as i32)) as u32),
+        ((((((('E' as u8) as i32) << (24)) | ((('B' as u8) as i32) << (16)))
+            | ((('D' as u8) as i32) << (8)))
+            | (('T' as u8) as i32)) as u32),
+        ((((((('E' as u8) as i32) << (24)) | ((('B' as u8) as i32) << (16)))
+            | ((('L' as u8) as i32) << (8)))
+            | (('C' as u8) as i32)) as u32),
+        ((((((('g' as u8) as i32) << (24)) | ((('a' as u8) as i32) << (16)))
+            | ((('s' as u8) as i32) << (8)))
+            | (('p' as u8) as i32)) as u32),
+        ((((((('h' as u8) as i32) << (24)) | ((('d' as u8) as i32) << (16)))
+            | ((('m' as u8) as i32) << (8)))
+            | (('x' as u8) as i32)) as u32),
+        ((((((('k' as u8) as i32) << (24)) | ((('e' as u8) as i32) << (16)))
+            | ((('r' as u8) as i32) << (8)))
+            | (('n' as u8) as i32)) as u32),
+        ((((((('L' as u8) as i32) << (24)) | ((('T' as u8) as i32) << (16)))
+            | ((('S' as u8) as i32) << (8)))
+            | (('H' as u8) as i32)) as u32),
+        ((((((('P' as u8) as i32) << (24)) | ((('C' as u8) as i32) << (16)))
+            | ((('L' as u8) as i32) << (8)))
+            | (('T' as u8) as i32)) as u32),
+        ((((((('V' as u8) as i32) << (24)) | ((('D' as u8) as i32) << (16)))
+            | ((('M' as u8) as i32) << (8)))
+            | (('X' as u8) as i32)) as u32),
+        ((((((('v' as u8) as i32) << (24)) | ((('h' as u8) as i32) << (16)))
+            | ((('e' as u8) as i32) << (8)))
+            | (('a' as u8) as i32)) as u32),
+        ((((((('v' as u8) as i32) << (24)) | ((('m' as u8) as i32) << (16)))
+            | ((('t' as u8) as i32) << (8)))
+            | (('x' as u8) as i32)) as u32),
+        ((((((('B' as u8) as i32) << (24)) | ((('A' as u8) as i32) << (16)))
+            | ((('S' as u8) as i32) << (8)))
+            | (('E' as u8) as i32)) as u32),
+        ((((((('G' as u8) as i32) << (24)) | ((('D' as u8) as i32) << (16)))
+            | ((('E' as u8) as i32) << (8)))
+            | (('F' as u8) as i32)) as u32),
+        ((((((('G' as u8) as i32) << (24)) | ((('P' as u8) as i32) << (16)))
+            | ((('O' as u8) as i32) << (8)))
+            | (('S' as u8) as i32)) as u32),
+        ((((((('G' as u8) as i32) << (24)) | ((('S' as u8) as i32) << (16)))
+            | ((('U' as u8) as i32) << (8)))
+            | (('B' as u8) as i32)) as u32),
+        ((((((('E' as u8) as i32) << (24)) | ((('B' as u8) as i32) << (16)))
+            | ((('S' as u8) as i32) << (8)))
+            | (('C' as u8) as i32)) as u32),
+        ((((((('J' as u8) as i32) << (24)) | ((('S' as u8) as i32) << (16)))
+            | ((('T' as u8) as i32) << (8)))
+            | (('F' as u8) as i32)) as u32),
+        ((((((('M' as u8) as i32) << (24)) | ((('A' as u8) as i32) << (16)))
+            | ((('T' as u8) as i32) << (8)))
+            | (('H' as u8) as i32)) as u32),
+        ((((((('C' as u8) as i32) << (24)) | ((('B' as u8) as i32) << (16)))
+            | ((('D' as u8) as i32) << (8)))
+            | (('T' as u8) as i32)) as u32),
+        ((((((('C' as u8) as i32) << (24)) | ((('B' as u8) as i32) << (16)))
+            | ((('L' as u8) as i32) << (8)))
+            | (('C' as u8) as i32)) as u32),
+        ((((((('C' as u8) as i32) << (24)) | ((('O' as u8) as i32) << (16)))
+            | ((('L' as u8) as i32) << (8)))
+            | (('R' as u8) as i32)) as u32),
+        ((((((('C' as u8) as i32) << (24)) | ((('P' as u8) as i32) << (16)))
+            | ((('A' as u8) as i32) << (8)))
+            | (('L' as u8) as i32)) as u32),
+        ((((((('S' as u8) as i32) << (24)) | ((('V' as u8) as i32) << (16)))
+            | ((('G' as u8) as i32) << (8)))
+            | ((' ' as u8) as i32)) as u32),
+        ((((((('s' as u8) as i32) << (24)) | ((('b' as u8) as i32) << (16)))
+            | ((('i' as u8) as i32) << (8)))
+            | (('x' as u8) as i32)) as u32),
+        ((((((('a' as u8) as i32) << (24)) | ((('c' as u8) as i32) << (16)))
+            | ((('n' as u8) as i32) << (8)))
+            | (('t' as u8) as i32)) as u32),
+        ((((((('a' as u8) as i32) << (24)) | ((('v' as u8) as i32) << (16)))
+            | ((('a' as u8) as i32) << (8)))
+            | (('r' as u8) as i32)) as u32),
+        ((((((('b' as u8) as i32) << (24)) | ((('d' as u8) as i32) << (16)))
+            | ((('a' as u8) as i32) << (8)))
+            | (('t' as u8) as i32)) as u32),
+        ((((((('b' as u8) as i32) << (24)) | ((('l' as u8) as i32) << (16)))
+            | ((('o' as u8) as i32) << (8)))
+            | (('c' as u8) as i32)) as u32),
+        ((((((('b' as u8) as i32) << (24)) | ((('s' as u8) as i32) << (16)))
+            | ((('l' as u8) as i32) << (8)))
+            | (('n' as u8) as i32)) as u32),
+        ((((((('c' as u8) as i32) << (24)) | ((('v' as u8) as i32) << (16)))
+            | ((('a' as u8) as i32) << (8)))
+            | (('r' as u8) as i32)) as u32),
+        ((((((('f' as u8) as i32) << (24)) | ((('d' as u8) as i32) << (16)))
+            | ((('s' as u8) as i32) << (8)))
+            | (('c' as u8) as i32)) as u32),
+        ((((((('f' as u8) as i32) << (24)) | ((('e' as u8) as i32) << (16)))
+            | ((('a' as u8) as i32) << (8)))
+            | (('t' as u8) as i32)) as u32),
+        ((((((('f' as u8) as i32) << (24)) | ((('m' as u8) as i32) << (16)))
+            | ((('t' as u8) as i32) << (8)))
+            | (('x' as u8) as i32)) as u32),
+        ((((((('f' as u8) as i32) << (24)) | ((('v' as u8) as i32) << (16)))
+            | ((('a' as u8) as i32) << (8)))
+            | (('r' as u8) as i32)) as u32),
+        ((((((('g' as u8) as i32) << (24)) | ((('v' as u8) as i32) << (16)))
+            | ((('a' as u8) as i32) << (8)))
+            | (('r' as u8) as i32)) as u32),
+        ((((((('h' as u8) as i32) << (24)) | ((('s' as u8) as i32) << (16)))
+            | ((('t' as u8) as i32) << (8)))
+            | (('y' as u8) as i32)) as u32),
+        ((((((('j' as u8) as i32) << (24)) | ((('u' as u8) as i32) << (16)))
+            | ((('s' as u8) as i32) << (8)))
+            | (('t' as u8) as i32)) as u32),
+        ((((((('l' as u8) as i32) << (24)) | ((('c' as u8) as i32) << (16)))
+            | ((('a' as u8) as i32) << (8)))
+            | (('r' as u8) as i32)) as u32),
+        ((((((('m' as u8) as i32) << (24)) | ((('o' as u8) as i32) << (16)))
+            | ((('r' as u8) as i32) << (8)))
+            | (('t' as u8) as i32)) as u32),
+        ((((((('m' as u8) as i32) << (24)) | ((('o' as u8) as i32) << (16)))
+            | ((('r' as u8) as i32) << (8)))
+            | (('x' as u8) as i32)) as u32),
+        ((((((('o' as u8) as i32) << (24)) | ((('p' as u8) as i32) << (16)))
+            | ((('b' as u8) as i32) << (8)))
+            | (('d' as u8) as i32)) as u32),
+        ((((((('p' as u8) as i32) << (24)) | ((('r' as u8) as i32) << (16)))
+            | ((('o' as u8) as i32) << (8)))
+            | (('p' as u8) as i32)) as u32),
+        ((((((('t' as u8) as i32) << (24)) | ((('r' as u8) as i32) << (16)))
+            | ((('a' as u8) as i32) << (8)))
+            | (('k' as u8) as i32)) as u32),
+        ((((((('Z' as u8) as i32) << (24)) | ((('a' as u8) as i32) << (16)))
+            | ((('p' as u8) as i32) << (8)))
+            | (('f' as u8) as i32)) as u32),
+        ((((((('S' as u8) as i32) << (24)) | ((('i' as u8) as i32) << (16)))
+            | ((('l' as u8) as i32) << (8)))
+            | (('f' as u8) as i32)) as u32),
+        ((((((('G' as u8) as i32) << (24)) | ((('l' as u8) as i32) << (16)))
+            | ((('a' as u8) as i32) << (8)))
+            | (('t' as u8) as i32)) as u32),
+        ((((((('G' as u8) as i32) << (24)) | ((('l' as u8) as i32) << (16)))
+            | ((('o' as u8) as i32) << (8)))
+            | (('c' as u8) as i32)) as u32),
+        ((((((('F' as u8) as i32) << (24)) | ((('e' as u8) as i32) << (16)))
+            | ((('a' as u8) as i32) << (8)))
+            | (('t' as u8) as i32)) as u32),
+        ((((((('S' as u8) as i32) << (24)) | ((('i' as u8) as i32) << (16)))
+            | ((('l' as u8) as i32) << (8)))
+            | (('l' as u8) as i32)) as u32),
+    ]
+};
 
 // variable_length.rs
 #[repr(C)]
@@ -422,10 +424,10 @@ pub unsafe fn Store255UShort_2(mut val: i32, mut offset: *mut u64, mut dst: *mut
     }
 }
 pub unsafe fn Read255UShort_3(mut buf: *mut woff2_Buffer, mut value: *mut u32) -> bool {
-    static mut kWordCode: i32 = 253;;
-    static mut kOneMoreByteCode2: i32 = 254;;
-    static mut kOneMoreByteCode1: i32 = 255;;
-    static mut kLowestUCode: i32 = 253;;
+    static mut kWordCode: i32 = unsafe { 253 };;
+    static mut kOneMoreByteCode2: i32 = unsafe { 254 };;
+    static mut kOneMoreByteCode1: i32 = unsafe { 255 };;
+    static mut kLowestUCode: i32 = unsafe { 253 };;
     let mut code: u8 = 0_u8;
     if !(unsafe {
         let _value: *mut u8 = (&mut code as *mut u8);
@@ -521,11 +523,11 @@ pub unsafe fn StoreBase128_6(mut len: u64, mut offset: *mut u64, mut dst: *mut u
     }
 }
 // woff2_common.rs
-pub static mut woff2_kWoff2Signature: u32 = 2001684018_u32;
-pub static mut woff2_kWoff2FlagsTransform: u32 = (((1) << (8)) as u32);
-pub static mut woff2_kTtcFontFlavor: u32 = 1953784678_u32;
-pub static mut woff2_kSfntHeaderSize: u64 = 12_u64;
-pub static mut woff2_kSfntEntrySize: u64 = 16_u64;
+pub static mut woff2_kWoff2Signature: u32 = unsafe { 2001684018_u32 };
+pub static mut woff2_kWoff2FlagsTransform: u32 = unsafe { (((1) << (8)) as u32) };
+pub static mut woff2_kTtcFontFlavor: u32 = unsafe { 1953784678_u32 };
+pub static mut woff2_kSfntHeaderSize: u64 = unsafe { 12_u64 };
+pub static mut woff2_kSfntEntrySize: u64 = unsafe { 16_u64 };
 #[repr(C)]
 #[derive(Copy, Clone, Default)]
 pub struct woff2_Point {
@@ -619,7 +621,7 @@ pub unsafe fn CollectionHeaderSize_9(mut header_version: u32, mut num_fonts: u32
     return size;
 }
 // woff2_dec.rs
-pub static mut woff2_kDefaultMaxSize: u64 = ((((128) * (1024)) * (1024)) as u64);
+pub static mut woff2_kDefaultMaxSize: u64 = unsafe { ((((128) * (1024)) * (1024)) as u64) };
 pub unsafe trait woff2_WOFF2Out {
     unsafe fn Write_pconstlibcc_void_u64(&mut self, buf: *const ::libc::c_void, n: u64) -> bool;
     unsafe fn Write_pconstlibcc_void_u64_u64(
@@ -683,25 +685,25 @@ pub unsafe fn StoreBytes_16(
     };
     (*offset) = (*offset).wrapping_add(len);
 }
-pub static mut woff2_kGlyfOnCurve: i32 = ((1) << (0));
-pub static mut woff2_kGlyfXShort: i32 = ((1) << (1));
-pub static mut woff2_kGlyfYShort: i32 = ((1) << (2));
-pub static mut woff2_kGlyfRepeat: i32 = ((1) << (3));
-pub static mut woff2_kGlyfThisXIsSame: i32 = ((1) << (4));
-pub static mut woff2_kGlyfThisYIsSame: i32 = ((1) << (5));
-pub static mut woff2_kOverlapSimple: i32 = ((1) << (6));
-pub static mut woff2_FLAG_ARG_1_AND_2_ARE_WORDS: i32 = ((1) << (0));
-pub static mut woff2_FLAG_WE_HAVE_A_SCALE: i32 = ((1) << (3));
-pub static mut woff2_FLAG_MORE_COMPONENTS: i32 = ((1) << (5));
-pub static mut woff2_FLAG_WE_HAVE_AN_X_AND_Y_SCALE: i32 = ((1) << (6));
-pub static mut woff2_FLAG_WE_HAVE_A_TWO_BY_TWO: i32 = ((1) << (7));
-pub static mut woff2_FLAG_WE_HAVE_INSTRUCTIONS: i32 = ((1) << (8));
-pub static mut woff2_FLAG_OVERLAP_SIMPLE_BITMAP: i32 = ((1) << (0));
-pub static mut woff2_kCheckSumAdjustmentOffset: u64 = 8_u64;
-pub static mut woff2_kEndPtsOfContoursOffset: u64 = 10_u64;
-pub static mut woff2_kCompositeGlyphBegin: u64 = 10_u64;
-pub static mut woff2_kDefaultGlyphBuf: u64 = 5120_u64;
-pub static mut woff2_kMaxPlausibleCompressionRatio: f32 = (1.0E+2 as f32);
+pub static mut woff2_kGlyfOnCurve: i32 = unsafe { ((1) << (0)) };
+pub static mut woff2_kGlyfXShort: i32 = unsafe { ((1) << (1)) };
+pub static mut woff2_kGlyfYShort: i32 = unsafe { ((1) << (2)) };
+pub static mut woff2_kGlyfRepeat: i32 = unsafe { ((1) << (3)) };
+pub static mut woff2_kGlyfThisXIsSame: i32 = unsafe { ((1) << (4)) };
+pub static mut woff2_kGlyfThisYIsSame: i32 = unsafe { ((1) << (5)) };
+pub static mut woff2_kOverlapSimple: i32 = unsafe { ((1) << (6)) };
+pub static mut woff2_FLAG_ARG_1_AND_2_ARE_WORDS: i32 = unsafe { ((1) << (0)) };
+pub static mut woff2_FLAG_WE_HAVE_A_SCALE: i32 = unsafe { ((1) << (3)) };
+pub static mut woff2_FLAG_MORE_COMPONENTS: i32 = unsafe { ((1) << (5)) };
+pub static mut woff2_FLAG_WE_HAVE_AN_X_AND_Y_SCALE: i32 = unsafe { ((1) << (6)) };
+pub static mut woff2_FLAG_WE_HAVE_A_TWO_BY_TWO: i32 = unsafe { ((1) << (7)) };
+pub static mut woff2_FLAG_WE_HAVE_INSTRUCTIONS: i32 = unsafe { ((1) << (8)) };
+pub static mut woff2_FLAG_OVERLAP_SIMPLE_BITMAP: i32 = unsafe { ((1) << (0)) };
+pub static mut woff2_kCheckSumAdjustmentOffset: u64 = unsafe { 8_u64 };
+pub static mut woff2_kEndPtsOfContoursOffset: u64 = unsafe { 10_u64 };
+pub static mut woff2_kCompositeGlyphBegin: u64 = unsafe { 10_u64 };
+pub static mut woff2_kDefaultGlyphBuf: u64 = unsafe { 5120_u64 };
+pub static mut woff2_kMaxPlausibleCompressionRatio: f32 = unsafe { (1.0E+2 as f32) };
 #[repr(C)]
 #[derive(Clone, Default)]
 pub struct woff2_TtcFont {
@@ -1223,7 +1225,7 @@ pub unsafe fn ReconstructGlyf_25(
     mut info: *mut woff2_WOFF2FontInfo,
     mut out: *mut dyn woff2_WOFF2Out,
 ) -> bool {
-    static mut kNumSubStreams: i32 = 7;;
+    static mut kNumSubStreams: i32 = unsafe { 7 };;
     let mut file: woff2_Buffer =
         woff2_Buffer::woff2_Buffer(data, ((*glyf_table).transform_length as u64));
     let mut version: u16 = 0_u16;
