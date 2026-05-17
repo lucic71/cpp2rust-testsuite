@@ -35,7 +35,7 @@ for model in "${MODELS[@]}"; do
   mkdir -p "$MODEL_DIR"
 
   for f in "$IMGS_DIR"/*.jpg; do
-    "$RUST_BIN"/cbrunsli "$f" "$RUST_BIN/$(basename "$f" .jpg).brn" &
+    "$RUST_BIN"/cbrunsli "$f" "$MODEL_DIR/$(basename "$f" .jpg).brn" &
   done
   wait
 
@@ -48,7 +48,7 @@ for model in "${MODELS[@]}"; do
 
   # Decompress and compare roundtrip
   for f in "$MODEL_DIR"/*.brn; do
-    "$RUST_BIN"/dbrunsli "$f" "$RUST_BIN/$(basename "$f" .brn).jpg" &
+    "$RUST_BIN"/dbrunsli "$f" "$MODEL_DIR/$(basename "$f" .brn).jpg" &
   done
   wait
 
