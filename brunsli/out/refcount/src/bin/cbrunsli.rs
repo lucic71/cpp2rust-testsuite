@@ -4146,11 +4146,20 @@ pub fn HistogramCombine_42(
     let max_clusters: Value<u64> = Rc::new(RefCell::new(max_clusters));
     let cost_diff_threshold: Value<f64> = Rc::new(RefCell::new(0.0E+0));
     let min_cluster_size: Value<u64> = Rc::new(RefCell::new(1_u64));
-    let clusters: Value<Vec<u64>> = Rc::new(RefCell::new(std_vector::std_vector1(
-        (*symbols.borrow()).clone(),
-        (*symbols.borrow()).offset((*symbols_size.borrow()) as isize),
-        Some(),
-    )));
+    let clusters: Value<Vec<u64>> = Rc::new(RefCell::new({
+        let mut __a0 = (*symbols.borrow()).clone();
+        let mut __out = Vec::with_capacity(
+            (*symbols.borrow())
+                .offset((*symbols_size.borrow()) as isize)
+                .get_offset()
+                - __a0.get_offset(),
+        );
+        while __a0 != (*symbols.borrow()).offset((*symbols_size.borrow()) as isize) {
+            __out.push(u64::try_from(__a0.read()).ok().unwrap());
+            __a0 += 1;
+        }
+        __out
+    }));
     (clusters.as_pointer() as Ptr<u64>)
         .sort((clusters.as_pointer() as Ptr<u64>).to_end().get_offset());
     {
@@ -4404,7 +4413,7 @@ pub fn HistogramRemap_44(
                 - __a0.get_offset(),
         );
         while __a0 != (*symbols.borrow()).offset((*in_size.borrow()) as isize) {
-            __out.push(__a0.read() as i32);
+            __out.push(i32::try_from(__a0.read()).ok().unwrap());
             __a0 += 1;
         }
         __out
@@ -4894,7 +4903,10 @@ impl Default for brunsli_internal_enc_Histogram {
     }
 }
 impl ByteRepr for brunsli_internal_enc_Histogram {}
-thread_local!();
+thread_local!(
+    static brunsli_internal_enc_EntropyCodes_kMaxNumberOfHistograms: Value<u64> =
+        Rc::new(RefCell::new(256_u64));
+);
 #[derive(Default)]
 pub struct brunsli_internal_enc_EntropyCodes {
     clustered_: Value<Vec<brunsli_internal_enc_Histogram>>,
@@ -4978,7 +4990,10 @@ impl Default for brunsli_internal_enc_EntropySource {
     }
 }
 impl ByteRepr for brunsli_internal_enc_EntropySource {}
-thread_local!();
+thread_local!(
+    static brunsli_internal_enc_DataStream_kSlackForOneBlock: Value<u64> =
+        Rc::new(RefCell::new(1024_u64));
+);
 #[derive()]
 struct brunsli_internal_enc_DataStream_CodeWord {
     pub context: Value<u32>,
