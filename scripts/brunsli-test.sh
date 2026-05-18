@@ -11,19 +11,32 @@ MODELS=("$@")
 IMGS_DIR="$SRC_DIR/tests"
 TMP_DIR="$BUILD_DIR/tmp-brunsli"
 
+# Wait for all PIDs, failing if any exited non-zero.
+wait_all() {
+  local pid fail=0
+  for pid in "$@"; do
+    wait "$pid" || fail=1
+  done
+  return $fail
+}
+
 rm -fr "$TMP_DIR"
 mkdir -p "$TMP_DIR/cpp"
 
 # Run original binaries
+pids=()
 for f in "$IMGS_DIR"/*.jpg; do
   "$SRC_DIR/src/bin/cbrunsli" "$f" "$TMP_DIR/cpp/$(basename "$f" .jpg).brn" &
+  pids+=($!)
 done
-wait
+wait_all "${pids[@]}" || { echo "FAIL: cpp cbrunsli"; exit 1; }
 
+pids=()
 for f in "$TMP_DIR/cpp"/*.brn; do
   "$SRC_DIR/src/bin/dbrunsli" "$f" "$TMP_DIR/cpp/$(basename "$f" .brn).jpg" &
+  pids+=($!)
 done
-wait
+wait_all "${pids[@]}" || { echo "FAIL: cpp dbrunsli"; exit 1; }
 
 # Run each model and compare against original
 
@@ -34,10 +47,12 @@ for model in "${MODELS[@]}"; do
   rm -fr "$MODEL_DIR"
   mkdir -p "$MODEL_DIR"
 
+  pids=()
   for f in "$IMGS_DIR"/*.jpg; do
-    "$RUST_BIN"/cbrunsli "$f" "$RUST_BIN/$(basename "$f" .jpg).brn" &
+    "$RUST_BIN"/cbrunsli "$f" "$MODEL_DIR/$(basename "$f" .jpg).brn" &
+    pids+=($!)
   done
-  wait
+  wait_all "${pids[@]}" || { echo "FAIL [$model]: cbrunsli"; exit 1; }
 
   # Compare brn files against original
   for f in "$MODEL_DIR"/*.brn; do
@@ -47,10 +62,12 @@ for model in "${MODELS[@]}"; do
   done
 
   # Decompress and compare roundtrip
+  pids=()
   for f in "$MODEL_DIR"/*.brn; do
-    "$RUST_BIN"/dbrunsli "$f" "$RUST_BIN/$(basename "$f" .brn).jpg" &
+    "$RUST_BIN"/dbrunsli "$f" "$MODEL_DIR/$(basename "$f" .brn).jpg" &
+    pids+=($!)
   done
-  wait
+  wait_all "${pids[@]}" || { echo "FAIL [$model]: dbrunsli"; exit 1; }
 
   for f in "$MODEL_DIR"/*.jpg; do
     base=$(basename "$f")
