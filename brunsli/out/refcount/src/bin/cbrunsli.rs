@@ -4154,24 +4154,24 @@ pub fn HistogramCombine_42(
             let count = (clusters.as_pointer() as Ptr<u64>).to_end().get_offset()
                 - (clusters.as_pointer() as Ptr<u64>).get_offset();
             if count <= 1 {
-                return (clusters.as_pointer() as Ptr<u64>).to_end();
-            }
+                (clusters.as_pointer() as Ptr<u64>).to_end()
+            } else {
+                let mut write_ptr = (clusters.as_pointer() as Ptr<u64>).clone();
+                let mut iter = PtrValueIter::new((clusters.as_pointer() as Ptr<u64>), count);
+                let mut last_unique = iter.next().unwrap();
 
-            let mut write_ptr = (clusters.as_pointer() as Ptr<u64>).clone();
-            let mut iter = PtrValueIter::new((clusters.as_pointer() as Ptr<u64>), count);
-            let mut last_unique = iter.next().unwrap();
+                // the first unique value is already in place
+                write_ptr += 1;
 
-            // the first unique value is already in place
-            write_ptr += 1;
-
-            for current_val in iter {
-                if current_val != last_unique {
-                    write_ptr.write(current_val.clone());
-                    last_unique = current_val;
-                    write_ptr += 1;
+                for current_val in iter {
+                    if current_val != last_unique {
+                        write_ptr.write(current_val.clone());
+                        last_unique = current_val;
+                        write_ptr += 1;
+                    }
                 }
+                write_ptr
             }
-            write_ptr
         }
         .get_offset() as isize)
             - ((clusters.as_pointer() as Ptr<u64>).get_offset() as isize))
@@ -4407,24 +4407,24 @@ pub fn HistogramRemap_44(
             let count = (all_symbols.as_pointer() as Ptr<i32>).to_end().get_offset()
                 - (all_symbols.as_pointer() as Ptr<i32>).get_offset();
             if count <= 1 {
-                return (all_symbols.as_pointer() as Ptr<i32>).to_end();
-            }
+                (all_symbols.as_pointer() as Ptr<i32>).to_end()
+            } else {
+                let mut write_ptr = (all_symbols.as_pointer() as Ptr<i32>).clone();
+                let mut iter = PtrValueIter::new((all_symbols.as_pointer() as Ptr<i32>), count);
+                let mut last_unique = iter.next().unwrap();
 
-            let mut write_ptr = (all_symbols.as_pointer() as Ptr<i32>).clone();
-            let mut iter = PtrValueIter::new((all_symbols.as_pointer() as Ptr<i32>), count);
-            let mut last_unique = iter.next().unwrap();
+                // the first unique value is already in place
+                write_ptr += 1;
 
-            // the first unique value is already in place
-            write_ptr += 1;
-
-            for current_val in iter {
-                if current_val != last_unique {
-                    write_ptr.write(current_val.clone());
-                    last_unique = current_val;
-                    write_ptr += 1;
+                for current_val in iter {
+                    if current_val != last_unique {
+                        write_ptr.write(current_val.clone());
+                        last_unique = current_val;
+                        write_ptr += 1;
+                    }
                 }
+                write_ptr
             }
-            write_ptr
         }
         .get_offset() as isize)
             - ((all_symbols.as_pointer() as Ptr<i32>).get_offset() as isize))
