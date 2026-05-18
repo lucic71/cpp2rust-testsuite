@@ -232,8 +232,8 @@ impl Default for brunsli_JPEGScanInfo {
             Al: 0_i32,
             num_components: 0_u64,
             components: std::array::from_fn::<_, 4, _>(|_| Default::default()).to_vec(),
-            reset_points: <Vec<i32>>::default(),
-            extra_zero_runs: <Vec<brunsli_JPEGScanInfo_ExtraZeroRunInfo>>::default(),
+            reset_points: Default::default(),
+            extra_zero_runs: Default::default(),
         }
     }
 }

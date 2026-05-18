@@ -321,8 +321,8 @@ impl Default for brunsli_JPEGScanInfo {
             components: Rc::new(RefCell::new(
                 std::array::from_fn::<_, 4, _>(|_| Default::default()).to_vec(),
             )),
-            reset_points: <Value<Vec<i32>>>::default(),
-            extra_zero_runs: <Value<Vec<brunsli_JPEGScanInfo_ExtraZeroRunInfo>>>::default(),
+            reset_points: Rc::new(RefCell::new(Default::default())),
+            extra_zero_runs: Rc::new(RefCell::new(Default::default())),
         }
     }
 }
@@ -8529,8 +8529,7 @@ pub fn DecodeMetaDataSection_84(
                         (*(*ms.upgrade().deref()).brotli.borrow()),
                     )
                 };
-                (*(*ms.upgrade().deref()).brotli.borrow_mut()) =
-                    Ptr::<*mut ::brotli_sys::BrotliDecoderState>::null();
+                (*(*ms.upgrade().deref()).brotli.borrow_mut()) = std::ptr::null_mut();
                 (*(*ms.upgrade().deref()).decompression_stage.borrow_mut()) =
                     (brunsli_internal_dec_MetadataDecompressionStage::DONE).clone();
                 return (*result.borrow()).clone();
@@ -17872,7 +17871,7 @@ impl Drop for brunsli_internal_dec_MetadataState {
     fn drop(&mut self) {
         if !((*self.brotli.borrow()).is_null()) {
             unsafe { ::brotli_sys::BrotliDecoderDestroyInstance((*self.brotli.borrow())) };
-            (*self.brotli.borrow_mut()) = Ptr::<*mut ::brotli_sys::BrotliDecoderState>::null();
+            (*self.brotli.borrow_mut()) = std::ptr::null_mut();
         }
     }
 }
