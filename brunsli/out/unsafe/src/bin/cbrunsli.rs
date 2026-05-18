@@ -6,13 +6,9 @@ use std::collections::BTreeMap;
 use std::io::{Read, Seek, Write};
 use std::os::fd::{AsFd, FromRawFd, IntoRawFd};
 use std::rc::Rc;
-
-// ans_params.rs
 pub static mut brunsli_BRUNSLI_ANS_LOG_TAB_SIZE: i32 = unsafe { 10 };
 pub static mut brunsli_BRUNSLI_ANS_TAB_SIZE: i32 =
     unsafe { ((1) << (brunsli_BRUNSLI_ANS_LOG_TAB_SIZE)) };
-
-// constants.rs
 pub static mut brunsli_kFallbackVersion: i32 = unsafe { 1 };
 pub static mut brunsli_kDCTBlockSize: i32 = unsafe { 64 };
 pub static mut brunsli_kMaxComponents: i32 = unsafe { 4 };
@@ -944,8 +940,6 @@ pub static mut brunsli_AppData_0xe2: [u8; 3161] = unsafe {
         255_u8,
     ]
 };
-
-// context.rs
 pub unsafe fn BrunsliUnalignedRead16_5(mut p: *const ::libc::c_void) -> u16 {
     let mut t: u16 = 0_u16;
     {
@@ -1101,9 +1095,7 @@ pub unsafe fn FastDivide_15(mut numerator: u32, mut denominator: u8) -> u8 {
         >> (17));
     if !((result) < (256_u32)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/././distributions.h\0"
-                    .as_ptr();
+            let _f: *const u8 = b"context.cc\0".as_ptr();
             let _l: i32 = 55;
             let _fn: *const u8 = b"FastDivide\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -1473,8 +1465,7 @@ pub unsafe fn NumNonzerosContext_23(mut prev: *const u8, mut x: i32, mut y: i32)
     }
     if !((prediction) <= (brunsli_kNumNonZeroTreeSize)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/./context.h\0".as_ptr();
+            let _f: *const u8 = b"context.cc\0".as_ptr();
             let _l: i32 = 305;
             let _fn: *const u8 = b"NumNonzerosContext\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -1965,9 +1956,7 @@ impl brunsli_ComponentState {
                 let v: i32 = ((brunsli_kInitProb[(k) as usize] as i32) + ((9) * ((i) - (7))));
                 if !((v) <= (255)) {
                     (unsafe {
-                        let _f: *const u8 =
-                            b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/context.cc\0"
-                                .as_ptr();
+                        let _f: *const u8 = b"context.cc\0".as_ptr();
                         let _l: i32 = 227;
                         let _fn: *const u8 = b"InitAll\0".as_ptr();
                         BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2032,7 +2021,6 @@ impl brunsli_ComponentState {
         }
     }
 }
-// lehmer_code.rs
 #[repr(C)]
 #[derive(Clone)]
 pub struct brunsli_PermutationCoder {
@@ -2055,9 +2043,7 @@ impl brunsli_PermutationCoder {
         let mut num_values: u32 = (self.values_.len() as u64 as u32);
         if !((num_values) > (0_u32)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/./lehmer_code.h\0"
-                        .as_ptr();
+                let _f: *const u8 = b"lehmer_code.cc\0".as_ptr();
                 let _l: i32 = 51;
                 let _fn: *const u8 = b"num_bits\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2140,8 +2126,7 @@ pub unsafe fn ComputeLehmerCode_26(mut sigma: *const u32, len: u64, mut code: *m
         };
         if !(it != items.as_mut_ptr().add(items.len())) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/lehmer_code.cc\0".as_ptr();
+                let _f: *const u8 = b"lehmer_code.cc\0".as_ptr();
                 let _l: i32 = 21;
                 let _fn: *const u8 = b"ComputeLehmerCode\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2186,7 +2171,6 @@ pub unsafe fn DecodeLehmerCode_27(mut code: *const u32, mut len: u64, mut sigma:
     }
     return true;
 }
-// platform.rs
 pub unsafe fn BrunsliDumpAndAbort_16(mut f: *const u8, mut l: i32, mut fn_: *const u8) {
     printf(b"%s:%d (%s)\n\0".as_ptr() as *const i8, f, l, fn_);
     if !(libcc2rs::cerr_unsafe()).is_null() {
@@ -2201,7 +2185,6 @@ pub unsafe fn BrunsliDumpAndAbort_16(mut f: *const u8, mut l: i32, mut fn_: *con
     };
     std::process::abort();
 }
-// predict.rs
 pub unsafe fn AdaptiveMedian_28(mut w: i32, mut n: i32, mut nw: i32) -> i32 {
     let mx: i32 = if ((w) > (n)) { w } else { n };
     let mn: i32 = (((w) + (n)) - (mx));
@@ -2243,14 +2226,12 @@ pub unsafe fn PredictWithAdaptiveMedian_29(
     }
     panic!("ub: non-void function does not return a value")
 }
-// quant_matrix.rs
 pub static mut brunsli_kQFactorBits: u64 = unsafe { 6_u64 };
 pub static mut brunsli_kQFactorLimit: u64 = unsafe { (((1_u32) << (brunsli_kQFactorBits)) as u64) };
 pub unsafe fn FillQuantMatrix_30(mut is_chroma: bool, mut q: u32, mut dst: *mut u8) {
     if !(((q) >= (0_u32)) && ((q as u64) < (brunsli_kQFactorLimit))) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/quant_matrix.cc\0".as_ptr();
+            let _f: *const u8 = b"quant_matrix.cc\0".as_ptr();
             let _l: i32 = 18;
             let _fn: *const u8 = b"FillQuantMatrix\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2337,7 +2318,6 @@ pub unsafe fn FindBestMatrix_31(mut src: *const i32, mut is_chroma: bool, mut ds
     });
     return best_q;
 }
-// ans_encode.rs
 pub unsafe fn WriteBits_32(mut n_bits: u64, mut bits: u64, mut storage: *mut brunsli_Storage) {
     if true {
     } else {
@@ -2357,8 +2337,7 @@ pub unsafe fn WriteBits_32(mut n_bits: u64, mut bits: u64, mut storage: *mut bru
     }
     if !(((bits) >> (n_bits)) == (0_u64)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/././write_bits.h\0".as_ptr();
+            let _f: *const u8 = b"ans_encode.cc\0".as_ptr();
             let _l: i32 = 58;
             let _fn: *const u8 = b"WriteBits\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2367,8 +2346,7 @@ pub unsafe fn WriteBits_32(mut n_bits: u64, mut bits: u64, mut storage: *mut bru
     };
     if !((n_bits) <= (56_u64)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/././write_bits.h\0".as_ptr();
+            let _f: *const u8 = b"ans_encode.cc\0".as_ptr();
             let _l: i32 = 59;
             let _fn: *const u8 = b"WriteBits\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2379,8 +2357,7 @@ pub unsafe fn WriteBits_32(mut n_bits: u64, mut bits: u64, mut storage: *mut bru
         < ((*storage).length))
     {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/././write_bits.h\0".as_ptr();
+            let _f: *const u8 = b"ans_encode.cc\0".as_ptr();
             let _l: i32 = 61;
             let _fn: *const u8 = b"WriteBits\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2510,7 +2487,6 @@ pub unsafe fn BuildAndStoreANSEncodingData_34(
         EncodeCounts_36(_counts, _omit_pos, _num_symbols, _symbols, _storage)
     });
 }
-// brunsli_encode.rs
 pub static mut brunsli_kLog2Table: [f32; 256] = unsafe {
     [
         0.0E+0,
@@ -2794,8 +2770,7 @@ pub unsafe fn lt(p1: *const brunsli_HistogramPair, p2: *const brunsli_HistogramP
     }
     if !(((*p1).idx1) < ((*p1).idx2)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/./cluster.h\0".as_ptr();
+            let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
             let _l: i32 = 35;
             let _fn: *const u8 = b"operator<\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2804,8 +2779,7 @@ pub unsafe fn lt(p1: *const brunsli_HistogramPair, p2: *const brunsli_HistogramP
     };
     if !(((*p2).idx1) < ((*p2).idx2)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/./cluster.h\0".as_ptr();
+            let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
             let _l: i32 = 36;
             let _fn: *const u8 = b"operator<\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -3938,8 +3912,7 @@ pub unsafe fn EncodeVarint_58(mut n: i32, mut max_bits: i32, mut storage: *mut b
     let mut b: i32 = 0_i32;
     if !((n) < ((1) << (max_bits))) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/brunsli_encode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
             let _l: i32 = 215;
             let _fn: *const u8 = b"EncodeVarint\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -4051,9 +4024,7 @@ pub unsafe fn EncodeQuantTables_60(
             let mut q_factor: u64 = (((code) - (brunsli_kNumStockQuantTables)) as u64);
             if !((q_factor) < (brunsli_kQFactorLimit)) {
                 (unsafe {
-                    let _f: *const u8 =
-                        b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/brunsli_encode.cc\0"
-                            .as_ptr();
+                    let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
                     let _l: i32 = 264;
                     let _fn: *const u8 = b"EncodeQuantTables\0".as_ptr();
                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -4452,8 +4423,7 @@ pub unsafe fn EncodeScanInfo_62(
         });
         if !((*block_idx) >= ((last_block_idx) + (1))) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/brunsli_encode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
                 let _l: i32 = 391;
                 let _fn: *const u8 = b"EncodeScanInfo\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -4481,8 +4451,7 @@ pub unsafe fn EncodeScanInfo_62(
         let mut num: i32 = (&(*si)).extra_zero_runs[(i) as usize].num_extra_zero_runs;
         if !((block_idx) >= (last_block_idx)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/brunsli_encode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
                 let _l: i32 = 401;
                 let _fn: *const u8 = b"EncodeScanInfo\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -4587,8 +4556,7 @@ pub unsafe fn EncodeAuxData_65(
     }
     if !(((*jpg).huffman_code.len() as u64) < (brunsli_kMaxDHTMarkers as u64)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/brunsli_encode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
             let _l: i32 = 453;
             let _fn: *const u8 = b"EncodeAuxData\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -4771,8 +4739,7 @@ impl brunsli_internal_enc_Histogram {
     pub unsafe fn Add(&mut self, mut val: u64) {
         if !((val) < (18_u64)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/brunsli_encode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
                 let _l: i32 = 522;
                 let _fn: *const u8 = b"Add\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -4875,8 +4842,7 @@ impl brunsli_internal_enc_EntropySource {
     pub unsafe fn Merge(&mut self, other: *const brunsli_internal_enc_EntropySource) {
         if !((self.histograms_.len() as u64) >= ((*other).histograms_.len() as u64)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/brunsli_encode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
                 let _l: i32 = 568;
                 let _fn: *const u8 = b"Merge\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -4980,8 +4946,7 @@ impl brunsli_internal_enc_DataStream {
         word.value = 0_u16;
         if !((self.pos_ as u64) < (self.code_words_.len() as u64)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/brunsli_encode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
                 let _l: i32 = 631;
                 let _fn: *const u8 = b"AddCode\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -5134,8 +5099,7 @@ pub unsafe fn EncodeNumNonzeros_68(
 ) {
     if !((val) < (((1_u32) << (brunsli_kNumNonZeroBits)) as u64)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/brunsli_encode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
             let _l: i32 = 719;
             let _fn: *const u8 = b"EncodeNumNonzeros\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -5223,9 +5187,7 @@ pub unsafe fn EncodeCoeffOrder_70(
             let mut v: i32 = 0_i32;
             if !((lehmer[(j) as usize]) <= (brunsli_kDCTBlockSize as u32)) {
                 (unsafe {
-                    let _f: *const u8 =
-                        b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/brunsli_encode.cc\0"
-                            .as_ptr();
+                    let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
                     let _l: i32 = 769;
                     let _fn: *const u8 = b"EncodeCoeffOrder\0".as_ptr();
                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -5713,8 +5675,7 @@ pub unsafe fn SelectContextBits_83(mut num_symbols: u64) -> i32 {
     let mut scheme: i32 = kContextBits[(log2_size) as usize];
     if !((scheme) < (brunsli_kNumSchemes)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/brunsli_encode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
             let _l: i32 = 1029;
             let _fn: *const u8 = b"SelectContextBits\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6315,7 +6276,7 @@ pub unsafe fn EncodeAC_87(mut state: *mut brunsli_internal_enc_State) {
                     }
                     if !((num_nzeros) <= (brunsli_kNumNonZeroTreeSize)) {
                         (unsafe {
-                            let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/brunsli_encode.cc\0" .as_ptr() ;
+                            let _f: *const u8 = b"brunsli_encode.cc\0".as_ptr();
                             let _l: i32 = 1329;
                             let _fn: *const u8 = b"EncodeAC\0".as_ptr();
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7038,7 +6999,6 @@ pub unsafe fn BrunsliEncodeJpegBypass_93(
     (*len) = pos;
     return true;
 }
-// context_map_encode.rs
 #[repr(C)]
 #[derive(Copy, Clone, Default)]
 pub struct brunsli_HuffmanTree {
@@ -7139,9 +7099,7 @@ pub unsafe fn MoveToFrontTransform_98(v: *const Vec<u32>) -> Vec<u32> {
         });
         if !((index) < (mtf.len() as u64)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/context_map_encode.cc\0"
-                        .as_ptr();
+                let _f: *const u8 = b"context_map_encode.cc\0".as_ptr();
                 let _l: i32 = 60;
                 let _fn: *const u8 = b"MoveToFrontTransform\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7344,7 +7302,6 @@ pub unsafe fn EncodeContextMap_67(
         WriteBits_32(_n_bits, _bits, _storage)
     });
 }
-// histogram_encode.rs
 pub unsafe fn GetPopulationCountPrecision_101(mut logcount: u32) -> u32 {
     return (((logcount).wrapping_add(1_u32)) >> (1));
 }
@@ -7373,8 +7330,7 @@ pub static mut brunsli_kLogCountSymbols: [u16; 11] = unsafe {
 pub unsafe fn SmallestIncrement_102(mut count: i32) -> i32 {
     if !((count) > (0)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/histogram_encode.cc\0".as_ptr();
+            let _f: *const u8 = b"histogram_encode.cc\0".as_ptr();
             let _l: i32 = 39;
             let _fn: *const u8 = b"SmallestIncrement\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7402,8 +7358,7 @@ pub unsafe fn RebalanceHistogram_103(
 ) -> bool {
     if !((table_size) >= (2)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/histogram_encode.cc\0".as_ptr();
+            let _f: *const u8 = b"histogram_encode.cc\0".as_ptr();
             let _l: i32 = 48;
             let _fn: *const u8 = b"RebalanceHistogram\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7456,8 +7411,7 @@ pub unsafe fn RebalanceHistogram_103(
     }
     if !((remainder_pos) != (-1_i32)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/histogram_encode.cc\0".as_ptr();
+            let _f: *const u8 = b"histogram_encode.cc\0".as_ptr();
             let _l: i32 = 81;
             let _fn: *const u8 = b"RebalanceHistogram\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7477,8 +7431,7 @@ pub unsafe fn RebalanceHistogram_104(
 ) -> bool {
     if !((table_size) >= (2)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/histogram_encode.cc\0".as_ptr();
+            let _f: *const u8 = b"histogram_encode.cc\0".as_ptr();
             let _l: i32 = 48;
             let _fn: *const u8 = b"RebalanceHistogram\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7531,8 +7484,7 @@ pub unsafe fn RebalanceHistogram_104(
     }
     if !((remainder_pos) != (-1_i32)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/histogram_encode.cc\0".as_ptr();
+            let _f: *const u8 = b"histogram_encode.cc\0".as_ptr();
             let _l: i32 = 81;
             let _fn: *const u8 = b"RebalanceHistogram\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7553,8 +7505,7 @@ pub unsafe fn NormalizeCounts_35(
 ) {
     if !((precision_bits) > (0)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/histogram_encode.cc\0".as_ptr();
+            let _f: *const u8 = b"histogram_encode.cc\0".as_ptr();
             let _l: i32 = 89;
             let _fn: *const u8 = b"NormalizeCounts\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7587,8 +7538,7 @@ pub unsafe fn NormalizeCounts_35(
     }
     if !((symbol_count) <= (table_size)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/histogram_encode.cc\0".as_ptr();
+            let _f: *const u8 = b"histogram_encode.cc\0".as_ptr();
             let _l: i32 = 112;
             let _fn: *const u8 = b"NormalizeCounts\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7619,9 +7569,7 @@ pub unsafe fn NormalizeCounts_35(
             RebalanceHistogram_104(_targets, _max_symbol, _table_size, _omit_pos, _counts)
         }) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/histogram_encode.cc\0"
-                        .as_ptr();
+                let _f: *const u8 = b"histogram_encode.cc\0".as_ptr();
                 let _l: i32 = 126;
                 let _fn: *const u8 = b"NormalizeCounts\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7696,9 +7644,7 @@ pub unsafe fn EncodeCounts_36(
         'loop_: while ((i) < (18)) {
             if !((*counts.offset((i) as isize)) <= (brunsli_BRUNSLI_ANS_TAB_SIZE)) {
                 (unsafe {
-                    let _f: *const u8 =
-                        b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/histogram_encode.cc\0"
-                            .as_ptr();
+                    let _f: *const u8 = b"histogram_encode.cc\0".as_ptr();
                     let _l: i32 = 155;
                     let _fn: *const u8 = b"EncodeCounts\0".as_ptr();
                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7707,9 +7653,7 @@ pub unsafe fn EncodeCounts_36(
             };
             if !((*counts.offset((i) as isize)) >= (0)) {
                 (unsafe {
-                    let _f: *const u8 =
-                        b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/histogram_encode.cc\0"
-                            .as_ptr();
+                    let _f: *const u8 = b"histogram_encode.cc\0".as_ptr();
                     let _l: i32 = 156;
                     let _fn: *const u8 = b"EncodeCounts\0".as_ptr();
                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7773,7 +7717,7 @@ pub unsafe fn EncodeCounts_36(
                 let mut drop_bits: i32 = (((logcounts[(i) as usize]) - (1)) - (bitcount));
                 if !(((*counts.offset((i) as isize)) & (((1) << (drop_bits)) - (1))) == (0)) {
                     (unsafe {
-                        let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/histogram_encode.cc\0" .as_ptr() ;
+                        let _f: *const u8 = b"histogram_encode.cc\0".as_ptr();
                         let _l: i32 = 184;
                         let _fn: *const u8 = b"EncodeCounts\0".as_ptr();
                         BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7839,9 +7783,7 @@ pub unsafe fn PopulationCost_40(mut data: *const i32, mut total_count: i32) -> f
             let mut c_descaled: u64 = ((c) >> (kDescaleBits));
             if !((c_descaled) < ((1_u64) << (31))) {
                 (unsafe {
-                    let _f: *const u8 =
-                        b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/histogram_encode.cc\0"
-                            .as_ptr();
+                    let _f: *const u8 = b"histogram_encode.cc\0".as_ptr();
                     let _l: i32 = 236;
                     let _fn: *const u8 = b"PopulationCost\0".as_ptr();
                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7864,7 +7806,7 @@ pub unsafe fn PopulationCost_40(mut data: *const i32, mut total_count: i32) -> f
                 let mut c_descaled: u64 = ((c) >> (kDescaleBits));
                 if !((c_descaled) < ((1_u64) << (31))) {
                     (unsafe {
-                        let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/histogram_encode.cc\0" .as_ptr() ;
+                        let _f: *const u8 = b"histogram_encode.cc\0".as_ptr();
                         let _l: i32 = 245;
                         let _fn: *const u8 = b"PopulationCost\0".as_ptr();
                         BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7940,7 +7882,6 @@ pub unsafe fn PopulationCost_40(mut data: *const i32, mut total_count: i32) -> f
     histogram_bits += (brunsli_kHistogramLengthBitLengths[((length) - (3)) as usize] as i32);
     return ((((histogram_bits) + (entropy_bits as i32)) + (1)) as f64);
 }
-// huffman_encode.rs
 pub static mut brunsli_kCodeLengthCodes: i32 = unsafe { 18 };
 pub unsafe fn StoreHuffmanTreeOfHuffmanTreeToBitMask_105(
     num_codes: i32,
@@ -8321,7 +8262,6 @@ pub unsafe fn BuildAndStoreHuffmanTree_100(
         });
     }
 }
-// huffman_tree.rs
 pub unsafe fn SetDepth_112(
     p: *const brunsli_HuffmanTree,
     mut pool: *mut brunsli_HuffmanTree,
@@ -8450,8 +8390,7 @@ pub unsafe fn CreateHuffmanTree_110(
         }
         if !((tree.len() as u64) == (((2_u64).wrapping_mul(n)).wrapping_add(1_u64))) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/huffman_tree.cc\0".as_ptr();
+                let _f: *const u8 = b"huffman_tree.cc\0".as_ptr();
                 let _l: i32 = 121;
                 let _fn: *const u8 = b"CreateHuffmanTree\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8506,8 +8445,7 @@ pub unsafe fn WriteHuffmanTreeRepetitions_115(
 ) {
     if !((repetitions) > (0_u64)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/huffman_tree.cc\0".as_ptr();
+            let _f: *const u8 = b"huffman_tree.cc\0".as_ptr();
             let _l: i32 = 151;
             let _fn: *const u8 = b"WriteHuffmanTreeRepetitions\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8777,7 +8715,6 @@ pub unsafe fn ConvertBitDepthsToSymbols_111(
         i.prefix_inc();
     }
 }
-// jpeg_data_reader.rs
 pub static mut brunsli_kJpegHuffmanRootTableBits: i32 = unsafe { 8 };
 pub static mut brunsli_kJpegHuffmanLutSize: i32 = unsafe { 1024 };
 #[repr(C)]
@@ -10194,9 +10131,7 @@ impl brunsli_BitReaderState {
         self.bits_left_ -= nbits;
         if !((val) < (((1_u32) << (31)) as u64)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/jpeg_data_reader.cc\0"
-                        .as_ptr();
+                let _f: *const u8 = b"jpeg_data_reader.cc\0".as_ptr();
                 let _l: i32 = 471;
                 let _fn: *const u8 = b"ReadBits\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10281,8 +10216,7 @@ pub unsafe fn ReadSymbol_130(
 pub unsafe fn HuffExtend_131(mut x: i32, mut s: i32) -> i32 {
     if !((s) >= (1)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/jpeg_data_reader.cc\0".as_ptr();
+            let _f: *const u8 = b"jpeg_data_reader.cc\0".as_ptr();
             let _l: i32 = 575;
             let _fn: *const u8 = b"HuffExtend\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10293,9 +10227,7 @@ pub unsafe fn HuffExtend_131(mut x: i32, mut s: i32) -> i32 {
     if ((x) >= (half)) {
         if !((x) < ((1) << (s))) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/jpeg_data_reader.cc\0"
-                        .as_ptr();
+                let _f: *const u8 = b"jpeg_data_reader.cc\0".as_ptr();
                 let _l: i32 = 578;
                 let _fn: *const u8 = b"HuffExtend\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11525,7 +11457,6 @@ pub unsafe fn ReadJpeg_94(
     }
     return true;
 }
-// jpeg_huffman_decode.rs
 pub unsafe fn NextTableBitSize_138(mut count: *const i32, mut len: i32) -> i32 {
     let mut left: i32 = ((1) << ((len) - (brunsli_kJpegHuffmanRootTableBits)));
     'loop_: while ((len) < (brunsli_kJpegHuffmanMaxBitLength)) {
@@ -11626,7 +11557,6 @@ pub unsafe fn BuildJpegHuffmanTable_125(
         len.prefix_inc();
     }
 }
-// write_bits.rs
 #[repr(C)]
 #[derive(Copy, Clone, Default)]
 pub struct brunsli_Storage {
@@ -11643,8 +11573,7 @@ impl brunsli_Storage {
         };
         if !((length) > (0_u64)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/write_bits.cc\0".as_ptr();
+                let _f: *const u8 = b"write_bits.cc\0".as_ptr();
                 let _l: i32 = 14;
                 let _fn: *const u8 = b"Storage\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11663,8 +11592,7 @@ impl brunsli_Storage {
     pub unsafe fn AppendBytes(&mut self, mut src: *const u8, mut len: u64) {
         if !(((self.pos) & (7_u64)) == (0_u64)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/write_bits.cc\0".as_ptr();
+                let _f: *const u8 = b"write_bits.cc\0".as_ptr();
                 let _l: i32 = 19;
                 let _fn: *const u8 = b"AppendBytes\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11673,8 +11601,7 @@ impl brunsli_Storage {
         };
         if !(((unsafe { self.GetBytesUsed() }).wrapping_add(len)) <= (self.length)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/enc/write_bits.cc\0".as_ptr();
+                let _f: *const u8 = b"write_bits.cc\0".as_ptr();
                 let _l: i32 = 20;
                 let _fn: *const u8 = b"AppendBytes\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11695,7 +11622,6 @@ impl brunsli_Storage {
         self.pos = (self.pos).wrapping_add((8_u64).wrapping_mul(len));
     }
 }
-// cbrunsli.rs
 pub unsafe fn ReadFileInternal_139(
     mut file: *mut ::std::fs::File,
     mut content: *mut Vec<u8>,
@@ -11747,16 +11673,17 @@ pub unsafe fn ReadFileInternal_139(
     };
     let mut read_pos: u64 = 0_u64;
     'loop_: while ((read_pos) < (((*content.cast_const()).len() - 1) as u64)) {
-        let bytes_read: u64 = libcc2rs::fread_unsafe(
-            ((if read_pos as usize >= (*content).len() - 1 {
+        let bytes_read: u64 = {
+            let __a0 = ((if read_pos as usize >= (*content).len() - 1 {
                 panic!("out of bounds access")
             } else {
                 &mut (&mut (*content))[read_pos as usize]
-            }) as *mut u8 as *mut ::libc::c_void) as *mut ::std::ffi::c_void,
-            1_u64,
-            (((*content.cast_const()).len() - 1) as u64).wrapping_sub(read_pos),
-            file,
-        );
+            }) as *mut u8 as *mut ::libc::c_void) as *mut ::std::ffi::c_void;
+            let __a1 = 1_u64;
+            let __a2 = (((*content.cast_const()).len() - 1) as u64).wrapping_sub(read_pos);
+            let __a3 = file;
+            libcc2rs::fread_unsafe(__a0, __a1, __a2, __a3)
+        };
         if ((bytes_read) == (0_u64)) {
             printf(b"Failed to read input file\n\0".as_ptr() as *const i8);
             return false;
@@ -11820,13 +11747,14 @@ pub unsafe fn WriteFileInternal_141(
 ) -> bool {
     let mut write_pos: u64 = 0_u64;
     'loop_: while ((write_pos) < (((*content).len() - 1) as u64)) {
-        let bytes_written: u64 = libcc2rs::fwrite_unsafe(
-            ((&(&(*content))[(write_pos) as usize] as *const u8) as *const u8
-                as *const ::libc::c_void) as *const ::std::ffi::c_void,
-            1_u64,
-            (((*content).len() - 1) as u64).wrapping_sub(write_pos),
-            file,
-        );
+        let bytes_written: u64 = {
+            let __a0 = ((&(&(*content))[(write_pos) as usize] as *const u8) as *const u8
+                as *const ::libc::c_void) as *const ::std::ffi::c_void;
+            let __a1 = 1_u64;
+            let __a2 = (((*content).len() - 1) as u64).wrapping_sub(write_pos);
+            let __a3 = file;
+            libcc2rs::fwrite_unsafe(__a0, __a1, __a2, __a3)
+        };
         if ((bytes_written) == (0_u64)) {
             printf(b"Failed to write output.\n\0".as_ptr() as *const i8);
             return false;

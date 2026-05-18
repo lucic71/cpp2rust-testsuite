@@ -6,8 +6,6 @@ use std::io::prelude::*;
 use std::io::{Read, Seek, Write};
 use std::os::fd::AsFd;
 use std::rc::{Rc, Weak};
-
-// ans_params.rs
 thread_local!(
     pub static brunsli_BRUNSLI_ANS_LOG_TAB_SIZE: Value<i32> = Rc::new(RefCell::new(10));
 );
@@ -16,8 +14,6 @@ thread_local!(
         (1 << (*brunsli_BRUNSLI_ANS_LOG_TAB_SIZE.with(Value::clone).borrow())),
     ));
 );
-
-// constants.rs
 thread_local!(
     pub static brunsli_kFallbackVersion: Value<i32> = Rc::new(RefCell::new(1));
 );
@@ -268,7 +264,20 @@ impl Clone for brunsli_JPEGComponentScanInfo {
         this
     }
 }
-impl ByteRepr for brunsli_JPEGComponentScanInfo {}
+impl ByteRepr for brunsli_JPEGComponentScanInfo {
+    fn to_bytes(&self, buf: &mut [u8]) {
+        (*self.comp_idx.borrow()).to_bytes(&mut buf[0..1]);
+        (*self.dc_tbl_idx.borrow()).to_bytes(&mut buf[4..8]);
+        (*self.ac_tbl_idx.borrow()).to_bytes(&mut buf[8..12]);
+    }
+    fn from_bytes(buf: &[u8]) -> Self {
+        Self {
+            comp_idx: Rc::new(RefCell::new(<u8>::from_bytes(&buf[0..1]))),
+            dc_tbl_idx: Rc::new(RefCell::new(<i32>::from_bytes(&buf[4..8]))),
+            ac_tbl_idx: Rc::new(RefCell::new(<i32>::from_bytes(&buf[8..12]))),
+        }
+    }
+}
 #[derive(Default)]
 pub struct brunsli_JPEGScanInfo_ExtraZeroRunInfo {
     pub block_idx: Value<i32>,
@@ -283,7 +292,18 @@ impl Clone for brunsli_JPEGScanInfo_ExtraZeroRunInfo {
         this
     }
 }
-impl ByteRepr for brunsli_JPEGScanInfo_ExtraZeroRunInfo {}
+impl ByteRepr for brunsli_JPEGScanInfo_ExtraZeroRunInfo {
+    fn to_bytes(&self, buf: &mut [u8]) {
+        (*self.block_idx.borrow()).to_bytes(&mut buf[0..4]);
+        (*self.num_extra_zero_runs.borrow()).to_bytes(&mut buf[4..8]);
+    }
+    fn from_bytes(buf: &[u8]) -> Self {
+        Self {
+            block_idx: Rc::new(RefCell::new(<i32>::from_bytes(&buf[0..4]))),
+            num_extra_zero_runs: Rc::new(RefCell::new(<i32>::from_bytes(&buf[4..8]))),
+        }
+    }
+}
 #[derive()]
 pub struct brunsli_JPEGScanInfo {
     pub Ss: Value<i32>,
@@ -1286,8 +1306,6 @@ thread_local!(
         255_u8,
     ])));
 );
-
-// context.rs
 pub fn BrunsliUnalignedRead16_5(p: AnyPtr) -> u16 {
     let p: Value<AnyPtr> = Rc::new(RefCell::new(p));
     let t: Value<u16> = <Value<u16>>::default();
@@ -1353,7 +1371,7 @@ pub fn Append_10(dst: Ptr<Vec<u8>>, begin: Ptr<u8>, end: Ptr<u8>) {
             .clone()
             .get_offset();
         let count = (*end.borrow()).get_offset() - (*begin.borrow()).get_offset();
-        let temp_vec: Vec<u8> = PtrValueIter::new((*begin.borrow()), count).collect();
+        let temp_vec: Vec<u8> = PtrValueIter::new(&(*begin.borrow()), count).collect();
         ((*dst.borrow()).to_strong().as_pointer() as Ptr<Vec<u8>>).with_mut(|v: &mut Vec<u8>| {
             v.splice(start_idx..start_idx, temp_vec);
         });
@@ -1445,9 +1463,7 @@ pub fn FastDivide_15(numerator: u32, denominator: u8) -> u8 {
     ));
     if !((*result.borrow()) < 256_u32) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/././distributions.h",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("context.cc");
             let _l: i32 = 55;
             let _fn: Ptr<u8> = Ptr::from_string_literal("FastDivide");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -1538,7 +1554,20 @@ impl Default for brunsli_Prob {
         }
     }
 }
-impl ByteRepr for brunsli_Prob {}
+impl ByteRepr for brunsli_Prob {
+    fn to_bytes(&self, buf: &mut [u8]) {
+        (*self.prob8.borrow()).to_bytes(&mut buf[0..1]);
+        (*self.total.borrow()).to_bytes(&mut buf[1..2]);
+        (*self.count.borrow()).to_bytes(&mut buf[2..4]);
+    }
+    fn from_bytes(buf: &[u8]) -> Self {
+        Self {
+            prob8: Rc::new(RefCell::new(<u8>::from_bytes(&buf[0..1]))),
+            total: Rc::new(RefCell::new(<u8>::from_bytes(&buf[1..2]))),
+            count: Rc::new(RefCell::new(<u16>::from_bytes(&buf[2..4]))),
+        }
+    }
+}
 thread_local!(
     pub static brunsli_kMaxAverageContext: Value<u64> = Rc::new(RefCell::new(8_u64));
 );
@@ -2097,9 +2126,7 @@ pub fn NumNonzerosContext_23(prev: Ptr<u8>, x: i32, y: i32) -> u8 {
     }
     if !((*prediction.borrow()) <= (*brunsli_kNumNonZeroTreeSize.with(Value::clone).borrow())) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/./context.h",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("context.cc");
             let _l: i32 = 305;
             let _fn: Ptr<u8> = Ptr::from_string_literal("NumNonzerosContext");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2748,9 +2775,7 @@ impl brunsli_ComponentState {
                 ));
                 if !((*v.borrow()) <= 255) {
                     ({
-                        let _f: Ptr<u8> = Ptr::from_string_literal(
-                            "/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/context.cc",
-                        );
+                        let _f: Ptr<u8> = Ptr::from_string_literal("context.cc");
                         let _l: i32 = 227;
                         let _fn: Ptr<u8> = Ptr::from_string_literal("InitAll");
                         BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2855,7 +2880,6 @@ impl brunsli_ComponentState {
         }
     }
 }
-// lehmer_code.rs
 #[derive()]
 pub struct brunsli_PermutationCoder {
     values_: Value<Vec<u8>>,
@@ -2880,9 +2904,7 @@ impl brunsli_PermutationCoder {
             Rc::new(RefCell::new(((*self.values_.borrow()).len() as u64 as u32)));
         if !((*num_values.borrow()) > 0_u32) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/./lehmer_code.h",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("lehmer_code.cc");
                 let _l: i32 = 51;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("num_bits");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -3014,9 +3036,7 @@ pub fn ComputeLehmerCode_26(sigma: Ptr<u32>, len: u64, code: Ptr<u32>) {
         ));
         if !((*it.borrow()) != (items.as_pointer() as Ptr<u32>).to_end()) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/lehmer_code.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("lehmer_code.cc");
                 let _l: i32 = 21;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("ComputeLehmerCode");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -3085,7 +3105,6 @@ pub fn DecodeLehmerCode_27(code: Ptr<u32>, len: u64, sigma: Ptr<u32>) -> bool {
     }
     return true;
 }
-// platform.rs
 pub fn BrunsliDumpAndAbort_16(f: Ptr<u8>, l: i32, fn_: Ptr<u8>) {
     let f: Value<Ptr<u8>> = Rc::new(RefCell::new(f));
     let l: Value<i32> = Rc::new(RefCell::new(l));
@@ -3103,7 +3122,6 @@ pub fn BrunsliDumpAndAbort_16(f: Ptr<u8>, l: i32, fn_: Ptr<u8>) {
     };
     std::process::abort();
 }
-// predict.rs
 pub fn AdaptiveMedian_28(w: i32, n: i32, nw: i32) -> i32 {
     let w: Value<i32> = Rc::new(RefCell::new(w));
     let n: Value<i32> = Rc::new(RefCell::new(n));
@@ -3165,7 +3183,6 @@ pub fn PredictWithAdaptiveMedian_29(coeffs: Ptr<i16>, x: i32, y: i32, stride: i3
     }
     panic!("ub: non-void function does not return a value")
 }
-// quant_matrix.rs
 thread_local!();
 thread_local!();
 thread_local!();
@@ -3187,9 +3204,7 @@ pub fn FillQuantMatrix_30(is_chroma: bool, q: u32, dst: Ptr<u8>) {
         && (((*q.borrow()) as u64) < (*brunsli_kQFactorLimit.with(Value::clone).borrow())))
     {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/quant_matrix.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("quant_matrix.cc");
             let _l: i32 = 18;
             let _fn: Ptr<u8> = Ptr::from_string_literal("FillQuantMatrix");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -3302,7 +3317,6 @@ pub fn FindBestMatrix_31(src: Ptr<i32>, is_chroma: bool, dst: Ptr<u8>) -> u32 {
     });
     return (*best_q.borrow());
 }
-// ans_decode.rs
 thread_local!(
     pub static brunsli_kBitMask: Value<Box<[i32]>> = Rc::new(RefCell::new(Box::new([
         0, 1, 3, 7, 15, 31, 63, 127, 255, 511, 1023, 2047, 4095, 8191, 16383, 32767, 65535,
@@ -3445,7 +3459,18 @@ impl Default for brunsli_BitSource {
         }
     }
 }
-impl ByteRepr for brunsli_BitSource {}
+impl ByteRepr for brunsli_BitSource {
+    fn to_bytes(&self, buf: &mut [u8]) {
+        (*self.val_.borrow()).to_bytes(&mut buf[0..4]);
+        (*self.bit_pos_.borrow()).to_bytes(&mut buf[4..8]);
+    }
+    fn from_bytes(buf: &[u8]) -> Self {
+        Self {
+            val_: Rc::new(RefCell::new(<u32>::from_bytes(&buf[0..4]))),
+            bit_pos_: Rc::new(RefCell::new(<i32>::from_bytes(&buf[4..8]))),
+        }
+    }
+}
 #[derive(Default)]
 pub struct brunsli_ANSSymbolInfo {
     pub offset_: Value<u16>,
@@ -3462,7 +3487,20 @@ impl Clone for brunsli_ANSSymbolInfo {
         this
     }
 }
-impl ByteRepr for brunsli_ANSSymbolInfo {}
+impl ByteRepr for brunsli_ANSSymbolInfo {
+    fn to_bytes(&self, buf: &mut [u8]) {
+        (*self.offset_.borrow()).to_bytes(&mut buf[0..2]);
+        (*self.freq_.borrow()).to_bytes(&mut buf[2..4]);
+        (*self.symbol_.borrow()).to_bytes(&mut buf[4..5]);
+    }
+    fn from_bytes(buf: &[u8]) -> Self {
+        Self {
+            offset_: Rc::new(RefCell::new(<u16>::from_bytes(&buf[0..2]))),
+            freq_: Rc::new(RefCell::new(<u16>::from_bytes(&buf[2..4]))),
+            symbol_: Rc::new(RefCell::new(<u8>::from_bytes(&buf[4..5]))),
+        }
+    }
+}
 #[derive()]
 pub struct brunsli_ANSDecodingData {
     pub map_: Value<Box<[brunsli_ANSSymbolInfo]>>,
@@ -3563,7 +3601,16 @@ impl Default for brunsli_ANSDecoder {
         }
     }
 }
-impl ByteRepr for brunsli_ANSDecoder {}
+impl ByteRepr for brunsli_ANSDecoder {
+    fn to_bytes(&self, buf: &mut [u8]) {
+        (*self.state_.borrow()).to_bytes(&mut buf[0..4]);
+    }
+    fn from_bytes(buf: &[u8]) -> Self {
+        Self {
+            state_: Rc::new(RefCell::new(<u32>::from_bytes(&buf[0..4]))),
+        }
+    }
+}
 impl brunsli_ANSDecodingData {
     pub fn Init(&self, counts: Ptr<Vec<u32>>) -> bool {
         let pos: Value<u64> = Rc::new(RefCell::new(0_u64));
@@ -3599,7 +3646,6 @@ impl brunsli_ANSDecodingData {
             == ((*brunsli_BRUNSLI_ANS_TAB_SIZE.with(Value::clone).borrow()) as u64));
     }
 }
-// bit_reader.rs
 #[derive(Default)]
 pub struct brunsli_BrunsliBitReader {
     pub next_: Value<Ptr<u8>>,
@@ -3673,9 +3719,7 @@ pub fn BrunsliBitReaderGet_35(br: Ptr<brunsli_BrunsliBitReader>, n_bits: u32) ->
     let n_bits: Value<u32> = Rc::new(RefCell::new(n_bits));
     if !((*n_bits.borrow()) <= 24_u32) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/./bit_reader.h",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("bit_reader.cc");
             let _l: i32 = 110;
             let _fn: Ptr<u8> = Ptr::from_string_literal("BrunsliBitReaderGet");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -3717,9 +3761,7 @@ pub fn BrunsliBitReaderDrop_36(br: Ptr<brunsli_BrunsliBitReader>, n_bits: u32) {
         _lhs <= (*(*(*br.borrow()).upgrade().deref()).num_bits_.borrow())
     }) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/./bit_reader.h",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("bit_reader.cc");
             let _l: i32 = 121;
             let _fn: Ptr<u8> = Ptr::from_string_literal("BrunsliBitReaderDrop");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -3873,7 +3915,6 @@ pub fn BrunsliBitReaderCanRead_45(br: Ptr<brunsli_BrunsliBitReader>, n_bits: u64
         _lhs <= (*(*(*br.borrow()).upgrade().deref()).end_.borrow()).clone()
     });
 }
-// brunsli_decode.rs
 #[derive(Clone, Copy, PartialEq, Debug, Default)]
 enum brunsli_BrunsliStatus {
     #[default]
@@ -4032,7 +4073,20 @@ impl Default for brunsli_BinaryArithmeticDecoder {
         }
     }
 }
-impl ByteRepr for brunsli_BinaryArithmeticDecoder {}
+impl ByteRepr for brunsli_BinaryArithmeticDecoder {
+    fn to_bytes(&self, buf: &mut [u8]) {
+        (*self.low_.borrow()).to_bytes(&mut buf[0..4]);
+        (*self.high_.borrow()).to_bytes(&mut buf[4..8]);
+        (*self.value_.borrow()).to_bytes(&mut buf[8..12]);
+    }
+    fn from_bytes(buf: &[u8]) -> Self {
+        Self {
+            low_: Rc::new(RefCell::new(<u32>::from_bytes(&buf[0..4]))),
+            high_: Rc::new(RefCell::new(<u32>::from_bytes(&buf[4..8]))),
+            value_: Rc::new(RefCell::new(<u32>::from_bytes(&buf[8..12]))),
+        }
+    }
+}
 #[derive(Default)]
 pub struct brunsli_HuffmanCode {
     pub bits: Value<u8>,
@@ -4047,7 +4101,18 @@ impl Clone for brunsli_HuffmanCode {
         this
     }
 }
-impl ByteRepr for brunsli_HuffmanCode {}
+impl ByteRepr for brunsli_HuffmanCode {
+    fn to_bytes(&self, buf: &mut [u8]) {
+        (*self.bits.borrow()).to_bytes(&mut buf[0..1]);
+        (*self.value.borrow()).to_bytes(&mut buf[2..4]);
+    }
+    fn from_bytes(buf: &[u8]) -> Self {
+        Self {
+            bits: Rc::new(RefCell::new(<u8>::from_bytes(&buf[0..1]))),
+            value: Rc::new(RefCell::new(<u16>::from_bytes(&buf[2..4]))),
+        }
+    }
+}
 #[derive()]
 pub struct brunsli_JPEGOutput {
     cb: Value<FnPtr<fn(AnyPtr, Ptr<u8>, u64) -> u64>>,
@@ -4271,7 +4336,7 @@ impl brunsli_internal_dec_OutputChunk {
             buffer: Rc::new(RefCell::new(None)),
         };
         {
-            let _p: Ptr<_> = Ptr::alloc((*bytes.borrow()));
+            let _p: Ptr<_> = Ptr::alloc((*bytes.borrow()).clone());
             (*this.buffer.borrow_mut()) = _p.to_owned_opt()
         };
         (*this.next.borrow_mut()) = ((*this.buffer.borrow())
@@ -4494,7 +4559,28 @@ impl Clone for brunsli_internal_dec_SectionState {
         this
     }
 }
-impl ByteRepr for brunsli_internal_dec_SectionState {}
+impl ByteRepr for brunsli_internal_dec_SectionState {
+    fn to_bytes(&self, buf: &mut [u8]) {
+        (*self.tag.borrow()).to_bytes(&mut buf[0..8]);
+        (*self.is_active.borrow()).to_bytes(&mut buf[8..9]);
+        (*self.is_section.borrow()).to_bytes(&mut buf[9..10]);
+        (*self.tags_met.borrow()).to_bytes(&mut buf[12..16]);
+        (*self.remaining.borrow()).to_bytes(&mut buf[16..24]);
+        (*self.milestone.borrow()).to_bytes(&mut buf[24..32]);
+        (*self.projected_end.borrow()).to_bytes(&mut buf[32..40]);
+    }
+    fn from_bytes(buf: &[u8]) -> Self {
+        Self {
+            tag: Rc::new(RefCell::new(<u64>::from_bytes(&buf[0..8]))),
+            is_active: Rc::new(RefCell::new(<bool>::from_bytes(&buf[8..9]))),
+            is_section: Rc::new(RefCell::new(<bool>::from_bytes(&buf[9..10]))),
+            tags_met: Rc::new(RefCell::new(<u32>::from_bytes(&buf[12..16]))),
+            remaining: Rc::new(RefCell::new(<u64>::from_bytes(&buf[16..24]))),
+            milestone: Rc::new(RefCell::new(<u64>::from_bytes(&buf[24..32]))),
+            projected_end: Rc::new(RefCell::new(<u64>::from_bytes(&buf[32..40]))),
+        }
+    }
+}
 #[derive(Clone, Copy, PartialEq, Debug, Default)]
 enum brunsli_internal_dec_HeaderState_Stage {
     #[default]
@@ -4627,7 +4713,16 @@ impl Clone for brunsli_internal_dec_SectionHeaderState {
         this
     }
 }
-impl ByteRepr for brunsli_internal_dec_SectionHeaderState {}
+impl ByteRepr for brunsli_internal_dec_SectionHeaderState {
+    fn to_bytes(&self, buf: &mut [u8]) {
+        (*self.stage.borrow()).to_bytes(&mut buf[0..8]);
+    }
+    fn from_bytes(buf: &[u8]) -> Self {
+        Self {
+            stage: Rc::new(RefCell::new(<u64>::from_bytes(&buf[0..8]))),
+        }
+    }
+}
 #[derive(Clone, Copy, PartialEq, Debug, Default)]
 enum brunsli_internal_dec_MetadataDecompressionStage {
     #[default]
@@ -5148,9 +5243,7 @@ pub fn DecodeVarint_49(
                 _ => {
                     if !(false) {
                         ({
-                            let _f: Ptr<u8> = Ptr::from_string_literal(
-                                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                            );
+                            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                             let _l: i32 = 132;
                             let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeVarint");
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -5241,9 +5334,7 @@ pub fn DecodeLimitedVarint_50(
                 _ => {
                     if !(false) {
                         ({
-                            let _f: Ptr<u8> = Ptr::from_string_literal(
-                                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                            );
+                            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                             let _l: i32 = 169;
                             let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeLimitedVarint");
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -5334,9 +5425,7 @@ pub fn DecodeLimitedVarint_51(
                 _ => {
                     if !(false) {
                         ({
-                            let _f: Ptr<u8> = Ptr::from_string_literal(
-                                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                            );
+                            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                             let _l: i32 = 169;
                             let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeLimitedVarint");
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -5358,7 +5447,7 @@ pub fn GenerateApp0Marker_52(app0_status: u8) -> Vec<u8> {
             .get_offset()
             - (brunsli_AppData_0xe0.with(Value::clone).as_pointer() as Ptr<u8>).get_offset();
         PtrValueIter::new(
-            (brunsli_AppData_0xe0.with(Value::clone).as_pointer() as Ptr<u8>),
+            &(brunsli_AppData_0xe0.with(Value::clone).as_pointer() as Ptr<u8>),
             __count,
         )
         .collect::<Vec<_>>()
@@ -5417,7 +5506,7 @@ pub fn GenerateAppMarker_53(marker: u8, code: u8) -> Vec<u8> {
                 .get_offset()
                 - (brunsli_AppData_0xe2.with(Value::clone).as_pointer() as Ptr<u8>).get_offset();
             PtrValueIter::new(
-                (brunsli_AppData_0xe2.with(Value::clone).as_pointer() as Ptr<u8>),
+                &(brunsli_AppData_0xe2.with(Value::clone).as_pointer() as Ptr<u8>),
                 __count,
             )
             .collect::<Vec<_>>()
@@ -5432,7 +5521,7 @@ pub fn GenerateAppMarker_53(marker: u8, code: u8) -> Vec<u8> {
                 .get_offset()
                 - (brunsli_AppData_0xec.with(Value::clone).as_pointer() as Ptr<u8>).get_offset();
             PtrValueIter::new(
-                (brunsli_AppData_0xec.with(Value::clone).as_pointer() as Ptr<u8>),
+                &(brunsli_AppData_0xec.with(Value::clone).as_pointer() as Ptr<u8>),
                 __count,
             )
             .collect::<Vec<_>>()
@@ -5443,9 +5532,7 @@ pub fn GenerateAppMarker_53(marker: u8, code: u8) -> Vec<u8> {
     } else {
         if !(((*marker.borrow()) as i32) == 130) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 197;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("GenerateAppMarker");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -5458,7 +5545,7 @@ pub fn GenerateAppMarker_53(marker: u8, code: u8) -> Vec<u8> {
                 .get_offset()
                 - (brunsli_AppData_0xee.with(Value::clone).as_pointer() as Ptr<u8>).get_offset();
             PtrValueIter::new(
-                (brunsli_AppData_0xee.with(Value::clone).as_pointer() as Ptr<u8>),
+                &(brunsli_AppData_0xee.with(Value::clone).as_pointer() as Ptr<u8>),
                 __count,
             )
             .collect::<Vec<_>>()
@@ -5667,7 +5754,7 @@ pub fn ProcessMetaData_54(
                                     .offset((3) as isize)
                                     .get_offset()
                                     - (head.as_pointer() as Ptr<u8>).get_offset();
-                                PtrValueIter::new((head.as_pointer() as Ptr<u8>).clone(), __count)
+                                PtrValueIter::new(&(head.as_pointer() as Ptr<u8>), __count)
                                     .map(|item| u8::try_from(item).ok().unwrap())
                                     .collect::<Vec<_>>()
                             })))
@@ -5983,7 +6070,7 @@ pub fn DecodeHuffmanCode_55(
                                             as Ptr<u8>)
                                             .get_offset();
                                     PtrValueIter::new(
-                                        (brunsli_kDefaultDCValues.with(Value::clone).as_pointer()
+                                        &(brunsli_kDefaultDCValues.with(Value::clone).as_pointer()
                                             as Ptr<u8>),
                                         __count,
                                     )
@@ -6001,7 +6088,7 @@ pub fn DecodeHuffmanCode_55(
                                             as Ptr<u8>)
                                             .get_offset();
                                     PtrValueIter::new(
-                                        (brunsli_kDefaultACValues.with(Value::clone).as_pointer()
+                                        &(brunsli_kDefaultACValues.with(Value::clone).as_pointer()
                                             as Ptr<u8>),
                                         __count,
                                     )
@@ -6546,9 +6633,7 @@ pub fn DecodeNumNonzeros_58(
     )));
     if !((*val.borrow()) <= (*brunsli_kNumNonZeroTreeSize.with(Value::clone).borrow())) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 593;
             let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeNumNonzeros");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7581,7 +7666,7 @@ pub fn DecodeAC_64(
                             <= (*brunsli_kNumNonZeroTreeSize.with(Value::clone).borrow()))
                         {
                             ({
-                                let _f: Ptr::<u8>   = Ptr::from_string_literal("/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc" )  ;
+                                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                                 let _l: i32 = 949;
                                 let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeAC");
                                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8515,9 +8600,7 @@ pub fn DecodeMetaDataSection_84(
                 let result: Value<brunsli_BrunsliStatus> = Rc::new(RefCell::new(result));
                 if !(!((*(*ms.upgrade().deref()).brotli.borrow()).is_null())) {
                     ({
-                        let _f: Ptr<u8> = Ptr::from_string_literal(
-                            "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                        );
+                        let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                         let _l: i32 = 1312;
                         let _fn: Ptr<u8> = Ptr::from_string_literal("operator()");
                         BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8689,9 +8772,7 @@ pub fn DecodeMetaDataSection_84(
                 == (::brotli_sys::BROTLI_DECODER_RESULT_NEEDS_MORE_INPUT as i32))
             {
                 ({
-                    let _f: Ptr<u8> = Ptr::from_string_literal(
-                        "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                    );
+                    let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                     let _l: i32 = 1352;
                     let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeMetaDataSection");
                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8714,9 +8795,7 @@ pub fn DecodeMetaDataSection_84(
     }
     if !(false) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 1361;
             let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeMetaDataSection");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8792,9 +8871,7 @@ pub fn PrepareBitReader_86(
         BrunsliBitReaderIsHealthy_43(_br)
     }) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 1384;
             let _fn: Ptr<u8> = Ptr::from_string_literal("PrepareBitReader");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8858,9 +8935,7 @@ pub fn SuspendBitReader_87(
             != (brunsli_BrunsliStatus::BRUNSLI_NOT_ENOUGH_DATA as i32))))
     {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 1401;
             let _fn: Ptr<u8> = Ptr::from_string_literal("SuspendBitReader");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -9253,9 +9328,7 @@ pub fn DecodeJPEGInternalsSection_88(
             if !((*comp_ids.borrow()) == (*brunsli_kComponentIdsCustom.with(Value::clone).borrow()))
             {
                 ({
-                    let _f: Ptr<u8> = Ptr::from_string_literal(
-                        "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                    );
+                    let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                     let _l: i32 = 1529;
                     let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeJPEGInternalsSection");
                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -9518,9 +9591,7 @@ pub fn DecodeJPEGInternalsSection_88(
                     }) == 0_u64)
                     {
                         ({
-                            let _f: Ptr<u8> = Ptr::from_string_literal(
-                                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                            );
+                            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                             let _l: i32 = 1613;
                             let _fn: Ptr<u8> =
                                 Ptr::from_string_literal("DecodeJPEGInternalsSection");
@@ -9534,9 +9605,7 @@ pub fn DecodeJPEGInternalsSection_88(
                     }) > 0_u64)
                     {
                         ({
-                            let _f: Ptr<u8> = Ptr::from_string_literal(
-                                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                            );
+                            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                             let _l: i32 = 1614;
                             let _fn: Ptr<u8> =
                                 Ptr::from_string_literal("DecodeJPEGInternalsSection");
@@ -9967,9 +10036,7 @@ pub fn DecodeQuantDataSection_89(
         _lhs == (brunsli_internal_dec_QuantDataState_Stage::FINISH as i32)
     }) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 1787;
             let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeQuantDataSection");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10020,9 +10087,7 @@ pub fn DecodeHistogramDataSection_90(
         });
         if !(!(*(*(*jpg.borrow()).upgrade().deref()).components.borrow()).is_empty()) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 1802;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeHistogramDataSection");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10078,9 +10143,7 @@ pub fn DecodeHistogramDataSection_90(
         ));
         if !((*num_components.borrow()) <= 4_u64) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 1822;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeHistogramDataSection");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10427,9 +10490,7 @@ pub fn DecodeHistogramDataSection_90(
         _lhs == (brunsli_internal_dec_HistogramDataState_Stage::DONE as i32)
     }) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 1925;
             let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeHistogramDataSection");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10454,9 +10515,7 @@ pub fn DecodeDCDataSection_93(state: Ptr<brunsli_internal_dec_State>) -> brunsli
     ));
     if !(((*limit.borrow()) & 1_u64) == 0_u64) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 1932;
             let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeDCDataSection");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10489,9 +10548,7 @@ pub fn DecodeDCDataSection_93(state: Ptr<brunsli_internal_dec_State>) -> brunsli
     ));
     if !(((*(*in_.borrow()).pos_.borrow()) & 1_u64) == 0_u64) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 1941;
             let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeDCDataSection");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10503,9 +10560,7 @@ pub fn DecodeDCDataSection_93(state: Ptr<brunsli_internal_dec_State>) -> brunsli
     }
     if !((*(*in_.borrow()).pos_.borrow()) <= (*chunk_len.borrow())) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 1943;
             let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeDCDataSection");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10521,9 +10576,7 @@ pub fn DecodeDCDataSection_93(state: Ptr<brunsli_internal_dec_State>) -> brunsli
         if !(((*status.borrow()) as i32) != (brunsli_BrunsliStatus::BRUNSLI_NOT_ENOUGH_DATA as i32))
         {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 1946;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeDCDataSection");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10555,9 +10608,7 @@ pub fn DecodeACDataSection_94(state: Ptr<brunsli_internal_dec_State>) -> brunsli
     ));
     if !(((*limit.borrow()) & 1_u64) == 0_u64) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 1955;
             let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeACDataSection");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10590,9 +10641,7 @@ pub fn DecodeACDataSection_94(state: Ptr<brunsli_internal_dec_State>) -> brunsli
     ));
     if !(((*(*in_.borrow()).pos_.borrow()) & 1_u64) == 0_u64) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 1964;
             let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeACDataSection");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10604,9 +10653,7 @@ pub fn DecodeACDataSection_94(state: Ptr<brunsli_internal_dec_State>) -> brunsli
     }
     if !((*(*in_.borrow()).pos_.borrow()) <= (*chunk_len.borrow())) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 1966;
             let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeACDataSection");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10622,9 +10669,7 @@ pub fn DecodeACDataSection_94(state: Ptr<brunsli_internal_dec_State>) -> brunsli
         if !(((*status.borrow()) as i32) != (brunsli_BrunsliStatus::BRUNSLI_NOT_ENOUGH_DATA as i32))
         {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 1969;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("DecodeACDataSection");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -10793,7 +10838,8 @@ pub fn DecodeOriginalJpg_95(
                             .offset((*to_copy.borrow()) as isize)
                             .get_offset()
                             - (*src.borrow()).get_offset();
-                        let temp_vec: Vec<u8> = PtrValueIter::new((*src.borrow()), count).collect();
+                        let temp_vec: Vec<u8> =
+                            PtrValueIter::new(&(*src.borrow()), count).collect();
                         ((*fs.upgrade().deref()).storage.as_pointer() as Ptr<Vec<u8>>).with_mut(
                             |v: &mut Vec<u8>| {
                                 v.splice(start_idx..start_idx, temp_vec);
@@ -10973,9 +11019,7 @@ pub fn ParseSection_96(state: Ptr<brunsli_internal_dec_State>) -> brunsli_intern
         (brunsli_internal_dec_SectionHeaderState_Stage::READ_TAG as u64);
     if !((*result.borrow()) != brunsli_internal_dec_Stage::ERROR) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 2091;
             let _fn: Ptr<u8> = Ptr::from_string_literal("ParseSection");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11041,9 +11085,7 @@ pub fn ProcessSection_98(
             }) == 0_u64)
             {
                 ({
-                    let _f: Ptr<u8> = Ptr::from_string_literal(
-                        "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                    );
+                    let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                     let _l: i32 = 2110;
                     let _fn: Ptr<u8> = Ptr::from_string_literal("ProcessSection");
                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11389,9 +11431,7 @@ pub fn UpdateSubsamplingDerivatives_82(jpg: Ptr<brunsli_JPEGData>) -> bool {
             .borrow_mut()) = __rhs;
         if !((*(*(*c.borrow()).upgrade().deref()).width_in_blocks.borrow()) <= 8205_u32) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 2211;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("UpdateSubsamplingDerivatives");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11400,9 +11440,7 @@ pub fn UpdateSubsamplingDerivatives_82(jpg: Ptr<brunsli_JPEGData>) -> bool {
         };
         if !((*(*(*c.borrow()).upgrade().deref()).height_in_blocks.borrow()) <= 8205_u32) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 2212;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("UpdateSubsamplingDerivatives");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11724,9 +11762,7 @@ pub fn LoadInput_102(state: Ptr<brunsli_internal_dec_State>) {
             .borrow())
     }) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 2337;
             let _fn: Ptr<u8> = Ptr::from_string_literal("LoadInput");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11794,9 +11830,7 @@ pub fn UnloadInput_103(
             _lhs <= (*(*b.upgrade().deref()).external_len.borrow())
         }) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 2364;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("UnloadInput");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11809,9 +11843,7 @@ pub fn UnloadInput_103(
         }
         if !((*(*b.upgrade().deref()).data_len.borrow()) == 0_u64) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 2366;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("UnloadInput");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11828,9 +11860,7 @@ pub fn UnloadInput_103(
                 .borrow()))
         {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 2368;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("UnloadInput");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11891,9 +11921,7 @@ pub fn UnloadInput_103(
             _lhs == (*(*b.upgrade().deref()).external_len.borrow())
         }) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 2389;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("UnloadInput");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11908,9 +11936,7 @@ pub fn UnloadInput_103(
                 .borrow())
         }) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 2391;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("UnloadInput");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11926,9 +11952,7 @@ pub fn UnloadInput_103(
     }
     if !(!(*(*b.upgrade().deref()).data.borrow()).is_empty()) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 2395;
             let _fn: Ptr<u8> = Ptr::from_string_literal("UnloadInput");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11960,9 +11984,7 @@ pub fn UnloadInput_103(
             .borrow())
     }) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
             let _l: i32 = 2399;
             let _fn: Ptr<u8> = Ptr::from_string_literal("UnloadInput");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -12206,9 +12228,7 @@ impl brunsli_BrunsliDecoder {
             Rc::new(RefCell::new((*self.jpg_.borrow()).as_pointer()));
         if !!(*jpg.borrow()).is_null() {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 2511;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("Decode");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -12219,9 +12239,7 @@ impl brunsli_BrunsliDecoder {
             Rc::new(RefCell::new((*self.state_.borrow()).as_pointer()));
         if !!(*state.borrow()).is_null() {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 2513;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("Decode");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -12259,9 +12277,7 @@ impl brunsli_BrunsliDecoder {
         }
         if !(((*available_in.borrow()).read()) == 0_u64) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                 let _l: i32 = 2529;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("Decode");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -12289,9 +12305,7 @@ impl brunsli_BrunsliDecoder {
                         == (brunsli_BrunsliStatus::BRUNSLI_OK as i32))
                     {
                         ({
-                            let _f: Ptr<u8> = Ptr::from_string_literal(
-                                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                            );
+                            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                             let _l: i32 = 2540;
                             let _fn: Ptr<u8> = Ptr::from_string_literal("Decode");
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -12305,9 +12319,7 @@ impl brunsli_BrunsliDecoder {
                         == (brunsli_BrunsliStatus::BRUNSLI_NOT_ENOUGH_DATA as i32))
                     {
                         ({
-                            let _f: Ptr<u8> = Ptr::from_string_literal(
-                                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                            );
+                            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                             let _l: i32 = 2545;
                             let _fn: Ptr<u8> = Ptr::from_string_literal("Decode");
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -12319,9 +12331,7 @@ impl brunsli_BrunsliDecoder {
                 v if v == brunsli_internal_dec_SerializationStatus::NEEDS_MORE_OUTPUT => {
                     if !(((*available_out.borrow()).read()) == 0_u64) {
                         ({
-                            let _f: Ptr<u8> = Ptr::from_string_literal(
-                                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                            );
+                            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                             let _l: i32 = 2551;
                             let _fn: Ptr<u8> = Ptr::from_string_literal("Decode");
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -12336,9 +12346,7 @@ impl brunsli_BrunsliDecoder {
                 _ => {
                     if !(false) {
                         ({
-                            let _f: Ptr<u8> = Ptr::from_string_literal(
-                                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc",
-                            );
+                            let _f: Ptr<u8> = Ptr::from_string_literal("brunsli_decode.cc");
                             let _l: i32 = 2559;
                             let _fn: Ptr<u8> = Ptr::from_string_literal("Decode");
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -12352,7 +12360,6 @@ impl brunsli_BrunsliDecoder {
         panic!("ub: non-void function does not return a value")
     }
 }
-// context_map_decode.rs
 thread_local!();
 thread_local!();
 thread_local!();
@@ -12491,7 +12498,6 @@ pub fn DecodeContextMap_91(
         brunsli_BrunsliStatus::BRUNSLI_INVALID_BRN
     };
 }
-// histogram_decode.rs
 pub fn GetPopulationCountPrecision_111(logcount: u32) -> u32 {
     let logcount: Value<u32> = Rc::new(RefCell::new(logcount));
     return (((*logcount.borrow()).wrapping_add(1_u32)) >> 1);
@@ -12587,9 +12593,7 @@ pub fn ReadHistogram_92(
     let br: Value<Ptr<brunsli_BrunsliBitReader>> = Rc::new(RefCell::new(br));
     if !(!(*(*counts.borrow()).upgrade().deref()).is_empty()) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/histogram_decode.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("histogram_decode.cc");
             let _l: i32 = 41;
             let _fn: Ptr<u8> = Ptr::from_string_literal("ReadHistogram");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -12687,9 +12691,7 @@ pub fn ReadHistogram_92(
         let omit_pos: Value<u64> = Rc::new(RefCell::new(0_u64));
         if !((*real_length.borrow()) > 2_u64) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/histogram_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("histogram_decode.cc");
                 let _l: i32 = 74;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("ReadHistogram");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -12713,9 +12715,7 @@ pub fn ReadHistogram_92(
         }
         if !((*omit_pos.borrow()) >= 0_u64) {
             ({
-                let _f: Ptr<u8> = Ptr::from_string_literal(
-                    "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/histogram_decode.cc",
-                );
+                let _f: Ptr<u8> = Ptr::from_string_literal("histogram_decode.cc");
                 let _l: i32 = 80;
                 let _fn: Ptr<u8> = Ptr::from_string_literal("ReadHistogram");
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -12776,7 +12776,6 @@ pub fn ReadHistogram_92(
         BrunsliBitReaderIsHealthy_43(_br)
     });
 }
-// huffman_decode.rs
 #[derive(Default)]
 pub struct brunsli_HuffmanDecodingData {
     pub table_: Value<Vec<brunsli_HuffmanCode>>,
@@ -13503,7 +13502,7 @@ impl brunsli_HuffmanDecodingData {
                 .get_offset()
                 - ({ (*(*arena.borrow()).upgrade().deref()).data() }).get_offset();
             PtrValueIter::new(
-                ({ (*(*arena.borrow()).upgrade().deref()).data() }).clone(),
+                &({ (*(*arena.borrow()).upgrade().deref()).data() }),
                 __count,
             )
             .map(|item| brunsli_HuffmanCode::try_from(item).ok().unwrap())
@@ -13550,7 +13549,6 @@ impl brunsli_HuffmanDecodingData {
         return (*(*(*table.borrow()).upgrade().deref()).value.borrow());
     }
 }
-// huffman_table.rs
 thread_local!();
 thread_local!();
 thread_local!();
@@ -13829,7 +13827,6 @@ pub fn BuildHuffmanTable_114(
     }
     return ((*total_size.borrow()) as u32);
 }
-// jpeg_data_writer.rs
 thread_local!();
 thread_local!();
 thread_local!();
@@ -14073,9 +14070,7 @@ pub fn EmitMarker_127(bw: Ptr<brunsli_internal_dec_BitWriter>, marker: i32) {
     });
     if !((*marker.borrow()) != 255) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/jpeg_data_writer.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("jpeg_data_writer.cc");
             let _l: i32 = 133;
             let _fn: Ptr<u8> = Ptr::from_string_literal("EmitMarker");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -15835,9 +15830,7 @@ pub fn DoEncodeScan_148(
         _lhs == (brunsli_internal_dec_EncodeScanState_Stage::BODY as i32)
     }) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/jpeg_data_writer.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("jpeg_data_writer.cc");
             let _l: i32 = 741;
             let _fn: Ptr<u8> = Ptr::from_string_literal("DoEncodeScan");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -16337,9 +16330,7 @@ pub fn DoEncodeScan_149(
         _lhs == (brunsli_internal_dec_EncodeScanState_Stage::BODY as i32)
     }) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/jpeg_data_writer.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("jpeg_data_writer.cc");
             let _l: i32 = 741;
             let _fn: Ptr<u8> = Ptr::from_string_literal("DoEncodeScan");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -16839,9 +16830,7 @@ pub fn DoEncodeScan_150(
         _lhs == (brunsli_internal_dec_EncodeScanState_Stage::BODY as i32)
     }) {
         ({
-            let _f: Ptr<u8> = Ptr::from_string_literal(
-                "/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/jpeg_data_writer.cc",
-            );
+            let _f: Ptr<u8> = Ptr::from_string_literal("jpeg_data_writer.cc");
             let _l: i32 = 741;
             let _fn: Ptr<u8> = Ptr::from_string_literal("DoEncodeScan");
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -17724,7 +17713,7 @@ pub fn SerializeJpeg_108(
                 } else if ((*status.borrow()) != brunsli_internal_dec_SerializationStatus::DONE) {
                     if !(false) {
                         ({
-                            let _f: Ptr::<u8>   = Ptr::from_string_literal("/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/jpeg_data_writer.cc" )  ;
+                            let _f: Ptr<u8> = Ptr::from_string_literal("jpeg_data_writer.cc");
                             let _l: i32 = 1073;
                             let _fn: Ptr<u8> = Ptr::from_string_literal("SerializeJpeg");
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -17752,7 +17741,6 @@ pub fn SerializeJpeg_108(
     }
     panic!("ub: non-void function does not return a value")
 }
-// state.rs
 #[derive()]
 pub struct brunsli_internal_dec_State {
     pub stage: Value<brunsli_internal_dec_Stage>,
@@ -17893,7 +17881,6 @@ pub fn HasSection_97(state: Ptr<brunsli_internal_dec_State>, tag: u32) -> bool {
         _lhs & (1_u32 << (*tag.borrow()))
     } != 0);
 }
-// dbrunsli.rs
 pub fn StringWriter_155(data: AnyPtr, buf: Ptr<u8>, count: u64) -> u64 {
     let data: Value<AnyPtr> = Rc::new(RefCell::new(data));
     let buf: Value<Ptr<u8>> = Rc::new(RefCell::new(buf));
@@ -17980,8 +17967,8 @@ pub fn ReadFileInternal_156(file: Ptr<::std::fs::File>, content: Ptr<Vec<u8>>) -
         let _lhs = (*read_pos.borrow());
         _lhs < ((*(*content.borrow()).upgrade().deref()).len() - 1) as u64
     } {
-        let bytes_read: Value<u64> = Rc::new(RefCell::new(libcc2rs::fread_refcount(
-            ((if (*read_pos.borrow()) as usize
+        let bytes_read: Value<u64> = Rc::new(RefCell::new({
+            let __a0 = ((if (*read_pos.borrow()) as usize
                 >= (*((*content.borrow()).to_strong().as_pointer() as Ptr<Vec<u8>>)
                     .upgrade()
                     .deref())
@@ -17995,12 +17982,13 @@ pub fn ReadFileInternal_156(file: Ptr<::std::fs::File>, content: Ptr<Vec<u8>>) -
                     .as_pointer() as Ptr<u8>)
                     .offset((*read_pos.borrow()) as isize)
             }) as Ptr<u8>)
-                .to_any(),
-            1_u64,
-            (((*(*content.borrow()).upgrade().deref()).len() - 1) as u64)
-                .wrapping_sub((*read_pos.borrow())),
-            (*file.borrow()).clone(),
-        )));
+                .to_any();
+            let __a1 = 1_u64;
+            let __a2 = (((*(*content.borrow()).upgrade().deref()).len() - 1) as u64)
+                .wrapping_sub((*read_pos.borrow()));
+            let __a3 = (*file.borrow()).clone();
+            libcc2rs::fread_refcount(__a0, __a1, __a2, __a3)
+        }));
         if ((*bytes_read.borrow()) == 0_u64) {
             eprintln!("Failed to read input file");
             return false;
@@ -18060,14 +18048,16 @@ pub fn WriteFileInternal_158(file: Ptr<::std::fs::File>, content: Ptr<Vec<u8>>) 
         let _lhs = (*write_pos.borrow());
         _lhs < ((*content.upgrade().deref()).len() - 1) as u64
     } {
-        let bytes_written: Value<u64> = Rc::new(RefCell::new(libcc2rs::fwrite_refcount(
-            (((content.to_strong().as_pointer() as Ptr<u8>).offset((*write_pos.borrow()) as isize))
-                as Ptr<u8>)
-                .to_any(),
-            1_u64,
-            (((*content.upgrade().deref()).len() - 1) as u64).wrapping_sub((*write_pos.borrow())),
-            (*file.borrow()).clone(),
-        )));
+        let bytes_written: Value<u64> = Rc::new(RefCell::new({
+            let __a0 = (((content.to_strong().as_pointer() as Ptr<u8>)
+                .offset((*write_pos.borrow()) as isize)) as Ptr<u8>)
+                .to_any();
+            let __a1 = 1_u64;
+            let __a2 = (((*content.upgrade().deref()).len() - 1) as u64)
+                .wrapping_sub((*write_pos.borrow()));
+            let __a3 = (*file.borrow()).clone();
+            libcc2rs::fwrite_refcount(__a0, __a1, __a2, __a3)
+        }));
         if ((*bytes_written.borrow()) == 0_u64) {
             eprintln!("Failed to write output.");
             return false;

@@ -6,8 +6,6 @@ use std::io::prelude::*;
 use std::io::{Read, Seek, Write};
 use std::os::fd::AsFd;
 use std::rc::{Rc, Weak};
-
-// table_tags.rs
 thread_local!(
     pub static woff2_kGlyfTableTag: Value<u32> = Rc::new(RefCell::new(1735162214_u32));
 );
@@ -226,8 +224,6 @@ thread_local!(
             | (('l' as u8) as i32)) as u32),
     ])));
 );
-
-// variable_length.rs
 #[derive(Default)]
 pub struct woff2_Buffer {
     buffer_: Value<Ptr<u8>>,
@@ -619,7 +615,6 @@ pub fn StoreBase128_6(len: u64, offset: Ptr<u64>, dst: Ptr<u8>) {
         (*i.borrow_mut()).prefix_inc();
     }
 }
-// woff2_common.rs
 thread_local!(
     pub static woff2_kWoff2Signature: Value<u32> = Rc::new(RefCell::new(2001684018_u32));
 );
@@ -651,7 +646,20 @@ impl Clone for woff2_Point {
         this
     }
 }
-impl ByteRepr for woff2_Point {}
+impl ByteRepr for woff2_Point {
+    fn to_bytes(&self, buf: &mut [u8]) {
+        (*self.x.borrow()).to_bytes(&mut buf[0..4]);
+        (*self.y.borrow()).to_bytes(&mut buf[4..8]);
+        (*self.on_curve.borrow()).to_bytes(&mut buf[8..9]);
+    }
+    fn from_bytes(buf: &[u8]) -> Self {
+        Self {
+            x: Rc::new(RefCell::new(<i32>::from_bytes(&buf[0..4]))),
+            y: Rc::new(RefCell::new(<i32>::from_bytes(&buf[4..8]))),
+            on_curve: Rc::new(RefCell::new(<bool>::from_bytes(&buf[8..9]))),
+        }
+    }
+}
 #[derive(Default)]
 pub struct woff2_Table {
     pub tag: Value<u32>,
@@ -778,7 +786,6 @@ pub fn CollectionHeaderSize_9(header_version: u32, num_fonts: u32) -> u64 {
     }
     return (*size.borrow());
 }
-// font.rs
 #[derive(Default)]
 pub struct woff2_Font_Table {
     pub tag: Value<u32>,
@@ -1988,7 +1995,7 @@ pub fn RemoveDigitalSignature_30(font: Ptr<woff2_Font>) -> bool {
         RefcountMapIter::erase(
             ((*(*font.borrow()).upgrade().deref()).tables.as_pointer()
                 as Ptr<BTreeMap<u32, Value<woff2_Font_Table>>>),
-            &(*it.borrow()),
+            &(*it.borrow()).clone(),
         );
         let __rhs = ((*(*(*font.borrow()).upgrade().deref()).tables.borrow()).len() as u64 as u16);
         (*(*(*font.borrow()).upgrade().deref())
@@ -1997,7 +2004,6 @@ pub fn RemoveDigitalSignature_30(font: Ptr<woff2_Font>) -> bool {
     }
     return true;
 }
-// glyph.rs
 #[derive(Default)]
 pub struct woff2_Glyph_Point {
     pub x: Value<i32>,
@@ -2014,7 +2020,20 @@ impl Clone for woff2_Glyph_Point {
         this
     }
 }
-impl ByteRepr for woff2_Glyph_Point {}
+impl ByteRepr for woff2_Glyph_Point {
+    fn to_bytes(&self, buf: &mut [u8]) {
+        (*self.x.borrow()).to_bytes(&mut buf[0..4]);
+        (*self.y.borrow()).to_bytes(&mut buf[4..8]);
+        (*self.on_curve.borrow()).to_bytes(&mut buf[8..9]);
+    }
+    fn from_bytes(buf: &[u8]) -> Self {
+        Self {
+            x: Rc::new(RefCell::new(<i32>::from_bytes(&buf[0..4]))),
+            y: Rc::new(RefCell::new(<i32>::from_bytes(&buf[4..8]))),
+            on_curve: Rc::new(RefCell::new(<bool>::from_bytes(&buf[8..9]))),
+        }
+    }
+}
 #[derive()]
 pub struct woff2_Glyph {
     pub x_min: Value<i16>,
@@ -3001,7 +3020,6 @@ pub fn StoreGlyph_37(glyph: Ptr<woff2_Glyph>, dst: Ptr<u8>, dst_size: Ptr<u64>) 
     (*dst_size.borrow()).write(__rhs);
     return true;
 }
-// normalize.rs
 pub fn Round4_38(value: i32) -> i32 {
     let value: Value<i32> = Rc::new(RefCell::new(value));
     if ((<i32>::MAX - (*value.borrow())) < 3) {
@@ -3684,7 +3702,6 @@ pub fn NormalizeFontCollection_51(font_collection: Ptr<woff2_FontCollection>) ->
     }
     return true;
 }
-// transform.rs
 thread_local!();
 thread_local!(
     pub static woff2_FLAG_ARG_1_AND_2_ARE_WORDS: Value<i32> = Rc::new(RefCell::new((1 << 0)));
@@ -4688,7 +4705,6 @@ pub fn TransformHmtxTable_57(font: Ptr<woff2_Font>) -> bool {
         .borrow_mut()) = __rhs;
     return true;
 }
-// woff2_enc.rs
 #[derive()]
 pub struct woff2_WOFF2Params {
     pub extended_metadata: Value<Vec<u8>>,
@@ -5746,7 +5762,6 @@ pub fn ConvertTTFToWOFF2_73(
     }
     return true;
 }
-// woff2_compress.rs
 pub fn GetFileContent_74(filename: Vec<u8>) -> Vec<u8> {
     let filename: Value<Vec<u8>> = Rc::new(RefCell::new(filename));
     let ifs: Value<::std::fs::File> = Rc::new(RefCell::new(
@@ -5770,10 +5785,12 @@ pub fn SetFileContents_75(filename: Vec<u8>, start: Ptr<u8>, end: Ptr<u8>) {
             .expect("Failed to open file"),
     ));
     {
-        (*ofs.borrow_mut())
-            .try_clone()
-            .unwrap()
-            .write_all((*start.borrow()).slice_until(&(*end.borrow())).as_slice());
+        (*ofs.borrow_mut()).try_clone().unwrap().write_all(
+            (*start.borrow())
+                .clone()
+                .slice_until(&(*end.borrow()).clone())
+                .as_slice(),
+        );
         (*ofs.borrow_mut())
             .try_clone()
             .unwrap()

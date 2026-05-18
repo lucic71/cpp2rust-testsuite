@@ -6,13 +6,9 @@ use std::collections::BTreeMap;
 use std::io::{Read, Seek, Write};
 use std::os::fd::{AsFd, FromRawFd, IntoRawFd};
 use std::rc::Rc;
-
-// ans_params.rs
 pub static mut brunsli_BRUNSLI_ANS_LOG_TAB_SIZE: i32 = unsafe { 10 };
 pub static mut brunsli_BRUNSLI_ANS_TAB_SIZE: i32 =
     unsafe { ((1) << (brunsli_BRUNSLI_ANS_LOG_TAB_SIZE)) };
-
-// constants.rs
 pub static mut brunsli_kFallbackVersion: i32 = unsafe { 1 };
 pub static mut brunsli_kDCTBlockSize: i32 = unsafe { 64 };
 pub static mut brunsli_kMaxComponents: i32 = unsafe { 4 };
@@ -944,8 +940,6 @@ pub static mut brunsli_AppData_0xe2: [u8; 3161] = unsafe {
         255_u8,
     ]
 };
-
-// context.rs
 pub unsafe fn BrunsliUnalignedRead16_5(mut p: *const ::libc::c_void) -> u16 {
     let mut t: u16 = 0_u16;
     {
@@ -1101,9 +1095,7 @@ pub unsafe fn FastDivide_15(mut numerator: u32, mut denominator: u8) -> u8 {
         >> (17));
     if !((result) < (256_u32)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/././distributions.h\0"
-                    .as_ptr();
+            let _f: *const u8 = b"context.cc\0".as_ptr();
             let _l: i32 = 55;
             let _fn: *const u8 = b"FastDivide\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -1473,8 +1465,7 @@ pub unsafe fn NumNonzerosContext_23(mut prev: *const u8, mut x: i32, mut y: i32)
     }
     if !((prediction) <= (brunsli_kNumNonZeroTreeSize)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/./context.h\0".as_ptr();
+            let _f: *const u8 = b"context.cc\0".as_ptr();
             let _l: i32 = 305;
             let _fn: *const u8 = b"NumNonzerosContext\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -1965,9 +1956,7 @@ impl brunsli_ComponentState {
                 let v: i32 = ((brunsli_kInitProb[(k) as usize] as i32) + ((9) * ((i) - (7))));
                 if !((v) <= (255)) {
                     (unsafe {
-                        let _f: *const u8 =
-                            b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/context.cc\0"
-                                .as_ptr();
+                        let _f: *const u8 = b"context.cc\0".as_ptr();
                         let _l: i32 = 227;
                         let _fn: *const u8 = b"InitAll\0".as_ptr();
                         BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2032,7 +2021,6 @@ impl brunsli_ComponentState {
         }
     }
 }
-// lehmer_code.rs
 #[repr(C)]
 #[derive(Clone)]
 pub struct brunsli_PermutationCoder {
@@ -2055,9 +2043,7 @@ impl brunsli_PermutationCoder {
         let mut num_values: u32 = (self.values_.len() as u64 as u32);
         if !((num_values) > (0_u32)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/./lehmer_code.h\0"
-                        .as_ptr();
+                let _f: *const u8 = b"lehmer_code.cc\0".as_ptr();
                 let _l: i32 = 51;
                 let _fn: *const u8 = b"num_bits\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2140,8 +2126,7 @@ pub unsafe fn ComputeLehmerCode_26(mut sigma: *const u32, len: u64, mut code: *m
         };
         if !(it != items.as_mut_ptr().add(items.len())) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/lehmer_code.cc\0".as_ptr();
+                let _f: *const u8 = b"lehmer_code.cc\0".as_ptr();
                 let _l: i32 = 21;
                 let _fn: *const u8 = b"ComputeLehmerCode\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2186,7 +2171,6 @@ pub unsafe fn DecodeLehmerCode_27(mut code: *const u32, mut len: u64, mut sigma:
     }
     return true;
 }
-// platform.rs
 pub unsafe fn BrunsliDumpAndAbort_16(mut f: *const u8, mut l: i32, mut fn_: *const u8) {
     printf(b"%s:%d (%s)\n\0".as_ptr() as *const i8, f, l, fn_);
     if !(libcc2rs::cerr_unsafe()).is_null() {
@@ -2201,7 +2185,6 @@ pub unsafe fn BrunsliDumpAndAbort_16(mut f: *const u8, mut l: i32, mut fn_: *con
     };
     std::process::abort();
 }
-// predict.rs
 pub unsafe fn AdaptiveMedian_28(mut w: i32, mut n: i32, mut nw: i32) -> i32 {
     let mx: i32 = if ((w) > (n)) { w } else { n };
     let mn: i32 = (((w) + (n)) - (mx));
@@ -2243,14 +2226,12 @@ pub unsafe fn PredictWithAdaptiveMedian_29(
     }
     panic!("ub: non-void function does not return a value")
 }
-// quant_matrix.rs
 pub static mut brunsli_kQFactorBits: u64 = unsafe { 6_u64 };
 pub static mut brunsli_kQFactorLimit: u64 = unsafe { (((1_u32) << (brunsli_kQFactorBits)) as u64) };
 pub unsafe fn FillQuantMatrix_30(mut is_chroma: bool, mut q: u32, mut dst: *mut u8) {
     if !(((q) >= (0_u32)) && ((q as u64) < (brunsli_kQFactorLimit))) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/common/quant_matrix.cc\0".as_ptr();
+            let _f: *const u8 = b"quant_matrix.cc\0".as_ptr();
             let _l: i32 = 18;
             let _fn: *const u8 = b"FillQuantMatrix\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2337,7 +2318,6 @@ pub unsafe fn FindBestMatrix_31(mut src: *const i32, mut is_chroma: bool, mut ds
     });
     return best_q;
 }
-// ans_decode.rs
 pub static mut brunsli_kBitMask: [i32; 17] = unsafe {
     [
         0, 1, 3, 7, 15, 31, 63, 127, 255, 511, 1023, 2047, 4095, 8191, 16383, 32767, 65535,
@@ -2527,7 +2507,6 @@ impl brunsli_ANSDecodingData {
         return ((pos) == (brunsli_BRUNSLI_ANS_TAB_SIZE as u64));
     }
 }
-// bit_reader.rs
 #[repr(C)]
 #[derive(Copy, Clone, Default)]
 pub struct brunsli_BrunsliBitReader {
@@ -2569,8 +2548,7 @@ pub unsafe fn BrunsliBitReaderGet_35(
 ) -> u32 {
     if !((n_bits) <= (24_u32)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/./bit_reader.h\0".as_ptr();
+            let _f: *const u8 = b"bit_reader.cc\0".as_ptr();
             let _l: i32 = 110;
             let _fn: *const u8 = b"BrunsliBitReaderGet\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2605,8 +2583,7 @@ pub unsafe fn BrunsliBitReaderGet_35(
 pub unsafe fn BrunsliBitReaderDrop_36(mut br: *mut brunsli_BrunsliBitReader, mut n_bits: u32) {
     if !((n_bits) <= ((*br).num_bits_)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/./bit_reader.h\0".as_ptr();
+            let _f: *const u8 = b"bit_reader.cc\0".as_ptr();
             let _l: i32 = 121;
             let _fn: *const u8 = b"BrunsliBitReaderDrop\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -2717,7 +2694,6 @@ pub unsafe fn BrunsliBitReaderCanRead_45(
         ((((n_bits).wrapping_sub(((*br).num_bits_ as u64))).wrapping_add(7_u64)) >> (3));
     return (((*br).next_.offset((num_extra_bytes) as isize)) <= ((*br).end_));
 }
-// brunsli_decode.rs
 #[derive(Clone, Copy, PartialEq, Debug, Default)]
 enum brunsli_BrunsliStatus {
     #[default]
@@ -3052,7 +3028,7 @@ impl brunsli_internal_dec_OutputChunk {
             buffer: None,
         };
         {
-            let _a0: *mut Vec<u8> = (Box::leak(Box::new(bytes)) as *mut Vec<u8>);
+            let _a0: *mut Vec<u8> = (Box::leak(Box::new(bytes.clone())) as *mut Vec<u8>);
             this.buffer = if _a0.is_null() {
                 None
             } else {
@@ -3728,7 +3704,7 @@ pub unsafe fn DecodeVarint_49(
                 _ => {
                     if !(false) {
                         (unsafe {
-                            let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                             let _l: i32 = 132;
                             let _fn: *const u8 = b"DecodeVarint\0".as_ptr();
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -3801,7 +3777,7 @@ pub unsafe fn DecodeLimitedVarint_50(
                 _ => {
                     if !(false) {
                         (unsafe {
-                            let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                             let _l: i32 = 169;
                             let _fn: *const u8 = b"DecodeLimitedVarint\0".as_ptr();
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -3874,7 +3850,7 @@ pub unsafe fn DecodeLimitedVarint_51(
                 _ => {
                     if !(false) {
                         (unsafe {
-                            let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                             let _l: i32 = 169;
                             let _fn: *const u8 = b"DecodeLimitedVarint\0".as_ptr();
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -3935,8 +3911,7 @@ pub unsafe fn GenerateAppMarker_53(mut marker: u8, mut code: u8) -> Vec<u8> {
     } else {
         if !((marker as i32) == (130)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 197;
                 let _fn: *const u8 = b"GenerateAppMarker\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -4655,8 +4630,7 @@ pub unsafe fn DecodeNumNonzeros_58(
     let mut val: u64 = (ctx).wrapping_sub((((1_u32) << (brunsli_kNumNonZeroBits)) as u64));
     if !((val) <= (brunsli_kNumNonZeroTreeSize)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 593;
             let _fn: *const u8 = b"DecodeNumNonzeros\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -5298,7 +5272,7 @@ pub unsafe fn DecodeAC_64(
                         });
                         if !((num_nonzeros) <= (brunsli_kNumNonZeroTreeSize)) {
                             (unsafe {
-                                let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                                 let _l: i32 = 949;
                                 let _fn: *const u8 = b"DecodeAC\0".as_ptr();
                                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6027,7 +6001,7 @@ pub unsafe fn DecodeMetaDataSection_84(
                     (|result: brunsli_BrunsliStatus| {
                         if !(!(((*ms).brotli).is_null())) {
                             (unsafe {
-                                let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                                 let _l: i32 = 1312;
                                 let _fn: *const u8 = b"operator()\0".as_ptr();
                                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6054,7 +6028,7 @@ pub unsafe fn DecodeMetaDataSection_84(
                     (|result: brunsli_BrunsliStatus| {
                         if !(!(((*ms).brotli).is_null())) {
                             (unsafe {
-                                let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                                 let _l: i32 = 1312;
                                 let _fn: *const u8 = b"operator()\0".as_ptr();
                                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6088,7 +6062,7 @@ pub unsafe fn DecodeMetaDataSection_84(
                     (|result: brunsli_BrunsliStatus| {
                         if !(!(((*ms).brotli).is_null())) {
                             (unsafe {
-                                let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                                 let _l: i32 = 1312;
                                 let _fn: *const u8 = b"operator()\0".as_ptr();
                                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6115,7 +6089,7 @@ pub unsafe fn DecodeMetaDataSection_84(
                         (|result: brunsli_BrunsliStatus| {
                             if !(!(((*ms).brotli).is_null())) {
                                 (unsafe {
-                                    let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                                    let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                                     let _l: i32 = 1312;
                                     let _fn: *const u8 = b"operator()\0".as_ptr();
                                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6137,7 +6111,7 @@ pub unsafe fn DecodeMetaDataSection_84(
                         (|result: brunsli_BrunsliStatus| {
                             if !(!(((*ms).brotli).is_null())) {
                                 (unsafe {
-                                    let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                                    let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                                     let _l: i32 = 1312;
                                     let _fn: *const u8 = b"operator()\0".as_ptr();
                                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6159,7 +6133,7 @@ pub unsafe fn DecodeMetaDataSection_84(
                         (|result: brunsli_BrunsliStatus| {
                             if !(!(((*ms).brotli).is_null())) {
                                 (unsafe {
-                                    let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                                    let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                                     let _l: i32 = 1312;
                                     let _fn: *const u8 = b"operator()\0".as_ptr();
                                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6179,7 +6153,7 @@ pub unsafe fn DecodeMetaDataSection_84(
                     (|result: brunsli_BrunsliStatus| {
                         if !(!(((*ms).brotli).is_null())) {
                             (unsafe {
-                                let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                                 let _l: i32 = 1312;
                                 let _fn: *const u8 = b"operator()\0".as_ptr();
                                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6199,9 +6173,7 @@ pub unsafe fn DecodeMetaDataSection_84(
             }
             if !((result as i32) == (::brotli_sys::BROTLI_DECODER_RESULT_NEEDS_MORE_INPUT as i32)) {
                 (unsafe {
-                    let _f: *const u8 =
-                        b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0"
-                            .as_ptr();
+                    let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                     let _l: i32 = 1352;
                     let _fn: *const u8 = b"DecodeMetaDataSection\0".as_ptr();
                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6218,7 +6190,7 @@ pub unsafe fn DecodeMetaDataSection_84(
                     (|result: brunsli_BrunsliStatus| {
                         if !(!(((*ms).brotli).is_null())) {
                             (unsafe {
-                                let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                                 let _l: i32 = 1312;
                                 let _fn: *const u8 = b"operator()\0".as_ptr();
                                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6238,8 +6210,7 @@ pub unsafe fn DecodeMetaDataSection_84(
     }
     if !(false) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 1361;
             let _fn: *const u8 = b"DecodeMetaDataSection\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6300,8 +6271,7 @@ pub unsafe fn PrepareBitReader_86(
         BrunsliBitReaderIsHealthy_43(_br)
     }) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 1384;
             let _fn: *const u8 = b"PrepareBitReader\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6352,8 +6322,7 @@ pub unsafe fn SuspendBitReader_87(
         && ((result as i32) != (brunsli_BrunsliStatus::BRUNSLI_NOT_ENOUGH_DATA as i32))))
     {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 1401;
             let _fn: *const u8 = b"SuspendBitReader\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6716,9 +6685,7 @@ pub unsafe fn DecodeJPEGInternalsSection_88(
         } else {
             if !((comp_ids) == (brunsli_kComponentIdsCustom)) {
                 (unsafe {
-                    let _f: *const u8 =
-                        b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0"
-                            .as_ptr();
+                    let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                     let _l: i32 = 1529;
                     let _fn: *const u8 = b"DecodeJPEGInternalsSection\0".as_ptr();
                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6963,7 +6930,7 @@ pub unsafe fn DecodeJPEGInternalsSection_88(
                     }) == (0_u64))
                     {
                         (unsafe {
-                            let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                             let _l: i32 = 1613;
                             let _fn: *const u8 = b"DecodeJPEGInternalsSection\0".as_ptr();
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -6976,7 +6943,7 @@ pub unsafe fn DecodeJPEGInternalsSection_88(
                     }) > (0_u64))
                     {
                         (unsafe {
-                            let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                             let _l: i32 = 1614;
                             let _fn: *const u8 = b"DecodeJPEGInternalsSection\0".as_ptr();
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7370,8 +7337,7 @@ pub unsafe fn DecodeQuantDataSection_89(
     }
     if !(((*qs).stage as i32) == (brunsli_internal_dec_QuantDataState_Stage::FINISH as i32)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 1787;
             let _fn: *const u8 = b"DecodeQuantDataSection\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7424,8 +7390,7 @@ pub unsafe fn DecodeHistogramDataSection_90(
         });
         if !(!(*jpg).components.is_empty()) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 1802;
                 let _fn: *const u8 = b"DecodeHistogramDataSection\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7461,8 +7426,7 @@ pub unsafe fn DecodeHistogramDataSection_90(
         let num_components: u64 = (*jpg).components.len() as u64;
         if !((num_components) <= (4_u64)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 1822;
                 let _fn: *const u8 = b"DecodeHistogramDataSection\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7849,8 +7813,7 @@ pub unsafe fn DecodeHistogramDataSection_90(
     (unsafe { (*hs).arena.reset() });
     if !(((*hs).stage as i32) == (brunsli_internal_dec_HistogramDataState_Stage::DONE as i32)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 1925;
             let _fn: *const u8 = b"DecodeHistogramDataSection\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7872,8 +7835,7 @@ pub unsafe fn DecodeDCDataSection_93(
     });
     if !(((limit) & (1_u64)) == (0_u64)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 1932;
             let _fn: *const u8 = b"DecodeDCDataSection\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7898,8 +7860,7 @@ pub unsafe fn DecodeDCDataSection_93(
     });
     if !(((in_.pos_) & (1_u64)) == (0_u64)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 1941;
             let _fn: *const u8 = b"DecodeDCDataSection\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7911,8 +7872,7 @@ pub unsafe fn DecodeDCDataSection_93(
     }
     if !((in_.pos_) <= (chunk_len)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 1943;
             let _fn: *const u8 = b"DecodeDCDataSection\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7927,8 +7887,7 @@ pub unsafe fn DecodeDCDataSection_93(
     if is_last_chunk {
         if !((status as i32) != (brunsli_BrunsliStatus::BRUNSLI_NOT_ENOUGH_DATA as i32)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 1946;
                 let _fn: *const u8 = b"DecodeDCDataSection\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7957,8 +7916,7 @@ pub unsafe fn DecodeACDataSection_94(
     });
     if !(((limit) & (1_u64)) == (0_u64)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 1955;
             let _fn: *const u8 = b"DecodeACDataSection\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7983,8 +7941,7 @@ pub unsafe fn DecodeACDataSection_94(
     });
     if !(((in_.pos_) & (1_u64)) == (0_u64)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 1964;
             let _fn: *const u8 = b"DecodeACDataSection\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -7996,8 +7953,7 @@ pub unsafe fn DecodeACDataSection_94(
     }
     if !((in_.pos_) <= (chunk_len)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 1966;
             let _fn: *const u8 = b"DecodeACDataSection\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8012,8 +7968,7 @@ pub unsafe fn DecodeACDataSection_94(
     if is_last_chunk {
         if !((status as i32) != (brunsli_BrunsliStatus::BRUNSLI_NOT_ENOUGH_DATA as i32)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 1969;
                 let _fn: *const u8 = b"DecodeACDataSection\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8289,8 +8244,7 @@ pub unsafe fn ParseSection_96(
     (*sh).stage = (brunsli_internal_dec_SectionHeaderState_Stage::READ_TAG as u64).clone();
     if !((result) != (brunsli_internal_dec_Stage::ERROR)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 2091;
             let _fn: *const u8 = b"ParseSection\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8338,9 +8292,7 @@ pub unsafe fn ProcessSection_98(
             }) == (0_u64))
             {
                 (unsafe {
-                    let _f: *const u8 =
-                        b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0"
-                            .as_ptr();
+                    let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                     let _l: i32 = 2110;
                     let _fn: *const u8 = b"ProcessSection\0".as_ptr();
                     BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8601,8 +8553,7 @@ pub unsafe fn UpdateSubsamplingDerivatives_82(mut jpg: *mut brunsli_JPEGData) ->
         (*c).height_in_blocks = ((((*jpg).MCU_rows) * ((*c).v_samp_factor)) as u32);
         if !(((*c).width_in_blocks) <= (8205_u32)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 2211;
                 let _fn: *const u8 = b"UpdateSubsamplingDerivatives\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8611,8 +8562,7 @@ pub unsafe fn UpdateSubsamplingDerivatives_82(mut jpg: *mut brunsli_JPEGData) ->
         };
         if !(((*c).height_in_blocks) <= (8205_u32)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 2212;
                 let _fn: *const u8 = b"UpdateSubsamplingDerivatives\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8826,8 +8776,7 @@ pub unsafe fn LoadInput_102(mut state: *mut brunsli_internal_dec_State) {
     }
     if !(((*b).data_len) <= (brunsli_internal_dec_kBufferMaxReadAhead)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 2337;
             let _fn: *const u8 = b"LoadInput\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8868,8 +8817,7 @@ pub unsafe fn UnloadInput_103(
         (*b).external_pos = (*state).pos;
         if !(((*b).external_pos) <= ((*b).external_len)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 2364;
                 let _fn: *const u8 = b"UnloadInput\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8881,8 +8829,7 @@ pub unsafe fn UnloadInput_103(
         }
         if !(((*b).data_len) == (0_u64)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 2366;
                 let _fn: *const u8 = b"UnloadInput\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8892,8 +8839,7 @@ pub unsafe fn UnloadInput_103(
         let mut available: u64 = ((*b).external_len).wrapping_sub((*b).external_pos);
         if !((available) < (brunsli_internal_dec_kBufferMaxReadAhead)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 2368;
                 let _fn: *const u8 = b"UnloadInput\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8931,8 +8877,7 @@ pub unsafe fn UnloadInput_103(
     if ((result as i32) == (brunsli_BrunsliStatus::BRUNSLI_NOT_ENOUGH_DATA as i32)) {
         if !((((*b).external_pos).wrapping_add((*b).borrowed_len)) == ((*b).external_len)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 2389;
                 let _fn: *const u8 = b"UnloadInput\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8943,8 +8888,7 @@ pub unsafe fn UnloadInput_103(
             < (brunsli_internal_dec_kBufferMaxReadAhead))
         {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 2391;
                 let _fn: *const u8 = b"UnloadInput\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8956,8 +8900,7 @@ pub unsafe fn UnloadInput_103(
     }
     if !(!(*b).data.is_empty()) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 2395;
             let _fn: *const u8 = b"UnloadInput\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -8979,8 +8922,7 @@ pub unsafe fn UnloadInput_103(
     }
     if !(((*b).data_len) <= (brunsli_internal_dec_kBufferMaxReadAhead)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
             let _l: i32 = 2399;
             let _fn: *const u8 = b"UnloadInput\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -9148,8 +9090,7 @@ impl brunsli_BrunsliDecoder {
             .map_or(::std::ptr::null_mut(), |v| v as *mut brunsli_JPEGData);
         if !!(jpg).is_null() {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 2511;
                 let _fn: *const u8 = b"Decode\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -9164,8 +9105,7 @@ impl brunsli_BrunsliDecoder {
             });
         if !!(state).is_null() {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 2513;
                 let _fn: *const u8 = b"Decode\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -9190,8 +9130,7 @@ impl brunsli_BrunsliDecoder {
         }
         if !((*available_in) == (0_u64)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0".as_ptr();
+                let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                 let _l: i32 = 2529;
                 let _fn: *const u8 = b"Decode\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -9214,7 +9153,7 @@ impl brunsli_BrunsliDecoder {
                 v if v == brunsli_internal_dec_SerializationStatus::DONE => {
                     if !((parse_status as i32) == (brunsli_BrunsliStatus::BRUNSLI_OK as i32)) {
                         (unsafe {
-                            let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                             let _l: i32 = 2540;
                             let _fn: *const u8 = b"Decode\0".as_ptr();
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -9228,7 +9167,7 @@ impl brunsli_BrunsliDecoder {
                         == (brunsli_BrunsliStatus::BRUNSLI_NOT_ENOUGH_DATA as i32))
                     {
                         (unsafe {
-                            let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                             let _l: i32 = 2545;
                             let _fn: *const u8 = b"Decode\0".as_ptr();
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -9240,7 +9179,7 @@ impl brunsli_BrunsliDecoder {
                 v if v == brunsli_internal_dec_SerializationStatus::NEEDS_MORE_OUTPUT => {
                     if !((*available_out) == (0_u64)) {
                         (unsafe {
-                            let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                             let _l: i32 = 2551;
                             let _fn: *const u8 = b"Decode\0".as_ptr();
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -9255,7 +9194,7 @@ impl brunsli_BrunsliDecoder {
                 _ => {
                     if !(false) {
                         (unsafe {
-                            let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/brunsli_decode.cc\0" .as_ptr() ;
+                            let _f: *const u8 = b"brunsli_decode.cc\0".as_ptr();
                             let _l: i32 = 2559;
                             let _fn: *const u8 = b"Decode\0".as_ptr();
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -9269,7 +9208,6 @@ impl brunsli_BrunsliDecoder {
         panic!("ub: non-void function does not return a value")
     }
 }
-// context_map_decode.rs
 pub unsafe fn MoveToFront_109(mut v: *mut u8, mut index: u8) {
     let mut value: u8 = (*v.offset((index) as isize));
     let mut i: u8 = index;
@@ -9367,7 +9305,6 @@ pub unsafe fn DecodeContextMap_91(
         brunsli_BrunsliStatus::BRUNSLI_INVALID_BRN
     };
 }
-// histogram_decode.rs
 pub unsafe fn GetPopulationCountPrecision_111(mut logcount: u32) -> u32 {
     return (((logcount).wrapping_add(1_u32)) >> (1));
 }
@@ -9458,8 +9395,7 @@ pub unsafe fn ReadHistogram_92(
 ) -> bool {
     if !(!(*counts.cast_const()).is_empty()) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/histogram_decode.cc\0".as_ptr();
+            let _f: *const u8 = b"histogram_decode.cc\0".as_ptr();
             let _l: i32 = 41;
             let _fn: *const u8 = b"ReadHistogram\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -9530,9 +9466,7 @@ pub unsafe fn ReadHistogram_92(
         let mut omit_pos: u64 = 0_u64;
         if !((real_length) > (2_u64)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/histogram_decode.cc\0"
-                        .as_ptr();
+                let _f: *const u8 = b"histogram_decode.cc\0".as_ptr();
                 let _l: i32 = 74;
                 let _fn: *const u8 = b"ReadHistogram\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -9554,9 +9488,7 @@ pub unsafe fn ReadHistogram_92(
         }
         if !((omit_pos) >= (0_u64)) {
             (unsafe {
-                let _f: *const u8 =
-                    b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/histogram_decode.cc\0"
-                        .as_ptr();
+                let _f: *const u8 = b"histogram_decode.cc\0".as_ptr();
                 let _l: i32 = 80;
                 let _fn: *const u8 = b"ReadHistogram\0".as_ptr();
                 BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -9601,7 +9533,6 @@ pub unsafe fn ReadHistogram_92(
         BrunsliBitReaderIsHealthy_43(_br)
     });
 }
-// huffman_decode.rs
 #[repr(C)]
 #[derive(Clone, Default)]
 pub struct brunsli_HuffmanDecodingData {
@@ -10206,7 +10137,6 @@ impl brunsli_HuffmanDecodingData {
         return (*table).value;
     }
 }
-// huffman_table.rs
 pub unsafe fn GetNextKey_116(mut key: i32, mut len: u64) -> i32 {
     let mut step: i32 = (((1_u32) << ((len).wrapping_sub(1_u64))) as i32);
     'loop_: while (((key) & (step)) != 0) {
@@ -10401,7 +10331,6 @@ pub unsafe fn BuildHuffmanTable_114(
     }
     return (total_size as u32);
 }
-// jpeg_data_writer.rs
 impl brunsli_internal_dec_OutputChunk {
     pub unsafe fn brunsli_internal_dec_OutputChunk4(bytes: *const Vec<u8>) -> Self {
         let mut this = Self {
@@ -10555,8 +10484,7 @@ pub unsafe fn EmitMarker_127(mut bw: *mut brunsli_internal_dec_BitWriter, mut ma
     });
     if !((marker) != (255)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/jpeg_data_writer.cc\0".as_ptr();
+            let _f: *const u8 = b"jpeg_data_writer.cc\0".as_ptr();
             let _l: i32 = 133;
             let _fn: *const u8 = b"EmitMarker\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11612,8 +11540,7 @@ pub unsafe fn DoEncodeScan_148(
         (&mut (*ss).coding_state as *mut brunsli_internal_dec_DCTCodingState);
     if !(((*ss).stage as i32) == (brunsli_internal_dec_EncodeScanState_Stage::BODY as i32)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/jpeg_data_writer.cc\0".as_ptr();
+            let _f: *const u8 = b"jpeg_data_writer.cc\0".as_ptr();
             let _l: i32 = 741;
             let _fn: *const u8 = b"DoEncodeScan\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -11980,8 +11907,7 @@ pub unsafe fn DoEncodeScan_149(
         (&mut (*ss).coding_state as *mut brunsli_internal_dec_DCTCodingState);
     if !(((*ss).stage as i32) == (brunsli_internal_dec_EncodeScanState_Stage::BODY as i32)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/jpeg_data_writer.cc\0".as_ptr();
+            let _f: *const u8 = b"jpeg_data_writer.cc\0".as_ptr();
             let _l: i32 = 741;
             let _fn: *const u8 = b"DoEncodeScan\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -12348,8 +12274,7 @@ pub unsafe fn DoEncodeScan_150(
         (&mut (*ss).coding_state as *mut brunsli_internal_dec_DCTCodingState);
     if !(((*ss).stage as i32) == (brunsli_internal_dec_EncodeScanState_Stage::BODY as i32)) {
         (unsafe {
-            let _f: *const u8 =
-                b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/jpeg_data_writer.cc\0".as_ptr();
+            let _f: *const u8 = b"jpeg_data_writer.cc\0".as_ptr();
             let _l: i32 = 741;
             let _fn: *const u8 = b"DoEncodeScan\0".as_ptr();
             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -13120,7 +13045,7 @@ pub unsafe fn SerializeJpeg_108(
                 } else if ((status) != (brunsli_internal_dec_SerializationStatus::DONE)) {
                     if !(false) {
                         (unsafe {
-                            let _f: *const u8  = b"/home/nuno/cpp2rust-testsuite/brunsli/src/c/dec/jpeg_data_writer.cc\0" .as_ptr() ;
+                            let _f: *const u8 = b"jpeg_data_writer.cc\0".as_ptr();
                             let _l: i32 = 1073;
                             let _fn: *const u8 = b"SerializeJpeg\0".as_ptr();
                             BrunsliDumpAndAbort_16(_f, _l, _fn)
@@ -13147,7 +13072,6 @@ pub unsafe fn SerializeJpeg_108(
     }
     panic!("ub: non-void function does not return a value")
 }
-// state.rs
 #[repr(C)]
 #[derive()]
 pub struct brunsli_internal_dec_State {
@@ -13249,7 +13173,6 @@ pub unsafe fn HasSection_97(mut state: *const brunsli_internal_dec_State, mut ta
         & ((1_u32) << (tag)))
         != 0);
 }
-// dbrunsli.rs
 pub unsafe fn StringWriter_155(
     mut data: *mut ::libc::c_void,
     mut buf: *const u8,
@@ -13314,16 +13237,17 @@ pub unsafe fn ReadFileInternal_156(
     };
     let mut read_pos: u64 = 0_u64;
     'loop_: while ((read_pos) < (((*content.cast_const()).len() - 1) as u64)) {
-        let bytes_read: u64 = libcc2rs::fread_unsafe(
-            ((if read_pos as usize >= (*content).len() - 1 {
+        let bytes_read: u64 = {
+            let __a0 = ((if read_pos as usize >= (*content).len() - 1 {
                 panic!("out of bounds access")
             } else {
                 &mut (&mut (*content))[read_pos as usize]
-            }) as *mut u8 as *mut ::libc::c_void) as *mut ::std::ffi::c_void,
-            1_u64,
-            (((*content.cast_const()).len() - 1) as u64).wrapping_sub(read_pos),
-            file,
-        );
+            }) as *mut u8 as *mut ::libc::c_void) as *mut ::std::ffi::c_void;
+            let __a1 = 1_u64;
+            let __a2 = (((*content.cast_const()).len() - 1) as u64).wrapping_sub(read_pos);
+            let __a3 = file;
+            libcc2rs::fread_unsafe(__a0, __a1, __a2, __a3)
+        };
         if ((bytes_read) == (0_u64)) {
             printf(b"Failed to read input file\n\0".as_ptr() as *const i8);
             return false;
@@ -13387,13 +13311,14 @@ pub unsafe fn WriteFileInternal_158(
 ) -> bool {
     let mut write_pos: u64 = 0_u64;
     'loop_: while ((write_pos) < (((*content).len() - 1) as u64)) {
-        let bytes_written: u64 = libcc2rs::fwrite_unsafe(
-            ((&(&(*content))[(write_pos) as usize] as *const u8) as *const u8
-                as *const ::libc::c_void) as *const ::std::ffi::c_void,
-            1_u64,
-            (((*content).len() - 1) as u64).wrapping_sub(write_pos),
-            file,
-        );
+        let bytes_written: u64 = {
+            let __a0 = ((&(&(*content))[(write_pos) as usize] as *const u8) as *const u8
+                as *const ::libc::c_void) as *const ::std::ffi::c_void;
+            let __a1 = 1_u64;
+            let __a2 = (((*content).len() - 1) as u64).wrapping_sub(write_pos);
+            let __a3 = file;
+            libcc2rs::fwrite_unsafe(__a0, __a1, __a2, __a3)
+        };
         if ((bytes_written) == (0_u64)) {
             printf(b"Failed to write output.\n\0".as_ptr() as *const i8);
             return false;

@@ -6,8 +6,6 @@ use std::io::prelude::*;
 use std::io::{Read, Seek, Write};
 use std::os::fd::AsFd;
 use std::rc::{Rc, Weak};
-
-// table_tags.rs
 thread_local!(
     pub static woff2_kGlyfTableTag: Value<u32> = Rc::new(RefCell::new(1735162214_u32));
 );
@@ -226,8 +224,6 @@ thread_local!(
             | (('l' as u8) as i32)) as u32),
     ])));
 );
-
-// variable_length.rs
 #[derive(Default)]
 pub struct woff2_Buffer {
     buffer_: Value<Ptr<u8>>,
@@ -619,7 +615,6 @@ pub fn StoreBase128_6(len: u64, offset: Ptr<u64>, dst: Ptr<u8>) {
         (*i.borrow_mut()).prefix_inc();
     }
 }
-// woff2_common.rs
 thread_local!(
     pub static woff2_kWoff2Signature: Value<u32> = Rc::new(RefCell::new(2001684018_u32));
 );
@@ -651,7 +646,20 @@ impl Clone for woff2_Point {
         this
     }
 }
-impl ByteRepr for woff2_Point {}
+impl ByteRepr for woff2_Point {
+    fn to_bytes(&self, buf: &mut [u8]) {
+        (*self.x.borrow()).to_bytes(&mut buf[0..4]);
+        (*self.y.borrow()).to_bytes(&mut buf[4..8]);
+        (*self.on_curve.borrow()).to_bytes(&mut buf[8..9]);
+    }
+    fn from_bytes(buf: &[u8]) -> Self {
+        Self {
+            x: Rc::new(RefCell::new(<i32>::from_bytes(&buf[0..4]))),
+            y: Rc::new(RefCell::new(<i32>::from_bytes(&buf[4..8]))),
+            on_curve: Rc::new(RefCell::new(<bool>::from_bytes(&buf[8..9]))),
+        }
+    }
+}
 #[derive(Default)]
 pub struct woff2_Table {
     pub tag: Value<u32>,
@@ -778,7 +786,6 @@ pub fn CollectionHeaderSize_9(header_version: u32, num_fonts: u32) -> u64 {
     }
     return (*size.borrow());
 }
-// woff2_dec.rs
 thread_local!(
     pub static woff2_kDefaultMaxSize: Value<u64> =
         Rc::new(RefCell::new((((128 * 1024) * 1024) as u64)));
@@ -4144,7 +4151,6 @@ pub fn ConvertWOFF2ToTTF_40(data: Ptr<u8>, length: u64, out: PtrDyn<dyn woff2_WO
     }
     return true;
 }
-// woff2_out.rs
 #[derive(Default)]
 pub struct woff2_WOFF2StringOut {
     buf_: Value<Ptr<Vec<u8>>>,
@@ -4363,7 +4369,6 @@ impl woff2_WOFF2StringOut {
     }
 }
 impl woff2_WOFF2MemoryOut {}
-// woff2_decompress.rs
 pub fn GetFileContent_41(filename: Vec<u8>) -> Vec<u8> {
     let filename: Value<Vec<u8>> = Rc::new(RefCell::new(filename));
     let ifs: Value<::std::fs::File> = Rc::new(RefCell::new(
@@ -4387,10 +4392,12 @@ pub fn SetFileContents_42(filename: Vec<u8>, start: Ptr<u8>, end: Ptr<u8>) {
             .expect("Failed to open file"),
     ));
     {
-        (*ofs.borrow_mut())
-            .try_clone()
-            .unwrap()
-            .write_all((*start.borrow()).slice_until(&(*end.borrow())).as_slice());
+        (*ofs.borrow_mut()).try_clone().unwrap().write_all(
+            (*start.borrow())
+                .clone()
+                .slice_until(&(*end.borrow()).clone())
+                .as_slice(),
+        );
         (*ofs.borrow_mut())
             .try_clone()
             .unwrap()

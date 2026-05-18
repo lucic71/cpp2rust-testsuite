@@ -6,8 +6,6 @@ use std::collections::BTreeMap;
 use std::io::{Read, Seek, Write};
 use std::os::fd::{AsFd, FromRawFd, IntoRawFd};
 use std::rc::Rc;
-
-// table_tags.rs
 pub static mut woff2_kGlyfTableTag: u32 = unsafe { 1735162214_u32 };
 pub static mut woff2_kHeadTableTag: u32 = unsafe { 1751474532_u32 };
 pub static mut woff2_kLocaTableTag: u32 = unsafe { 1819239265_u32 };
@@ -209,8 +207,6 @@ pub static mut woff2_kKnownTags: [u32; 63] = unsafe {
             | (('l' as u8) as i32)) as u32),
     ]
 };
-
-// variable_length.rs
 #[repr(C)]
 #[derive(Copy, Clone, Default)]
 pub struct woff2_Buffer {
@@ -522,7 +518,6 @@ pub unsafe fn StoreBase128_6(mut len: u64, mut offset: *mut u64, mut dst: *mut u
         i.prefix_inc();
     }
 }
-// woff2_common.rs
 pub static mut woff2_kWoff2Signature: u32 = unsafe { 2001684018_u32 };
 pub static mut woff2_kWoff2FlagsTransform: u32 = unsafe { (((1) << (8)) as u32) };
 pub static mut woff2_kTtcFontFlavor: u32 = unsafe { 1953784678_u32 };
@@ -620,7 +615,6 @@ pub unsafe fn CollectionHeaderSize_9(mut header_version: u32, mut num_fonts: u32
     }
     return size;
 }
-// font.rs
 #[repr(C)]
 #[derive(Clone, Default)]
 pub struct woff2_Font_Table {
@@ -1444,7 +1438,6 @@ pub unsafe fn RemoveDigitalSignature_30(mut font: *mut woff2_Font) -> bool {
     }
     return true;
 }
-// woff2_info.rs
 pub unsafe fn GetFileContent_31(mut filename: Vec<u8>) -> Vec<u8> {
     let mut ifs: ::std::fs::File = ::std::fs::File::open(
         ::std::ffi::CStr::from_ptr(filename.as_ptr() as *const i8)

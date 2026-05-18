@@ -6,8 +6,6 @@ use std::collections::BTreeMap;
 use std::io::{Read, Seek, Write};
 use std::os::fd::{AsFd, FromRawFd, IntoRawFd};
 use std::rc::Rc;
-
-// table_tags.rs
 pub static mut woff2_kGlyfTableTag: u32 = unsafe { 1735162214_u32 };
 pub static mut woff2_kHeadTableTag: u32 = unsafe { 1751474532_u32 };
 pub static mut woff2_kLocaTableTag: u32 = unsafe { 1819239265_u32 };
@@ -209,8 +207,6 @@ pub static mut woff2_kKnownTags: [u32; 63] = unsafe {
             | (('l' as u8) as i32)) as u32),
     ]
 };
-
-// variable_length.rs
 #[repr(C)]
 #[derive(Copy, Clone, Default)]
 pub struct woff2_Buffer {
@@ -522,7 +518,6 @@ pub unsafe fn StoreBase128_6(mut len: u64, mut offset: *mut u64, mut dst: *mut u
         i.prefix_inc();
     }
 }
-// woff2_common.rs
 pub static mut woff2_kWoff2Signature: u32 = unsafe { 2001684018_u32 };
 pub static mut woff2_kWoff2FlagsTransform: u32 = unsafe { (((1) << (8)) as u32) };
 pub static mut woff2_kTtcFontFlavor: u32 = unsafe { 1953784678_u32 };
@@ -620,7 +615,6 @@ pub unsafe fn CollectionHeaderSize_9(mut header_version: u32, mut num_fonts: u32
     }
     return size;
 }
-// woff2_dec.rs
 pub static mut woff2_kDefaultMaxSize: u64 = unsafe { ((((128) * (1024)) * (1024)) as u64) };
 pub unsafe trait woff2_WOFF2Out {
     unsafe fn Write_pconstlibcc_void_u64(&mut self, buf: *const ::libc::c_void, n: u64) -> bool;
@@ -3010,7 +3004,6 @@ pub unsafe fn ConvertWOFF2ToTTF_40(
     }
     return true;
 }
-// woff2_out.rs
 #[repr(C)]
 #[derive(Copy, Clone, Default)]
 pub struct woff2_WOFF2StringOut {
@@ -3155,7 +3148,6 @@ impl woff2_WOFF2StringOut {
     }
 }
 impl woff2_WOFF2MemoryOut {}
-// woff2_decompress.rs
 pub unsafe fn GetFileContent_41(mut filename: Vec<u8>) -> Vec<u8> {
     let mut ifs: ::std::fs::File = ::std::fs::File::open(
         ::std::ffi::CStr::from_ptr(filename.as_ptr() as *const i8)
