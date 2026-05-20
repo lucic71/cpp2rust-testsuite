@@ -1069,7 +1069,7 @@ pub unsafe fn WriteTableRecord_24(
         return false;
     }
     if (unsafe { (*table).IsReused() }) {
-        table = (*table).reuse_of.cast_const();
+        table = ((*table).reuse_of).cast_const();
     }
     (unsafe {
         let _val: u32 = (*table).tag;
@@ -1484,7 +1484,7 @@ pub unsafe fn PrintTag_33(mut tag: i32) -> Vec<u8> {
         ((((tag) >> (8)) & (255)) as u8),
         (((tag) & (255)) as u8),
     ];
-    return std::slice::from_raw_parts(printable.as_mut_ptr().cast_const(), 4_u64 as usize)
+    return std::slice::from_raw_parts((printable.as_mut_ptr()).cast_const(), 4_u64 as usize)
         .to_vec()
         .iter()
         .copied()

@@ -4303,11 +4303,10 @@ pub fn HistogramCombine_42(
             .offset((*best_idx2.borrow()) as isize)
             .read());
         {
-            let __ptr = (*cluster_size.borrow())
+            let _ptr = (*cluster_size.borrow())
                 .offset((*best_idx1.borrow()) as isize)
                 .clone();
-            let __tmp = __ptr.read() + __rhs;
-            __ptr.write(__tmp)
+            _ptr.write(_ptr.read() + __rhs)
         };
         let i: Value<u64> = Rc::new(RefCell::new(0_u64));
         'loop_: while ((*i.borrow()) < (*symbols_size.borrow())) {
@@ -10373,9 +10372,8 @@ pub fn RebalanceHistogram_103(
                 _lhs & ((*inc.borrow()) - 1)
             };
             {
-                let __ptr = (*counts.borrow()).offset((*n.borrow()) as isize).clone();
-                let __tmp = __ptr.read() - __rhs;
-                __ptr.write(__tmp)
+                let _ptr = (*counts.borrow()).offset((*n.borrow()) as isize).clone();
+                _ptr.write(_ptr.read() - __rhs)
             };
             let target: Value<f32> = Rc::new(RefCell::new(if false {
                 ((*sum_nonrounded.borrow()) - ((*sum.borrow()) as f32))
@@ -10399,9 +10397,8 @@ pub fn RebalanceHistogram_103(
             {
                 let __rhs = (*inc.borrow());
                 {
-                    let __ptr = (*counts.borrow()).offset((*n.borrow()) as isize).clone();
-                    let __tmp = __ptr.read() + __rhs;
-                    __ptr.write(__tmp)
+                    let _ptr = (*counts.borrow()).offset((*n.borrow()) as isize).clone();
+                    _ptr.write(_ptr.read() + __rhs)
                 };
             }
             let __rhs = ((*counts.borrow()).offset((*n.borrow()) as isize).read());
@@ -10431,11 +10428,10 @@ pub fn RebalanceHistogram_103(
     };
     let __rhs = ((*sum.borrow()) - (*table_size.borrow()));
     {
-        let __ptr = (*counts.borrow())
+        let _ptr = (*counts.borrow())
             .offset((*remainder_pos.borrow()) as isize)
             .clone();
-        let __tmp = __ptr.read() - __rhs;
-        __ptr.write(__tmp)
+        _ptr.write(_ptr.read() - __rhs)
     };
     let __rhs = (*remainder_pos.borrow());
     (*omit_pos.borrow()).write(__rhs);
@@ -10502,9 +10498,8 @@ pub fn RebalanceHistogram_104(
                 _lhs & ((*inc.borrow()) - 1)
             };
             {
-                let __ptr = (*counts.borrow()).offset((*n.borrow()) as isize).clone();
-                let __tmp = __ptr.read() - __rhs;
-                __ptr.write(__tmp)
+                let _ptr = (*counts.borrow()).offset((*n.borrow()) as isize).clone();
+                _ptr.write(_ptr.read() - __rhs)
             };
             let target: Value<f32> = Rc::new(RefCell::new(if true {
                 ((*sum_nonrounded.borrow()) - ((*sum.borrow()) as f32))
@@ -10528,9 +10523,8 @@ pub fn RebalanceHistogram_104(
             {
                 let __rhs = (*inc.borrow());
                 {
-                    let __ptr = (*counts.borrow()).offset((*n.borrow()) as isize).clone();
-                    let __tmp = __ptr.read() + __rhs;
-                    __ptr.write(__tmp)
+                    let _ptr = (*counts.borrow()).offset((*n.borrow()) as isize).clone();
+                    _ptr.write(_ptr.read() + __rhs)
                 };
             }
             let __rhs = ((*counts.borrow()).offset((*n.borrow()) as isize).read());
@@ -10560,11 +10554,10 @@ pub fn RebalanceHistogram_104(
     };
     let __rhs = ((*sum.borrow()) - (*table_size.borrow()));
     {
-        let __ptr = (*counts.borrow())
+        let _ptr = (*counts.borrow())
             .offset((*remainder_pos.borrow()) as isize)
             .clone();
-        let __tmp = __ptr.read() - __rhs;
-        __ptr.write(__tmp)
+        _ptr.write(_ptr.read() - __rhs)
     };
     let __rhs = (*remainder_pos.borrow());
     (*omit_pos.borrow()).write(__rhs);
@@ -14190,9 +14183,8 @@ pub fn DecodeDCTBlock_132(
                     (*(*br.borrow()).upgrade().deref()).ReadBits(_nbits)
                 });
                 {
-                    let __ptr = (*eobrun.borrow()).clone();
-                    let __tmp = __ptr.read() + __rhs;
-                    __ptr.write(__tmp)
+                    let _ptr = (*eobrun.borrow()).clone();
+                    _ptr.write(_ptr.read() + __rhs)
                 };
             }
             break;
@@ -14312,9 +14304,8 @@ pub fn RefineDCTBlock_133(
                             (*(*br.borrow()).upgrade().deref()).ReadBits(_nbits)
                         });
                         {
-                            let __ptr = (*eobrun.borrow()).clone();
-                            let __tmp = __ptr.read() + __rhs;
-                            __ptr.write(__tmp)
+                            let _ptr = (*eobrun.borrow()).clone();
+                            _ptr.write(_ptr.read() + __rhs)
                         };
                     }
                     break;
@@ -14497,14 +14488,12 @@ pub fn ProcessRestart_134(
         (*(*br.borrow()).upgrade().deref()).Reset(_pos)
     });
     {
-        let __ptr = (*next_restart_marker.borrow()).clone();
-        let __tmp = __ptr.read() + 1;
-        __ptr.write(__tmp)
+        let _ptr = (*next_restart_marker.borrow()).clone();
+        _ptr.write(_ptr.read() + 1)
     };
     {
-        let __ptr = (*next_restart_marker.borrow()).clone();
-        let __tmp = __ptr.read() & 7;
-        __ptr.write(__tmp)
+        let _ptr = (*next_restart_marker.borrow()).clone();
+        _ptr.write(_ptr.read() & 7)
     };
     return true;
 }

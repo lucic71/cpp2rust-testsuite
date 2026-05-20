@@ -12265,9 +12265,8 @@ impl brunsli_BrunsliDecoder {
         (*available_in.borrow()).write(rhs_0);
         let __rhs = (*consumed_bytes.borrow());
         {
-            let __ptr = (*next_in.borrow()).clone();
-            let __tmp = __ptr.read() + __rhs;
-            __ptr.write(__tmp)
+            let _ptr = (*next_in.borrow()).clone();
+            _ptr.write(_ptr.read() + __rhs)
         };
         if (((*parse_status.borrow()) as i32) != (brunsli_BrunsliStatus::BRUNSLI_OK as i32))
             && (((*parse_status.borrow()) as i32)
@@ -17485,9 +17484,8 @@ pub fn PushOutput_153(
             };
             let __rhs = (*to_copy.borrow());
             {
-                let __ptr = (*next_out.borrow()).clone();
-                let __tmp = __ptr.read() + __rhs;
-                __ptr.write(__tmp)
+                let _ptr = (*next_out.borrow()).clone();
+                _ptr.write(_ptr.read() + __rhs)
             };
             let rhs_0 = ((*available_out.borrow()).read()).wrapping_sub((*to_copy.borrow()));
             (*available_out.borrow()).write(rhs_0);

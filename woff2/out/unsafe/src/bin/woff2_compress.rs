@@ -1069,7 +1069,7 @@ pub unsafe fn WriteTableRecord_24(
         return false;
     }
     if (unsafe { (*table).IsReused() }) {
-        table = (*table).reuse_of.cast_const();
+        table = ((*table).reuse_of).cast_const();
     }
     (unsafe {
         let _val: u32 = (*table).tag;
@@ -1501,9 +1501,9 @@ pub unsafe fn ReadCompositeGlyphData_31(
     mut glyph: *mut woff2_Glyph,
 ) -> bool {
     (*glyph).have_instructions = false;
-    (*glyph).composite_data = (unsafe { (*buffer.cast_const()).buffer() })
-        .offset((unsafe { (*buffer.cast_const()).offset() }) as isize);
-    let mut start_offset: u64 = (unsafe { (*buffer.cast_const()).offset() });
+    (*glyph).composite_data = (unsafe { (*(buffer).cast_const()).buffer() })
+        .offset((unsafe { (*(buffer).cast_const()).offset() }) as isize);
+    let mut start_offset: u64 = (unsafe { (*(buffer).cast_const()).offset() });
     let mut flags: u16 = (woff2_kFLAG_MORE_COMPONENTS as u16);
     'loop_: while (((flags as i32) & (woff2_kFLAG_MORE_COMPONENTS)) != 0) {
         if !(unsafe {
@@ -1535,13 +1535,13 @@ pub unsafe fn ReadCompositeGlyphData_31(
             return false;
         }
     }
-    if (((unsafe { (*buffer.cast_const()).offset() }).wrapping_sub(start_offset))
+    if (((unsafe { (*(buffer).cast_const()).offset() }).wrapping_sub(start_offset))
         > (<u32>::MAX as u64))
     {
         return false;
     }
     (*glyph).composite_data_size =
-        (((unsafe { (*buffer.cast_const()).offset() }).wrapping_sub(start_offset)) as u32);
+        (((unsafe { (*(buffer).cast_const()).offset() }).wrapping_sub(start_offset)) as u32);
     return true;
 }
 pub unsafe fn ReadGlyph_32(mut data: *const u8, mut len: u64, mut glyph: *mut woff2_Glyph) -> bool {
@@ -2182,18 +2182,18 @@ pub unsafe fn WriteNormalizedLoca_42(
         let __a0 = (glyf_offset as u64) as usize;
         (*glyf_table).buffer.resize_with(__a0, || <u8>::default())
     };
-    (*glyf_table).data = if (glyf_offset != 0) {
+    (*glyf_table).data = (if (glyf_offset != 0) {
         (&mut (&mut (*glyf_table)).buffer[(0_u64) as usize] as *mut u8)
     } else {
         std::ptr::null_mut()
-    }
+    })
     .cast_const();
     (*glyf_table).length = glyf_offset;
-    (*loca_table).data = if (loca_offset != 0) {
+    (*loca_table).data = (if (loca_offset != 0) {
         (&mut (&mut (*loca_table)).buffer[(0_u64) as usize] as *mut u8)
     } else {
         std::ptr::null_mut()
-    }
+    })
     .cast_const();
     return true;
 }
@@ -2205,7 +2205,7 @@ pub unsafe fn MakeEditableBuffer_43(mut font: *mut woff2_Font, mut tableTag: i32
     if (table).is_null() {
         return false;
     }
-    if (unsafe { (*table.cast_const()).IsReused() }) {
+    if (unsafe { (*(table).cast_const()).IsReused() }) {
         return true;
     }
     let mut sz: i32 = ((unsafe {
@@ -2237,7 +2237,7 @@ pub unsafe fn MakeEditableBuffer_43(mut font: *mut woff2_Font, mut tableTag: i32
             (buf.offset(((*table).length) as isize) as *mut u8 as *mut ::libc::c_void)
         };
     }
-    (*table).data = buf.cast_const();
+    (*table).data = (buf).cast_const();
     return true;
 }
 pub unsafe fn NormalizeGlyphs_44(mut font: *mut woff2_Font) -> bool {
@@ -2262,12 +2262,12 @@ pub unsafe fn NormalizeGlyphs_44(mut font: *mut woff2_Font) -> bool {
     if ((((glyf_table).is_null()) as i32) != (((loca_table).is_null()) as i32)) {
         return false;
     }
-    if (((unsafe { (*loca_table.cast_const()).IsReused() }) as i32)
-        != ((unsafe { (*glyf_table.cast_const()).IsReused() }) as i32))
+    if (((unsafe { (*(loca_table).cast_const()).IsReused() }) as i32)
+        != ((unsafe { (*(glyf_table).cast_const()).IsReused() }) as i32))
     {
         return false;
     }
-    if (unsafe { (*loca_table.cast_const()).IsReused() }) {
+    if (unsafe { (*(loca_table).cast_const()).IsReused() }) {
         return true;
     }
     let mut index_fmt: i32 = ((*(*head_table).data.offset((51) as isize)) as i32);
@@ -2305,8 +2305,8 @@ pub unsafe fn NormalizeGlyphs_44(mut font: *mut woff2_Font) -> bool {
 }
 pub unsafe fn NormalizeOffsets_45(mut font: *mut woff2_Font) -> bool {
     let mut offset: u32 = (((12) + ((16) * ((*font).num_tables as i32))) as u32);
-    'loop_: for tag in 0..((unsafe { (*font.cast_const()).OutputOrderedTags() }).len()) {
-        let mut tag = (unsafe { (&(*font.cast_const())).OutputOrderedTags() })[tag].clone();
+    'loop_: for tag in 0..((unsafe { (*(font).cast_const()).OutputOrderedTags() }).len()) {
+        let mut tag = (unsafe { (&(*(font).cast_const())).OutputOrderedTags() })[tag].clone();
         let table: *mut woff2_Font_Table =
             &mut (*(*font).tables.entry(tag).or_default().as_mut()) as *mut woff2_Font_Table;
         (*table).offset = offset;
@@ -2345,7 +2345,7 @@ pub unsafe fn ComputeHeaderChecksum_46(font: *const woff2_Font) -> u32 {
     {
         let mut table: *const woff2_Font_Table = (&*i.second() as *const woff2_Font_Table);
         if (unsafe { (*table).IsReused() }) {
-            table = (*table).reuse_of.cast_const();
+            table = ((*table).reuse_of).cast_const();
         }
         checksum = (checksum).wrapping_add((*table).tag);
         checksum = (checksum).wrapping_add((*table).checksum);
@@ -2382,7 +2382,7 @@ pub unsafe fn FixChecksums_47(mut font: *mut woff2_Font) -> bool {
         UnsafeMapIterator::begin(&(*font).tables as *const BTreeMap<u32, Box<woff2_Font_Table>>)
     {
         let mut table: *mut woff2_Font_Table = (&mut *i.second() as *mut woff2_Font_Table);
-        if (unsafe { (*table.cast_const()).IsReused() }) {
+        if (unsafe { (*(table).cast_const()).IsReused() }) {
             table = (*table).reuse_of;
         }
         (*table).checksum = (unsafe {
@@ -2522,7 +2522,7 @@ pub unsafe fn WriteBytes_52(mut out: *mut Vec<u8>, mut data: *const u8, mut len:
     if ((len) == (0_u64)) {
         return;
     }
-    let mut offset: u64 = (*out.cast_const()).len() as u64;
+    let mut offset: u64 = (*(out).cast_const()).len() as u64;
     {
         let __a0 = (offset).wrapping_add(len) as usize;
         (*out).resize_with(__a0, || <u8>::default())
@@ -3033,7 +3033,7 @@ pub unsafe fn TransformGlyfAndLocaTables_56(mut font: *mut woff2_Font) -> bool {
         (*(*head_table).data.offset((51) as isize));
     (*transformed_glyf).tag = ((woff2_kGlyfTableTag) ^ (2155905152_u32));
     (*transformed_glyf).length = ((*transformed_glyf).buffer.len() as u64 as u32).clone();
-    (*transformed_glyf).data = (*transformed_glyf).buffer.as_mut_ptr().cast_const();
+    (*transformed_glyf).data = ((*transformed_glyf).buffer.as_mut_ptr()).cast_const();
     (*transformed_loca).tag = ((woff2_kLocaTableTag) ^ (2155905152_u32));
     (*transformed_loca).length = 0_u32;
     (*transformed_loca).data = std::ptr::null();
@@ -3220,7 +3220,7 @@ pub unsafe fn TransformHmtxTable_57(mut font: *mut woff2_Font) -> bool {
     (*transformed_hmtx).tag = ((woff2_kHmtxTableTag) ^ (2155905152_u32));
     (*transformed_hmtx).flag_byte = (((1) << (6)) as u8);
     (*transformed_hmtx).length = ((*transformed_hmtx).buffer.len() as u64 as u32).clone();
-    (*transformed_hmtx).data = (*transformed_hmtx).buffer.as_mut_ptr().cast_const();
+    (*transformed_hmtx).data = ((*transformed_hmtx).buffer.as_mut_ptr()).cast_const();
     return true;
 }
 #[repr(C)]
@@ -3662,7 +3662,7 @@ pub unsafe fn ConvertTTFToWOFF2_73(
         }
     }
     if !(unsafe {
-        let _data: *const u8 = transform_buf.as_mut_ptr().cast_const();
+        let _data: *const u8 = (transform_buf.as_mut_ptr()).cast_const();
         let _len: u64 = total_transform_length;
         let _result: *mut u8 = (&mut compression_buf[(0_u64) as usize] as *mut u8);
         let _result_len: *mut u32 = (&mut total_compressed_length as *mut u32);
@@ -3988,7 +3988,7 @@ pub unsafe fn ConvertTTFToWOFF2_73(
         Round4_39(_value)
     });
     (unsafe {
-        let _data: *const u8 = compressed_metadata_buf.as_mut_ptr().cast_const();
+        let _data: *const u8 = (compressed_metadata_buf.as_mut_ptr()).cast_const();
         let _len: u64 = (compressed_metadata_buf_length as u64);
         let _offset: *mut u64 = (&mut offset as *mut u64);
         let _dst: *mut u8 = result;

@@ -1597,10 +1597,10 @@ pub unsafe fn ReconstructGlyf_25(
             } else {
                 (unsafe {
                     let _n_points: u32 = total_n_points;
-                    let _points: *const woff2_Point = points
+                    let _points: *const woff2_Point = (points
                         .as_deref_mut()
-                        .map_or(::std::ptr::null_mut(), |s| s.as_mut_ptr())
-                        .cast_const();
+                        .map_or(::std::ptr::null_mut(), |s| s.as_mut_ptr()))
+                    .cast_const();
                     let _dst: *mut u8 = glyph_buf
                         .as_deref_mut()
                         .map_or(::std::ptr::null_mut(), |s| s.as_mut_ptr());
@@ -1654,10 +1654,10 @@ pub unsafe fn ReconstructGlyf_25(
                     != 0);
             if ((!(unsafe {
                 let _n_points: u32 = total_n_points;
-                let _points: *const woff2_Point = points
+                let _points: *const woff2_Point = (points
                     .as_deref_mut()
-                    .map_or(::std::ptr::null_mut(), |s| s.as_mut_ptr())
-                    .cast_const();
+                    .map_or(::std::ptr::null_mut(), |s| s.as_mut_ptr()))
+                .cast_const();
                 let _n_contours: u32 = (n_contours as u32);
                 let _instruction_length: u32 = instruction_size;
                 let _has_overlap_bit: bool = has_overlap_bit;
@@ -1712,21 +1712,21 @@ pub unsafe fn ReconstructGlyf_25(
         }
         (*glyf_checksum) = (*glyf_checksum).wrapping_add(
             (unsafe {
-                let _buf: *const u8 = glyph_buf
+                let _buf: *const u8 = (glyph_buf
                     .as_deref_mut()
-                    .map_or(::std::ptr::null_mut(), |s| s.as_mut_ptr())
-                    .cast_const();
+                    .map_or(::std::ptr::null_mut(), |s| s.as_mut_ptr()))
+                .cast_const();
                 let _size: u64 = glyph_size;
                 ComputeULongSum_8(_buf, _size)
             }),
         );
         if ((n_contours as i32) > (0)) {
             let mut x_min_buf: woff2_Buffer = woff2_Buffer::woff2_Buffer(
-                glyph_buf
+                (glyph_buf
                     .as_deref_mut()
                     .map_or(::std::ptr::null_mut(), |s| s.as_mut_ptr())
-                    .offset((2) as isize)
-                    .cast_const(),
+                    .offset((2) as isize))
+                .cast_const(),
                 2_u64,
             );
             if ((!(unsafe {
@@ -2211,9 +2211,8 @@ pub unsafe fn ReconstructFont_35(
         }
         if (((*table).tag) == (woff2_kHheaTableTag)) {
             if !(unsafe {
-                let _data: *const u8 = transformed_buf
-                    .offset(((*table).src_offset) as isize)
-                    .cast_const();
+                let _data: *const u8 =
+                    (transformed_buf.offset(((*table).src_offset) as isize)).cast_const();
                 let _data_size: u64 = ((*table).src_length as u64);
                 let _num_hmetrics: *mut u16 = (&mut (*info).num_hmetrics as *mut u16);
                 ReadNumHMetrics_27(_data, _data_size, _num_hmetrics)
@@ -2237,9 +2236,8 @@ pub unsafe fn ReconstructFont_35(
                 }
                 (*table).dst_offset = (dest_offset as u32);
                 checksum = (unsafe {
-                    let _buf: *const u8 = transformed_buf
-                        .offset(((*table).src_offset) as isize)
-                        .cast_const();
+                    let _buf: *const u8 =
+                        (transformed_buf.offset(((*table).src_offset) as isize)).cast_const();
                     let _size: u64 = ((*table).src_length as u64);
                     ComputeULongSum_8(_buf, _size)
                 });
@@ -2264,9 +2262,8 @@ pub unsafe fn ReconstructFont_35(
                         FindTable_26(_tables, _tag)
                     });
                     if ((!(unsafe {
-                        let _data: *const u8 = transformed_buf
-                            .offset(((*table).src_offset) as isize)
-                            .cast_const();
+                        let _data: *const u8 =
+                            (transformed_buf.offset(((*table).src_offset) as isize)).cast_const();
                         let _glyf_table: *mut woff2_Table = (table);
                         let _glyf_checksum: *mut u32 = (&mut checksum as *mut u32);
                         let _loca_table: *mut woff2_Table = loca_table;
@@ -2292,9 +2289,8 @@ pub unsafe fn ReconstructFont_35(
                 } else if (((*table).tag) == (woff2_kHmtxTableTag)) {
                     (*table).dst_offset = (dest_offset as u32);
                     if ((!(unsafe {
-                        let _transformed_buf: *const u8 = transformed_buf
-                            .offset(((*table).src_offset) as isize)
-                            .cast_const();
+                        let _transformed_buf: *const u8 =
+                            (transformed_buf.offset(((*table).src_offset) as isize)).cast_const();
                         let _transformed_size: u64 = ((*table).src_length as u64);
                         let _num_glyphs: u16 = (*info).num_glyphs;
                         let _num_hmetrics: u16 = (*info).num_hmetrics;
@@ -2368,7 +2364,7 @@ pub unsafe fn ReconstructFont_35(
         }
         font_checksum = (font_checksum).wrapping_add(
             (unsafe {
-                let _buf: *const u8 = table_entry.as_mut_ptr().cast_const();
+                let _buf: *const u8 = (table_entry.as_mut_ptr()).cast_const();
                 let _size: u64 = 12_u64;
                 ComputeULongSum_8(_buf, _size)
             }),
@@ -3042,20 +3038,20 @@ unsafe impl woff2_WOFF2Out for woff2_WOFF2StringOut {
         if ((offset) > (self.max_size_)) || ((n) > ((self.max_size_).wrapping_sub(offset))) {
             return false;
         }
-        if ((offset) == (((*self.buf_.cast_const()).len() - 1) as u64)) {
+        if ((offset) == (((*(self.buf_).cast_const()).len() - 1) as u64)) {
             (*self.buf_).splice((*self.buf_).len().saturating_sub(1)..(*self.buf_).len(), {
                 let mut v = ::std::slice::from_raw_parts((buf as *const u8), n as usize).to_vec();
                 v.push(0);
                 v
             });
         } else {
-            if (((offset).wrapping_add(n)) > (((*self.buf_.cast_const()).len() - 1) as u64)) {
+            if (((offset).wrapping_add(n)) > (((*(self.buf_).cast_const()).len() - 1) as u64)) {
                 (*self.buf_).splice(
                     (*self.buf_).len() - 1..(*self.buf_).len() - 1,
                     ::std::vec::from_elem(
                         0_u8,
                         ((offset).wrapping_add(n))
-                            .wrapping_sub(((*self.buf_.cast_const()).len() - 1) as u64)
+                            .wrapping_sub(((*(self.buf_).cast_const()).len() - 1) as u64)
                             as usize,
                     ),
                 );
