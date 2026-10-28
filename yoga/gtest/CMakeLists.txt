@@ -10,7 +10,7 @@ file(GLOB SOURCES CONFIGURE_DEPENDS
     ${YOGA_ROOT}/tests/*.cpp
     ${YOGA_ROOT}/tests/**/*.cpp)
 
-list(FILTER SOURCES EXCLUDE REGEX "/(CacheTest|EventPublisherTest|EventsTest|YGConfigTest|YGFlexBasisFitContentTest|YGHadOverflowTest|YGPersistentNodeCloningTest)\\.cpp$")
+list(FILTER SOURCES EXCLUDE REGEX "/tests/(CacheTest|EventPublisherTest|EventsTest|YGConfigTest|YGFlexBasisFitContentTest|YGHadOverflowTest|YGPersistentNodeCloningTest)\\.cpp$")
 
 set(SHIM_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(MAIN_CPP ${CMAKE_CURRENT_BINARY_DIR}/main.cpp)

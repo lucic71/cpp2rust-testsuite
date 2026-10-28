@@ -136,20 +136,15 @@ PROGRAMS = {
         },
     },
     "yoga": {
-        "Layout": {
-            "cpp_dir": "build",
-            "bin": "benchmark",
-            "tests": "*",
-        },
         "Legacy": {
             "cpp_dir": "build",
             "bin": "benchmarklegacy",
-            "tests": "chat-mac",
+            "tests": "*",
         },
         "Tests": {
             "cpp_dir": "../gtest/build",
             "bin": "yogatests",
-            "tests": "chat-mac",
+            "tests": "*",
         },
     },
 }

@@ -8,7 +8,6 @@ SRC_DIR="$2/yoga"
 shift 2
 MODELS=("$@")
 
-CAPTURES_DIR="$SRC_DIR/tests"
 TMP_DIR="$BUILD_DIR/tmp-yoga"
 
 strip_numbers() {
@@ -20,10 +19,6 @@ run_all() {
   mkdir -p "$out_dir"
   "$tests_bin" > "$out_dir/yogatests.out"
   "$bin_dir/benchmarklegacy" | strip_numbers > "$out_dir/benchmarklegacy.out"
-  for d in "$CAPTURES_DIR"/*/; do
-    name=$(basename "$d")
-    "$bin_dir/benchmark" "$d" | strip_numbers > "$out_dir/benchmark-$name.out"
-  done
 }
 
 rm -fr "$TMP_DIR"
