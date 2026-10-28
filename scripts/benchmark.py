@@ -135,6 +135,23 @@ PROGRAMS = {
             "cmdline": lambda f: get_temp_dir() / f.with_suffix(".jpg.brn").name,
         },
     },
+    "yoga": {
+        "Layout": {
+            "cpp_dir": "build",
+            "bin": "benchmark",
+            "tests": "*",
+        },
+        "Legacy": {
+            "cpp_dir": "build",
+            "bin": "benchmarklegacy",
+            "tests": "chat-mac",
+        },
+        "Tests": {
+            "cpp_dir": "../gtest/build",
+            "bin": "yogatests",
+            "tests": "chat-mac",
+        },
+    },
 }
 
 # Add micro benchmarks

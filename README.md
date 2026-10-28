@@ -8,6 +8,7 @@ needed.
 
 ## Current set of included programs
  - [WOFF2](https://github.com/google/woff2): TTF font compression/decompression
+ - [Yoga](https://github.com/react/yoga): Flexbox layout engine
 
 
 ## To build and run the benchmarks
