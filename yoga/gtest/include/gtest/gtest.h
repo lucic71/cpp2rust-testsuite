@@ -12,12 +12,12 @@
 
 namespace gtest_shim {
 
-struct Message {
-  template <typename T>
-  Message& operator<<(const T&) {
-    return *this;
-  }
-};
+struct Message {};
+
+template <typename T>
+const Message& operator<<(const Message& m, const T&) {
+  return m;
+}
 
 Message fail(const char* file, int line, const char* expr);
 

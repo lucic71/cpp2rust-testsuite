@@ -75,10 +75,10 @@ struct ShrinkRow {
   YGNodeRef spacer;
 
   ShrinkRow(bool useAutoMinSize, float containerWidth)
-      : config(makeWebConfig(useAutoMinSize)),
-        root(YGNodeNewWithConfig(config)),
-        text(YGNodeNewWithConfig(config)),
-        spacer(YGNodeNewWithConfig(config)) {
+      : config(makeWebConfig(useAutoMinSize)) {
+    root = YGNodeNewWithConfig(config);
+    text = YGNodeNewWithConfig(config);
+    spacer = YGNodeNewWithConfig(config);
     YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
     YGNodeStyleSetWidth(root, containerWidth);
     YGNodeStyleSetHeight(root, 50);
