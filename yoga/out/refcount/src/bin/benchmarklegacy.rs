@@ -881,7 +881,7 @@ impl facebook_yoga_Config {
         mut logger: FnPtr<fn(Ptr<YGConfig>, Ptr<YGNode>, YGLogLevel, Ptr<i8>, Ptr<VaArg>) -> i32>,
     ) -> Self {
         Self {
-            cloneNodeCallback_: FnPtr::<fn(Ptr<YGNode>, Ptr<YGNode>, u64) -> Ptr<YGNode>>::null(),
+            cloneNodeCallback_: FnPtr::<fn(Ptr<YGNode>, Ptr<YGNode>, usize) -> Ptr<YGNode>>::null(),
             logger_: (logger).clone(),
             useWebDefaults_: false,
             version_: 0_u32,
@@ -904,8 +904,8 @@ impl Default for facebook_yoga_Config {
     fn default() -> Self {
         {
             facebook_yoga_Config {
-                cloneNodeCallback_: FnPtr::<fn(Ptr<YGNode>, Ptr<YGNode>, u64) -> Ptr<YGNode>>::null(
-                ),
+                cloneNodeCallback_:
+                    FnPtr::<fn(Ptr<YGNode>, Ptr<YGNode>, usize) -> Ptr<YGNode>>::null(),
                 logger_: FnPtr::<
                     fn(Ptr<YGConfig>, Ptr<YGNode>, YGLogLevel, Ptr<i8>, Ptr<VaArg>) -> i32,
                 >::null(),
@@ -925,11 +925,10 @@ impl Default for facebook_yoga_Config {
     }
 }
 thread_local!(
-    static defaultConfig__71: Value<facebook_yoga_Config> = Rc::new(RefCell::new(
-        facebook_yoga_Config::new({
-            FnPtr::<fn(Ptr< YGConfig  >  ,Ptr< YGNode  >  ,YGLogLevel  ,Ptr< i8  >  ,Ptr< __va_list_tag  >  ,) -> i32  >::null()
-        }),
-    ));
+    static defaultConfig__71: Value<facebook_yoga_Config> =
+        Rc::new(RefCell::new(facebook_yoga_Config::new({
+            FnPtr::<fn(Ptr<YGConfig>, Ptr<YGNode>, YGLogLevel, Ptr<i8>, Ptr<VaArg>) -> i32>::null()
+        })));
 );
 pub fn resolveRef_72(mut ref_: Ptr<YGConfig>) -> Ptr<facebook_yoga_Config> {
     return ref_.reinterpret_cast::<facebook_yoga_Config>();
