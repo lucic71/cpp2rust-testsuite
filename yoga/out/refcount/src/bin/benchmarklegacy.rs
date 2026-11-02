@@ -848,9 +848,7 @@ pub fn unscopedEnum_68(mut scoped: facebook_yoga_LogLevel) -> YGLogLevel {
 pub fn toString_69(mut e: facebook_yoga_LogLevel) -> Ptr<i8> {
     return ({ YGLogLevelToString_70(({ unscopedEnum_68(e) })) });
 }
-#[derive(Clone, Record, ByteRepr, VaArg, FnPtrArg, Default)]
-#[byte_size(1)]
-pub struct YGConfig {}
+pub type YGConfig = facebook_yoga_Config;
 #[derive(Clone, Record, ByteRepr, VaArg, FnPtrArg)]
 #[byte_size(48)]
 pub struct facebook_yoga_Config {
@@ -2780,9 +2778,7 @@ impl Default for facebook_yoga_Style {
         }
     }
 }
-#[derive(Clone, Record, ByteRepr, VaArg, FnPtrArg, Default)]
-#[byte_size(1)]
-pub struct YGNode {}
+pub type YGNode = facebook_yoga_Node;
 #[derive(Clone, Record, ByteRepr, VaArg, FnPtrArg)]
 #[byte_size(720)]
 pub struct facebook_yoga_Node {

@@ -16791,9 +16791,7 @@ pub unsafe fn unscopedEnum_416(mut scoped: facebook_yoga_LogLevel) -> YGLogLevel
 pub unsafe fn toString_417(mut e: facebook_yoga_LogLevel) -> *const libc::c_char {
     return (unsafe { YGLogLevelToString_418((unsafe { unscopedEnum_416(e) })) });
 }
-#[repr(C)]
-#[derive(Copy, Clone, VaArg, FnPtrArg, Default)]
-pub struct YGConfig {}
+pub type YGConfig = facebook_yoga_Config;
 #[repr(C)]
 #[derive(Clone, VaArg, FnPtrArg)]
 pub struct facebook_yoga_Config {
@@ -17191,9 +17189,7 @@ impl Default for facebook_yoga_LayoutResults {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, VaArg, FnPtrArg, Default)]
-pub struct YGNode {}
+pub type YGNode = facebook_yoga_Node;
 #[repr(C)]
 #[derive(Clone, VaArg, FnPtrArg)]
 pub struct facebook_yoga_Node {
