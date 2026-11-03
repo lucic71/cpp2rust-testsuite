@@ -512,38 +512,45 @@ unsafe fn main_0(mut argc: i32, mut argv: *mut *const libc::c_char) -> i32 {
     }
     return 0;
 }
+#[inline]
 pub unsafe fn operator_bitnot_16(mut a: YGErrata) -> YGErrata {
     return ((!(a as u32)) as YGErrata);
 }
+#[inline]
 pub unsafe fn operator_bitor_17(mut a: YGErrata, mut b: YGErrata) -> YGErrata {
     return (((a as u32) | (b as u32)) as YGErrata);
 }
+#[inline]
 pub unsafe fn operator_bitand_18(mut a: YGErrata, mut b: YGErrata) -> YGErrata {
     return (((a as u32) & (b as u32)) as YGErrata);
 }
+#[inline]
 pub unsafe fn operator_bitxor_19(mut a: YGErrata, mut b: YGErrata) -> YGErrata {
     return (((a as u32) ^ (b as u32)) as YGErrata);
 }
+#[inline]
 pub unsafe fn operator_bitor_assign_20(a: *mut YGErrata, mut b: YGErrata) -> *mut YGErrata {
     return &mut (*({
         (*(a as *mut u32)) |= (b as u32);
         (a as *mut u32)
     } as *mut YGErrata));
 }
+#[inline]
 pub unsafe fn operator_bitand_assign_21(a: *mut YGErrata, mut b: YGErrata) -> *mut YGErrata {
     return &mut (*({
         (*(a as *mut u32)) &= (b as u32);
         (a as *mut u32)
     } as *mut YGErrata));
 }
+#[inline]
 pub unsafe fn operator_bitxor_assign_22(a: *mut YGErrata, mut b: YGErrata) -> *mut YGErrata {
     return &mut (*({
         (*(a as *mut u32)) ^= (b as u32);
         (a as *mut u32)
     } as *mut YGErrata));
 }
-pub static mut YGUndefined_23: std::cell::LazyCell<f32> =
-    std::cell::LazyCell::new(|| unsafe { f32::NAN });
+pub static YGUndefined_23: f32 = f32::NAN;
+#[inline]
 pub unsafe fn operator_eq_24(lhs: *const YGValue, rhs: *const YGValue) -> bool {
     if (((*lhs).unit as i32) != ((*rhs).unit as i32)) {
         return false;
@@ -568,51 +575,66 @@ pub unsafe fn operator_eq_24(lhs: *const YGValue, rhs: *const YGValue) -> bool {
     };
     panic!("ub: non-void function does not return a value")
 }
+#[inline]
 pub unsafe fn operator_neg_25(value: *const YGValue) -> YGValue {
     return YGValue {
         value: -(*value).value,
         unit: (*value).unit,
     };
 }
+#[inline]
 pub unsafe fn bitCount_26() -> i32 {
     return (((unsafe { ordinalCount_27() }) - (1)) as u8).cpp_bit_width();
 }
+#[inline]
 pub unsafe fn bitCount_28() -> i32 {
     return (((unsafe { ordinalCount_29() }) - (1)) as u8).cpp_bit_width();
 }
+#[inline]
 pub unsafe fn bitCount_30() -> i32 {
     return (((unsafe { ordinalCount_31() }) - (1)) as u8).cpp_bit_width();
 }
+#[inline]
 pub unsafe fn bitCount_32() -> i32 {
     return (((unsafe { ordinalCount_33() }) - (1)) as u8).cpp_bit_width();
 }
+#[inline]
 pub unsafe fn bitCount_34() -> i32 {
     return (((unsafe { ordinalCount_35() }) - (1)) as u8).cpp_bit_width();
 }
+#[inline]
 pub unsafe fn bitCount_36() -> i32 {
     return (((unsafe { ordinalCount_37() }) - (1)) as u8).cpp_bit_width();
 }
+#[inline]
 pub unsafe fn bitCount_38() -> i32 {
     return (((unsafe { ordinalCount_39() }) - (1)) as u8).cpp_bit_width();
 }
+#[inline]
 pub unsafe fn bitCount_40() -> i32 {
     return (((unsafe { ordinalCount_41() }) - (1)) as u8).cpp_bit_width();
 }
+#[inline]
 pub unsafe fn bitCount_42() -> i32 {
     return (((unsafe { ordinalCount_43() }) - (1)) as u8).cpp_bit_width();
 }
+#[inline]
 pub unsafe fn bitCount_44() -> i32 {
     return (((unsafe { ordinalCount_45() }) - (1)) as u8).cpp_bit_width();
 }
+#[inline]
 pub unsafe fn to_underlying_46(mut e: facebook_yoga_Edge) -> u8 {
     return (e as u8);
 }
+#[inline]
 pub unsafe fn to_underlying_47(mut e: facebook_yoga_Dimension) -> u8 {
     return (e as u8);
 }
+#[inline]
 pub unsafe fn to_underlying_48(mut e: facebook_yoga_PhysicalEdge) -> u32 {
     return (e as u32);
 }
+#[inline]
 pub unsafe fn to_underlying_49(mut e: facebook_yoga_Gutter) -> u8 {
     return (e as u8);
 }
@@ -626,27 +648,32 @@ pub const facebook_yoga_Errata_MinSizeUndefinedInsteadOfAuto: facebook_yoga_Erra
 pub const facebook_yoga_Errata_FlexFirstPassUsesRunningTotals: facebook_yoga_Errata = 16;
 pub const facebook_yoga_Errata_All: facebook_yoga_Errata = 2147483647;
 pub const facebook_yoga_Errata_Classic: facebook_yoga_Errata = 2147483646;
+#[inline]
 pub unsafe fn operator_bitnot_50(mut a: facebook_yoga_Errata) -> facebook_yoga_Errata {
     return ((!(a as u32)) as facebook_yoga_Errata);
 }
+#[inline]
 pub unsafe fn operator_bitor_51(
     mut a: facebook_yoga_Errata,
     mut b: facebook_yoga_Errata,
 ) -> facebook_yoga_Errata {
     return (((a as u32) | (b as u32)) as facebook_yoga_Errata);
 }
+#[inline]
 pub unsafe fn operator_bitand_52(
     mut a: facebook_yoga_Errata,
     mut b: facebook_yoga_Errata,
 ) -> facebook_yoga_Errata {
     return (((a as u32) & (b as u32)) as facebook_yoga_Errata);
 }
+#[inline]
 pub unsafe fn operator_bitxor_53(
     mut a: facebook_yoga_Errata,
     mut b: facebook_yoga_Errata,
 ) -> facebook_yoga_Errata {
     return (((a as u32) ^ (b as u32)) as facebook_yoga_Errata);
 }
+#[inline]
 pub unsafe fn operator_bitor_assign_54(
     a: *mut facebook_yoga_Errata,
     mut b: facebook_yoga_Errata,
@@ -656,6 +683,7 @@ pub unsafe fn operator_bitor_assign_54(
         (a as *mut u32)
     } as *mut facebook_yoga_Errata));
 }
+#[inline]
 pub unsafe fn operator_bitand_assign_55(
     a: *mut facebook_yoga_Errata,
     mut b: facebook_yoga_Errata,
@@ -665,6 +693,7 @@ pub unsafe fn operator_bitand_assign_55(
         (a as *mut u32)
     } as *mut facebook_yoga_Errata));
 }
+#[inline]
 pub unsafe fn operator_bitxor_assign_56(
     a: *mut facebook_yoga_Errata,
     mut b: facebook_yoga_Errata,
@@ -674,12 +703,15 @@ pub unsafe fn operator_bitxor_assign_56(
         (a as *mut u32)
     } as *mut facebook_yoga_Errata));
 }
+#[inline]
 pub unsafe fn scopedEnum_57(mut unscoped: YGErrata) -> facebook_yoga_Errata {
     return (unscoped as facebook_yoga_Errata);
 }
+#[inline]
 pub unsafe fn unscopedEnum_58(mut scoped: facebook_yoga_Errata) -> YGErrata {
     return (scoped as YGErrata);
 }
+#[inline]
 pub unsafe fn toString_59(mut e: facebook_yoga_Errata) -> *const libc::c_char {
     return (unsafe { YGErrataToString_60((unsafe { unscopedEnum_58(e) })) });
 }
@@ -687,19 +719,23 @@ pub type facebook_yoga_ExperimentalFeature = u8;
 pub const facebook_yoga_ExperimentalFeature_WebFlexBasis: facebook_yoga_ExperimentalFeature = 0;
 pub const facebook_yoga_ExperimentalFeature_FixFlexBasisFitContent:
     facebook_yoga_ExperimentalFeature = 1;
+#[inline]
 pub unsafe fn ordinalCount_61() -> i32 {
     return 2;
 }
+#[inline]
 pub unsafe fn scopedEnum_62(
     mut unscoped: YGExperimentalFeature,
 ) -> facebook_yoga_ExperimentalFeature {
     return (unscoped as facebook_yoga_ExperimentalFeature);
 }
+#[inline]
 pub unsafe fn unscopedEnum_63(
     mut scoped: facebook_yoga_ExperimentalFeature,
 ) -> YGExperimentalFeature {
     return (scoped as YGExperimentalFeature);
 }
+#[inline]
 pub unsafe fn toString_64(mut e: facebook_yoga_ExperimentalFeature) -> *const libc::c_char {
     return (unsafe { YGExperimentalFeatureToString_65((unsafe { unscopedEnum_63(e) })) });
 }
@@ -710,21 +746,25 @@ pub const facebook_yoga_LogLevel_Info: facebook_yoga_LogLevel = 2;
 pub const facebook_yoga_LogLevel_Debug: facebook_yoga_LogLevel = 3;
 pub const facebook_yoga_LogLevel_Verbose: facebook_yoga_LogLevel = 4;
 pub const facebook_yoga_LogLevel_Fatal: facebook_yoga_LogLevel = 5;
+#[inline]
 pub unsafe fn ordinalCount_66() -> i32 {
     return 6;
 }
+#[inline]
 pub unsafe fn scopedEnum_67(mut unscoped: YGLogLevel) -> facebook_yoga_LogLevel {
     return (unscoped as facebook_yoga_LogLevel);
 }
+#[inline]
 pub unsafe fn unscopedEnum_68(mut scoped: facebook_yoga_LogLevel) -> YGLogLevel {
     return (scoped as YGLogLevel);
 }
+#[inline]
 pub unsafe fn toString_69(mut e: facebook_yoga_LogLevel) -> *const libc::c_char {
     return (unsafe { YGLogLevelToString_70((unsafe { unscopedEnum_68(e) })) });
 }
 pub type YGConfig = facebook_yoga_Config;
 #[repr(C)]
-#[derive(Clone, VaArg, FnPtrArg)]
+#[derive(Copy, Clone, VaArg, FnPtrArg)]
 pub struct facebook_yoga_Config {
     cloneNodeCallback_: Option<unsafe fn(*const YGNode, *const YGNode, usize) -> *mut YGNode>,
     logger_: Option<
@@ -738,12 +778,13 @@ pub struct facebook_yoga_Config {
     >,
     useWebDefaults_: bool,
     version_: u32,
-    experimentalFeatures_: Vec<bool>,
+    experimentalFeatures_: [bool; 2],
     errata_: facebook_yoga_Errata,
     pointScaleFactor_: f32,
     context_: *mut ::libc::c_void,
 }
 impl facebook_yoga_Config {
+    #[inline]
     pub unsafe fn new(
         mut logger: Option<
             unsafe fn(
@@ -760,7 +801,7 @@ impl facebook_yoga_Config {
             logger_: logger,
             useWebDefaults_: false,
             version_: 0_u32,
-            experimentalFeatures_: vec![false; 2],
+            experimentalFeatures_: [false; 2],
             errata_: (unsafe {
                 operator_bitor_51(
                     facebook_yoga_Errata_MinSizeUndefinedInsteadOfAuto,
@@ -772,6 +813,7 @@ impl facebook_yoga_Config {
         };
         this
     }
+    #[inline]
     pub unsafe fn getDefault() -> *const facebook_yoga_Config {
         return &(*std::cell::LazyCell::force_mut(&mut *&raw mut defaultConfig__71));
     }
@@ -784,7 +826,7 @@ impl Default for facebook_yoga_Config {
                 logger_: None,
                 useWebDefaults_: false,
                 version_: 0_u32,
-                experimentalFeatures_: vec![false; 2],
+                experimentalFeatures_: [false; 2],
                 errata_: (unsafe {
                     operator_bitor_51(
                         facebook_yoga_Errata_MinSizeUndefinedInsteadOfAuto,
@@ -799,9 +841,11 @@ impl Default for facebook_yoga_Config {
 }
 static mut defaultConfig__71: std::cell::LazyCell<facebook_yoga_Config> =
     std::cell::LazyCell::new(|| unsafe { facebook_yoga_Config::new({ None }) });
+#[inline]
 pub unsafe fn resolveRef_72(ref_: *mut YGConfig) -> *mut facebook_yoga_Config {
     return (ref_ as *mut facebook_yoga_Config);
 }
+#[inline]
 pub unsafe fn resolveRef_73(ref_: *const YGConfig) -> *const facebook_yoga_Config {
     return (ref_ as *const facebook_yoga_Config);
 }
@@ -810,18 +854,23 @@ pub const facebook_yoga_Display_Flex: facebook_yoga_Display = 0;
 pub const facebook_yoga_Display_None: facebook_yoga_Display = 1;
 pub const facebook_yoga_Display_Contents: facebook_yoga_Display = 2;
 pub const facebook_yoga_Display_Grid: facebook_yoga_Display = 3;
+#[inline]
 pub unsafe fn ordinalCount_41() -> i32 {
     return 4;
 }
+#[inline]
 pub unsafe fn scopedEnum_74(mut unscoped: YGDisplay) -> facebook_yoga_Display {
     return (unscoped as facebook_yoga_Display);
 }
+#[inline]
 pub unsafe fn unscopedEnum_75(mut scoped: facebook_yoga_Display) -> YGDisplay {
     return (scoped as YGDisplay);
 }
+#[inline]
 pub unsafe fn toString_76(mut e: facebook_yoga_Display) -> *const libc::c_char {
     return (unsafe { YGDisplayToString_77((unsafe { unscopedEnum_75(e) })) });
 }
+#[inline]
 pub unsafe fn operator_ne_78(
     a: *const facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator,
     b: *const facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator,
@@ -836,6 +885,7 @@ pub struct facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator {
     backtrack_: Vec<CppPair<*const facebook_yoga_Node, u64>>,
 }
 impl facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator {
+    #[inline]
     pub unsafe fn new_1(mut node: *const facebook_yoga_Node, mut childIndex: usize) -> Self {
         let mut this = Self {
             node_: node,
@@ -844,6 +894,7 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator {
         };
         this
     }
+    #[inline]
     pub unsafe fn operator_inc_4(
         &mut self,
     ) -> *mut facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator {
@@ -851,6 +902,7 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator {
         return &mut (*(self
             as *mut facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator));
     }
+    #[inline]
     pub unsafe fn operator_post_inc_5(
         &mut self,
         mut _a0: i32,
@@ -867,6 +919,7 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator {
             &mut tmp
         });
     }
+    #[inline]
     unsafe fn next(&mut self) {
         if (((self.childIndex_).wrapping_add(1_usize))
             >= (unsafe { facebook_yoga_Node::getChildCount(&(*self.node_)) }))
@@ -911,6 +964,7 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator {
             }
         }
     }
+    #[inline]
     unsafe fn skipContentsNodes(&mut self) {
         let mut currentNode: *mut facebook_yoga_Node = (unsafe {
             let _index: usize = self.childIndex_;
@@ -946,6 +1000,7 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator {
             (unsafe { facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator::next(self) });
         }
     }
+    #[inline]
     pub unsafe fn move_from(
         _a0: *mut facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator,
     ) -> Self {
@@ -956,6 +1011,7 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator {
         };
         this
     }
+    #[inline]
     pub unsafe fn move_assign(
         &mut self,
         _a0: *mut facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator,
@@ -984,12 +1040,14 @@ pub struct facebook_yoga_LayoutableChildren_facebook_yoga_Node_ {
     node_: *const facebook_yoga_Node,
 }
 impl facebook_yoga_LayoutableChildren_facebook_yoga_Node_ {
+    #[inline]
     pub unsafe fn new(mut node: *const facebook_yoga_Node) -> Self {
         let mut this = Self { node_: node };
         const _: () = assert!(true, "std::input_iterator<LayoutableChildren<T>::Iterator>");;
         const _: () = assert!(true, "std::is_base_of<Node, T>::value");;
         this
     }
+    #[inline]
     pub unsafe fn begin(&self) -> facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator {
         if ((unsafe { facebook_yoga_Node::getChildCount(&(*self.node_)) }) > (0_usize)) {
             let mut result: facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator =
@@ -1023,6 +1081,7 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node_ {
         }
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     pub unsafe fn end(&self) -> facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator {
         return <facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator>::default();
     }
@@ -1030,15 +1089,19 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node_ {
 pub type facebook_yoga_Dimension = u8;
 pub const facebook_yoga_Dimension_Width: facebook_yoga_Dimension = 0;
 pub const facebook_yoga_Dimension_Height: facebook_yoga_Dimension = 1;
+#[inline]
 pub unsafe fn ordinalCount_79() -> i32 {
     return 2;
 }
+#[inline]
 pub unsafe fn scopedEnum_80(mut unscoped: YGDimension) -> facebook_yoga_Dimension {
     return (unscoped as facebook_yoga_Dimension);
 }
+#[inline]
 pub unsafe fn unscopedEnum_81(mut scoped: facebook_yoga_Dimension) -> YGDimension {
     return (scoped as YGDimension);
 }
+#[inline]
 pub unsafe fn toString_82(mut e: facebook_yoga_Dimension) -> *const libc::c_char {
     return (unsafe { YGDimensionToString_83((unsafe { unscopedEnum_81(e) })) });
 }
@@ -1046,15 +1109,19 @@ pub type facebook_yoga_Direction = u8;
 pub const facebook_yoga_Direction_Inherit: facebook_yoga_Direction = 0;
 pub const facebook_yoga_Direction_LTR: facebook_yoga_Direction = 1;
 pub const facebook_yoga_Direction_RTL: facebook_yoga_Direction = 2;
+#[inline]
 pub unsafe fn ordinalCount_27() -> i32 {
     return 3;
 }
+#[inline]
 pub unsafe fn scopedEnum_84(mut unscoped: YGDirection) -> facebook_yoga_Direction {
     return (unscoped as facebook_yoga_Direction);
 }
+#[inline]
 pub unsafe fn unscopedEnum_85(mut scoped: facebook_yoga_Direction) -> YGDirection {
     return (scoped as YGDirection);
 }
+#[inline]
 pub unsafe fn toString_86(mut e: facebook_yoga_Direction) -> *const libc::c_char {
     return (unsafe { YGDirectionToString_87((unsafe { unscopedEnum_85(e) })) });
 }
@@ -1068,15 +1135,19 @@ pub const facebook_yoga_Edge_End: facebook_yoga_Edge = 5;
 pub const facebook_yoga_Edge_Horizontal: facebook_yoga_Edge = 6;
 pub const facebook_yoga_Edge_Vertical: facebook_yoga_Edge = 7;
 pub const facebook_yoga_Edge_All: facebook_yoga_Edge = 8;
+#[inline]
 pub unsafe fn ordinalCount_88() -> i32 {
     return 9;
 }
+#[inline]
 pub unsafe fn scopedEnum_89(mut unscoped: YGEdge) -> facebook_yoga_Edge {
     return (unscoped as facebook_yoga_Edge);
 }
+#[inline]
 pub unsafe fn unscopedEnum_90(mut scoped: facebook_yoga_Edge) -> YGEdge {
     return (scoped as YGEdge);
 }
+#[inline]
 pub unsafe fn toString_91(mut e: facebook_yoga_Edge) -> *const libc::c_char {
     return (unsafe { YGEdgeToString_92((unsafe { unscopedEnum_90(e) })) });
 }
@@ -1084,30 +1155,38 @@ pub type facebook_yoga_MeasureMode = u8;
 pub const facebook_yoga_MeasureMode_Undefined: facebook_yoga_MeasureMode = 0;
 pub const facebook_yoga_MeasureMode_Exactly: facebook_yoga_MeasureMode = 1;
 pub const facebook_yoga_MeasureMode_AtMost: facebook_yoga_MeasureMode = 2;
+#[inline]
 pub unsafe fn ordinalCount_93() -> i32 {
     return 3;
 }
+#[inline]
 pub unsafe fn scopedEnum_94(mut unscoped: YGMeasureMode) -> facebook_yoga_MeasureMode {
     return (unscoped as facebook_yoga_MeasureMode);
 }
+#[inline]
 pub unsafe fn unscopedEnum_95(mut scoped: facebook_yoga_MeasureMode) -> YGMeasureMode {
     return (scoped as YGMeasureMode);
 }
+#[inline]
 pub unsafe fn toString_96(mut e: facebook_yoga_MeasureMode) -> *const libc::c_char {
     return (unsafe { YGMeasureModeToString_97((unsafe { unscopedEnum_95(e) })) });
 }
 pub type facebook_yoga_NodeType = u8;
 pub const facebook_yoga_NodeType_Default: facebook_yoga_NodeType = 0;
 pub const facebook_yoga_NodeType_Text: facebook_yoga_NodeType = 1;
+#[inline]
 pub unsafe fn ordinalCount_45() -> i32 {
     return 2;
 }
+#[inline]
 pub unsafe fn scopedEnum_98(mut unscoped: YGNodeType) -> facebook_yoga_NodeType {
     return (unscoped as facebook_yoga_NodeType);
 }
+#[inline]
 pub unsafe fn unscopedEnum_99(mut scoped: facebook_yoga_NodeType) -> YGNodeType {
     return (scoped as YGNodeType);
 }
+#[inline]
 pub unsafe fn toString_100(mut e: facebook_yoga_NodeType) -> *const libc::c_char {
     return (unsafe { YGNodeTypeToString_101((unsafe { unscopedEnum_99(e) })) });
 }
@@ -1120,6 +1199,7 @@ pub type facebook_yoga_SizingMode = i32;
 pub const facebook_yoga_SizingMode_StretchFit: facebook_yoga_SizingMode = 0;
 pub const facebook_yoga_SizingMode_MaxContent: facebook_yoga_SizingMode = 1;
 pub const facebook_yoga_SizingMode_FitContent: facebook_yoga_SizingMode = 2;
+#[inline]
 pub unsafe fn measureMode_102(mut mode: facebook_yoga_SizingMode) -> facebook_yoga_MeasureMode {
     switch!(match mode {
         __v if __v == facebook_yoga_SizingMode_StretchFit => {
@@ -1137,6 +1217,7 @@ pub unsafe fn measureMode_102(mut mode: facebook_yoga_SizingMode) -> facebook_yo
     });
     panic!("ub: non-void function does not return a value")
 }
+#[inline]
 pub unsafe fn sizingMode_104(mut mode: facebook_yoga_MeasureMode) -> facebook_yoga_SizingMode {
     switch!(match mode {
         __v if __v == facebook_yoga_MeasureMode_Exactly => {
@@ -1154,21 +1235,27 @@ pub unsafe fn sizingMode_104(mut mode: facebook_yoga_MeasureMode) -> facebook_yo
     });
     panic!("ub: non-void function does not return a value")
 }
+#[inline]
 pub unsafe fn isUndefined_105(mut value: f32) -> bool {
     return ((value) != (value));
 }
+#[inline]
 pub unsafe fn isUndefined_106(mut value: f64) -> bool {
     return ((value) != (value));
 }
+#[inline]
 pub unsafe fn isDefined_107(mut value: f32) -> bool {
     return !(unsafe { isUndefined_105(value) });
 }
+#[inline]
 pub unsafe fn isDefined_108(mut value: f64) -> bool {
     return !(unsafe { isUndefined_106(value) });
 }
+#[inline]
 pub unsafe fn isinf_109(mut value: f32) -> bool {
     return ((value) == (f32::INFINITY)) || ((value) == (-f32::INFINITY));
 }
+#[inline]
 pub unsafe fn maxOrDefined_110(mut a: f32, mut b: f32) -> f32 {
     if (unsafe { isDefined_107(a) }) && (unsafe { isDefined_107(b) }) {
         return (*{
@@ -1183,12 +1270,14 @@ pub unsafe fn maxOrDefined_110(mut a: f32, mut b: f32) -> f32 {
         a
     };
 }
+#[inline]
 pub unsafe fn inexactEquals_111(mut a: f32, mut b: f32) -> bool {
     if (unsafe { isDefined_107(a) }) && (unsafe { isDefined_107(b) }) {
         return ((((a) - (b)).abs()) < (1e-04_f32));
     }
     return (unsafe { isUndefined_105(a) }) && (unsafe { isUndefined_105(b) });
 }
+#[inline]
 pub unsafe fn inexactEquals_112(mut a: f64, mut b: f64) -> bool {
     if (unsafe { isDefined_108(a) }) && (unsafe { isDefined_108(b) }) {
         return ((((a) - (b)).abs()) < (1e-04_f64));
@@ -1208,6 +1297,7 @@ pub struct facebook_yoga_CachedMeasurement {
     pub ownerHeight: f32,
 }
 impl facebook_yoga_CachedMeasurement {
+    #[inline]
     pub unsafe fn operator_eq(&self, mut measurement: facebook_yoga_CachedMeasurement) -> bool {
         let mut isEqual: bool = ((self.widthSizingMode) == (measurement.widthSizingMode))
             && ((self.heightSizingMode) == (measurement.heightSizingMode));
@@ -1272,13 +1362,16 @@ pub struct facebook_yoga_FloatOptional {
     value_: f32,
 }
 impl facebook_yoga_FloatOptional {
+    #[inline]
     pub unsafe fn new_1(mut value: f32) -> Self {
         let mut this = Self { value_: value };
         this
     }
+    #[inline]
     pub unsafe fn unwrap(&self) -> f32 {
         return self.value_;
     }
+    #[inline]
     pub unsafe fn unwrapOrDefault(&self, mut defaultValue: f32) -> f32 {
         return if (unsafe { facebook_yoga_FloatOptional::isUndefined(self) }) {
             defaultValue
@@ -1286,9 +1379,11 @@ impl facebook_yoga_FloatOptional {
             self.value_
         };
     }
+    #[inline]
     pub unsafe fn isUndefined(&self) -> bool {
         return (unsafe { isUndefined_105(self.value_) });
     }
+    #[inline]
     pub unsafe fn isDefined(&self) -> bool {
         return (unsafe { isDefined_107(self.value_) });
     }
@@ -1322,6 +1417,7 @@ impl Default for facebook_yoga_FloatOptional {
         unsafe { facebook_yoga_FloatOptional { value_: f32::NAN } }
     }
 }
+#[inline]
 pub unsafe fn operator_eq_114(
     mut lhs: facebook_yoga_FloatOptional,
     mut rhs: facebook_yoga_FloatOptional,
@@ -1331,18 +1427,21 @@ pub unsafe fn operator_eq_114(
         || ((unsafe { facebook_yoga_FloatOptional::isUndefined(&lhs) })
             && (unsafe { facebook_yoga_FloatOptional::isUndefined(&rhs) }));
 }
+#[inline]
 pub unsafe fn operator_eq_115(mut lhs: facebook_yoga_FloatOptional, mut rhs: f32) -> bool {
     return (unsafe {
         let _lhs: facebook_yoga_FloatOptional = lhs;
         operator_eq_114(_lhs, facebook_yoga_FloatOptional::new_1({ rhs }))
     });
 }
+#[inline]
 pub unsafe fn operator_eq_116(mut lhs: f32, mut rhs: facebook_yoga_FloatOptional) -> bool {
     return (unsafe {
         let _lhs: facebook_yoga_FloatOptional = rhs;
         operator_eq_115(_lhs, lhs)
     });
 }
+#[inline]
 pub unsafe fn operator_add_117(
     mut lhs: facebook_yoga_FloatOptional,
     mut rhs: facebook_yoga_FloatOptional,
@@ -1352,6 +1451,7 @@ pub unsafe fn operator_add_117(
             + (unsafe { facebook_yoga_FloatOptional::unwrap(&rhs) }))
     });
 }
+#[inline]
 pub unsafe fn operator_gt_118(
     mut lhs: facebook_yoga_FloatOptional,
     mut rhs: facebook_yoga_FloatOptional,
@@ -1359,6 +1459,7 @@ pub unsafe fn operator_gt_118(
     return ((unsafe { facebook_yoga_FloatOptional::unwrap(&lhs) })
         > (unsafe { facebook_yoga_FloatOptional::unwrap(&rhs) }));
 }
+#[inline]
 pub unsafe fn operator_lt_113(
     mut lhs: facebook_yoga_FloatOptional,
     mut rhs: facebook_yoga_FloatOptional,
@@ -1366,6 +1467,7 @@ pub unsafe fn operator_lt_113(
     return ((unsafe { facebook_yoga_FloatOptional::unwrap(&lhs) })
         < (unsafe { facebook_yoga_FloatOptional::unwrap(&rhs) }));
 }
+#[inline]
 pub unsafe fn operator_ge_119(
     mut lhs: facebook_yoga_FloatOptional,
     mut rhs: facebook_yoga_FloatOptional,
@@ -1378,6 +1480,7 @@ pub unsafe fn operator_ge_119(
         operator_eq_114(_lhs, rhs)
     });
 }
+#[inline]
 pub unsafe fn operator_le_120(
     mut lhs: facebook_yoga_FloatOptional,
     mut rhs: facebook_yoga_FloatOptional,
@@ -1390,6 +1493,7 @@ pub unsafe fn operator_le_120(
         operator_eq_114(_lhs, rhs)
     });
 }
+#[inline]
 pub unsafe fn maxOrDefined_121(
     mut lhs: facebook_yoga_FloatOptional,
     mut rhs: facebook_yoga_FloatOptional,
@@ -1402,6 +1506,7 @@ pub unsafe fn maxOrDefined_121(
         })
     });
 }
+#[inline]
 pub unsafe fn inexactEquals_122(
     mut lhs: facebook_yoga_FloatOptional,
     mut rhs: facebook_yoga_FloatOptional,
@@ -1412,132 +1517,128 @@ pub unsafe fn inexactEquals_122(
         inexactEquals_111(_a, _b)
     });
 }
-pub static mut MaxCachedMeasurements_123: std::cell::LazyCell<i32> =
-    std::cell::LazyCell::new(|| unsafe { 8 });
+pub static MaxCachedMeasurements_123: i32 = 8_i32;
 #[repr(C)]
 #[derive(Clone, VaArg, FnPtrArg)]
 pub struct facebook_yoga_LayoutResults {
     pub computedFlexBasisGeneration: u32,
     pub computedFlexBasis: facebook_yoga_FloatOptional,
     pub computedAutoMinMainSize: facebook_yoga_FloatOptional,
-    pub minContentGeneration: Vec<u32>,
-    pub minContentOwnerWidth: Vec<f32>,
-    pub minContent: Vec<f32>,
+    pub minContentGeneration: [u32; 2],
+    pub minContentOwnerWidth: [f32; 2],
+    pub minContent: [f32; 2],
     pub generationCount: u32,
     pub configVersion: u32,
     pub lastOwnerDirection: facebook_yoga_Direction,
     pub nextCachedMeasurementsIndex: u32,
-    pub cachedMeasurements: Vec<facebook_yoga_CachedMeasurement>,
+    pub cachedMeasurements: [facebook_yoga_CachedMeasurement; 8],
     pub cachedLayout: facebook_yoga_CachedMeasurement,
     direction_: facebook_yoga_Direction,
     hadOverflow_: bool,
-    dimensions_: Vec<f32>,
-    measuredDimensions_: Vec<f32>,
-    rawDimensions_: Vec<f32>,
-    position_: Vec<f32>,
-    margin_: Vec<f32>,
-    border_: Vec<f32>,
-    padding_: Vec<f32>,
+    dimensions_: [f32; 2],
+    measuredDimensions_: [f32; 2],
+    rawDimensions_: [f32; 2],
+    position_: [f32; 4],
+    margin_: [f32; 4],
+    border_: [f32; 4],
+    padding_: [f32; 4],
 }
 impl facebook_yoga_LayoutResults {
+    #[inline]
     pub unsafe fn direction(&self) -> facebook_yoga_Direction {
         return self.direction_;
     }
+    #[inline]
     pub unsafe fn setDirection(&mut self, mut direction: facebook_yoga_Direction) {
         self.direction_ = direction;
     }
+    #[inline]
     pub unsafe fn hadOverflow(&self) -> bool {
         return self.hadOverflow_;
     }
+    #[inline]
     pub unsafe fn setHadOverflow(&mut self, mut hadOverflow: bool) {
         self.hadOverflow_ = hadOverflow;
     }
+    #[inline]
     pub unsafe fn dimension(&self, mut axis: facebook_yoga_Dimension) -> f32 {
-        return (*(self.dimensions_)
-            .as_ptr()
-            .add(((unsafe { to_underlying_47(axis) }) as usize) as usize));
+        return self.dimensions_[((unsafe { to_underlying_47(axis) }) as usize)];
     }
+    #[inline]
     pub unsafe fn setDimension(&mut self, mut axis: facebook_yoga_Dimension, mut dimension: f32) {
-        (*(&mut (self.dimensions_)[((unsafe { to_underlying_47(axis) }) as usize) as usize]
-            as *mut f32)) = dimension;
+        self.dimensions_[((unsafe { to_underlying_47(axis) }) as usize)] = dimension;
     }
+    #[inline]
     pub unsafe fn measuredDimension(&self, mut axis: facebook_yoga_Dimension) -> f32 {
-        return (*(self.measuredDimensions_)
-            .as_ptr()
-            .add(((unsafe { to_underlying_47(axis) }) as usize) as usize));
+        return self.measuredDimensions_[((unsafe { to_underlying_47(axis) }) as usize)];
     }
+    #[inline]
     pub unsafe fn rawDimension(&self, mut axis: facebook_yoga_Dimension) -> f32 {
-        return (*(self.rawDimensions_)
-            .as_ptr()
-            .add(((unsafe { to_underlying_47(axis) }) as usize) as usize));
+        return self.rawDimensions_[((unsafe { to_underlying_47(axis) }) as usize)];
     }
+    #[inline]
     pub unsafe fn setMeasuredDimension(
         &mut self,
         mut axis: facebook_yoga_Dimension,
         mut dimension: f32,
     ) {
-        (*(&mut (self.measuredDimensions_)[((unsafe { to_underlying_47(axis) }) as usize) as usize]
-            as *mut f32)) = dimension;
+        self.measuredDimensions_[((unsafe { to_underlying_47(axis) }) as usize)] = dimension;
     }
+    #[inline]
     pub unsafe fn setRawDimension(
         &mut self,
         mut axis: facebook_yoga_Dimension,
         mut dimension: f32,
     ) {
-        (*(&mut (self.rawDimensions_)[((unsafe { to_underlying_47(axis) }) as usize) as usize]
-            as *mut f32)) = dimension;
+        self.rawDimensions_[((unsafe { to_underlying_47(axis) }) as usize)] = dimension;
     }
+    #[inline]
     pub unsafe fn position(&self, mut physicalEdge: facebook_yoga_PhysicalEdge) -> f32 {
-        return (*(self.position_)
-            .as_ptr()
-            .add(((unsafe { to_underlying_48(physicalEdge) }) as usize) as usize));
+        return self.position_[((unsafe { to_underlying_48(physicalEdge) }) as usize)];
     }
+    #[inline]
     pub unsafe fn setPosition(
         &mut self,
         mut physicalEdge: facebook_yoga_PhysicalEdge,
         mut dimension: f32,
     ) {
-        (*(&mut (self.position_)[((unsafe { to_underlying_48(physicalEdge) }) as usize) as usize]
-            as *mut f32)) = dimension;
+        self.position_[((unsafe { to_underlying_48(physicalEdge) }) as usize)] = dimension;
     }
+    #[inline]
     pub unsafe fn margin(&self, mut physicalEdge: facebook_yoga_PhysicalEdge) -> f32 {
-        return (*(self.margin_)
-            .as_ptr()
-            .add(((unsafe { to_underlying_48(physicalEdge) }) as usize) as usize));
+        return self.margin_[((unsafe { to_underlying_48(physicalEdge) }) as usize)];
     }
+    #[inline]
     pub unsafe fn setMargin(
         &mut self,
         mut physicalEdge: facebook_yoga_PhysicalEdge,
         mut dimension: f32,
     ) {
-        (*(&mut (self.margin_)[((unsafe { to_underlying_48(physicalEdge) }) as usize) as usize]
-            as *mut f32)) = dimension;
+        self.margin_[((unsafe { to_underlying_48(physicalEdge) }) as usize)] = dimension;
     }
+    #[inline]
     pub unsafe fn border(&self, mut physicalEdge: facebook_yoga_PhysicalEdge) -> f32 {
-        return (*(self.border_)
-            .as_ptr()
-            .add(((unsafe { to_underlying_48(physicalEdge) }) as usize) as usize));
+        return self.border_[((unsafe { to_underlying_48(physicalEdge) }) as usize)];
     }
+    #[inline]
     pub unsafe fn setBorder(
         &mut self,
         mut physicalEdge: facebook_yoga_PhysicalEdge,
         mut dimension: f32,
     ) {
-        (*(&mut (self.border_)[((unsafe { to_underlying_48(physicalEdge) }) as usize) as usize]
-            as *mut f32)) = dimension;
+        self.border_[((unsafe { to_underlying_48(physicalEdge) }) as usize)] = dimension;
     }
+    #[inline]
     pub unsafe fn padding(&self, mut physicalEdge: facebook_yoga_PhysicalEdge) -> f32 {
-        return (*(self.padding_)
-            .as_ptr()
-            .add(((unsafe { to_underlying_48(physicalEdge) }) as usize) as usize));
+        return self.padding_[((unsafe { to_underlying_48(physicalEdge) }) as usize)];
     }
+    #[inline]
     pub unsafe fn setPadding(
         &mut self,
         mut physicalEdge: facebook_yoga_PhysicalEdge,
         mut dimension: f32,
     ) {
-        (*(&mut (self.padding_)[((unsafe { to_underlying_48(physicalEdge) }) as usize) as usize]
-            as *mut f32)) = dimension;
+        self.padding_[((unsafe { to_underlying_48(physicalEdge) }) as usize)] = dimension;
     }
 }
 impl Default for facebook_yoga_LayoutResults {
@@ -1547,42 +1648,26 @@ impl Default for facebook_yoga_LayoutResults {
                 computedFlexBasisGeneration: 0_u32,
                 computedFlexBasis: <facebook_yoga_FloatOptional>::default(),
                 computedAutoMinMainSize: <facebook_yoga_FloatOptional>::default(),
-                minContentGeneration: std::array::from_fn::<_, 2, _>(|_| 0_u32).to_vec(),
-                minContentOwnerWidth: Vec::from([
-                    (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
-                    (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
-                ]),
-                minContent: Vec::from([
-                    (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
-                    (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
-                ]),
+                minContentGeneration: std::array::from_fn::<_, 2, _>(|_| 0_u32),
+                minContentOwnerWidth: [YGUndefined_23, YGUndefined_23],
+                minContent: [YGUndefined_23, YGUndefined_23],
                 generationCount: 0_u32,
                 configVersion: 0_u32,
                 lastOwnerDirection: facebook_yoga_Direction_Inherit,
                 nextCachedMeasurementsIndex: 0_u32,
                 cachedMeasurements: std::array::from_fn::<_, 8, _>(|_| {
                     <facebook_yoga_CachedMeasurement>::default()
-                })
-                .to_vec(),
+                }),
                 cachedLayout: <facebook_yoga_CachedMeasurement>::default(),
                 direction_: facebook_yoga_Direction_Inherit,
                 hadOverflow_: false,
-                dimensions_: Vec::from([
-                    (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
-                    (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
-                ]),
-                measuredDimensions_: Vec::from([
-                    (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
-                    (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
-                ]),
-                rawDimensions_: Vec::from([
-                    (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
-                    (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
-                ]),
-                position_: std::array::from_fn::<_, 4, _>(|_| 0_f32).to_vec(),
-                margin_: std::array::from_fn::<_, 4, _>(|_| 0_f32).to_vec(),
-                border_: std::array::from_fn::<_, 4, _>(|_| 0_f32).to_vec(),
-                padding_: std::array::from_fn::<_, 4, _>(|_| 0_f32).to_vec(),
+                dimensions_: [YGUndefined_23, YGUndefined_23],
+                measuredDimensions_: [YGUndefined_23, YGUndefined_23],
+                rawDimensions_: [YGUndefined_23, YGUndefined_23],
+                position_: std::array::from_fn::<_, 4, _>(|_| 0_f32),
+                margin_: std::array::from_fn::<_, 4, _>(|_| 0_f32),
+                border_: std::array::from_fn::<_, 4, _>(|_| 0_f32),
+                padding_: std::array::from_fn::<_, 4, _>(|_| 0_f32),
             }
         }
     }
@@ -1592,26 +1677,33 @@ pub const facebook_yoga_FlexDirection_Column: facebook_yoga_FlexDirection = 0;
 pub const facebook_yoga_FlexDirection_ColumnReverse: facebook_yoga_FlexDirection = 1;
 pub const facebook_yoga_FlexDirection_Row: facebook_yoga_FlexDirection = 2;
 pub const facebook_yoga_FlexDirection_RowReverse: facebook_yoga_FlexDirection = 3;
+#[inline]
 pub unsafe fn ordinalCount_29() -> i32 {
     return 4;
 }
+#[inline]
 pub unsafe fn scopedEnum_124(mut unscoped: YGFlexDirection) -> facebook_yoga_FlexDirection {
     return (unscoped as facebook_yoga_FlexDirection);
 }
+#[inline]
 pub unsafe fn unscopedEnum_125(mut scoped: facebook_yoga_FlexDirection) -> YGFlexDirection {
     return (scoped as YGFlexDirection);
 }
+#[inline]
 pub unsafe fn toString_126(mut e: facebook_yoga_FlexDirection) -> *const libc::c_char {
     return (unsafe { YGFlexDirectionToString_127((unsafe { unscopedEnum_125(e) })) });
 }
+#[inline]
 pub unsafe fn isRow_128(flexDirection: facebook_yoga_FlexDirection) -> bool {
     return ((flexDirection) == (facebook_yoga_FlexDirection_Row))
         || ((flexDirection) == (facebook_yoga_FlexDirection_RowReverse));
 }
+#[inline]
 pub unsafe fn isColumn_129(flexDirection: facebook_yoga_FlexDirection) -> bool {
     return ((flexDirection) == (facebook_yoga_FlexDirection_Column))
         || ((flexDirection) == (facebook_yoga_FlexDirection_ColumnReverse));
 }
+#[inline]
 pub unsafe fn resolveDirection_130(
     flexDirection: facebook_yoga_FlexDirection,
     direction: facebook_yoga_Direction,
@@ -1625,6 +1717,7 @@ pub unsafe fn resolveDirection_130(
     }
     return flexDirection;
 }
+#[inline]
 pub unsafe fn resolveCrossDirection_131(
     flexDirection: facebook_yoga_FlexDirection,
     direction: facebook_yoga_Direction,
@@ -1635,6 +1728,7 @@ pub unsafe fn resolveCrossDirection_131(
         facebook_yoga_FlexDirection_Column
     };
 }
+#[inline]
 pub unsafe fn flexStartEdge_132(
     mut flexDirection: facebook_yoga_FlexDirection,
 ) -> facebook_yoga_PhysicalEdge {
@@ -1657,6 +1751,7 @@ pub unsafe fn flexStartEdge_132(
     });
     panic!("ub: non-void function does not return a value")
 }
+#[inline]
 pub unsafe fn flexEndEdge_133(
     mut flexDirection: facebook_yoga_FlexDirection,
 ) -> facebook_yoga_PhysicalEdge {
@@ -1679,6 +1774,7 @@ pub unsafe fn flexEndEdge_133(
     });
     panic!("ub: non-void function does not return a value")
 }
+#[inline]
 pub unsafe fn inlineStartEdge_134(
     mut flexDirection: facebook_yoga_FlexDirection,
     mut direction: facebook_yoga_Direction,
@@ -1692,6 +1788,7 @@ pub unsafe fn inlineStartEdge_134(
     }
     return facebook_yoga_PhysicalEdge_Top;
 }
+#[inline]
 pub unsafe fn inlineEndEdge_135(
     mut flexDirection: facebook_yoga_FlexDirection,
     mut direction: facebook_yoga_Direction,
@@ -1705,6 +1802,7 @@ pub unsafe fn inlineEndEdge_135(
     }
     return facebook_yoga_PhysicalEdge_Bottom;
 }
+#[inline]
 pub unsafe fn dimension_136(
     mut flexDirection: facebook_yoga_FlexDirection,
 ) -> facebook_yoga_Dimension {
@@ -1739,30 +1837,38 @@ pub const facebook_yoga_Align_SpaceAround: facebook_yoga_Align = 7;
 pub const facebook_yoga_Align_SpaceEvenly: facebook_yoga_Align = 8;
 pub const facebook_yoga_Align_Start: facebook_yoga_Align = 9;
 pub const facebook_yoga_Align_End: facebook_yoga_Align = 10;
+#[inline]
 pub unsafe fn ordinalCount_33() -> i32 {
     return 11;
 }
+#[inline]
 pub unsafe fn scopedEnum_137(mut unscoped: YGAlign) -> facebook_yoga_Align {
     return (unscoped as facebook_yoga_Align);
 }
+#[inline]
 pub unsafe fn unscopedEnum_138(mut scoped: facebook_yoga_Align) -> YGAlign {
     return (scoped as YGAlign);
 }
+#[inline]
 pub unsafe fn toString_139(mut e: facebook_yoga_Align) -> *const libc::c_char {
     return (unsafe { YGAlignToString_140((unsafe { unscopedEnum_138(e) })) });
 }
 pub type facebook_yoga_BoxSizing = u8;
 pub const facebook_yoga_BoxSizing_BorderBox: facebook_yoga_BoxSizing = 0;
 pub const facebook_yoga_BoxSizing_ContentBox: facebook_yoga_BoxSizing = 1;
+#[inline]
 pub unsafe fn ordinalCount_43() -> i32 {
     return 2;
 }
+#[inline]
 pub unsafe fn scopedEnum_141(mut unscoped: YGBoxSizing) -> facebook_yoga_BoxSizing {
     return (unscoped as facebook_yoga_BoxSizing);
 }
+#[inline]
 pub unsafe fn unscopedEnum_142(mut scoped: facebook_yoga_BoxSizing) -> YGBoxSizing {
     return (scoped as YGBoxSizing);
 }
+#[inline]
 pub unsafe fn toString_143(mut e: facebook_yoga_BoxSizing) -> *const libc::c_char {
     return (unsafe { YGBoxSizingToString_144((unsafe { unscopedEnum_142(e) })) });
 }
@@ -1770,15 +1876,19 @@ pub type facebook_yoga_Gutter = u8;
 pub const facebook_yoga_Gutter_Column: facebook_yoga_Gutter = 0;
 pub const facebook_yoga_Gutter_Row: facebook_yoga_Gutter = 1;
 pub const facebook_yoga_Gutter_All: facebook_yoga_Gutter = 2;
+#[inline]
 pub unsafe fn ordinalCount_145() -> i32 {
     return 3;
 }
+#[inline]
 pub unsafe fn scopedEnum_146(mut unscoped: YGGutter) -> facebook_yoga_Gutter {
     return (unscoped as facebook_yoga_Gutter);
 }
+#[inline]
 pub unsafe fn unscopedEnum_147(mut scoped: facebook_yoga_Gutter) -> YGGutter {
     return (scoped as YGGutter);
 }
+#[inline]
 pub unsafe fn toString_148(mut e: facebook_yoga_Gutter) -> *const libc::c_char {
     return (unsafe { YGGutterToString_149((unsafe { unscopedEnum_147(e) })) });
 }
@@ -1793,15 +1903,19 @@ pub const facebook_yoga_Justify_SpaceEvenly: facebook_yoga_Justify = 6;
 pub const facebook_yoga_Justify_Stretch: facebook_yoga_Justify = 7;
 pub const facebook_yoga_Justify_Start: facebook_yoga_Justify = 8;
 pub const facebook_yoga_Justify_End: facebook_yoga_Justify = 9;
+#[inline]
 pub unsafe fn ordinalCount_31() -> i32 {
     return 10;
 }
+#[inline]
 pub unsafe fn scopedEnum_150(mut unscoped: YGJustify) -> facebook_yoga_Justify {
     return (unscoped as facebook_yoga_Justify);
 }
+#[inline]
 pub unsafe fn unscopedEnum_151(mut scoped: facebook_yoga_Justify) -> YGJustify {
     return (scoped as YGJustify);
 }
+#[inline]
 pub unsafe fn toString_152(mut e: facebook_yoga_Justify) -> *const libc::c_char {
     return (unsafe { YGJustifyToString_153((unsafe { unscopedEnum_151(e) })) });
 }
@@ -1809,15 +1923,19 @@ pub type facebook_yoga_Overflow = u8;
 pub const facebook_yoga_Overflow_Visible: facebook_yoga_Overflow = 0;
 pub const facebook_yoga_Overflow_Hidden: facebook_yoga_Overflow = 1;
 pub const facebook_yoga_Overflow_Scroll: facebook_yoga_Overflow = 2;
+#[inline]
 pub unsafe fn ordinalCount_39() -> i32 {
     return 3;
 }
+#[inline]
 pub unsafe fn scopedEnum_154(mut unscoped: YGOverflow) -> facebook_yoga_Overflow {
     return (unscoped as facebook_yoga_Overflow);
 }
+#[inline]
 pub unsafe fn unscopedEnum_155(mut scoped: facebook_yoga_Overflow) -> YGOverflow {
     return (scoped as YGOverflow);
 }
+#[inline]
 pub unsafe fn toString_156(mut e: facebook_yoga_Overflow) -> *const libc::c_char {
     return (unsafe { YGOverflowToString_157((unsafe { unscopedEnum_155(e) })) });
 }
@@ -1825,15 +1943,19 @@ pub type facebook_yoga_PositionType = u8;
 pub const facebook_yoga_PositionType_Static: facebook_yoga_PositionType = 0;
 pub const facebook_yoga_PositionType_Relative: facebook_yoga_PositionType = 1;
 pub const facebook_yoga_PositionType_Absolute: facebook_yoga_PositionType = 2;
+#[inline]
 pub unsafe fn ordinalCount_35() -> i32 {
     return 3;
 }
+#[inline]
 pub unsafe fn scopedEnum_158(mut unscoped: YGPositionType) -> facebook_yoga_PositionType {
     return (unscoped as facebook_yoga_PositionType);
 }
+#[inline]
 pub unsafe fn unscopedEnum_159(mut scoped: facebook_yoga_PositionType) -> YGPositionType {
     return (scoped as YGPositionType);
 }
+#[inline]
 pub unsafe fn toString_160(mut e: facebook_yoga_PositionType) -> *const libc::c_char {
     return (unsafe { YGPositionTypeToString_161((unsafe { unscopedEnum_159(e) })) });
 }
@@ -1845,15 +1967,19 @@ pub const facebook_yoga_Unit_Auto: facebook_yoga_Unit = 3;
 pub const facebook_yoga_Unit_MaxContent: facebook_yoga_Unit = 4;
 pub const facebook_yoga_Unit_FitContent: facebook_yoga_Unit = 5;
 pub const facebook_yoga_Unit_Stretch: facebook_yoga_Unit = 6;
+#[inline]
 pub unsafe fn ordinalCount_162() -> i32 {
     return 7;
 }
+#[inline]
 pub unsafe fn scopedEnum_163(mut unscoped: YGUnit) -> facebook_yoga_Unit {
     return (unscoped as facebook_yoga_Unit);
 }
+#[inline]
 pub unsafe fn unscopedEnum_164(mut scoped: facebook_yoga_Unit) -> YGUnit {
     return (scoped as YGUnit);
 }
+#[inline]
 pub unsafe fn toString_165(mut e: facebook_yoga_Unit) -> *const libc::c_char {
     return (unsafe { YGUnitToString_166((unsafe { unscopedEnum_164(e) })) });
 }
@@ -1861,15 +1987,19 @@ pub type facebook_yoga_Wrap = u8;
 pub const facebook_yoga_Wrap_NoWrap: facebook_yoga_Wrap = 0;
 pub const facebook_yoga_Wrap_Wrap: facebook_yoga_Wrap = 1;
 pub const facebook_yoga_Wrap_WrapReverse: facebook_yoga_Wrap = 2;
+#[inline]
 pub unsafe fn ordinalCount_37() -> i32 {
     return 3;
 }
+#[inline]
 pub unsafe fn scopedEnum_167(mut unscoped: YGWrap) -> facebook_yoga_Wrap {
     return (unscoped as facebook_yoga_Wrap);
 }
+#[inline]
 pub unsafe fn unscopedEnum_168(mut scoped: facebook_yoga_Wrap) -> YGWrap {
     return (scoped as YGWrap);
 }
+#[inline]
 pub unsafe fn toString_169(mut e: facebook_yoga_Wrap) -> *const libc::c_char {
     return (unsafe { YGWrapToString_170((unsafe { unscopedEnum_168(e) })) });
 }
@@ -1884,33 +2014,40 @@ pub struct facebook_yoga_GridLine {
     pub integer: i32,
 }
 impl facebook_yoga_GridLine {
+    #[inline]
     pub unsafe fn auto_() -> facebook_yoga_GridLine {
         return facebook_yoga_GridLine {
             type_: facebook_yoga_GridLineType_Auto,
             integer: 0,
         };
     }
+    #[inline]
     pub unsafe fn fromInteger(mut value: i32) -> facebook_yoga_GridLine {
         return facebook_yoga_GridLine {
             type_: facebook_yoga_GridLineType_Integer,
             integer: value,
         };
     }
+    #[inline]
     pub unsafe fn span(mut value: i32) -> facebook_yoga_GridLine {
         return facebook_yoga_GridLine {
             type_: facebook_yoga_GridLineType_Span,
             integer: value,
         };
     }
+    #[inline]
     pub unsafe fn isAuto(&self) -> bool {
         return ((self.type_) == (facebook_yoga_GridLineType_Auto));
     }
+    #[inline]
     pub unsafe fn isInteger(&self) -> bool {
         return ((self.type_) == (facebook_yoga_GridLineType_Integer));
     }
+    #[inline]
     pub unsafe fn isSpan(&self) -> bool {
         return ((self.type_) == (facebook_yoga_GridLineType_Span));
     }
+    #[inline]
     pub unsafe fn operator_eq(&self, other: *const facebook_yoga_GridLine) -> bool {
         return (((*(self as *const facebook_yoga_GridLine)).type_) == ((*other).type_))
             && (((*(self as *const facebook_yoga_GridLine)).integer) == ((*other).integer));
@@ -1939,6 +2076,7 @@ pub struct facebook_yoga_StyleSizeLength {
     unit_: facebook_yoga_Unit,
 }
 impl facebook_yoga_StyleSizeLength {
+    #[inline]
     pub unsafe fn points(mut value: f32) -> facebook_yoga_StyleSizeLength {
         return if (unsafe { isUndefined_105(value) }) || (unsafe { isinf_109(value) }) {
             (unsafe { facebook_yoga_StyleSizeLength::undefined() })
@@ -1949,6 +2087,7 @@ impl facebook_yoga_StyleSizeLength {
             )
         };
     }
+    #[inline]
     pub unsafe fn percent(mut value: f32) -> facebook_yoga_StyleSizeLength {
         return if (unsafe { isUndefined_105(value) }) || (unsafe { isinf_109(value) }) {
             (unsafe { facebook_yoga_StyleSizeLength::undefined() })
@@ -1959,6 +2098,7 @@ impl facebook_yoga_StyleSizeLength {
             )
         };
     }
+    #[inline]
     pub unsafe fn stretch(mut fraction: f32) -> facebook_yoga_StyleSizeLength {
         return if (unsafe { isUndefined_105(fraction) }) || (unsafe { isinf_109(fraction) }) {
             (unsafe { facebook_yoga_StyleSizeLength::undefined() })
@@ -1969,63 +2109,78 @@ impl facebook_yoga_StyleSizeLength {
             )
         };
     }
+    #[inline]
     pub unsafe fn ofAuto() -> facebook_yoga_StyleSizeLength {
         return facebook_yoga_StyleSizeLength::new_1(
             { <facebook_yoga_FloatOptional>::default() },
             { facebook_yoga_Unit_Auto },
         );
     }
+    #[inline]
     pub unsafe fn ofMaxContent() -> facebook_yoga_StyleSizeLength {
         return facebook_yoga_StyleSizeLength::new_1(
             { <facebook_yoga_FloatOptional>::default() },
             { facebook_yoga_Unit_MaxContent },
         );
     }
+    #[inline]
     pub unsafe fn ofFitContent() -> facebook_yoga_StyleSizeLength {
         return facebook_yoga_StyleSizeLength::new_1(
             { <facebook_yoga_FloatOptional>::default() },
             { facebook_yoga_Unit_FitContent },
         );
     }
+    #[inline]
     pub unsafe fn ofStretch() -> facebook_yoga_StyleSizeLength {
         return facebook_yoga_StyleSizeLength::new_1(
             { <facebook_yoga_FloatOptional>::default() },
             { facebook_yoga_Unit_Stretch },
         );
     }
+    #[inline]
     pub unsafe fn undefined() -> facebook_yoga_StyleSizeLength {
         return facebook_yoga_StyleSizeLength::new_1(
             { <facebook_yoga_FloatOptional>::default() },
             { facebook_yoga_Unit_Undefined },
         );
     }
+    #[inline]
     pub unsafe fn isAuto(&self) -> bool {
         return ((self.unit_) == (facebook_yoga_Unit_Auto));
     }
+    #[inline]
     pub unsafe fn isMaxContent(&self) -> bool {
         return ((self.unit_) == (facebook_yoga_Unit_MaxContent));
     }
+    #[inline]
     pub unsafe fn isFitContent(&self) -> bool {
         return ((self.unit_) == (facebook_yoga_Unit_FitContent));
     }
+    #[inline]
     pub unsafe fn isStretch(&self) -> bool {
         return ((self.unit_) == (facebook_yoga_Unit_Stretch));
     }
+    #[inline]
     pub unsafe fn isUndefined(&self) -> bool {
         return ((self.unit_) == (facebook_yoga_Unit_Undefined));
     }
+    #[inline]
     pub unsafe fn isDefined(&self) -> bool {
         return !(unsafe { facebook_yoga_StyleSizeLength::isUndefined(self) });
     }
+    #[inline]
     pub unsafe fn isPoints(&self) -> bool {
         return ((self.unit_) == (facebook_yoga_Unit_Point));
     }
+    #[inline]
     pub unsafe fn isPercent(&self) -> bool {
         return ((self.unit_) == (facebook_yoga_Unit_Percent));
     }
+    #[inline]
     pub unsafe fn value(&self) -> facebook_yoga_FloatOptional {
         return self.value_;
     }
+    #[inline]
     pub unsafe fn resolve(&self, mut referenceLength: f32) -> facebook_yoga_FloatOptional {
         'switch: {
             match { self.unit_ } {
@@ -2046,12 +2201,14 @@ impl facebook_yoga_StyleSizeLength {
         };
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     pub unsafe fn to_YGValue(&self) -> YGValue {
         return YGValue {
             value: (unsafe { facebook_yoga_FloatOptional::unwrap(&self.value_) }),
             unit: (unsafe { unscopedEnum_164(self.unit_) }),
         };
     }
+    #[inline]
     pub unsafe fn operator_eq(&self, rhs: *const facebook_yoga_StyleSizeLength) -> bool {
         return (unsafe {
             let _lhs: facebook_yoga_FloatOptional = self.value_;
@@ -2059,6 +2216,7 @@ impl facebook_yoga_StyleSizeLength {
             operator_eq_114(_lhs, _rhs)
         }) && ((self.unit_) == ((*rhs).unit_));
     }
+    #[inline]
     pub unsafe fn inexactEquals(&self, other: *const facebook_yoga_StyleSizeLength) -> bool {
         return ((self.unit_) == ((*other).unit_))
             && (unsafe {
@@ -2067,6 +2225,7 @@ impl facebook_yoga_StyleSizeLength {
                 inexactEquals_122(_lhs, _rhs)
             });
     }
+    #[inline]
     unsafe fn new_1(mut value: facebook_yoga_FloatOptional, mut unit: facebook_yoga_Unit) -> Self {
         let mut this = Self {
             value_: value,
@@ -2096,6 +2255,7 @@ impl Default for facebook_yoga_StyleSizeLength {
         }
     }
 }
+#[inline]
 pub unsafe fn inexactEquals_171(
     a: *const facebook_yoga_StyleSizeLength,
     b: *const facebook_yoga_StyleSizeLength,
@@ -2115,6 +2275,7 @@ pub struct facebook_yoga_GridTrackSize {
     pub infinitelyGrowable: bool,
 }
 impl facebook_yoga_GridTrackSize {
+    #[inline]
     pub unsafe fn auto_() -> facebook_yoga_GridTrackSize {
         return facebook_yoga_GridTrackSize {
             minSizingFunction: (unsafe { facebook_yoga_StyleSizeLength::ofAuto() }),
@@ -2124,6 +2285,7 @@ impl facebook_yoga_GridTrackSize {
             infinitelyGrowable: false,
         };
     }
+    #[inline]
     pub unsafe fn length(mut points: f32) -> facebook_yoga_GridTrackSize {
         let mut len: facebook_yoga_StyleSizeLength =
             (unsafe { facebook_yoga_StyleSizeLength::points(points) });
@@ -2135,6 +2297,7 @@ impl facebook_yoga_GridTrackSize {
             infinitelyGrowable: false,
         };
     }
+    #[inline]
     pub unsafe fn fr(mut fraction: f32) -> facebook_yoga_GridTrackSize {
         return facebook_yoga_GridTrackSize {
             minSizingFunction: (unsafe { facebook_yoga_StyleSizeLength::ofAuto() }),
@@ -2144,6 +2307,7 @@ impl facebook_yoga_GridTrackSize {
             infinitelyGrowable: false,
         };
     }
+    #[inline]
     pub unsafe fn percent(mut percentage: f32) -> facebook_yoga_GridTrackSize {
         return facebook_yoga_GridTrackSize {
             minSizingFunction: (unsafe { facebook_yoga_StyleSizeLength::percent(percentage) }),
@@ -2153,6 +2317,7 @@ impl facebook_yoga_GridTrackSize {
             infinitelyGrowable: false,
         };
     }
+    #[inline]
     pub unsafe fn minmax(
         mut min: facebook_yoga_StyleSizeLength,
         mut max: facebook_yoga_StyleSizeLength,
@@ -2165,6 +2330,7 @@ impl facebook_yoga_GridTrackSize {
             infinitelyGrowable: false,
         };
     }
+    #[inline]
     pub unsafe fn operator_eq(&self, other: *const facebook_yoga_GridTrackSize) -> bool {
         return (unsafe {
             let _rhs: *const facebook_yoga_StyleSizeLength = &(*other).minSizingFunction;
@@ -2224,6 +2390,7 @@ pub struct facebook_yoga_GridStyle {
     pub rowEnd: facebook_yoga_GridLine,
 }
 impl facebook_yoga_GridStyle {
+    #[inline]
     pub unsafe fn operator_eq(&self, other: *const facebook_yoga_GridStyle) -> bool {
         return ((*(self as *const facebook_yoga_GridStyle)).templateColumns
             == (*other).templateColumns)
@@ -2259,6 +2426,7 @@ impl facebook_yoga_GridStyle {
                             )
                         })))))));
     }
+    #[inline]
     pub unsafe fn move_from(_a0: *mut facebook_yoga_GridStyle) -> Self {
         let mut this = Self {
             templateColumns: std::mem::take(&mut (*_a0).templateColumns),
@@ -2272,6 +2440,7 @@ impl facebook_yoga_GridStyle {
         };
         this
     }
+    #[inline]
     pub unsafe fn move_assign(
         &mut self,
         _a0: *mut facebook_yoga_GridStyle,
@@ -2317,12 +2486,14 @@ pub struct facebook_yoga_GridStyleStorage {
     grid_: Option<Box<facebook_yoga_GridStyle>>,
 }
 impl facebook_yoga_GridStyleStorage {
+    #[inline]
     pub unsafe fn move_from(_a0: *mut facebook_yoga_GridStyleStorage) -> Self {
         let mut this = Self {
             grid_: (*_a0).grid_.take(),
         };
         this
     }
+    #[inline]
     pub unsafe fn move_assign(
         &mut self,
         _a0: *mut facebook_yoga_GridStyleStorage,
@@ -2330,6 +2501,7 @@ impl facebook_yoga_GridStyleStorage {
         self.grid_ = (*_a0).grid_.take();
         return &mut (*(self as *mut facebook_yoga_GridStyleStorage));
     }
+    #[inline]
     pub unsafe fn copy_from(other: *const facebook_yoga_GridStyleStorage) -> Self {
         let mut this = Self { grid_: None };
         (unsafe {
@@ -2338,6 +2510,7 @@ impl facebook_yoga_GridStyleStorage {
         });
         this
     }
+    #[inline]
     pub unsafe fn copy_assign(
         &mut self,
         other: *const facebook_yoga_GridStyleStorage,
@@ -2360,6 +2533,7 @@ impl facebook_yoga_GridStyleStorage {
         .take();
         return &mut (*(self as *mut facebook_yoga_GridStyleStorage));
     }
+    #[inline]
     pub unsafe fn get(&self) -> *const facebook_yoga_GridStyle {
         return if self.grid_.is_none() {
             (unsafe { facebook_yoga_GridStyleStorage::defaults() })
@@ -2369,6 +2543,7 @@ impl facebook_yoga_GridStyleStorage {
             })) as *const facebook_yoga_GridStyle)
         };
     }
+    #[inline]
     pub unsafe fn ensure(&mut self) -> *mut facebook_yoga_GridStyle {
         if self.grid_.is_none() {
             self.grid_ = Some(Box::new(libcc2rs::cpp_make!(facebook_yoga_GridStyle,))).take();
@@ -2377,6 +2552,7 @@ impl facebook_yoga_GridStyleStorage {
             __v as *const facebook_yoga_GridStyle as *mut facebook_yoga_GridStyle
         }));
     }
+    #[inline]
     pub unsafe fn operator_eq(&self, other: *const facebook_yoga_GridStyleStorage) -> bool {
         return (self
             .grid_
@@ -2395,6 +2571,7 @@ impl facebook_yoga_GridStyleStorage {
                 )
             });
     }
+    #[inline]
     unsafe fn defaults() -> *const facebook_yoga_GridStyle {
         return &(*std::cell::LazyCell::force_mut(&mut *&raw mut kDefaults_172));
     }
@@ -2431,6 +2608,7 @@ pub struct facebook_yoga_StyleLength {
     unit_: facebook_yoga_Unit,
 }
 impl facebook_yoga_StyleLength {
+    #[inline]
     pub unsafe fn points(mut value: f32) -> facebook_yoga_StyleLength {
         return if (unsafe { isUndefined_105(value) }) || (unsafe { isinf_109(value) }) {
             (unsafe { facebook_yoga_StyleLength::undefined() })
@@ -2440,6 +2618,7 @@ impl facebook_yoga_StyleLength {
             })
         };
     }
+    #[inline]
     pub unsafe fn percent(mut value: f32) -> facebook_yoga_StyleLength {
         return if (unsafe { isUndefined_105(value) }) || (unsafe { isinf_109(value) }) {
             (unsafe { facebook_yoga_StyleLength::undefined() })
@@ -2449,34 +2628,43 @@ impl facebook_yoga_StyleLength {
             })
         };
     }
+    #[inline]
     pub unsafe fn ofAuto() -> facebook_yoga_StyleLength {
         return facebook_yoga_StyleLength::new_1({ <facebook_yoga_FloatOptional>::default() }, {
             facebook_yoga_Unit_Auto
         });
     }
+    #[inline]
     pub unsafe fn undefined() -> facebook_yoga_StyleLength {
         return facebook_yoga_StyleLength::new_1({ <facebook_yoga_FloatOptional>::default() }, {
             facebook_yoga_Unit_Undefined
         });
     }
+    #[inline]
     pub unsafe fn isAuto(&self) -> bool {
         return ((self.unit_) == (facebook_yoga_Unit_Auto));
     }
+    #[inline]
     pub unsafe fn isUndefined(&self) -> bool {
         return ((self.unit_) == (facebook_yoga_Unit_Undefined));
     }
+    #[inline]
     pub unsafe fn isPoints(&self) -> bool {
         return ((self.unit_) == (facebook_yoga_Unit_Point));
     }
+    #[inline]
     pub unsafe fn isPercent(&self) -> bool {
         return ((self.unit_) == (facebook_yoga_Unit_Percent));
     }
+    #[inline]
     pub unsafe fn isDefined(&self) -> bool {
         return !(unsafe { facebook_yoga_StyleLength::isUndefined(self) });
     }
+    #[inline]
     pub unsafe fn value(&self) -> facebook_yoga_FloatOptional {
         return self.value_;
     }
+    #[inline]
     pub unsafe fn resolve(&mut self, mut referenceLength: f32) -> facebook_yoga_FloatOptional {
         'switch: {
             match { self.unit_ } {
@@ -2497,12 +2685,14 @@ impl facebook_yoga_StyleLength {
         };
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     pub unsafe fn to_YGValue(&self) -> YGValue {
         return YGValue {
             value: (unsafe { facebook_yoga_FloatOptional::unwrap(&self.value_) }),
             unit: (unsafe { unscopedEnum_164(self.unit_) }),
         };
     }
+    #[inline]
     pub unsafe fn operator_eq(&self, rhs: *const facebook_yoga_StyleLength) -> bool {
         return (unsafe {
             let _lhs: facebook_yoga_FloatOptional = self.value_;
@@ -2510,6 +2700,7 @@ impl facebook_yoga_StyleLength {
             operator_eq_114(_lhs, _rhs)
         }) && ((self.unit_) == ((*rhs).unit_));
     }
+    #[inline]
     pub unsafe fn inexactEquals(&self, other: *const facebook_yoga_StyleLength) -> bool {
         return ((self.unit_) == ((*other).unit_))
             && (unsafe {
@@ -2518,6 +2709,7 @@ impl facebook_yoga_StyleLength {
                 inexactEquals_122(_lhs, _rhs)
             });
     }
+    #[inline]
     unsafe fn new_1(mut value: facebook_yoga_FloatOptional, mut unit: facebook_yoga_Unit) -> Self {
         let mut this = Self {
             value_: value,
@@ -2544,6 +2736,7 @@ impl Default for facebook_yoga_StyleLength {
         }
     }
 }
+#[inline]
 pub unsafe fn inexactEquals_173(
     a: *const facebook_yoga_StyleLength,
     b: *const facebook_yoga_StyleLength,
@@ -2560,6 +2753,7 @@ struct facebook_yoga_SmallValueBuffer_4__Overflow {
     pub wideElements_: Vec<bool>,
 }
 impl facebook_yoga_SmallValueBuffer_4__Overflow {
+    #[inline]
     pub unsafe fn move_from(_a0: *mut facebook_yoga_SmallValueBuffer_4__Overflow) -> Self {
         let mut this = Self {
             buffer_: std::mem::take(&mut (*_a0).buffer_),
@@ -2567,6 +2761,7 @@ impl facebook_yoga_SmallValueBuffer_4__Overflow {
         };
         this
     }
+    #[inline]
     pub unsafe fn move_assign(
         &mut self,
         _a0: *mut facebook_yoga_SmallValueBuffer_4__Overflow,
@@ -2580,16 +2775,17 @@ impl facebook_yoga_SmallValueBuffer_4__Overflow {
 #[derive(VaArg, FnPtrArg, MoveCtorUnsafe, CopyAssignUnsafe, MoveAssignUnsafe)]
 pub struct facebook_yoga_SmallValueBuffer_4_ {
     count_: u16,
-    buffer_: Vec<u32>,
-    wideElements_: Vec<bool>,
+    buffer_: [u32; 4],
+    wideElements_: [bool; 4],
     overflow_: Option<Box<facebook_yoga_SmallValueBuffer_4__Overflow>>,
 }
 impl facebook_yoga_SmallValueBuffer_4_ {
+    #[inline]
     pub unsafe fn copy_from(other: *const facebook_yoga_SmallValueBuffer_4_) -> Self {
         let mut this = Self {
             count_: 0_u16,
-            buffer_: std::array::from_fn::<_, 4, _>(|_| 0_u32).to_vec(),
-            wideElements_: vec![false; 4],
+            buffer_: std::array::from_fn::<_, 4, _>(|_| 0_u32),
+            wideElements_: [false; 4],
             overflow_: None,
         };
         (unsafe {
@@ -2598,23 +2794,25 @@ impl facebook_yoga_SmallValueBuffer_4_ {
         });
         this
     }
+    #[inline]
     pub unsafe fn move_from(other: *mut facebook_yoga_SmallValueBuffer_4_) -> Self {
         let mut this = Self {
             count_: (*other).count_,
             buffer_: (*other).buffer_.clone(),
-            wideElements_: (*other).wideElements_.clone(),
+            wideElements_: (*other).wideElements_,
             overflow_: (*other).overflow_.take(),
         };
         this
     }
+    #[inline]
     pub unsafe fn push_4(&mut self, mut value: u32) -> u16 {
         let index: u16 = self.count_.postfix_inc();
         assert!(
             ((index as i32) < (4096))
                 && (!(c"SmallValueBuffer can only hold up to 4096 chunks".as_ptr()).is_null())
         );
-        if ((index as usize) < (self.buffer_.len())) {
-            (*(&mut (self.buffer_)[(index as usize) as usize] as *mut u32)) = value;
+        if ((index as usize) < (4)) {
+            self.buffer_[(index as usize)] = value;
             return index;
         }
         if self.overflow_.is_none() {
@@ -2643,9 +2841,10 @@ impl facebook_yoga_SmallValueBuffer_4_ {
         .push(false);
         return index;
     }
+    #[inline]
     pub unsafe fn replace_6(&mut self, mut index: u16, mut value: u32) -> u16 {
-        if ((index as usize) < (self.buffer_.len())) {
-            (*(&mut (self.buffer_)[(index as usize) as usize] as *mut u32)) = value;
+        if ((index as usize) < (4)) {
+            self.buffer_[(index as usize)] = value;
         } else {
             (*(&mut ((&mut (*self
                 .overflow_
@@ -2654,14 +2853,14 @@ impl facebook_yoga_SmallValueBuffer_4_ {
                     __v as *const facebook_yoga_SmallValueBuffer_4__Overflow
                         as *mut facebook_yoga_SmallValueBuffer_4__Overflow
                 })))
-                .buffer_)[(index as usize).wrapping_sub(self.buffer_.len()) as usize]
-                as *mut u32)) = value;
+                .buffer_)[(index as usize).wrapping_sub(4) as usize] as *mut u32)) = value;
         }
         return index;
     }
+    #[inline]
     pub unsafe fn get32(&self, mut index: u16) -> u32 {
-        if ((index as usize) < (self.buffer_.len())) {
-            return (*(self.buffer_).as_ptr().add((index as usize) as usize));
+        if ((index as usize) < (4)) {
+            return self.buffer_[(index as usize)];
         } else {
             return (*(&mut ((&mut (*self.overflow_.as_deref().map_or(
                 ::std::ptr::null_mut(),
@@ -2670,18 +2869,19 @@ impl facebook_yoga_SmallValueBuffer_4_ {
                         as *mut facebook_yoga_SmallValueBuffer_4__Overflow
                 },
             )))
-                .buffer_)[(index as usize).wrapping_sub(self.buffer_.len()) as usize]
+                .buffer_)[(index as usize).wrapping_sub(4) as usize]
                 as *mut u32));
         }
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     pub unsafe fn copy_assign(
         &mut self,
         other: *const facebook_yoga_SmallValueBuffer_4_,
     ) -> *mut facebook_yoga_SmallValueBuffer_4_ {
         self.count_ = (*other).count_;
         self.buffer_ = ((*other).buffer_).clone();
-        self.wideElements_ = ((*other).wideElements_).clone();
+        self.wideElements_ = (*other).wideElements_;
         self.overflow_ = if (*other).overflow_.is_some() {
             Some(Box::new(libcc2rs::cpp_make!(
                 facebook_yoga_SmallValueBuffer_4__Overflow,
@@ -2699,13 +2899,14 @@ impl facebook_yoga_SmallValueBuffer_4_ {
         .take();
         return &mut (*(self as *mut facebook_yoga_SmallValueBuffer_4_));
     }
+    #[inline]
     pub unsafe fn move_assign(
         &mut self,
         other: *mut facebook_yoga_SmallValueBuffer_4_,
     ) -> *mut facebook_yoga_SmallValueBuffer_4_ {
         self.count_ = (*other).count_;
         self.buffer_ = ((*other).buffer_).clone();
-        self.wideElements_ = ((*other).wideElements_).clone();
+        self.wideElements_ = (*other).wideElements_;
         self.overflow_ = (*other).overflow_.take();
         return &mut (*(self as *mut facebook_yoga_SmallValueBuffer_4_));
     }
@@ -2724,19 +2925,16 @@ impl Default for facebook_yoga_SmallValueBuffer_4_ {
         unsafe {
             facebook_yoga_SmallValueBuffer_4_ {
                 count_: 0_u16,
-                buffer_: std::array::from_fn::<_, 4, _>(|_| 0_u32).to_vec(),
-                wideElements_: vec![false; 4],
+                buffer_: std::array::from_fn::<_, 4, _>(|_| 0_u32),
+                wideElements_: [false; 4],
                 overflow_: None,
             }
         }
     }
 }
-static mut kHandleTypeMask_174: std::cell::LazyCell<u16> =
-    std::cell::LazyCell::new(|| unsafe { 7_u16 });
-static mut kHandleIndexedMask_175: std::cell::LazyCell<u16> =
-    std::cell::LazyCell::new(|| unsafe { 8_u16 });
-static mut kHandleValueMask_176: std::cell::LazyCell<u16> =
-    std::cell::LazyCell::new(|| unsafe { 65520_u16 });
+static kHandleTypeMask_174: u16 = 7_u16;
+static kHandleIndexedMask_175: u16 = 8_u16;
+static kHandleValueMask_176: u16 = 65520_u16;
 pub type facebook_yoga_StyleValueHandle_Type = u8;
 pub const facebook_yoga_StyleValueHandle_Type_Undefined: facebook_yoga_StyleValueHandle_Type = 0;
 pub const facebook_yoga_StyleValueHandle_Type_Point: facebook_yoga_StyleValueHandle_Type = 1;
@@ -2757,6 +2955,7 @@ pub struct facebook_yoga_StyleValueHandle {
     repr_: u16,
 }
 impl facebook_yoga_StyleValueHandle {
+    #[inline]
     pub unsafe fn ofAuto() -> facebook_yoga_StyleValueHandle {
         let mut handle: facebook_yoga_StyleValueHandle =
             <facebook_yoga_StyleValueHandle>::default();
@@ -2768,60 +2967,63 @@ impl facebook_yoga_StyleValueHandle {
         });
         return handle;
     }
+    #[inline]
     pub unsafe fn isUndefined(&self) -> bool {
         return ((unsafe { facebook_yoga_StyleValueHandle::type_(self) })
             == (facebook_yoga_StyleValueHandle_Type_Undefined));
     }
+    #[inline]
     pub unsafe fn isDefined(&self) -> bool {
         return !(unsafe { facebook_yoga_StyleValueHandle::isUndefined(self) });
     }
+    #[inline]
     pub unsafe fn isAuto(&self) -> bool {
         return ((unsafe { facebook_yoga_StyleValueHandle::type_(self) })
             == (facebook_yoga_StyleValueHandle_Type_Auto));
     }
+    #[inline]
     pub unsafe fn isPercent(&self) -> bool {
         return ((unsafe { facebook_yoga_StyleValueHandle::type_(self) })
             == (facebook_yoga_StyleValueHandle_Type_Percent));
     }
+    #[inline]
     pub unsafe fn isPoint(&self) -> bool {
         return ((unsafe { facebook_yoga_StyleValueHandle::type_(self) })
             == (facebook_yoga_StyleValueHandle_Type_Point));
     }
+    #[inline]
     unsafe fn isKeyword(&self, mut keyword: facebook_yoga_StyleValueHandle_Keyword) -> bool {
         return ((unsafe { facebook_yoga_StyleValueHandle::type_(self) })
             == (facebook_yoga_StyleValueHandle_Type_Keyword))
             && (((unsafe { facebook_yoga_StyleValueHandle::value(self) }) as i32)
                 == ((keyword as u16) as i32));
     }
+    #[inline]
     unsafe fn type_(&self) -> facebook_yoga_StyleValueHandle_Type {
-        return (((self.repr_ as i32)
-            & ((*std::cell::LazyCell::force_mut(&mut *&raw mut kHandleTypeMask_174)) as i32))
+        return (((self.repr_ as i32) & (kHandleTypeMask_174 as i32))
             as facebook_yoga_StyleValueHandle_Type);
     }
+    #[inline]
     unsafe fn setType(&mut self, mut handleType: facebook_yoga_StyleValueHandle_Type) {
-        self.repr_ = ((self.repr_ as i32)
-            & (!((*std::cell::LazyCell::force_mut(&mut *&raw mut kHandleTypeMask_174)) as i32)))
-            as u16;
+        self.repr_ = ((self.repr_ as i32) & (!(kHandleTypeMask_174 as i32))) as u16;
         self.repr_ = ((self.repr_ as i32) | ((handleType as u8) as i32)) as u16;
     }
+    #[inline]
     unsafe fn value(&self) -> u16 {
         return (((self.repr_ as i32) >> (4)) as u16);
     }
+    #[inline]
     unsafe fn setValue(&mut self, mut value: u16) {
-        self.repr_ = ((self.repr_ as i32)
-            & (!((*std::cell::LazyCell::force_mut(&mut *&raw mut kHandleValueMask_176)) as i32)))
-            as u16;
+        self.repr_ = ((self.repr_ as i32) & (!(kHandleValueMask_176 as i32))) as u16;
         self.repr_ = ((self.repr_ as i32) | ((value as i32) << (4))) as u16;
     }
+    #[inline]
     unsafe fn isValueIndexed(&self) -> bool {
-        return (((self.repr_ as i32)
-            & ((*std::cell::LazyCell::force_mut(&mut *&raw mut kHandleIndexedMask_175)) as i32))
-            != (0));
+        return (((self.repr_ as i32) & (kHandleIndexedMask_175 as i32)) != (0));
     }
+    #[inline]
     unsafe fn setValueIsIndexed(&mut self) {
-        self.repr_ = ((self.repr_ as i32)
-            | ((*std::cell::LazyCell::force_mut(&mut *&raw mut kHandleIndexedMask_175)) as i32))
-            as u16;
+        self.repr_ = ((self.repr_ as i32) | (kHandleIndexedMask_175 as i32)) as u16;
     }
 }
 impl Default for facebook_yoga_StyleValueHandle {
@@ -2835,6 +3037,7 @@ pub struct facebook_yoga_StyleValuePool {
     buffer_: facebook_yoga_SmallValueBuffer_4_,
 }
 impl facebook_yoga_StyleValuePool {
+    #[inline]
     pub unsafe fn store_1(
         &mut self,
         handle: *mut facebook_yoga_StyleValueHandle,
@@ -2873,6 +3076,7 @@ impl facebook_yoga_StyleValuePool {
             });
         }
     }
+    #[inline]
     pub unsafe fn store_2(
         &mut self,
         handle: *mut facebook_yoga_StyleValueHandle,
@@ -2935,6 +3139,7 @@ impl facebook_yoga_StyleValuePool {
             });
         }
     }
+    #[inline]
     pub unsafe fn store_3(
         &mut self,
         handle: *mut facebook_yoga_StyleValueHandle,
@@ -2960,6 +3165,7 @@ impl facebook_yoga_StyleValuePool {
             });
         }
     }
+    #[inline]
     pub unsafe fn getLength(
         &self,
         mut handle: facebook_yoga_StyleValueHandle,
@@ -3002,6 +3208,7 @@ impl facebook_yoga_StyleValuePool {
         }
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     pub unsafe fn getSize(
         &self,
         mut handle: facebook_yoga_StyleValueHandle,
@@ -3065,6 +3272,7 @@ impl facebook_yoga_StyleValuePool {
         }
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     pub unsafe fn getNumber(
         &self,
         mut handle: facebook_yoga_StyleValueHandle,
@@ -3097,6 +3305,7 @@ impl facebook_yoga_StyleValuePool {
         }
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     pub unsafe fn getStoredValue(&self, mut handle: facebook_yoga_StyleValueHandle) -> f32 {
         assert!(
             (((unsafe { facebook_yoga_StyleValueHandle::type_(&handle,) })
@@ -3123,6 +3332,7 @@ impl facebook_yoga_StyleValuePool {
             })
         };
     }
+    #[inline]
     unsafe fn storeValue(
         &mut self,
         handle: *mut facebook_yoga_StyleValueHandle,
@@ -3165,6 +3375,7 @@ impl facebook_yoga_StyleValuePool {
             (unsafe { facebook_yoga_StyleValueHandle::setValueIsIndexed(&mut (*handle)) });
         }
     }
+    #[inline]
     unsafe fn storeKeyword(
         &mut self,
         handle: *mut facebook_yoga_StyleValueHandle,
@@ -3195,12 +3406,14 @@ impl facebook_yoga_StyleValuePool {
             });
         }
     }
+    #[inline]
     unsafe fn isIntegerPackable(mut f: f32) -> bool {
         let kMaxInlineAbsValue: u16 = ((((1) << (11)) - (1)) as u16);
         let mut i: i32 = (f as i32);
         return (((i as f32) == (f)) && ((i) >= (-(kMaxInlineAbsValue as i32))))
             && ((i) <= (kMaxInlineAbsValue as i32));
     }
+    #[inline]
     unsafe fn packInlineInteger(mut value: f32) -> u16 {
         let mut isNegative: u16 = (if ((value) < (0_f32)) { 1 } else { 0 } as u16);
         return ((((isNegative as i32) << (11))
@@ -3211,6 +3424,7 @@ impl facebook_yoga_StyleValuePool {
                     1
                 }))) as u16);
     }
+    #[inline]
     unsafe fn unpackInlineInteger(mut value: u16) -> f32 {
         let kValueSignMask: u16 = 2048_u16;
         let kValueMagnitudeMask: u16 = 2047_u16;
@@ -3218,12 +3432,14 @@ impl facebook_yoga_StyleValuePool {
         return ((((value as i32) & (kValueMagnitudeMask as i32))
             * (if isNegative { -1_i32 } else { 1 })) as f32);
     }
+    #[inline]
     pub unsafe fn move_from(_a0: *mut facebook_yoga_StyleValuePool) -> Self {
         let mut this = Self {
             buffer_: facebook_yoga_SmallValueBuffer_4_::move_from({ &mut (*_a0).buffer_ }),
         };
         this
     }
+    #[inline]
     pub unsafe fn copy_assign(
         &mut self,
         _a0: *const facebook_yoga_StyleValuePool,
@@ -3234,6 +3450,7 @@ impl facebook_yoga_StyleValuePool {
         });
         return &mut (*(self as *mut facebook_yoga_StyleValuePool));
     }
+    #[inline]
     pub unsafe fn move_assign(
         &mut self,
         _a0: *mut facebook_yoga_StyleValuePool,
@@ -3245,12 +3462,9 @@ impl facebook_yoga_StyleValuePool {
         return &mut (*(self as *mut facebook_yoga_StyleValuePool));
     }
 }
-pub static mut DefaultFlexGrow_177: std::cell::LazyCell<f32> =
-    std::cell::LazyCell::new(|| unsafe { 0_f32 });
-pub static mut DefaultFlexShrink_178: std::cell::LazyCell<f32> =
-    std::cell::LazyCell::new(|| unsafe { 0_f32 });
-pub static mut WebDefaultFlexShrink_179: std::cell::LazyCell<f32> =
-    std::cell::LazyCell::new(|| unsafe { 1_f32 });
+pub static DefaultFlexGrow_177: f32 = 0_f32;
+pub static DefaultFlexShrink_178: f32 = 0_f32;
+pub static WebDefaultFlexShrink_179: f32 = 1_f32;
 #[repr(C)]
 #[derive(Clone, VaArg, FnPtrArg, MoveCtorUnsafe, CopyAssignUnsafe, MoveAssignUnsafe)]
 pub struct facebook_yoga_Style {
@@ -3271,292 +3485,327 @@ pub struct facebook_yoga_Style {
     flexGrow_: facebook_yoga_StyleValueHandle,
     flexShrink_: facebook_yoga_StyleValueHandle,
     flexBasis_: facebook_yoga_StyleValueHandle,
-    margin_: Vec<facebook_yoga_StyleValueHandle>,
-    position_: Vec<facebook_yoga_StyleValueHandle>,
-    padding_: Vec<facebook_yoga_StyleValueHandle>,
-    border_: Vec<facebook_yoga_StyleValueHandle>,
-    gap_: Vec<facebook_yoga_StyleValueHandle>,
-    dimensions_: Vec<facebook_yoga_StyleValueHandle>,
-    minDimensions_: Vec<facebook_yoga_StyleValueHandle>,
-    maxDimensions_: Vec<facebook_yoga_StyleValueHandle>,
+    margin_: [facebook_yoga_StyleValueHandle; 9],
+    position_: [facebook_yoga_StyleValueHandle; 9],
+    padding_: [facebook_yoga_StyleValueHandle; 9],
+    border_: [facebook_yoga_StyleValueHandle; 9],
+    gap_: [facebook_yoga_StyleValueHandle; 3],
+    dimensions_: [facebook_yoga_StyleValueHandle; 2],
+    minDimensions_: [facebook_yoga_StyleValueHandle; 2],
+    maxDimensions_: [facebook_yoga_StyleValueHandle; 2],
     aspectRatio_: facebook_yoga_StyleValueHandle,
     grid_: facebook_yoga_GridStyleStorage,
     pool_: facebook_yoga_StyleValuePool,
 }
 impl facebook_yoga_Style {
+    #[inline]
     pub unsafe fn direction(&self) -> facebook_yoga_Direction {
         return self.direction_;
     }
+    #[inline]
     pub unsafe fn setDirection(&mut self, mut value: facebook_yoga_Direction) {
         self.direction_ = value;
     }
+    #[inline]
     pub unsafe fn flexDirection(&self) -> facebook_yoga_FlexDirection {
         return self.flexDirection_;
     }
+    #[inline]
     pub unsafe fn setFlexDirection(&mut self, mut value: facebook_yoga_FlexDirection) {
         self.flexDirection_ = value;
     }
+    #[inline]
     pub unsafe fn justifyContent(&self) -> facebook_yoga_Justify {
         return self.justifyContent_;
     }
+    #[inline]
     pub unsafe fn setJustifyContent(&mut self, mut value: facebook_yoga_Justify) {
         self.justifyContent_ = value;
     }
+    #[inline]
     pub unsafe fn justifyItems(&self) -> facebook_yoga_Justify {
         return self.justifyItems_;
     }
+    #[inline]
     pub unsafe fn setJustifyItems(&mut self, mut value: facebook_yoga_Justify) {
         self.justifyItems_ = value;
     }
+    #[inline]
     pub unsafe fn justifySelf(&self) -> facebook_yoga_Justify {
         return self.justifySelf_;
     }
+    #[inline]
     pub unsafe fn setJustifySelf(&mut self, mut value: facebook_yoga_Justify) {
         self.justifySelf_ = value;
     }
+    #[inline]
     pub unsafe fn alignContent(&self) -> facebook_yoga_Align {
         return self.alignContent_;
     }
+    #[inline]
     pub unsafe fn setAlignContent(&mut self, mut value: facebook_yoga_Align) {
         self.alignContent_ = value;
     }
+    #[inline]
     pub unsafe fn alignItems(&self) -> facebook_yoga_Align {
         return self.alignItems_;
     }
+    #[inline]
     pub unsafe fn setAlignItems(&mut self, mut value: facebook_yoga_Align) {
         self.alignItems_ = value;
     }
+    #[inline]
     pub unsafe fn alignSelf(&self) -> facebook_yoga_Align {
         return self.alignSelf_;
     }
+    #[inline]
     pub unsafe fn setAlignSelf(&mut self, mut value: facebook_yoga_Align) {
         self.alignSelf_ = value;
     }
+    #[inline]
     pub unsafe fn positionType(&self) -> facebook_yoga_PositionType {
         return self.positionType_;
     }
+    #[inline]
     pub unsafe fn setPositionType(&mut self, mut value: facebook_yoga_PositionType) {
         self.positionType_ = value;
     }
+    #[inline]
     pub unsafe fn flexWrap(&self) -> facebook_yoga_Wrap {
         return self.flexWrap_;
     }
+    #[inline]
     pub unsafe fn setFlexWrap(&mut self, mut value: facebook_yoga_Wrap) {
         self.flexWrap_ = value;
     }
+    #[inline]
     pub unsafe fn overflow(&self) -> facebook_yoga_Overflow {
         return self.overflow_;
     }
+    #[inline]
     pub unsafe fn setOverflow(&mut self, mut value: facebook_yoga_Overflow) {
         self.overflow_ = value;
     }
+    #[inline]
     pub unsafe fn display(&self) -> facebook_yoga_Display {
         return self.display_;
     }
+    #[inline]
     pub unsafe fn setDisplay(&mut self, mut value: facebook_yoga_Display) {
         self.display_ = value;
     }
+    #[inline]
     pub unsafe fn flex(&self) -> facebook_yoga_FloatOptional {
         return (unsafe {
             let _handle: facebook_yoga_StyleValueHandle = self.flex_;
             facebook_yoga_StyleValuePool::getNumber(&self.pool_, _handle)
         });
     }
+    #[inline]
     pub unsafe fn setFlex(&mut self, mut value: facebook_yoga_FloatOptional) {
         (unsafe {
             let _handle: *mut facebook_yoga_StyleValueHandle = &mut self.flex_;
             facebook_yoga_StyleValuePool::store_3(&mut self.pool_, _handle, value)
         });
     }
+    #[inline]
     pub unsafe fn flexGrow(&self) -> facebook_yoga_FloatOptional {
         return (unsafe {
             let _handle: facebook_yoga_StyleValueHandle = self.flexGrow_;
             facebook_yoga_StyleValuePool::getNumber(&self.pool_, _handle)
         });
     }
+    #[inline]
     pub unsafe fn setFlexGrow(&mut self, mut value: facebook_yoga_FloatOptional) {
         (unsafe {
             let _handle: *mut facebook_yoga_StyleValueHandle = &mut self.flexGrow_;
             facebook_yoga_StyleValuePool::store_3(&mut self.pool_, _handle, value)
         });
     }
+    #[inline]
     pub unsafe fn flexShrink(&self) -> facebook_yoga_FloatOptional {
         return (unsafe {
             let _handle: facebook_yoga_StyleValueHandle = self.flexShrink_;
             facebook_yoga_StyleValuePool::getNumber(&self.pool_, _handle)
         });
     }
+    #[inline]
     pub unsafe fn setFlexShrink(&mut self, mut value: facebook_yoga_FloatOptional) {
         (unsafe {
             let _handle: *mut facebook_yoga_StyleValueHandle = &mut self.flexShrink_;
             facebook_yoga_StyleValuePool::store_3(&mut self.pool_, _handle, value)
         });
     }
+    #[inline]
     pub unsafe fn flexBasis(&self) -> facebook_yoga_StyleSizeLength {
         return (unsafe {
             let _handle: facebook_yoga_StyleValueHandle = self.flexBasis_;
             facebook_yoga_StyleValuePool::getSize(&self.pool_, _handle)
         });
     }
+    #[inline]
     pub unsafe fn setFlexBasis(&mut self, mut value: facebook_yoga_StyleSizeLength) {
         (unsafe {
             let _handle: *mut facebook_yoga_StyleValueHandle = &mut self.flexBasis_;
             facebook_yoga_StyleValuePool::store_2(&mut self.pool_, _handle, value)
         });
     }
+    #[inline]
     pub unsafe fn margin(&self, mut edge: facebook_yoga_Edge) -> facebook_yoga_StyleLength {
         return (unsafe {
-            let _handle: facebook_yoga_StyleValueHandle = (*(self.margin_)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(edge) }) as usize) as usize));
+            let _handle: facebook_yoga_StyleValueHandle =
+                self.margin_[((unsafe { to_underlying_46(edge) }) as usize)];
             facebook_yoga_StyleValuePool::getLength(&self.pool_, _handle)
         });
     }
+    #[inline]
     pub unsafe fn setMargin(
         &mut self,
         mut edge: facebook_yoga_Edge,
         mut value: facebook_yoga_StyleLength,
     ) {
         (unsafe {
-            let _handle: *mut facebook_yoga_StyleValueHandle = &mut (*(&mut (self.margin_)
-                [((unsafe { to_underlying_46(edge) }) as usize) as usize]
-                as *mut facebook_yoga_StyleValueHandle));
+            let _handle: *mut facebook_yoga_StyleValueHandle =
+                &mut self.margin_[((unsafe { to_underlying_46(edge) }) as usize)];
             facebook_yoga_StyleValuePool::store_1(&mut self.pool_, _handle, value)
         });
     }
+    #[inline]
     pub unsafe fn position(&self, mut edge: facebook_yoga_Edge) -> facebook_yoga_StyleLength {
         return (unsafe {
-            let _handle: facebook_yoga_StyleValueHandle = (*(self.position_)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(edge) }) as usize) as usize));
+            let _handle: facebook_yoga_StyleValueHandle =
+                self.position_[((unsafe { to_underlying_46(edge) }) as usize)];
             facebook_yoga_StyleValuePool::getLength(&self.pool_, _handle)
         });
     }
+    #[inline]
     pub unsafe fn setPosition(
         &mut self,
         mut edge: facebook_yoga_Edge,
         mut value: facebook_yoga_StyleLength,
     ) {
         (unsafe {
-            let _handle: *mut facebook_yoga_StyleValueHandle = &mut (*(&mut (self.position_)
-                [((unsafe { to_underlying_46(edge) }) as usize) as usize]
-                as *mut facebook_yoga_StyleValueHandle));
+            let _handle: *mut facebook_yoga_StyleValueHandle =
+                &mut self.position_[((unsafe { to_underlying_46(edge) }) as usize)];
             facebook_yoga_StyleValuePool::store_1(&mut self.pool_, _handle, value)
         });
     }
+    #[inline]
     pub unsafe fn padding(&self, mut edge: facebook_yoga_Edge) -> facebook_yoga_StyleLength {
         return (unsafe {
-            let _handle: facebook_yoga_StyleValueHandle = (*(self.padding_)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(edge) }) as usize) as usize));
+            let _handle: facebook_yoga_StyleValueHandle =
+                self.padding_[((unsafe { to_underlying_46(edge) }) as usize)];
             facebook_yoga_StyleValuePool::getLength(&self.pool_, _handle)
         });
     }
+    #[inline]
     pub unsafe fn setPadding(
         &mut self,
         mut edge: facebook_yoga_Edge,
         mut value: facebook_yoga_StyleLength,
     ) {
         (unsafe {
-            let _handle: *mut facebook_yoga_StyleValueHandle = &mut (*(&mut (self.padding_)
-                [((unsafe { to_underlying_46(edge) }) as usize) as usize]
-                as *mut facebook_yoga_StyleValueHandle));
+            let _handle: *mut facebook_yoga_StyleValueHandle =
+                &mut self.padding_[((unsafe { to_underlying_46(edge) }) as usize)];
             facebook_yoga_StyleValuePool::store_1(&mut self.pool_, _handle, value)
         });
     }
+    #[inline]
     pub unsafe fn border(&self, mut edge: facebook_yoga_Edge) -> facebook_yoga_StyleLength {
         return (unsafe {
-            let _handle: facebook_yoga_StyleValueHandle = (*(self.border_)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(edge) }) as usize) as usize));
+            let _handle: facebook_yoga_StyleValueHandle =
+                self.border_[((unsafe { to_underlying_46(edge) }) as usize)];
             facebook_yoga_StyleValuePool::getLength(&self.pool_, _handle)
         });
     }
+    #[inline]
     pub unsafe fn setBorder(
         &mut self,
         mut edge: facebook_yoga_Edge,
         mut value: facebook_yoga_StyleLength,
     ) {
         (unsafe {
-            let _handle: *mut facebook_yoga_StyleValueHandle = &mut (*(&mut (self.border_)
-                [((unsafe { to_underlying_46(edge) }) as usize) as usize]
-                as *mut facebook_yoga_StyleValueHandle));
+            let _handle: *mut facebook_yoga_StyleValueHandle =
+                &mut self.border_[((unsafe { to_underlying_46(edge) }) as usize)];
             facebook_yoga_StyleValuePool::store_1(&mut self.pool_, _handle, value)
         });
     }
+    #[inline]
     pub unsafe fn gap(&self, mut gutter: facebook_yoga_Gutter) -> facebook_yoga_StyleLength {
         return (unsafe {
-            let _handle: facebook_yoga_StyleValueHandle = (*(self.gap_)
-                .as_ptr()
-                .add(((unsafe { to_underlying_49(gutter) }) as usize) as usize));
+            let _handle: facebook_yoga_StyleValueHandle =
+                self.gap_[((unsafe { to_underlying_49(gutter) }) as usize)];
             facebook_yoga_StyleValuePool::getLength(&self.pool_, _handle)
         });
     }
+    #[inline]
     pub unsafe fn setGap(
         &mut self,
         mut gutter: facebook_yoga_Gutter,
         mut value: facebook_yoga_StyleLength,
     ) {
         (unsafe {
-            let _handle: *mut facebook_yoga_StyleValueHandle = &mut (*(&mut (self.gap_)
-                [((unsafe { to_underlying_49(gutter) }) as usize) as usize]
-                as *mut facebook_yoga_StyleValueHandle));
+            let _handle: *mut facebook_yoga_StyleValueHandle =
+                &mut self.gap_[((unsafe { to_underlying_49(gutter) }) as usize)];
             facebook_yoga_StyleValuePool::store_1(&mut self.pool_, _handle, value)
         });
     }
+    #[inline]
     pub unsafe fn dimension(
         &self,
         mut axis: facebook_yoga_Dimension,
     ) -> facebook_yoga_StyleSizeLength {
         return (unsafe {
-            let _handle: facebook_yoga_StyleValueHandle = (*(self.dimensions_)
-                .as_ptr()
-                .add(((unsafe { to_underlying_47(axis) }) as usize) as usize));
+            let _handle: facebook_yoga_StyleValueHandle =
+                self.dimensions_[((unsafe { to_underlying_47(axis) }) as usize)];
             facebook_yoga_StyleValuePool::getSize(&self.pool_, _handle)
         });
     }
+    #[inline]
     pub unsafe fn setDimension(
         &mut self,
         mut axis: facebook_yoga_Dimension,
         mut value: facebook_yoga_StyleSizeLength,
     ) {
         (unsafe {
-            let _handle: *mut facebook_yoga_StyleValueHandle = &mut (*(&mut (self.dimensions_)
-                [((unsafe { to_underlying_47(axis) }) as usize) as usize]
-                as *mut facebook_yoga_StyleValueHandle));
+            let _handle: *mut facebook_yoga_StyleValueHandle =
+                &mut self.dimensions_[((unsafe { to_underlying_47(axis) }) as usize)];
             facebook_yoga_StyleValuePool::store_2(&mut self.pool_, _handle, value)
         });
     }
+    #[inline]
     pub unsafe fn minDimension(
         &self,
         mut axis: facebook_yoga_Dimension,
     ) -> facebook_yoga_StyleSizeLength {
         return (unsafe {
-            let _handle: facebook_yoga_StyleValueHandle = (*(self.minDimensions_)
-                .as_ptr()
-                .add(((unsafe { to_underlying_47(axis) }) as usize) as usize));
+            let _handle: facebook_yoga_StyleValueHandle =
+                self.minDimensions_[((unsafe { to_underlying_47(axis) }) as usize)];
             facebook_yoga_StyleValuePool::getSize(&self.pool_, _handle)
         });
     }
+    #[inline]
     pub unsafe fn setMinDimension(
         &mut self,
         mut axis: facebook_yoga_Dimension,
         mut value: facebook_yoga_StyleSizeLength,
     ) {
         (unsafe {
-            let _handle: *mut facebook_yoga_StyleValueHandle = &mut (*(&mut (self.minDimensions_)
-                [((unsafe { to_underlying_47(axis) }) as usize) as usize]
-                as *mut facebook_yoga_StyleValueHandle));
+            let _handle: *mut facebook_yoga_StyleValueHandle =
+                &mut self.minDimensions_[((unsafe { to_underlying_47(axis) }) as usize)];
             facebook_yoga_StyleValuePool::store_2(&mut self.pool_, _handle, value)
         });
     }
+    #[inline]
     pub unsafe fn gridTemplateColumns(&self) -> *const Vec<facebook_yoga_GridTrackSize> {
         return &(*(unsafe { facebook_yoga_GridStyleStorage::get(&self.grid_) })).templateColumns;
     }
+    #[inline]
     pub unsafe fn setGridTemplateColumns(&mut self, mut value: Vec<facebook_yoga_GridTrackSize>) {
         (*(unsafe { facebook_yoga_GridStyleStorage::ensure(&mut self.grid_) })).templateColumns =
             std::mem::take(&mut value);
     }
+    #[inline]
     pub unsafe fn resizeGridTemplateColumns(&mut self, mut count: usize) {
         {
             let __n = count as usize;
@@ -3565,6 +3814,7 @@ impl facebook_yoga_Style {
                 .resize_with(__n, || <facebook_yoga_GridTrackSize>::default())
         };
     }
+    #[inline]
     pub unsafe fn setGridTemplateColumnAt(
         &mut self,
         mut index: usize,
@@ -3573,13 +3823,16 @@ impl facebook_yoga_Style {
         (*(&mut ((&mut (*(unsafe { facebook_yoga_GridStyleStorage::ensure(&mut self.grid_) })))
             .templateColumns)[index as usize] as *mut facebook_yoga_GridTrackSize)) = value;
     }
+    #[inline]
     pub unsafe fn gridTemplateRows(&self) -> *const Vec<facebook_yoga_GridTrackSize> {
         return &(*(unsafe { facebook_yoga_GridStyleStorage::get(&self.grid_) })).templateRows;
     }
+    #[inline]
     pub unsafe fn setGridTemplateRows(&mut self, mut value: Vec<facebook_yoga_GridTrackSize>) {
         (*(unsafe { facebook_yoga_GridStyleStorage::ensure(&mut self.grid_) })).templateRows =
             std::mem::take(&mut value);
     }
+    #[inline]
     pub unsafe fn resizeGridTemplateRows(&mut self, mut count: usize) {
         {
             let __n = count as usize;
@@ -3588,6 +3841,7 @@ impl facebook_yoga_Style {
                 .resize_with(__n, || <facebook_yoga_GridTrackSize>::default())
         };
     }
+    #[inline]
     pub unsafe fn setGridTemplateRowAt(
         &mut self,
         mut index: usize,
@@ -3596,13 +3850,16 @@ impl facebook_yoga_Style {
         (*(&mut ((&mut (*(unsafe { facebook_yoga_GridStyleStorage::ensure(&mut self.grid_) })))
             .templateRows)[index as usize] as *mut facebook_yoga_GridTrackSize)) = value;
     }
+    #[inline]
     pub unsafe fn gridAutoColumns(&self) -> *const Vec<facebook_yoga_GridTrackSize> {
         return &(*(unsafe { facebook_yoga_GridStyleStorage::get(&self.grid_) })).autoColumns;
     }
+    #[inline]
     pub unsafe fn setGridAutoColumns(&mut self, mut value: Vec<facebook_yoga_GridTrackSize>) {
         (*(unsafe { facebook_yoga_GridStyleStorage::ensure(&mut self.grid_) })).autoColumns =
             std::mem::take(&mut value);
     }
+    #[inline]
     pub unsafe fn resizeGridAutoColumns(&mut self, mut count: usize) {
         {
             let __n = count as usize;
@@ -3611,6 +3868,7 @@ impl facebook_yoga_Style {
                 .resize_with(__n, || <facebook_yoga_GridTrackSize>::default())
         };
     }
+    #[inline]
     pub unsafe fn setGridAutoColumnAt(
         &mut self,
         mut index: usize,
@@ -3619,13 +3877,16 @@ impl facebook_yoga_Style {
         (*(&mut ((&mut (*(unsafe { facebook_yoga_GridStyleStorage::ensure(&mut self.grid_) })))
             .autoColumns)[index as usize] as *mut facebook_yoga_GridTrackSize)) = value;
     }
+    #[inline]
     pub unsafe fn gridAutoRows(&self) -> *const Vec<facebook_yoga_GridTrackSize> {
         return &(*(unsafe { facebook_yoga_GridStyleStorage::get(&self.grid_) })).autoRows;
     }
+    #[inline]
     pub unsafe fn setGridAutoRows(&mut self, mut value: Vec<facebook_yoga_GridTrackSize>) {
         (*(unsafe { facebook_yoga_GridStyleStorage::ensure(&mut self.grid_) })).autoRows =
             std::mem::take(&mut value);
     }
+    #[inline]
     pub unsafe fn resizeGridAutoRows(&mut self, mut count: usize) {
         {
             let __n = count as usize;
@@ -3634,6 +3895,7 @@ impl facebook_yoga_Style {
                 .resize_with(__n, || <facebook_yoga_GridTrackSize>::default())
         };
     }
+    #[inline]
     pub unsafe fn setGridAutoRowAt(
         &mut self,
         mut index: usize,
@@ -3642,30 +3904,39 @@ impl facebook_yoga_Style {
         (*(&mut ((&mut (*(unsafe { facebook_yoga_GridStyleStorage::ensure(&mut self.grid_) })))
             .autoRows)[index as usize] as *mut facebook_yoga_GridTrackSize)) = value;
     }
+    #[inline]
     pub unsafe fn gridColumnStart(&self) -> *const facebook_yoga_GridLine {
         return &(*(unsafe { facebook_yoga_GridStyleStorage::get(&self.grid_) })).columnStart;
     }
+    #[inline]
     pub unsafe fn setGridColumnStart(&mut self, mut value: facebook_yoga_GridLine) {
         (*(unsafe { facebook_yoga_GridStyleStorage::ensure(&mut self.grid_) })).columnStart = value;
     }
+    #[inline]
     pub unsafe fn gridColumnEnd(&self) -> *const facebook_yoga_GridLine {
         return &(*(unsafe { facebook_yoga_GridStyleStorage::get(&self.grid_) })).columnEnd;
     }
+    #[inline]
     pub unsafe fn setGridColumnEnd(&mut self, mut value: facebook_yoga_GridLine) {
         (*(unsafe { facebook_yoga_GridStyleStorage::ensure(&mut self.grid_) })).columnEnd = value;
     }
+    #[inline]
     pub unsafe fn gridRowStart(&self) -> *const facebook_yoga_GridLine {
         return &(*(unsafe { facebook_yoga_GridStyleStorage::get(&self.grid_) })).rowStart;
     }
+    #[inline]
     pub unsafe fn setGridRowStart(&mut self, mut value: facebook_yoga_GridLine) {
         (*(unsafe { facebook_yoga_GridStyleStorage::ensure(&mut self.grid_) })).rowStart = value;
     }
+    #[inline]
     pub unsafe fn gridRowEnd(&self) -> *const facebook_yoga_GridLine {
         return &(*(unsafe { facebook_yoga_GridStyleStorage::get(&self.grid_) })).rowEnd;
     }
+    #[inline]
     pub unsafe fn setGridRowEnd(&mut self, mut value: facebook_yoga_GridLine) {
         (*(unsafe { facebook_yoga_GridStyleStorage::ensure(&mut self.grid_) })).rowEnd = value;
     }
+    #[inline]
     pub unsafe fn resolvedMinDimension(
         &self,
         mut direction: facebook_yoga_Direction,
@@ -3673,9 +3944,8 @@ impl facebook_yoga_Style {
         mut referenceLength: f32,
         mut ownerWidth: f32,
     ) -> facebook_yoga_FloatOptional {
-        let handle: facebook_yoga_StyleValueHandle = (*(self.minDimensions_)
-            .as_ptr()
-            .add(((unsafe { to_underlying_47(axis) }) as usize) as usize));
+        let handle: facebook_yoga_StyleValueHandle =
+            self.minDimensions_[((unsafe { to_underlying_47(axis) }) as usize)];
         if (unsafe { facebook_yoga_StyleValueHandle::isUndefined(&handle) }) {
             return <facebook_yoga_FloatOptional>::default();
         }
@@ -3708,29 +3978,30 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn maxDimension(
         &self,
         mut axis: facebook_yoga_Dimension,
     ) -> facebook_yoga_StyleSizeLength {
         return (unsafe {
-            let _handle: facebook_yoga_StyleValueHandle = (*(self.maxDimensions_)
-                .as_ptr()
-                .add(((unsafe { to_underlying_47(axis) }) as usize) as usize));
+            let _handle: facebook_yoga_StyleValueHandle =
+                self.maxDimensions_[((unsafe { to_underlying_47(axis) }) as usize)];
             facebook_yoga_StyleValuePool::getSize(&self.pool_, _handle)
         });
     }
+    #[inline]
     pub unsafe fn setMaxDimension(
         &mut self,
         mut axis: facebook_yoga_Dimension,
         mut value: facebook_yoga_StyleSizeLength,
     ) {
         (unsafe {
-            let _handle: *mut facebook_yoga_StyleValueHandle = &mut (*(&mut (self.maxDimensions_)
-                [((unsafe { to_underlying_47(axis) }) as usize) as usize]
-                as *mut facebook_yoga_StyleValueHandle));
+            let _handle: *mut facebook_yoga_StyleValueHandle =
+                &mut self.maxDimensions_[((unsafe { to_underlying_47(axis) }) as usize)];
             facebook_yoga_StyleValuePool::store_2(&mut self.pool_, _handle, value)
         });
     }
+    #[inline]
     pub unsafe fn resolvedMaxDimension(
         &self,
         mut direction: facebook_yoga_Direction,
@@ -3738,9 +4009,8 @@ impl facebook_yoga_Style {
         mut referenceLength: f32,
         mut ownerWidth: f32,
     ) -> facebook_yoga_FloatOptional {
-        let handle: facebook_yoga_StyleValueHandle = (*(self.maxDimensions_)
-            .as_ptr()
-            .add(((unsafe { to_underlying_47(axis) }) as usize) as usize));
+        let handle: facebook_yoga_StyleValueHandle =
+            self.maxDimensions_[((unsafe { to_underlying_47(axis) }) as usize)];
         if (unsafe { facebook_yoga_StyleValueHandle::isUndefined(&handle) }) {
             return <facebook_yoga_FloatOptional>::default();
         }
@@ -3773,64 +4043,56 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn resolvesAgainstOwnerWidth(&self) -> bool {
         return ((((unsafe { facebook_yoga_Style::anyIsPercent_121_9(&self.margin_) })
             || (unsafe { facebook_yoga_Style::anyIsPercent_121_9(&self.padding_) }))
             || (unsafe {
                 facebook_yoga_StyleValueHandle::isPercent(
-                    &(*(self.dimensions_).as_ptr().add(
-                        ((unsafe { to_underlying_47(facebook_yoga_Dimension_Width) }) as usize)
-                            as usize,
-                    )),
+                    &self.dimensions_
+                        [((unsafe { to_underlying_47(facebook_yoga_Dimension_Width) }) as usize)],
                 )
             }))
             || (unsafe {
                 facebook_yoga_StyleValueHandle::isPercent(
-                    &(*(self.minDimensions_).as_ptr().add(
-                        ((unsafe { to_underlying_47(facebook_yoga_Dimension_Width) }) as usize)
-                            as usize,
-                    )),
+                    &self.minDimensions_
+                        [((unsafe { to_underlying_47(facebook_yoga_Dimension_Width) }) as usize)],
                 )
             }))
             || (unsafe {
                 facebook_yoga_StyleValueHandle::isPercent(
-                    &(*(self.maxDimensions_).as_ptr().add(
-                        ((unsafe { to_underlying_47(facebook_yoga_Dimension_Width) }) as usize)
-                            as usize,
-                    )),
+                    &self.maxDimensions_
+                        [((unsafe { to_underlying_47(facebook_yoga_Dimension_Width) }) as usize)],
                 )
             });
     }
+    #[inline]
     pub unsafe fn resolvesAgainstOwnerHeight(&self) -> bool {
         return ((unsafe {
             facebook_yoga_StyleValueHandle::isPercent(
-                &(*(self.dimensions_).as_ptr().add(
-                    ((unsafe { to_underlying_47(facebook_yoga_Dimension_Height) }) as usize)
-                        as usize,
-                )),
+                &self.dimensions_
+                    [((unsafe { to_underlying_47(facebook_yoga_Dimension_Height) }) as usize)],
             )
         }) || (unsafe {
             facebook_yoga_StyleValueHandle::isPercent(
-                &(*(self.minDimensions_).as_ptr().add(
-                    ((unsafe { to_underlying_47(facebook_yoga_Dimension_Height) }) as usize)
-                        as usize,
-                )),
+                &self.minDimensions_
+                    [((unsafe { to_underlying_47(facebook_yoga_Dimension_Height) }) as usize)],
             )
         })) || (unsafe {
             facebook_yoga_StyleValueHandle::isPercent(
-                &(*(self.maxDimensions_).as_ptr().add(
-                    ((unsafe { to_underlying_47(facebook_yoga_Dimension_Height) }) as usize)
-                        as usize,
-                )),
+                &self.maxDimensions_
+                    [((unsafe { to_underlying_47(facebook_yoga_Dimension_Height) }) as usize)],
             )
         });
     }
+    #[inline]
     pub unsafe fn aspectRatio(&self) -> facebook_yoga_FloatOptional {
         return (unsafe {
             let _handle: facebook_yoga_StyleValueHandle = self.aspectRatio_;
             facebook_yoga_StyleValuePool::getNumber(&self.pool_, _handle)
         });
     }
+    #[inline]
     pub unsafe fn setAspectRatio(&mut self, mut value: facebook_yoga_FloatOptional) {
         (unsafe {
             let _handle: *mut facebook_yoga_StyleValueHandle = &mut self.aspectRatio_;
@@ -3849,79 +4111,66 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn boxSizing(&self) -> facebook_yoga_BoxSizing {
         return self.boxSizing_;
     }
+    #[inline]
     pub unsafe fn setBoxSizing(&mut self, mut value: facebook_yoga_BoxSizing) {
         self.boxSizing_ = value;
     }
+    #[inline]
     pub unsafe fn horizontalInsetsDefined(&self) -> bool {
         return (((((unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(self.position_).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Left) }) as usize) as usize,
-                )),
+                &self.position_[((unsafe { to_underlying_46(facebook_yoga_Edge_Left) }) as usize)],
             )
         }) || (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(self.position_).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Right) }) as usize) as usize,
-                )),
+                &self.position_[((unsafe { to_underlying_46(facebook_yoga_Edge_Right) }) as usize)],
             )
         })) || (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(self.position_).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_All) }) as usize) as usize,
-                )),
+                &self.position_[((unsafe { to_underlying_46(facebook_yoga_Edge_All) }) as usize)],
             )
         })) || (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(self.position_).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Horizontal) }) as usize)
-                        as usize,
-                )),
+                &self.position_
+                    [((unsafe { to_underlying_46(facebook_yoga_Edge_Horizontal) }) as usize)],
             )
         })) || (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(self.position_).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Start) }) as usize) as usize,
-                )),
+                &self.position_[((unsafe { to_underlying_46(facebook_yoga_Edge_Start) }) as usize)],
             )
         })) || (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(self.position_).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_End) }) as usize) as usize,
-                )),
+                &self.position_[((unsafe { to_underlying_46(facebook_yoga_Edge_End) }) as usize)],
             )
         });
     }
+    #[inline]
     pub unsafe fn verticalInsetsDefined(&self) -> bool {
         return (((unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(self.position_).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Top) }) as usize) as usize,
-                )),
+                &self.position_[((unsafe { to_underlying_46(facebook_yoga_Edge_Top) }) as usize)],
             )
         }) || (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(self.position_).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Bottom) }) as usize) as usize,
-                )),
+                &self.position_
+                    [((unsafe { to_underlying_46(facebook_yoga_Edge_Bottom) }) as usize)],
             )
         })) || (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(self.position_).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_All) }) as usize) as usize,
-                )),
+                &self.position_[((unsafe { to_underlying_46(facebook_yoga_Edge_All) }) as usize)],
             )
         })) || (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(self.position_).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Vertical) }) as usize) as usize,
-                )),
+                &self.position_
+                    [((unsafe { to_underlying_46(facebook_yoga_Edge_Vertical) }) as usize)],
             )
         });
     }
+    #[inline]
     pub unsafe fn isFlexStartPositionDefined(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -3939,6 +4188,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn isFlexStartPositionAuto(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -3956,6 +4206,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn isInlineStartPositionDefined(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -3972,6 +4223,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn isInlineStartPositionAuto(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -3988,6 +4240,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn isFlexEndPositionDefined(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4005,6 +4258,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn isFlexEndPositionAuto(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4022,6 +4276,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn isInlineEndPositionDefined(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4038,6 +4293,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn isInlineEndPositionAuto(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4054,6 +4310,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeFlexStartPosition(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4076,6 +4333,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeInlineStartPosition(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4097,6 +4355,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeFlexEndPosition(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4119,6 +4378,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeInlineEndPosition(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4140,6 +4400,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeFlexStartMargin(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4162,6 +4423,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeInlineStartMargin(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4183,6 +4445,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeFlexEndMargin(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4205,6 +4468,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeInlineEndMargin(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4226,6 +4490,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeFlexStartBorder(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4251,6 +4516,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeInlineStartBorder(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4275,6 +4541,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeFlexEndBorder(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4300,6 +4567,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeInlineEndBorder(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4324,6 +4592,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeFlexStartPadding(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4350,6 +4619,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeInlineStartPadding(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4375,6 +4645,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeFlexEndPadding(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4401,6 +4672,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeInlineEndPadding(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4426,6 +4698,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeInlineStartPaddingAndBorder(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4438,6 +4711,7 @@ impl facebook_yoga_Style {
             facebook_yoga_Style::computeInlineStartBorder(self, axis, direction)
         }));
     }
+    #[inline]
     pub unsafe fn computeFlexStartPaddingAndBorder(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4450,6 +4724,7 @@ impl facebook_yoga_Style {
             facebook_yoga_Style::computeFlexStartBorder(self, axis, direction)
         }));
     }
+    #[inline]
     pub unsafe fn computeInlineEndPaddingAndBorder(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4462,6 +4737,7 @@ impl facebook_yoga_Style {
             facebook_yoga_Style::computeInlineEndBorder(self, axis, direction)
         }));
     }
+    #[inline]
     pub unsafe fn computeFlexEndPaddingAndBorder(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4474,6 +4750,7 @@ impl facebook_yoga_Style {
             facebook_yoga_Style::computeFlexEndBorder(self, axis, direction)
         }));
     }
+    #[inline]
     pub unsafe fn computePaddingAndBorderForDimension(
         &self,
         mut direction: facebook_yoga_Direction,
@@ -4502,6 +4779,7 @@ impl facebook_yoga_Style {
             )
         }));
     }
+    #[inline]
     pub unsafe fn computeBorderForAxis(&self, mut axis: facebook_yoga_FlexDirection) -> f32 {
         return ((unsafe {
             facebook_yoga_Style::computeInlineStartBorder(self, axis, facebook_yoga_Direction_LTR)
@@ -4509,6 +4787,7 @@ impl facebook_yoga_Style {
             facebook_yoga_Style::computeInlineEndBorder(self, axis, facebook_yoga_Direction_LTR)
         }));
     }
+    #[inline]
     pub unsafe fn computeMarginForAxis(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4530,6 +4809,7 @@ impl facebook_yoga_Style {
             )
         }));
     }
+    #[inline]
     pub unsafe fn computeGapForAxis(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4551,6 +4831,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn computeGapForDimension(
         &self,
         mut dimension: facebook_yoga_Dimension,
@@ -4573,6 +4854,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn flexStartMarginIsAuto(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4590,6 +4872,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn flexEndMarginIsAuto(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4607,6 +4890,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn inlineStartMarginIsAuto(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4623,6 +4907,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn inlineEndMarginIsAuto(
         &self,
         mut axis: facebook_yoga_FlexDirection,
@@ -4639,6 +4924,7 @@ impl facebook_yoga_Style {
             )
         });
     }
+    #[inline]
     pub unsafe fn operator_eq(&self, other: *const facebook_yoga_Style) -> bool {
         return (((((((((((((((((((((((((((self.direction_)
             == ((*other).direction_))
@@ -4683,58 +4969,58 @@ impl facebook_yoga_Style {
                 facebook_yoga_Style::lengthsEqual(_lhsHandle, _lhsPool, _rhsHandle, _rhsPool)
             }))
             && (unsafe {
-                let _lhs: *const Vec<facebook_yoga_StyleValueHandle> = &self.margin_;
+                let _lhs: *const [facebook_yoga_StyleValueHandle; 9] = &self.margin_;
                 let _lhsPool: *const facebook_yoga_StyleValuePool = &self.pool_;
-                let _rhs: *const Vec<facebook_yoga_StyleValueHandle> = &(*other).margin_;
+                let _rhs: *const [facebook_yoga_StyleValueHandle; 9] = &(*other).margin_;
                 let _rhsPool: *const facebook_yoga_StyleValuePool = &(*other).pool_;
                 facebook_yoga_Style::lengthsEqual_124_9(_lhs, _lhsPool, _rhs, _rhsPool)
             }))
             && (unsafe {
-                let _lhs: *const Vec<facebook_yoga_StyleValueHandle> = &self.position_;
+                let _lhs: *const [facebook_yoga_StyleValueHandle; 9] = &self.position_;
                 let _lhsPool: *const facebook_yoga_StyleValuePool = &self.pool_;
-                let _rhs: *const Vec<facebook_yoga_StyleValueHandle> = &(*other).position_;
+                let _rhs: *const [facebook_yoga_StyleValueHandle; 9] = &(*other).position_;
                 let _rhsPool: *const facebook_yoga_StyleValuePool = &(*other).pool_;
                 facebook_yoga_Style::lengthsEqual_124_9(_lhs, _lhsPool, _rhs, _rhsPool)
             }))
             && (unsafe {
-                let _lhs: *const Vec<facebook_yoga_StyleValueHandle> = &self.padding_;
+                let _lhs: *const [facebook_yoga_StyleValueHandle; 9] = &self.padding_;
                 let _lhsPool: *const facebook_yoga_StyleValuePool = &self.pool_;
-                let _rhs: *const Vec<facebook_yoga_StyleValueHandle> = &(*other).padding_;
+                let _rhs: *const [facebook_yoga_StyleValueHandle; 9] = &(*other).padding_;
                 let _rhsPool: *const facebook_yoga_StyleValuePool = &(*other).pool_;
                 facebook_yoga_Style::lengthsEqual_124_9(_lhs, _lhsPool, _rhs, _rhsPool)
             }))
             && (unsafe {
-                let _lhs: *const Vec<facebook_yoga_StyleValueHandle> = &self.border_;
+                let _lhs: *const [facebook_yoga_StyleValueHandle; 9] = &self.border_;
                 let _lhsPool: *const facebook_yoga_StyleValuePool = &self.pool_;
-                let _rhs: *const Vec<facebook_yoga_StyleValueHandle> = &(*other).border_;
+                let _rhs: *const [facebook_yoga_StyleValueHandle; 9] = &(*other).border_;
                 let _rhsPool: *const facebook_yoga_StyleValuePool = &(*other).pool_;
                 facebook_yoga_Style::lengthsEqual_124_9(_lhs, _lhsPool, _rhs, _rhsPool)
             }))
             && (unsafe {
-                let _lhs: *const Vec<facebook_yoga_StyleValueHandle> = &self.gap_;
+                let _lhs: *const [facebook_yoga_StyleValueHandle; 3] = &self.gap_;
                 let _lhsPool: *const facebook_yoga_StyleValuePool = &self.pool_;
-                let _rhs: *const Vec<facebook_yoga_StyleValueHandle> = &(*other).gap_;
+                let _rhs: *const [facebook_yoga_StyleValueHandle; 3] = &(*other).gap_;
                 let _rhsPool: *const facebook_yoga_StyleValuePool = &(*other).pool_;
                 facebook_yoga_Style::lengthsEqual_124_3(_lhs, _lhsPool, _rhs, _rhsPool)
             }))
             && (unsafe {
-                let _lhs: *const Vec<facebook_yoga_StyleValueHandle> = &self.dimensions_;
+                let _lhs: *const [facebook_yoga_StyleValueHandle; 2] = &self.dimensions_;
                 let _lhsPool: *const facebook_yoga_StyleValuePool = &self.pool_;
-                let _rhs: *const Vec<facebook_yoga_StyleValueHandle> = &(*other).dimensions_;
+                let _rhs: *const [facebook_yoga_StyleValueHandle; 2] = &(*other).dimensions_;
                 let _rhsPool: *const facebook_yoga_StyleValuePool = &(*other).pool_;
                 facebook_yoga_Style::sizeLengthsEqual_126_2(_lhs, _lhsPool, _rhs, _rhsPool)
             }))
             && (unsafe {
-                let _lhs: *const Vec<facebook_yoga_StyleValueHandle> = &self.minDimensions_;
+                let _lhs: *const [facebook_yoga_StyleValueHandle; 2] = &self.minDimensions_;
                 let _lhsPool: *const facebook_yoga_StyleValuePool = &self.pool_;
-                let _rhs: *const Vec<facebook_yoga_StyleValueHandle> = &(*other).minDimensions_;
+                let _rhs: *const [facebook_yoga_StyleValueHandle; 2] = &(*other).minDimensions_;
                 let _rhsPool: *const facebook_yoga_StyleValuePool = &(*other).pool_;
                 facebook_yoga_Style::sizeLengthsEqual_126_2(_lhs, _lhsPool, _rhs, _rhsPool)
             }))
             && (unsafe {
-                let _lhs: *const Vec<facebook_yoga_StyleValueHandle> = &self.maxDimensions_;
+                let _lhs: *const [facebook_yoga_StyleValueHandle; 2] = &self.maxDimensions_;
                 let _lhsPool: *const facebook_yoga_StyleValuePool = &self.pool_;
-                let _rhs: *const Vec<facebook_yoga_StyleValueHandle> = &(*other).maxDimensions_;
+                let _rhs: *const [facebook_yoga_StyleValueHandle; 2] = &(*other).maxDimensions_;
                 let _rhsPool: *const facebook_yoga_StyleValuePool = &(*other).pool_;
                 facebook_yoga_Style::sizeLengthsEqual_126_2(_lhs, _lhsPool, _rhs, _rhsPool)
             }))
@@ -4750,6 +5036,7 @@ impl facebook_yoga_Style {
                 facebook_yoga_GridStyleStorage::operator_eq(&self.grid_, _other)
             });
     }
+    #[inline]
     unsafe fn numbersEqual(
         lhsHandle: *const facebook_yoga_StyleValueHandle,
         lhsPool: *const facebook_yoga_StyleValuePool,
@@ -4770,6 +5057,7 @@ impl facebook_yoga_Style {
                 operator_eq_114(_lhs, _rhs)
             });
     }
+    #[inline]
     unsafe fn lengthsEqual(
         lhsHandle: *const facebook_yoga_StyleValueHandle,
         lhsPool: *const facebook_yoga_StyleValuePool,
@@ -4792,6 +5080,7 @@ impl facebook_yoga_Style {
                 )
             });
     }
+    #[inline]
     unsafe fn sizeLengthsEqual(
         lhsHandle: *const facebook_yoga_StyleValueHandle,
         lhsPool: *const facebook_yoga_StyleValuePool,
@@ -4814,218 +5103,165 @@ impl facebook_yoga_Style {
                 )
             });
     }
+    #[inline]
     unsafe fn computeColumnGap(&self) -> facebook_yoga_StyleValueHandle {
         if (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(self.gap_).as_ptr().add(
-                    ((unsafe { to_underlying_49(facebook_yoga_Gutter_Column) }) as usize) as usize,
-                )),
+                &self.gap_[((unsafe { to_underlying_49(facebook_yoga_Gutter_Column) }) as usize)],
             )
         }) {
-            return (*(self.gap_).as_ptr().add(
-                ((unsafe { to_underlying_49(facebook_yoga_Gutter_Column) }) as usize) as usize,
-            ));
+            return self.gap_
+                [((unsafe { to_underlying_49(facebook_yoga_Gutter_Column) }) as usize)];
         } else {
-            return (*(self.gap_)
-                .as_ptr()
-                .add(((unsafe { to_underlying_49(facebook_yoga_Gutter_All) }) as usize) as usize));
+            return self.gap_[((unsafe { to_underlying_49(facebook_yoga_Gutter_All) }) as usize)];
         }
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     unsafe fn computeRowGap(&self) -> facebook_yoga_StyleValueHandle {
         if (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(self.gap_).as_ptr().add(
-                    ((unsafe { to_underlying_49(facebook_yoga_Gutter_Row) }) as usize) as usize,
-                )),
+                &self.gap_[((unsafe { to_underlying_49(facebook_yoga_Gutter_Row) }) as usize)],
             )
         }) {
-            return (*(self.gap_)
-                .as_ptr()
-                .add(((unsafe { to_underlying_49(facebook_yoga_Gutter_Row) }) as usize) as usize));
+            return self.gap_[((unsafe { to_underlying_49(facebook_yoga_Gutter_Row) }) as usize)];
         } else {
-            return (*(self.gap_)
-                .as_ptr()
-                .add(((unsafe { to_underlying_49(facebook_yoga_Gutter_All) }) as usize) as usize));
+            return self.gap_[((unsafe { to_underlying_49(facebook_yoga_Gutter_All) }) as usize)];
         }
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     unsafe fn computeLeftEdge(
         &self,
-        edges: *const Vec<facebook_yoga_StyleValueHandle>,
+        edges: *const [facebook_yoga_StyleValueHandle; 9],
         mut layoutDirection: facebook_yoga_Direction,
     ) -> facebook_yoga_StyleValueHandle {
         if ((layoutDirection) == (facebook_yoga_Direction_LTR))
             && (unsafe {
                 facebook_yoga_StyleValueHandle::isDefined(
-                    &(*(*edges).as_ptr().add(
-                        ((unsafe { to_underlying_46(facebook_yoga_Edge_Start) }) as usize) as usize,
-                    )),
+                    &(&(*edges))
+                        [((unsafe { to_underlying_46(facebook_yoga_Edge_Start) }) as usize)],
                 )
             })
         {
-            return (*(*edges)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(facebook_yoga_Edge_Start) }) as usize) as usize));
+            return (&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_Start) }) as usize)];
         } else if ((layoutDirection) == (facebook_yoga_Direction_RTL))
             && (unsafe {
                 facebook_yoga_StyleValueHandle::isDefined(
-                    &(*(*edges).as_ptr().add(
-                        ((unsafe { to_underlying_46(facebook_yoga_Edge_End) }) as usize) as usize,
-                    )),
+                    &(&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_End) }) as usize)],
                 )
             })
         {
-            return (*(*edges)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(facebook_yoga_Edge_End) }) as usize) as usize));
+            return (&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_End) }) as usize)];
         } else if (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(*edges).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Left) }) as usize) as usize,
-                )),
+                &(&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_Left) }) as usize)],
             )
         }) {
-            return (*(*edges)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(facebook_yoga_Edge_Left) }) as usize) as usize));
+            return (&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_Left) }) as usize)];
         } else if (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(*edges).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Horizontal) }) as usize)
-                        as usize,
-                )),
+                &(&(*edges))
+                    [((unsafe { to_underlying_46(facebook_yoga_Edge_Horizontal) }) as usize)],
             )
         }) {
-            return (*(*edges).as_ptr().add(
-                ((unsafe { to_underlying_46(facebook_yoga_Edge_Horizontal) }) as usize) as usize,
-            ));
+            return (&(*edges))
+                [((unsafe { to_underlying_46(facebook_yoga_Edge_Horizontal) }) as usize)];
         } else {
-            return (*(*edges)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(facebook_yoga_Edge_All) }) as usize) as usize));
+            return (&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_All) }) as usize)];
         }
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     unsafe fn computeTopEdge(
         &self,
-        edges: *const Vec<facebook_yoga_StyleValueHandle>,
+        edges: *const [facebook_yoga_StyleValueHandle; 9],
     ) -> facebook_yoga_StyleValueHandle {
         if (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(*edges).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Top) }) as usize) as usize,
-                )),
+                &(&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_Top) }) as usize)],
             )
         }) {
-            return (*(*edges)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(facebook_yoga_Edge_Top) }) as usize) as usize));
+            return (&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_Top) }) as usize)];
         } else if (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(*edges).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Vertical) }) as usize) as usize,
-                )),
+                &(&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_Vertical) }) as usize)],
             )
         }) {
-            return (*(*edges).as_ptr().add(
-                ((unsafe { to_underlying_46(facebook_yoga_Edge_Vertical) }) as usize) as usize,
-            ));
+            return (&(*edges))
+                [((unsafe { to_underlying_46(facebook_yoga_Edge_Vertical) }) as usize)];
         } else {
-            return (*(*edges)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(facebook_yoga_Edge_All) }) as usize) as usize));
+            return (&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_All) }) as usize)];
         }
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     unsafe fn computeRightEdge(
         &self,
-        edges: *const Vec<facebook_yoga_StyleValueHandle>,
+        edges: *const [facebook_yoga_StyleValueHandle; 9],
         mut layoutDirection: facebook_yoga_Direction,
     ) -> facebook_yoga_StyleValueHandle {
         if ((layoutDirection) == (facebook_yoga_Direction_LTR))
             && (unsafe {
                 facebook_yoga_StyleValueHandle::isDefined(
-                    &(*(*edges).as_ptr().add(
-                        ((unsafe { to_underlying_46(facebook_yoga_Edge_End) }) as usize) as usize,
-                    )),
+                    &(&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_End) }) as usize)],
                 )
             })
         {
-            return (*(*edges)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(facebook_yoga_Edge_End) }) as usize) as usize));
+            return (&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_End) }) as usize)];
         } else if ((layoutDirection) == (facebook_yoga_Direction_RTL))
             && (unsafe {
                 facebook_yoga_StyleValueHandle::isDefined(
-                    &(*(*edges).as_ptr().add(
-                        ((unsafe { to_underlying_46(facebook_yoga_Edge_Start) }) as usize) as usize,
-                    )),
+                    &(&(*edges))
+                        [((unsafe { to_underlying_46(facebook_yoga_Edge_Start) }) as usize)],
                 )
             })
         {
-            return (*(*edges)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(facebook_yoga_Edge_Start) }) as usize) as usize));
+            return (&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_Start) }) as usize)];
         } else if (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(*edges).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Right) }) as usize) as usize,
-                )),
+                &(&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_Right) }) as usize)],
             )
         }) {
-            return (*(*edges)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(facebook_yoga_Edge_Right) }) as usize) as usize));
+            return (&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_Right) }) as usize)];
         } else if (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(*edges).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Horizontal) }) as usize)
-                        as usize,
-                )),
+                &(&(*edges))
+                    [((unsafe { to_underlying_46(facebook_yoga_Edge_Horizontal) }) as usize)],
             )
         }) {
-            return (*(*edges).as_ptr().add(
-                ((unsafe { to_underlying_46(facebook_yoga_Edge_Horizontal) }) as usize) as usize,
-            ));
+            return (&(*edges))
+                [((unsafe { to_underlying_46(facebook_yoga_Edge_Horizontal) }) as usize)];
         } else {
-            return (*(*edges)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(facebook_yoga_Edge_All) }) as usize) as usize));
+            return (&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_All) }) as usize)];
         }
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     unsafe fn computeBottomEdge(
         &self,
-        edges: *const Vec<facebook_yoga_StyleValueHandle>,
+        edges: *const [facebook_yoga_StyleValueHandle; 9],
     ) -> facebook_yoga_StyleValueHandle {
         if (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(*edges).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Bottom) }) as usize) as usize,
-                )),
+                &(&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_Bottom) }) as usize)],
             )
         }) {
-            return (*(*edges).as_ptr().add(
-                ((unsafe { to_underlying_46(facebook_yoga_Edge_Bottom) }) as usize) as usize,
-            ));
+            return (&(*edges))
+                [((unsafe { to_underlying_46(facebook_yoga_Edge_Bottom) }) as usize)];
         } else if (unsafe {
             facebook_yoga_StyleValueHandle::isDefined(
-                &(*(*edges).as_ptr().add(
-                    ((unsafe { to_underlying_46(facebook_yoga_Edge_Vertical) }) as usize) as usize,
-                )),
+                &(&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_Vertical) }) as usize)],
             )
         }) {
-            return (*(*edges).as_ptr().add(
-                ((unsafe { to_underlying_46(facebook_yoga_Edge_Vertical) }) as usize) as usize,
-            ));
+            return (&(*edges))
+                [((unsafe { to_underlying_46(facebook_yoga_Edge_Vertical) }) as usize)];
         } else {
-            return (*(*edges)
-                .as_ptr()
-                .add(((unsafe { to_underlying_46(facebook_yoga_Edge_All) }) as usize) as usize));
+            return (&(*edges))[((unsafe { to_underlying_46(facebook_yoga_Edge_All) }) as usize)];
         }
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     unsafe fn computePosition(
         &self,
         mut edge: facebook_yoga_PhysicalEdge,
@@ -5034,25 +5270,25 @@ impl facebook_yoga_Style {
         switch!(match edge {
             __v if __v == facebook_yoga_PhysicalEdge_Left => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.position_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.position_;
                     facebook_yoga_Style::computeLeftEdge(self, _edges, direction)
                 });
             }
             __v if __v == facebook_yoga_PhysicalEdge_Top => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.position_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.position_;
                     facebook_yoga_Style::computeTopEdge(self, _edges)
                 });
             }
             __v if __v == facebook_yoga_PhysicalEdge_Right => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.position_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.position_;
                     facebook_yoga_Style::computeRightEdge(self, _edges, direction)
                 });
             }
             __v if __v == facebook_yoga_PhysicalEdge_Bottom => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.position_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.position_;
                     facebook_yoga_Style::computeBottomEdge(self, _edges)
                 });
             }
@@ -5062,6 +5298,7 @@ impl facebook_yoga_Style {
         });
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     unsafe fn computeMargin(
         &self,
         mut edge: facebook_yoga_PhysicalEdge,
@@ -5070,25 +5307,25 @@ impl facebook_yoga_Style {
         switch!(match edge {
             __v if __v == facebook_yoga_PhysicalEdge_Left => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.margin_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.margin_;
                     facebook_yoga_Style::computeLeftEdge(self, _edges, direction)
                 });
             }
             __v if __v == facebook_yoga_PhysicalEdge_Top => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.margin_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.margin_;
                     facebook_yoga_Style::computeTopEdge(self, _edges)
                 });
             }
             __v if __v == facebook_yoga_PhysicalEdge_Right => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.margin_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.margin_;
                     facebook_yoga_Style::computeRightEdge(self, _edges, direction)
                 });
             }
             __v if __v == facebook_yoga_PhysicalEdge_Bottom => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.margin_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.margin_;
                     facebook_yoga_Style::computeBottomEdge(self, _edges)
                 });
             }
@@ -5098,6 +5335,7 @@ impl facebook_yoga_Style {
         });
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     unsafe fn computePadding(
         &self,
         mut edge: facebook_yoga_PhysicalEdge,
@@ -5106,25 +5344,25 @@ impl facebook_yoga_Style {
         switch!(match edge {
             __v if __v == facebook_yoga_PhysicalEdge_Left => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.padding_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.padding_;
                     facebook_yoga_Style::computeLeftEdge(self, _edges, direction)
                 });
             }
             __v if __v == facebook_yoga_PhysicalEdge_Top => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.padding_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.padding_;
                     facebook_yoga_Style::computeTopEdge(self, _edges)
                 });
             }
             __v if __v == facebook_yoga_PhysicalEdge_Right => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.padding_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.padding_;
                     facebook_yoga_Style::computeRightEdge(self, _edges, direction)
                 });
             }
             __v if __v == facebook_yoga_PhysicalEdge_Bottom => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.padding_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.padding_;
                     facebook_yoga_Style::computeBottomEdge(self, _edges)
                 });
             }
@@ -5134,6 +5372,7 @@ impl facebook_yoga_Style {
         });
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     unsafe fn computeBorder(
         &self,
         mut edge: facebook_yoga_PhysicalEdge,
@@ -5142,25 +5381,25 @@ impl facebook_yoga_Style {
         switch!(match edge {
             __v if __v == facebook_yoga_PhysicalEdge_Left => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.border_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.border_;
                     facebook_yoga_Style::computeLeftEdge(self, _edges, direction)
                 });
             }
             __v if __v == facebook_yoga_PhysicalEdge_Top => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.border_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.border_;
                     facebook_yoga_Style::computeTopEdge(self, _edges)
                 });
             }
             __v if __v == facebook_yoga_PhysicalEdge_Right => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.border_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.border_;
                     facebook_yoga_Style::computeRightEdge(self, _edges, direction)
                 });
             }
             __v if __v == facebook_yoga_PhysicalEdge_Bottom => {
                 return (unsafe {
-                    let _edges: *const Vec<facebook_yoga_StyleValueHandle> = &self.border_;
+                    let _edges: *const [facebook_yoga_StyleValueHandle; 9] = &self.border_;
                     facebook_yoga_Style::computeBottomEdge(self, _edges)
                 });
             }
@@ -5170,6 +5409,7 @@ impl facebook_yoga_Style {
         });
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     unsafe fn resolve(
         &self,
         mut handle: facebook_yoga_StyleValueHandle,
@@ -5189,6 +5429,7 @@ impl facebook_yoga_Style {
         }
         return <facebook_yoga_FloatOptional>::default();
     }
+    #[inline]
     pub unsafe fn move_from(_a0: *mut facebook_yoga_Style) -> Self {
         let mut this = Self {
             direction_: (*_a0).direction_,
@@ -5222,6 +5463,7 @@ impl facebook_yoga_Style {
         };
         this
     }
+    #[inline]
     pub unsafe fn copy_assign(
         &mut self,
         _a0: *const facebook_yoga_Style,
@@ -5262,6 +5504,7 @@ impl facebook_yoga_Style {
         });
         return &mut (*(self as *mut facebook_yoga_Style));
     }
+    #[inline]
     pub unsafe fn move_assign(
         &mut self,
         _a0: *mut facebook_yoga_Style,
@@ -5302,10 +5545,11 @@ impl facebook_yoga_Style {
         });
         return &mut (*(self as *mut facebook_yoga_Style));
     }
-    unsafe fn anyIsPercent_121_9(handles: *const Vec<facebook_yoga_StyleValueHandle>) -> bool {
+    #[inline]
+    unsafe fn anyIsPercent_121_9(handles: *const [facebook_yoga_StyleValueHandle; 9]) -> bool {
         return {
             let mut __it = (*handles).as_ptr();
-            let __last = (*handles).as_ptr().add((*handles).len());
+            let __last = (*handles).as_ptr().add(9);
             let __pred = FnPtr::<fn(*const facebook_yoga_StyleValueHandle) -> bool>::new(
                 |handle: *const facebook_yoga_StyleValueHandle| -> bool {
                     unsafe {
@@ -5324,17 +5568,18 @@ impl facebook_yoga_Style {
             __found
         };
     }
+    #[inline]
     unsafe fn lengthsEqual_124_9(
-        lhs: *const Vec<facebook_yoga_StyleValueHandle>,
+        lhs: *const [facebook_yoga_StyleValueHandle; 9],
         lhsPool: *const facebook_yoga_StyleValuePool,
-        rhs: *const Vec<facebook_yoga_StyleValueHandle>,
+        rhs: *const [facebook_yoga_StyleValueHandle; 9],
         rhsPool: *const facebook_yoga_StyleValuePool,
     ) -> bool {
         return {
             let mut __a = (*lhs).as_ptr();
-            let __a_end = (*lhs).as_ptr().add((*lhs).len());
+            let __a_end = (*lhs).as_ptr().add(9);
             let mut __b = (*rhs).as_ptr();
-            let __b_end = (*rhs).as_ptr().add((*rhs).len());
+            let __b_end = (*rhs).as_ptr().add(9);
             let __pred = lambda_unsafe!(
                 Generic,
                 {
@@ -5373,17 +5618,18 @@ impl facebook_yoga_Style {
             __eq && __a == __a_end && __b == __b_end
         };
     }
+    #[inline]
     unsafe fn lengthsEqual_124_3(
-        lhs: *const Vec<facebook_yoga_StyleValueHandle>,
+        lhs: *const [facebook_yoga_StyleValueHandle; 3],
         lhsPool: *const facebook_yoga_StyleValuePool,
-        rhs: *const Vec<facebook_yoga_StyleValueHandle>,
+        rhs: *const [facebook_yoga_StyleValueHandle; 3],
         rhsPool: *const facebook_yoga_StyleValuePool,
     ) -> bool {
         return {
             let mut __a = (*lhs).as_ptr();
-            let __a_end = (*lhs).as_ptr().add((*lhs).len());
+            let __a_end = (*lhs).as_ptr().add(3);
             let mut __b = (*rhs).as_ptr();
-            let __b_end = (*rhs).as_ptr().add((*rhs).len());
+            let __b_end = (*rhs).as_ptr().add(3);
             let __pred = lambda_unsafe!(
                 Generic,
                 {
@@ -5422,17 +5668,18 @@ impl facebook_yoga_Style {
             __eq && __a == __a_end && __b == __b_end
         };
     }
+    #[inline]
     unsafe fn sizeLengthsEqual_126_2(
-        lhs: *const Vec<facebook_yoga_StyleValueHandle>,
+        lhs: *const [facebook_yoga_StyleValueHandle; 2],
         lhsPool: *const facebook_yoga_StyleValuePool,
-        rhs: *const Vec<facebook_yoga_StyleValueHandle>,
+        rhs: *const [facebook_yoga_StyleValueHandle; 2],
         rhsPool: *const facebook_yoga_StyleValuePool,
     ) -> bool {
         return {
             let mut __a = (*lhs).as_ptr();
-            let __a_end = (*lhs).as_ptr().add((*lhs).len());
+            let __a_end = (*lhs).as_ptr().add(2);
             let mut __b = (*rhs).as_ptr();
-            let __b_end = (*rhs).as_ptr().add((*rhs).len());
+            let __b_end = (*rhs).as_ptr().add(2);
             let __pred = lambda_unsafe!(
                 Generic,
                 {
@@ -5501,36 +5748,29 @@ impl Default for facebook_yoga_Style {
                 flexBasis_: (unsafe { facebook_yoga_StyleValueHandle::ofAuto() }),
                 margin_: std::array::from_fn::<_, 9, _>(|_| {
                     <facebook_yoga_StyleValueHandle>::default()
-                })
-                .to_vec(),
+                }),
                 position_: std::array::from_fn::<_, 9, _>(|_| {
                     <facebook_yoga_StyleValueHandle>::default()
-                })
-                .to_vec(),
+                }),
                 padding_: std::array::from_fn::<_, 9, _>(|_| {
                     <facebook_yoga_StyleValueHandle>::default()
-                })
-                .to_vec(),
+                }),
                 border_: std::array::from_fn::<_, 9, _>(|_| {
                     <facebook_yoga_StyleValueHandle>::default()
-                })
-                .to_vec(),
+                }),
                 gap_: std::array::from_fn::<_, 3, _>(|_| {
                     <facebook_yoga_StyleValueHandle>::default()
-                })
-                .to_vec(),
-                dimensions_: Vec::from([
+                }),
+                dimensions_: [
                     (unsafe { facebook_yoga_StyleValueHandle::ofAuto() }),
                     (unsafe { facebook_yoga_StyleValueHandle::ofAuto() }),
-                ]),
+                ],
                 minDimensions_: std::array::from_fn::<_, 2, _>(|_| {
                     <facebook_yoga_StyleValueHandle>::default()
-                })
-                .to_vec(),
+                }),
                 maxDimensions_: std::array::from_fn::<_, 2, _>(|_| {
                     <facebook_yoga_StyleValueHandle>::default()
-                })
-                .to_vec(),
+                }),
                 aspectRatio_: <facebook_yoga_StyleValueHandle>::default(),
                 grid_: <facebook_yoga_GridStyleStorage>::default(),
                 pool_: <facebook_yoga_StyleValuePool>::default(),
@@ -5563,36 +5803,46 @@ pub struct facebook_yoga_Node {
     owner_: *mut facebook_yoga_Node,
     children_: Vec<*mut facebook_yoga_Node>,
     config_: *const facebook_yoga_Config,
-    processedDimensions_: Vec<facebook_yoga_StyleSizeLength>,
+    processedDimensions_: [facebook_yoga_StyleSizeLength; 2],
 }
 impl facebook_yoga_Node {
+    #[inline]
     pub unsafe fn getContext(&self) -> *mut ::libc::c_void {
         return self.context_;
     }
+    #[inline]
     pub unsafe fn alwaysFormsContainingBlock(&self) -> bool {
         return self.alwaysFormsContainingBlock_;
     }
+    #[inline]
     pub unsafe fn getHasNewLayout(&self) -> bool {
         return self.hasNewLayout_;
     }
+    #[inline]
     pub unsafe fn getNodeType(&self) -> facebook_yoga_NodeType {
         return self.nodeType_;
     }
+    #[inline]
     pub unsafe fn hasMeasureFunc(&self) -> bool {
         return !((self.measureFunc_).is_none());
     }
+    #[inline]
     pub unsafe fn hasMinContentMeasureFunc(&self) -> bool {
         return !((self.minContentMeasureFunc_).is_none());
     }
+    #[inline]
     pub unsafe fn getMinContentWidth(&self) -> facebook_yoga_FloatOptional {
         return self.minContentWidth_;
     }
+    #[inline]
     pub unsafe fn getMinContentHeight(&self) -> facebook_yoga_FloatOptional {
         return self.minContentHeight_;
     }
+    #[inline]
     pub unsafe fn hasBaselineFunc(&self) -> bool {
         return !((self.baselineFunc_).is_none());
     }
+    #[inline]
     pub unsafe fn hasDefiniteLength(
         &mut self,
         mut dimension: facebook_yoga_Dimension,
@@ -5607,39 +5857,51 @@ impl facebook_yoga_Node {
         return (unsafe { facebook_yoga_FloatOptional::isDefined(&usedValue) })
             && ((unsafe { facebook_yoga_FloatOptional::unwrap(&usedValue) }) >= (0_f32));
     }
+    #[inline]
     pub unsafe fn hasErrata(&self, mut errata: facebook_yoga_Errata) -> bool {
         return (unsafe { facebook_yoga_Config::hasErrata(&(*self.config_), errata) });
     }
+    #[inline]
     pub unsafe fn hasContentsChildren(&self) -> bool {
         return ((self.contentsChildrenCount_) != (0_usize));
     }
+    #[inline]
     pub unsafe fn getDirtiedFunc(&self) -> Option<unsafe fn(*const YGNode)> {
         return (self.dirtiedFunc_);
     }
+    #[inline]
     pub unsafe fn style_24(&mut self) -> *mut facebook_yoga_Style {
         return &mut self.style_;
     }
+    #[inline]
     pub unsafe fn style_25(&self) -> *const facebook_yoga_Style {
         return &self.style_;
     }
+    #[inline]
     pub unsafe fn getLayout_26(&mut self) -> *mut facebook_yoga_LayoutResults {
         return &mut self.layout_;
     }
+    #[inline]
     pub unsafe fn getLayout_27(&self) -> *const facebook_yoga_LayoutResults {
         return &self.layout_;
     }
+    #[inline]
     pub unsafe fn getLineIndex(&self) -> usize {
         return self.lineIndex_;
     }
+    #[inline]
     pub unsafe fn isReferenceBaseline(&self) -> bool {
         return self.isReferenceBaseline_;
     }
+    #[inline]
     pub unsafe fn getOwner(&self) -> *mut facebook_yoga_Node {
         return self.owner_;
     }
+    #[inline]
     pub unsafe fn getChildren(&self) -> *const Vec<*mut facebook_yoga_Node> {
         return &self.children_;
     }
+    #[inline]
     pub unsafe fn getChild(&self, mut index: usize) -> *mut facebook_yoga_Node {
         return (*{
             let __idx = index;
@@ -5650,14 +5912,17 @@ impl facebook_yoga_Node {
             }
         });
     }
+    #[inline]
     pub unsafe fn getChildCount(&self) -> usize {
         return self.children_.len();
     }
+    #[inline]
     pub unsafe fn getLayoutChildren(&self) -> facebook_yoga_LayoutableChildren_facebook_yoga_Node_ {
         return facebook_yoga_LayoutableChildren_facebook_yoga_Node_::new({
             (self as *const facebook_yoga_Node)
         });
     }
+    #[inline]
     pub unsafe fn getLayoutChildCount(&self) -> usize {
         if ((self.contentsChildrenCount_) == (0_usize)) {
             return self.children_.len();
@@ -5687,20 +5952,22 @@ impl facebook_yoga_Node {
         }
         panic!("ub: non-void function does not return a value")
     }
+    #[inline]
     pub unsafe fn getConfig(&self) -> *const facebook_yoga_Config {
         return self.config_;
     }
+    #[inline]
     pub unsafe fn isDirty(&self) -> bool {
         return self.isDirty_;
     }
+    #[inline]
     pub unsafe fn getProcessedDimension(
         &self,
         mut dimension: facebook_yoga_Dimension,
     ) -> facebook_yoga_StyleSizeLength {
-        return (*(self.processedDimensions_)
-            .as_ptr()
-            .add((dimension as usize) as usize));
+        return self.processedDimensions_[(dimension as usize)];
     }
+    #[inline]
     pub unsafe fn getResolvedDimension(
         &self,
         mut direction: facebook_yoga_Direction,
@@ -5743,18 +6010,23 @@ impl facebook_yoga_Node {
             )
         });
     }
+    #[inline]
     pub unsafe fn setContext(&mut self, mut context: *mut ::libc::c_void) {
         self.context_ = context;
     }
+    #[inline]
     pub unsafe fn setAlwaysFormsContainingBlock(&mut self, mut alwaysFormsContainingBlock: bool) {
         self.alwaysFormsContainingBlock_ = alwaysFormsContainingBlock;
     }
+    #[inline]
     pub unsafe fn setHasNewLayout(&mut self, mut hasNewLayout: bool) {
         self.hasNewLayout_ = hasNewLayout;
     }
+    #[inline]
     pub unsafe fn setNodeType(&mut self, mut nodeType: facebook_yoga_NodeType) {
         self.nodeType_ = nodeType;
     }
+    #[inline]
     pub unsafe fn setMinContentMeasureFunc(
         &mut self,
         mut minContentMeasureFunc: Option<
@@ -5763,42 +6035,52 @@ impl facebook_yoga_Node {
     ) {
         (self.minContentMeasureFunc_) = minContentMeasureFunc;
     }
+    #[inline]
     pub unsafe fn setMinContentWidth(&mut self, mut minContentWidth: facebook_yoga_FloatOptional) {
         self.minContentWidth_ = minContentWidth;
     }
+    #[inline]
     pub unsafe fn setMinContentHeight(
         &mut self,
         mut minContentHeight: facebook_yoga_FloatOptional,
     ) {
         self.minContentHeight_ = minContentHeight;
     }
+    #[inline]
     pub unsafe fn setBaselineFunc(
         &mut self,
         mut baseLineFunc: Option<unsafe fn(*const YGNode, f32, f32) -> f32>,
     ) {
         (self.baselineFunc_) = baseLineFunc;
     }
+    #[inline]
     pub unsafe fn setDirtiedFunc(&mut self, mut dirtiedFunc: Option<unsafe fn(*const YGNode)>) {
         (self.dirtiedFunc_) = dirtiedFunc;
     }
+    #[inline]
     pub unsafe fn setStyle(&mut self, style: *const facebook_yoga_Style) {
         (unsafe {
             let _arg0: *const facebook_yoga_Style = style;
             facebook_yoga_Style::copy_assign(&mut self.style_, _arg0)
         });
     }
+    #[inline]
     pub unsafe fn setLayout(&mut self, layout: *const facebook_yoga_LayoutResults) {
         self.layout_ = (*layout).clone();
     }
+    #[inline]
     pub unsafe fn setLineIndex(&mut self, mut lineIndex: usize) {
         self.lineIndex_ = lineIndex;
     }
+    #[inline]
     pub unsafe fn setIsReferenceBaseline(&mut self, mut isReferenceBaseline: bool) {
         self.isReferenceBaseline_ = isReferenceBaseline;
     }
+    #[inline]
     pub unsafe fn setOwner(&mut self, mut owner: *mut facebook_yoga_Node) {
         self.owner_ = owner;
     }
+    #[inline]
     unsafe fn useWebDefaults(&mut self) {
         (unsafe {
             facebook_yoga_Style::setFlexDirection(&mut self.style_, facebook_yoga_FlexDirection_Row)
@@ -5831,17 +6113,19 @@ impl Default for facebook_yoga_Node {
                 owner_: std::ptr::null_mut(),
                 children_: Default::default(),
                 config_: std::ptr::null(),
-                processedDimensions_: Vec::from([
+                processedDimensions_: [
                     (unsafe { facebook_yoga_StyleSizeLength::undefined() }),
                     (unsafe { facebook_yoga_StyleSizeLength::undefined() }),
-                ]),
+                ],
             }
         }
     }
 }
+#[inline]
 pub unsafe fn resolveRef_180(ref_: *mut YGNode) -> *mut facebook_yoga_Node {
     return (ref_ as *mut facebook_yoga_Node);
 }
+#[inline]
 pub unsafe fn resolveRef_181(ref_: *const YGNode) -> *const facebook_yoga_Node {
     return (ref_ as *const facebook_yoga_Node);
 }
@@ -6427,7 +6711,7 @@ pub struct facebook_yoga_LayoutData {
     pub cachedLayouts: i32,
     pub cachedMeasures: i32,
     pub measureCallbacks: i32,
-    pub measureCallbackReasonsCount: Vec<i32>,
+    pub measureCallbackReasonsCount: [i32; 9],
 }
 impl Default for facebook_yoga_LayoutData {
     fn default() -> Self {
@@ -6439,7 +6723,7 @@ impl Default for facebook_yoga_LayoutData {
                 cachedLayouts: 0,
                 cachedMeasures: 0,
                 measureCallbacks: 0,
-                measureCallbackReasonsCount: std::array::from_fn::<_, 9, _>(|_| 0_i32).to_vec(),
+                measureCallbackReasonsCount: std::array::from_fn::<_, 9, _>(|_| 0_i32),
             }
         }
     }
@@ -6486,6 +6770,7 @@ pub struct facebook_yoga_Event_TypedData_facebook_yoga_Event_NodeLayout_ {
     pub layoutType: facebook_yoga_LayoutType,
 }
 impl facebook_yoga_Event_Data {
+    #[inline]
     pub unsafe fn new_1(
         data: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_NodeAllocation_,
     ) -> Self {
@@ -6496,6 +6781,7 @@ impl facebook_yoga_Event_Data {
     }
 }
 impl facebook_yoga_Event_Data {
+    #[inline]
     pub unsafe fn new_2(
         data: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_NodeDeallocation_,
     ) -> Self {
@@ -6514,6 +6800,7 @@ pub struct facebook_yoga_Event_Data {
 #[derive(Copy, Clone, VaArg, FnPtrArg, Default)]
 pub struct facebook_yoga_Event {}
 impl facebook_yoga_Event {
+    #[inline]
     pub unsafe fn publish_3_0(
         mut node: *const YGNode,
         eventData: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_NodeAllocation_,
@@ -6524,6 +6811,7 @@ impl facebook_yoga_Event {
             facebook_yoga_Event::publish(node, ((0_u32) as facebook_yoga_Event_Type), &mut _arg2)
         });
     }
+    #[inline]
     pub unsafe fn publish_3_1(
         mut node: *const YGNode,
         eventData: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_NodeDeallocation_,
@@ -6963,7 +7251,7 @@ pub unsafe fn YGNodeGetMinContentWidth_231(mut node: *const YGNode) -> f32 {
             &(unsafe {
                 facebook_yoga_Node::getMinContentWidth(&(*(unsafe { resolveRef_181(node) })))
             }),
-            (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
+            YGUndefined_23,
         )
     });
 }
@@ -6973,7 +7261,7 @@ pub unsafe fn YGNodeGetMinContentHeight_232(mut node: *const YGNode) -> f32 {
             &(unsafe {
                 facebook_yoga_Node::getMinContentHeight(&(*(unsafe { resolveRef_181(node) })))
             }),
-            (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
+            YGUndefined_23,
         )
     });
 }
@@ -8154,7 +8442,7 @@ pub unsafe fn YGNodeStyleGetFlex_313(nodeRef: *const YGNode) -> f32 {
             }),
         )
     }) {
-        (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23))
+        YGUndefined_23
     } else {
         (unsafe {
             facebook_yoga_FloatOptional::unwrap(
@@ -8181,7 +8469,7 @@ pub unsafe fn YGNodeStyleGetFlexGrow_314(nodeRef: *const YGNode) -> f32 {
             }),
         )
     }) {
-        (*std::cell::LazyCell::force_mut(&mut *&raw mut DefaultFlexGrow_177))
+        DefaultFlexGrow_177
     } else {
         (unsafe {
             facebook_yoga_FloatOptional::unwrap(
@@ -8213,9 +8501,9 @@ pub unsafe fn YGNodeStyleGetFlexShrink_316(nodeRef: *const YGNode) -> f32 {
                 &(*(unsafe { facebook_yoga_Node::getConfig(&(*node)) })),
             )
         }) {
-            (*std::cell::LazyCell::force_mut(&mut *&raw mut WebDefaultFlexShrink_179))
+            WebDefaultFlexShrink_179
         } else {
-            (*std::cell::LazyCell::force_mut(&mut *&raw mut DefaultFlexShrink_178))
+            DefaultFlexShrink_178
         })
     } else {
         (unsafe {
@@ -8430,7 +8718,7 @@ pub unsafe fn YGNodeStyleGetBorder_336(node: *const YGNode, edge: YGEdge) -> f32
     if (unsafe { facebook_yoga_StyleLength::isUndefined(&border) })
         || (unsafe { facebook_yoga_StyleLength::isAuto(&border) })
     {
-        return (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23));
+        return YGUndefined_23;
     }
     return (unsafe { facebook_yoga_StyleLength::to_YGValue(&border) }).value;
 }
@@ -8480,7 +8768,7 @@ pub unsafe fn YGNodeStyleGetAspectRatio_341(node: *const YGNode) -> f32 {
         )
     });
     return if (unsafe { facebook_yoga_FloatOptional::isUndefined(&op) }) {
-        (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23))
+        YGUndefined_23
     } else {
         (unsafe { facebook_yoga_FloatOptional::unwrap(&op) })
     };
@@ -9284,13 +9572,13 @@ pub static mut YGValueZero_2: std::cell::LazyCell<YGValue> = std::cell::LazyCell
 pub static mut YGValueUndefined_1: std::cell::LazyCell<YGValue> =
     std::cell::LazyCell::new(|| unsafe {
         YGValue {
-            value: (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
+            value: YGUndefined_23,
             unit: YGUnit_YGUnitUndefined,
         }
     });
 pub static mut YGValueAuto_0: std::cell::LazyCell<YGValue> = std::cell::LazyCell::new(|| unsafe {
     YGValue {
-        value: (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)),
+        value: YGUndefined_23,
         unit: YGUnit_YGUnitAuto,
     }
 });
@@ -9298,6 +9586,7 @@ pub unsafe fn YGFloatIsUndefined_412(value: f32) -> bool {
     return (unsafe { isUndefined_105(value) });
 }
 impl facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator {
+    #[inline]
     pub unsafe fn operator_deref(&self) -> *mut facebook_yoga_Node {
         return (unsafe {
             let _index: usize = self.childIndex_;
@@ -9305,6 +9594,7 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator {
         });
     }
 }
+#[inline]
 pub unsafe fn resolveChildAlignment_413(
     mut node: *const facebook_yoga_Node,
     mut child: *const facebook_yoga_Node,
@@ -9339,6 +9629,7 @@ pub unsafe fn resolveChildAlignment_413(
     }
     return align;
 }
+#[inline]
 pub unsafe fn resolveChildJustification_414(
     mut node: *const facebook_yoga_Node,
     mut child: *const facebook_yoga_Node,
@@ -9360,6 +9651,7 @@ pub unsafe fn resolveChildJustification_414(
         })
     };
 }
+#[inline]
 pub unsafe fn fallbackAlignment_415(mut align: facebook_yoga_Align) -> facebook_yoga_Align {
     'switch: {
         match { align } {
@@ -9380,6 +9672,7 @@ pub unsafe fn fallbackAlignment_415(mut align: facebook_yoga_Align) -> facebook_
     };
     panic!("ub: non-void function does not return a value")
 }
+#[inline]
 pub unsafe fn fallbackAlignment_416(mut align: facebook_yoga_Justify) -> facebook_yoga_Justify {
     'switch: {
         match { align } {
@@ -9398,6 +9691,7 @@ pub unsafe fn fallbackAlignment_416(mut align: facebook_yoga_Justify) -> faceboo
     };
     panic!("ub: non-void function does not return a value")
 }
+#[inline]
 pub unsafe fn paddingAndBorderForAxis_417(
     node: *const facebook_yoga_Node,
     axis: facebook_yoga_FlexDirection,
@@ -9420,6 +9714,7 @@ pub unsafe fn paddingAndBorderForAxis_417(
         )
     }));
 }
+#[inline]
 pub unsafe fn boundAxisWithinMinAndMax_418(
     node: *const facebook_yoga_Node,
     direction: facebook_yoga_Direction,
@@ -9489,6 +9784,7 @@ pub unsafe fn boundAxisWithinMinAndMax_418(
     }
     return value;
 }
+#[inline]
 pub unsafe fn boundAxis_419(
     node: *const facebook_yoga_Node,
     axis: facebook_yoga_FlexDirection,
@@ -9516,6 +9812,7 @@ pub unsafe fn boundAxis_419(
         maxOrDefined_110(_a, _b)
     });
 }
+#[inline]
 pub unsafe fn getPositionOfOppositeEdge_420(
     mut position: f32,
     mut axis: facebook_yoga_FlexDirection,
@@ -9534,6 +9831,7 @@ pub unsafe fn getPositionOfOppositeEdge_420(
         )
     })) - (position));
 }
+#[inline]
 pub unsafe fn setChildTrailingPosition_421(
     node: *const facebook_yoga_Node,
     child: *mut facebook_yoga_Node,
@@ -9555,10 +9853,12 @@ pub unsafe fn setChildTrailingPosition_421(
         facebook_yoga_Node::setLayoutPosition(&mut (*child), _position, _edge)
     });
 }
+#[inline]
 pub unsafe fn needsTrailingPosition_422(axis: facebook_yoga_FlexDirection) -> bool {
     return ((axis) == (facebook_yoga_FlexDirection_RowReverse))
         || ((axis) == (facebook_yoga_FlexDirection_ColumnReverse));
 }
+#[inline]
 pub unsafe fn setFlexStartLayoutPosition_423(
     parent: *const facebook_yoga_Node,
     mut child: *mut facebook_yoga_Node,
@@ -9603,6 +9903,7 @@ pub unsafe fn setFlexStartLayoutPosition_423(
         )
     });
 }
+#[inline]
 pub unsafe fn setFlexEndLayoutPosition_424(
     parent: *const facebook_yoga_Node,
     mut child: *mut facebook_yoga_Node,
@@ -9647,6 +9948,7 @@ pub unsafe fn setFlexEndLayoutPosition_424(
         facebook_yoga_Node::setLayoutPosition(&mut (*child), _position, _edge)
     });
 }
+#[inline]
 pub unsafe fn setCenterLayoutPosition_425(
     parent: *const facebook_yoga_Node,
     mut child: *mut facebook_yoga_Node,
@@ -10069,8 +10371,8 @@ pub unsafe fn layoutAbsoluteChild_429(
         (unsafe { resolveCrossDirection_131(mainAxis, direction) })
     };
     let isMainAxisRow: bool = (unsafe { isRow_128(mainAxis) });
-    let mut childWidth: f32 = (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23));
-    let mut childHeight: f32 = (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23));
+    let mut childWidth: f32 = YGUndefined_23;
+    let mut childHeight: f32 = YGUndefined_23;
     let mut childWidthSizingMode: facebook_yoga_SizingMode = facebook_yoga_SizingMode_MaxContent;
     let mut childHeightSizingMode: facebook_yoga_SizingMode = facebook_yoga_SizingMode_MaxContent;
     let mut marginRow: f32 = (unsafe {
@@ -10712,6 +11014,7 @@ pub unsafe fn layoutAbsoluteDescendants_431(
     return hasNewLayout;
 }
 impl facebook_yoga_Event {
+    #[inline]
     pub unsafe fn publish_3_7(
         mut node: *const YGNode,
         eventData: Option<
@@ -10728,6 +11031,7 @@ impl facebook_yoga_Event {
             facebook_yoga_Event::publish(node, ((7_u32) as facebook_yoga_Event_Type), &mut _arg2)
         });
     }
+    #[inline]
     pub unsafe fn publish_3_8(
         mut node: *const YGNode,
         eventData: Option<
@@ -10752,6 +11056,7 @@ pub struct facebook_yoga_Event_TypedData_facebook_yoga_Event_NodeBaselineStart_ 
 #[derive(Copy, Clone, VaArg, FnPtrArg, Default)]
 pub struct facebook_yoga_Event_TypedData_facebook_yoga_Event_NodeBaselineEnd_ {}
 impl facebook_yoga_Event_Data {
+    #[inline]
     pub unsafe fn new_3(
         data: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_NodeBaselineStart_,
     ) -> Self {
@@ -10762,6 +11067,7 @@ impl facebook_yoga_Event_Data {
     }
 }
 impl facebook_yoga_Event_Data {
+    #[inline]
     pub unsafe fn new_4(
         data: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_NodeBaselineEnd_,
     ) -> Self {
@@ -10916,6 +11222,7 @@ pub unsafe fn isBaselineLayout_434(mut node: *const facebook_yoga_Node) -> bool 
     }
     return false;
 }
+#[inline]
 pub unsafe fn sizeIsExactAndMatchesOldMeasuredSize_435(
     mut sizeMode: facebook_yoga_SizingMode,
     mut size: f32,
@@ -10924,6 +11231,7 @@ pub unsafe fn sizeIsExactAndMatchesOldMeasuredSize_435(
     return ((sizeMode) == (facebook_yoga_SizingMode_StretchFit))
         && (unsafe { inexactEquals_111(size, lastComputedSize) });
 }
+#[inline]
 pub unsafe fn oldSizeIsMaxContentAndStillFits_436(
     mut sizeMode: facebook_yoga_SizingMode,
     mut size: f32,
@@ -10935,6 +11243,7 @@ pub unsafe fn oldSizeIsMaxContentAndStillFits_436(
         && (((size) >= (lastComputedSize))
             || (unsafe { inexactEquals_111(size, lastComputedSize) }));
 }
+#[inline]
 pub unsafe fn newSizeIsStricterAndStillValid_437(
     mut sizeMode: facebook_yoga_SizingMode,
     mut size: f32,
@@ -11078,6 +11387,7 @@ pub unsafe fn canUseCachedMeasurement_242(
     return (widthIsCompatible) && (heightIsCompatible);
 }
 impl facebook_yoga_Event {
+    #[inline]
     pub unsafe fn publish_3_5(
         mut node: *const YGNode,
         eventData: Option<
@@ -11094,6 +11404,7 @@ impl facebook_yoga_Event {
             facebook_yoga_Event::publish(node, ((5_u32) as facebook_yoga_Event_Type), &mut _arg2)
         });
     }
+    #[inline]
     pub unsafe fn publish_3_6(
         mut node: *const YGNode,
         eventData: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_MeasureCallbackEnd_,
@@ -11104,6 +11415,7 @@ impl facebook_yoga_Event {
             facebook_yoga_Event::publish(node, ((6_u32) as facebook_yoga_Event_Type), &mut _arg2)
         });
     }
+    #[inline]
     pub unsafe fn publish_3_2(
         mut node: *const YGNode,
         eventData: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_NodeLayout_,
@@ -11114,6 +11426,7 @@ impl facebook_yoga_Event {
             facebook_yoga_Event::publish(node, ((2_u32) as facebook_yoga_Event_Type), &mut _arg2)
         });
     }
+    #[inline]
     pub unsafe fn publish_3_3(
         mut node: *const YGNode,
         eventData: Option<
@@ -11130,6 +11443,7 @@ impl facebook_yoga_Event {
             facebook_yoga_Event::publish(node, ((3_u32) as facebook_yoga_Event_Type), &mut _arg2)
         });
     }
+    #[inline]
     pub unsafe fn publish_3_4(
         mut node: *const YGNode,
         eventData: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_LayoutPassEnd_,
@@ -11148,6 +11462,7 @@ pub struct facebook_yoga_Event_TypedData_facebook_yoga_Event_MeasureCallbackStar
 #[derive(Copy, Clone, VaArg, FnPtrArg, Default)]
 pub struct facebook_yoga_Event_TypedData_facebook_yoga_Event_LayoutPassStart_ {}
 impl facebook_yoga_Event_Data {
+    #[inline]
     pub unsafe fn new_5(
         data: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_MeasureCallbackStart_,
     ) -> Self {
@@ -11158,6 +11473,7 @@ impl facebook_yoga_Event_Data {
     }
 }
 impl facebook_yoga_Event_Data {
+    #[inline]
     pub unsafe fn new_6(
         data: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_MeasureCallbackEnd_,
     ) -> Self {
@@ -11168,6 +11484,7 @@ impl facebook_yoga_Event_Data {
     }
 }
 impl facebook_yoga_Event_Data {
+    #[inline]
     pub unsafe fn new_7(
         data: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_NodeLayout_,
     ) -> Self {
@@ -11178,6 +11495,7 @@ impl facebook_yoga_Event_Data {
     }
 }
 impl facebook_yoga_Event_Data {
+    #[inline]
     pub unsafe fn new_8(
         data: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_LayoutPassStart_,
     ) -> Self {
@@ -11188,6 +11506,7 @@ impl facebook_yoga_Event_Data {
     }
 }
 impl facebook_yoga_Event_Data {
+    #[inline]
     pub unsafe fn new_9(
         data: *const facebook_yoga_Event_TypedData_facebook_yoga_Event_LayoutPassEnd_,
     ) -> Self {
@@ -11197,6 +11516,7 @@ impl facebook_yoga_Event_Data {
         this
     }
 }
+#[inline]
 pub unsafe fn minOrDefined_438(mut a: f32, mut b: f32) -> f32 {
     if (unsafe { isDefined_107(a) }) && (unsafe { isDefined_107(b) }) {
         return (*{
@@ -11242,6 +11562,7 @@ pub struct facebook_yoga_FlexLine {
     pub layout: facebook_yoga_FlexLineRunningLayout,
 }
 impl facebook_yoga_FlexLine {
+    #[inline]
     pub unsafe fn move_from(_a0: *mut facebook_yoga_FlexLine) -> Self {
         let mut this = Self {
             itemsInFlow: (*_a0).itemsInFlow.clone(),
@@ -11372,16 +11693,13 @@ pub unsafe fn isNonZeroLength_443(length: *const facebook_yoga_StyleLength) -> b
         }) != (0_f32)));
 }
 pub unsafe fn hasNonZeroVerticalSpacing_444(style: *const facebook_yoga_Style) -> bool {
-    let verticalEdges: Vec<facebook_yoga_Edge> = Vec::from([
+    let verticalEdges: [facebook_yoga_Edge; 4] = [
         facebook_yoga_Edge_Top,
         facebook_yoga_Edge_Bottom,
         facebook_yoga_Edge_Vertical,
         facebook_yoga_Edge_All,
-    ]);
-    'loop_: for edge in IterRange::new(
-        verticalEdges.as_ptr(),
-        verticalEdges.as_ptr().add(verticalEdges.len()),
-    ) {
+    ];
+    'loop_: for edge in IterRange::new(verticalEdges.as_ptr(), verticalEdges.as_ptr().add(4)) {
         let edge: facebook_yoga_Edge = (*edge);
         if ((unsafe {
             let mut _length: facebook_yoga_StyleLength = (unsafe {
@@ -11408,7 +11726,7 @@ pub unsafe fn hasNonZeroVerticalSpacing_444(style: *const facebook_yoga_Style) -
     return false;
 }
 pub unsafe fn hasPercentageLength_445(style: *const facebook_yoga_Style) -> bool {
-    let edges: Vec<facebook_yoga_Edge> = Vec::from([
+    let edges: [facebook_yoga_Edge; 9] = [
         facebook_yoga_Edge_Left,
         facebook_yoga_Edge_Top,
         facebook_yoga_Edge_Right,
@@ -11418,8 +11736,8 @@ pub unsafe fn hasPercentageLength_445(style: *const facebook_yoga_Style) -> bool
         facebook_yoga_Edge_Horizontal,
         facebook_yoga_Edge_Vertical,
         facebook_yoga_Edge_All,
-    ]);
-    'loop_: for edge in IterRange::new(edges.as_ptr(), edges.as_ptr().add(edges.len())) {
+    ];
+    'loop_: for edge in IterRange::new(edges.as_ptr(), edges.as_ptr().add(9)) {
         let edge: facebook_yoga_Edge = (*edge);
         if (((unsafe {
             facebook_yoga_StyleLength::isPercent(
@@ -11453,14 +11771,11 @@ pub unsafe fn hasPercentageLength_445(style: *const facebook_yoga_Style) -> bool
             return true;
         }
     }
-    let dimensions: Vec<facebook_yoga_Dimension> = Vec::from([
+    let dimensions: [facebook_yoga_Dimension; 2] = [
         facebook_yoga_Dimension_Width,
         facebook_yoga_Dimension_Height,
-    ]);
-    'loop_: for dimension in IterRange::new(
-        dimensions.as_ptr(),
-        dimensions.as_ptr().add(dimensions.len()),
-    ) {
+    ];
+    'loop_: for dimension in IterRange::new(dimensions.as_ptr(), dimensions.as_ptr().add(2)) {
         let dimension: facebook_yoga_Dimension = (*dimension);
         if ((unsafe {
             facebook_yoga_StyleSizeLength::isPercent(
@@ -11625,7 +11940,7 @@ pub unsafe fn canSkipHeightFitContent_448(root: *const facebook_yoga_Node) -> bo
         return false;
     }
     let maxPendingNodes: usize = 64_usize;
-    let mut stack: Vec<*const facebook_yoga_Node> = Vec::from([
+    let mut stack: [*const facebook_yoga_Node; 64] = [
         root,
         std::ptr::null(),
         std::ptr::null(),
@@ -11690,11 +12005,10 @@ pub unsafe fn canSkipHeightFitContent_448(root: *const facebook_yoga_Node) -> bo
         std::ptr::null(),
         std::ptr::null(),
         std::ptr::null(),
-    ]);
+    ];
     let mut stackSize: usize = 1_usize;
     'loop_: while ((stackSize) > (0_usize)) {
-        let node: *const facebook_yoga_Node =
-            (*(&mut (stack)[stackSize.prefix_dec() as usize] as *mut *const facebook_yoga_Node));
+        let node: *const facebook_yoga_Node = stack[(stackSize.prefix_dec())];
         if ((node).is_null()) || (!(unsafe { isHeightFitContentIndependent_447(&(*node)) })) {
             return false;
         }
@@ -11715,11 +12029,10 @@ pub unsafe fn canSkipHeightFitContent_448(root: *const facebook_yoga_Node) -> bo
                     &__begin3,
                 )
             });
-            if ((stackSize) == (stack.len())) {
+            if ((stackSize) == (64)) {
                 return false;
             }
-            (*(&mut (stack)[stackSize.postfix_inc() as usize] as *mut *const facebook_yoga_Node)) =
-                (child).cast_const();
+            stack[(stackSize.postfix_inc())] = (child).cast_const();
             (unsafe {
                 facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator::operator_inc_4(
                     &mut __begin3,
@@ -11815,8 +12128,8 @@ pub unsafe fn computeFlexBasisForChild_450(
     } else {
         ownerHeight
     };
-    let mut childWidth: f32 = (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23));
-    let mut childHeight: f32 = (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23));
+    let mut childWidth: f32 = YGUndefined_23;
+    let mut childHeight: f32 = YGUndefined_23;
     let mut childWidthSizingMode: facebook_yoga_SizingMode = facebook_yoga_SizingMode_StretchFit;
     let mut childHeightSizingMode: facebook_yoga_SizingMode = facebook_yoga_SizingMode_StretchFit;
     let resolvedFlexBasis: facebook_yoga_FloatOptional = (unsafe {
@@ -12229,10 +12542,10 @@ pub unsafe fn measureNodeWithMeasureFunc_451(
         )
     });
     if ((widthSizingMode) == (facebook_yoga_SizingMode_MaxContent)) {
-        availableWidth = (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23));
+        availableWidth = YGUndefined_23;
     }
     if ((heightSizingMode) == (facebook_yoga_SizingMode_MaxContent)) {
-        availableHeight = (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23));
+        availableHeight = YGUndefined_23;
     }
     let layout: *const facebook_yoga_LayoutResults =
         (unsafe { facebook_yoga_Node::getLayout_26(&mut (*node)) });
@@ -12319,8 +12632,7 @@ pub unsafe fn measureNodeWithMeasureFunc_451(
             )
         });
         (*layoutMarkerData).measureCallbacks += 1;
-        (*(&mut ((&mut (*layoutMarkerData)).measureCallbackReasonsCount)[(reason as usize) as usize]
-            as *mut i32)) += 1;
+        (&mut (*layoutMarkerData)).measureCallbackReasonsCount[(reason as usize)] += 1;
         (unsafe {
             let mut _eventData : facebook_yoga_Event_TypedData_facebook_yoga_Event_MeasureCallbackEnd_  = facebook_yoga_Event_TypedData_facebook_yoga_Event_MeasureCallbackEnd_ { width : innerWidth , widthMeasureMode : ( unsafe { unscopedEnum_95 ( ( unsafe { measureMode_102 ( widthSizingMode , ) } )  , ) } )  , height : innerHeight , heightMeasureMode : ( unsafe { unscopedEnum_95 ( ( unsafe { measureMode_102 ( heightSizingMode , ) } )  , ) } )  , measuredWidth : measuredSize . width  , measuredHeight : measuredSize . height  , reason : reason , } ;
             facebook_yoga_Event::publish_3_6((node as *const YGNode), &mut _eventData)
@@ -12452,6 +12764,7 @@ pub unsafe fn measureNodeWithoutChildren_452(
         )
     });
 }
+#[inline]
 pub unsafe fn isFixedSize_453(mut dim: f32, mut sizingMode: facebook_yoga_SizingMode) -> bool {
     return ((sizingMode) == (facebook_yoga_SizingMode_StretchFit))
         || (((unsafe { isDefined_107(dim) })
@@ -12854,29 +13167,18 @@ pub unsafe fn computeMinContentMainSize_458(
         (unsafe { facebook_yoga_Node::getLayout_26(&mut (*node)) });
     let axisIndex: u8 = (unsafe { to_underlying_47((unsafe { dimension_136(requestedAxis) })) });
     if (unsafe { facebook_yoga_Node::hasMeasureFunc(&(*(node).cast_const())) }) {
-        if ((*(&mut ((&mut (*layout)).minContentGeneration)[(axisIndex as usize) as usize]
-            as *mut u32))
-            != (generationCount))
-        {
+        if (((&mut (*layout)).minContentGeneration[(axisIndex as usize)]) != (generationCount)) {
             let size: YGSize = if (unsafe {
                 facebook_yoga_Node::hasMinContentMeasureFunc(&(*(node).cast_const()))
             }) {
                 (unsafe {
-                    let _availableWidth: f32 = if wantRow {
-                        0_f32
-                    } else {
-                        (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23))
-                    };
+                    let _availableWidth: f32 = if wantRow { 0_f32 } else { YGUndefined_23 };
                     let _widthMode: facebook_yoga_MeasureMode = if wantRow {
                         facebook_yoga_MeasureMode_AtMost
                     } else {
                         facebook_yoga_MeasureMode_Undefined
                     };
-                    let _availableHeight: f32 = if wantRow {
-                        (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23))
-                    } else {
-                        0_f32
-                    };
+                    let _availableHeight: f32 = if wantRow { YGUndefined_23 } else { 0_f32 };
                     let _heightMode: facebook_yoga_MeasureMode = if wantRow {
                         facebook_yoga_MeasureMode_Undefined
                     } else {
@@ -12892,21 +13194,13 @@ pub unsafe fn computeMinContentMainSize_458(
                 })
             } else {
                 (unsafe {
-                    let _availableWidth: f32 = if wantRow {
-                        0_f32
-                    } else {
-                        (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23))
-                    };
+                    let _availableWidth: f32 = if wantRow { 0_f32 } else { YGUndefined_23 };
                     let _widthMode: facebook_yoga_MeasureMode = if wantRow {
                         facebook_yoga_MeasureMode_AtMost
                     } else {
                         facebook_yoga_MeasureMode_Undefined
                     };
-                    let _availableHeight: f32 = if wantRow {
-                        (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23))
-                    } else {
-                        0_f32
-                    };
+                    let _availableHeight: f32 = if wantRow { YGUndefined_23 } else { 0_f32 };
                     let _heightMode: facebook_yoga_MeasureMode = if wantRow {
                         facebook_yoga_MeasureMode_Undefined
                     } else {
@@ -12921,10 +13215,9 @@ pub unsafe fn computeMinContentMainSize_458(
                     )
                 })
             };
-            (*(&mut ((&mut (*layout)).minContent)[(axisIndex as usize) as usize] as *mut f32)) =
+            (&mut (*layout)).minContent[(axisIndex as usize)] =
                 if wantRow { size.width } else { size.height };
-            (*(&mut ((&mut (*layout)).minContentGeneration)[(axisIndex as usize) as usize]
-                as *mut u32)) = generationCount;
+            (&mut (*layout)).minContentGeneration[(axisIndex as usize)] = generationCount;
         }
         let leafDirection: facebook_yoga_Direction =
             (unsafe { facebook_yoga_Node::resolveDirection(&mut (*node), ownerDirection) });
@@ -12943,25 +13236,20 @@ pub unsafe fn computeMinContentMainSize_458(
                 ownerWidth,
             )
         }));
-        return ((*(&mut ((&mut (*layout)).minContent)[(axisIndex as usize) as usize]
-            as *mut f32))
-            + (paddingAndBorder));
+        return (((&mut (*layout)).minContent[(axisIndex as usize)]) + (paddingAndBorder));
     }
     if ((unsafe { facebook_yoga_Node::getChildCount(&(*(node).cast_const())) }) == (0_usize)) {
         return 0_f32;
     }
-    if ((*(&mut ((&mut (*layout)).minContentGeneration)[(axisIndex as usize) as usize]
-        as *mut u32))
-        == (generationCount))
+    if (((&mut (*layout)).minContentGeneration[(axisIndex as usize)]) == (generationCount))
         && (unsafe {
             inexactEquals_111(
-                (*(&mut ((&mut (*layout)).minContentOwnerWidth)[(axisIndex as usize) as usize]
-                    as *mut f32)),
+                (&mut (*layout)).minContentOwnerWidth[(axisIndex as usize)],
                 ownerWidth,
             )
         })
     {
-        return (*(&mut ((&mut (*layout)).minContent)[(axisIndex as usize) as usize] as *mut f32));
+        return (&mut (*layout)).minContent[(axisIndex as usize)];
     }
     let direction: facebook_yoga_Direction =
         (unsafe { facebook_yoga_Node::resolveDirection(&mut (*node), ownerDirection) });
@@ -13073,11 +13361,9 @@ pub unsafe fn computeMinContentMainSize_458(
     let widthMin: f32 = if nodeMainIsRow { mainTotal } else { crossMax };
     let heightMin: f32 = if nodeMainIsRow { crossMax } else { mainTotal };
     let minContent: f32 = if wantRow { widthMin } else { heightMin };
-    (*(&mut ((&mut (*layout)).minContent)[(axisIndex as usize) as usize] as *mut f32)) = minContent;
-    (*(&mut ((&mut (*layout)).minContentOwnerWidth)[(axisIndex as usize) as usize] as *mut f32)) =
-        ownerWidth;
-    (*(&mut ((&mut (*layout)).minContentGeneration)[(axisIndex as usize) as usize] as *mut u32)) =
-        generationCount;
+    (&mut (*layout)).minContent[(axisIndex as usize)] = minContent;
+    (&mut (*layout)).minContentOwnerWidth[(axisIndex as usize)] = ownerWidth;
+    (&mut (*layout)).minContentGeneration[(axisIndex as usize)] = generationCount;
     return minContent;
 }
 pub unsafe fn computeAutoMinMainSize_459(
@@ -13306,8 +13592,7 @@ pub unsafe fn distributeFreeSpaceSecondPass_461(
                 facebook_yoga_Node::resolveFlexShrink(&(*(currentLineChild).cast_const()))
             })) * (childFlexBasis));
             if ((flexShrinkScaledFactor) != (0_f32)) {
-                let mut childSize: f32 =
-                    (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23));
+                let mut childSize: f32 = YGUndefined_23;
                 let shrinkFactorMagnitude: f32 =
                     (*flexLine).layout.totalFlexShrinkScaledFactors.abs();
                 if (unsafe { isDefined_107((*flexLine).layout.totalFlexShrinkScaledFactors) })
@@ -13369,8 +13654,7 @@ pub unsafe fn distributeFreeSpaceSecondPass_461(
                 availableInnerWidth,
             )
         });
-        let mut childCrossSize: f32 =
-            (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23));
+        let mut childCrossSize: f32 = YGUndefined_23;
         let mut childMainSize: f32 = ((updatedMainSize) + (marginMain));
         let mut childCrossSizingMode: facebook_yoga_SizingMode =
             facebook_yoga_SizingMode_StretchFit;
@@ -15990,30 +16274,18 @@ pub unsafe fn calculateLayoutInternal_430(
             let mut i: usize = 0_usize;
             'loop_: while ((i) < ((*layout).nextCachedMeasurementsIndex as usize)) {
                 if (unsafe {
-                    let _lastWidthMode: facebook_yoga_SizingMode = (*(&mut ((&mut (*layout))
-                        .cachedMeasurements)[i as usize]
-                        as *mut facebook_yoga_CachedMeasurement))
-                        .widthSizingMode;
-                    let _lastAvailableWidth: f32 = (*(&mut ((&mut (*layout)).cachedMeasurements)
-                        [i as usize]
-                        as *mut facebook_yoga_CachedMeasurement))
-                        .availableWidth;
-                    let _lastHeightMode: facebook_yoga_SizingMode = (*(&mut ((&mut (*layout))
-                        .cachedMeasurements)[i as usize]
-                        as *mut facebook_yoga_CachedMeasurement))
-                        .heightSizingMode;
-                    let _lastAvailableHeight: f32 = (*(&mut ((&mut (*layout)).cachedMeasurements)
-                        [i as usize]
-                        as *mut facebook_yoga_CachedMeasurement))
-                        .availableHeight;
-                    let _lastComputedWidth: f32 = (*(&mut ((&mut (*layout)).cachedMeasurements)
-                        [i as usize]
-                        as *mut facebook_yoga_CachedMeasurement))
-                        .computedWidth;
-                    let _lastComputedHeight: f32 = (*(&mut ((&mut (*layout)).cachedMeasurements)
-                        [i as usize]
-                        as *mut facebook_yoga_CachedMeasurement))
-                        .computedHeight;
+                    let _lastWidthMode: facebook_yoga_SizingMode =
+                        (&mut (*layout)).cachedMeasurements[(i)].widthSizingMode;
+                    let _lastAvailableWidth: f32 =
+                        (&mut (*layout)).cachedMeasurements[(i)].availableWidth;
+                    let _lastHeightMode: facebook_yoga_SizingMode =
+                        (&mut (*layout)).cachedMeasurements[(i)].heightSizingMode;
+                    let _lastAvailableHeight: f32 =
+                        (&mut (*layout)).cachedMeasurements[(i)].availableHeight;
+                    let _lastComputedWidth: f32 =
+                        (&mut (*layout)).cachedMeasurements[(i)].computedWidth;
+                    let _lastComputedHeight: f32 =
+                        (&mut (*layout)).cachedMeasurements[(i)].computedHeight;
                     canUseCachedMeasurement_242(
                         widthSizingMode,
                         availableWidth,
@@ -16032,14 +16304,12 @@ pub unsafe fn calculateLayoutInternal_430(
                 }) && (unsafe {
                     isCachedForOwnerSize_467(
                         (node).cast_const(),
-                        &(*(&mut ((&mut (*layout)).cachedMeasurements)[i as usize]
-                            as *mut facebook_yoga_CachedMeasurement)),
+                        &(&mut (*layout)).cachedMeasurements[(i)],
                         ownerWidth,
                         ownerHeight,
                     )
                 }) {
-                    cachedResults = (&mut (*(&mut ((&mut (*layout)).cachedMeasurements)[i as usize]
-                        as *mut facebook_yoga_CachedMeasurement))
+                    cachedResults = (&mut (&mut (*layout)).cachedMeasurements[(i)]
                         as *mut facebook_yoga_CachedMeasurement);
                     break;
                 }
@@ -16069,39 +16339,28 @@ pub unsafe fn calculateLayoutInternal_430(
         'loop_: while ((i) < ((*layout).nextCachedMeasurementsIndex)) {
             if ((((unsafe {
                 inexactEquals_111(
-                    (*(&mut ((&mut (*layout)).cachedMeasurements)[(i as usize) as usize]
-                        as *mut facebook_yoga_CachedMeasurement))
-                        .availableWidth,
+                    (&mut (*layout)).cachedMeasurements[(i as usize)].availableWidth,
                     availableWidth,
                 )
             }) && (unsafe {
                 inexactEquals_111(
-                    (*(&mut ((&mut (*layout)).cachedMeasurements)[(i as usize) as usize]
-                        as *mut facebook_yoga_CachedMeasurement))
-                        .availableHeight,
+                    (&mut (*layout)).cachedMeasurements[(i as usize)].availableHeight,
                     availableHeight,
                 )
-            })) && (((*(&mut ((&mut (*layout)).cachedMeasurements)[(i as usize) as usize]
-                as *mut facebook_yoga_CachedMeasurement))
-                .widthSizingMode)
+            })) && (((&mut (*layout)).cachedMeasurements[(i as usize)].widthSizingMode)
                 == (widthSizingMode)))
-                && (((*(&mut ((&mut (*layout)).cachedMeasurements)[(i as usize) as usize]
-                    as *mut facebook_yoga_CachedMeasurement))
-                    .heightSizingMode)
+                && (((&mut (*layout)).cachedMeasurements[(i as usize)].heightSizingMode)
                     == (heightSizingMode)))
                 && (unsafe {
                     isCachedForOwnerSize_467(
                         (node).cast_const(),
-                        &(*(&mut ((&mut (*layout)).cachedMeasurements)[(i as usize) as usize]
-                            as *mut facebook_yoga_CachedMeasurement)),
+                        &(&mut (*layout)).cachedMeasurements[(i as usize)],
                         ownerWidth,
                         ownerHeight,
                     )
                 })
             {
-                cachedResults = (&mut (*(&mut ((&mut (*layout)).cachedMeasurements)
-                    [(i as usize) as usize]
-                    as *mut facebook_yoga_CachedMeasurement))
+                cachedResults = (&mut (&mut (*layout)).cachedMeasurements[(i as usize)]
                     as *mut facebook_yoga_CachedMeasurement);
                 break;
             }
@@ -16175,10 +16434,7 @@ pub unsafe fn calculateLayoutInternal_430(
                     if *__a < *__b { __b } else { __a }
                 })
             };
-            if (((*layout).nextCachedMeasurementsIndex)
-                == ((*std::cell::LazyCell::force_mut(&mut *&raw mut MaxCachedMeasurements_123))
-                    as u32))
-            {
+            if (((*layout).nextCachedMeasurementsIndex) == (MaxCachedMeasurements_123 as u32)) {
                 (*layout).nextCachedMeasurementsIndex = 0_u32;
             }
             let mut newCacheEntry: *mut facebook_yoga_CachedMeasurement = std::ptr::null_mut();
@@ -16186,9 +16442,8 @@ pub unsafe fn calculateLayoutInternal_430(
                 newCacheEntry =
                     (&mut (*layout).cachedLayout as *mut facebook_yoga_CachedMeasurement);
             } else {
-                newCacheEntry = (&mut (*(&mut ((&mut (*layout)).cachedMeasurements)
-                    [((*layout).nextCachedMeasurementsIndex as usize) as usize]
-                    as *mut facebook_yoga_CachedMeasurement))
+                newCacheEntry = (&mut (&mut (*layout)).cachedMeasurements
+                    [((*layout).nextCachedMeasurementsIndex as usize)]
                     as *mut facebook_yoga_CachedMeasurement);
                 (*layout).nextCachedMeasurementsIndex.postfix_inc();
             }
@@ -16287,7 +16542,7 @@ pub unsafe fn calculateLayout_208(
     (unsafe { facebook_yoga_Node::processDimensions(&mut (*node)) });
     let direction: facebook_yoga_Direction =
         (unsafe { facebook_yoga_Node::resolveDirection(&mut (*node), ownerDirection) });
-    let mut width: f32 = (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23));
+    let mut width: f32 = YGUndefined_23;
     let mut widthSizingMode: facebook_yoga_SizingMode = facebook_yoga_SizingMode_MaxContent;
     let style: *const facebook_yoga_Style = (unsafe { facebook_yoga_Node::style_24(&mut (*node)) });
     if (unsafe {
@@ -16360,7 +16615,7 @@ pub unsafe fn calculateLayout_208(
             facebook_yoga_SizingMode_StretchFit
         };
     }
-    let mut height: f32 = (*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23));
+    let mut height: f32 = YGUndefined_23;
     let mut heightSizingMode: facebook_yoga_SizingMode = facebook_yoga_SizingMode_MaxContent;
     if (unsafe {
         facebook_yoga_Node::hasDefiniteLength(
@@ -16694,7 +16949,7 @@ pub unsafe fn roundValueToPixelGridDouble_469(
             }));
     }
     return if ((scaledValue.is_nan()) || (pointScaleFactor.is_nan())) {
-        ((*std::cell::LazyCell::force_mut(&mut *&raw mut YGUndefined_23)) as f64)
+        (YGUndefined_23 as f64)
     } else {
         ((scaledValue) / (pointScaleFactor))
     };
@@ -16879,7 +17134,7 @@ impl facebook_yoga_Config {
         {
             {
                 (self.experimentalFeatures_)[(feature as usize) as usize] = enabled;
-                &mut self.experimentalFeatures_ as *mut Vec<bool>
+                &mut self.experimentalFeatures_ as *mut [bool; 2]
             };
             self.version_.postfix_inc();
         }
@@ -16894,8 +17149,8 @@ impl facebook_yoga_Config {
     }
 }
 impl facebook_yoga_Config {
-    pub unsafe fn getEnabledExperiments(&self) -> Vec<bool> {
-        return self.experimentalFeatures_.clone();
+    pub unsafe fn getEnabledExperiments(&self) -> [bool; 2] {
+        return self.experimentalFeatures_;
     }
 }
 impl facebook_yoga_Config {
@@ -17256,6 +17511,7 @@ pub struct facebook_yoga__anonymous_namespace__Node {
     pub next: *mut facebook_yoga__anonymous_namespace__Node,
 }
 impl facebook_yoga__anonymous_namespace__Node {
+    #[inline]
     pub unsafe fn new(
         subscriber: *mut Option<
             unsafe fn(*const YGNode, facebook_yoga_Event_Type, facebook_yoga_Event_Data) -> (),
@@ -17267,6 +17523,7 @@ impl facebook_yoga__anonymous_namespace__Node {
         };
         this
     }
+    #[inline]
     pub unsafe fn move_from(_a0: *mut facebook_yoga__anonymous_namespace__Node) -> Self {
         let mut this = Self {
             subscriber: (*_a0).subscriber.take(),
@@ -17274,6 +17531,7 @@ impl facebook_yoga__anonymous_namespace__Node {
         };
         this
     }
+    #[inline]
     pub unsafe fn move_assign(
         &mut self,
         _a0: *mut facebook_yoga__anonymous_namespace__Node,
@@ -17376,26 +17634,26 @@ impl facebook_yoga_Event {
         }
     }
 }
-pub unsafe fn inexactEquals_478(val1: *const Vec<f32>, val2: *const Vec<f32>) -> bool {
+pub unsafe fn inexactEquals_478(val1: *const [f32; 4], val2: *const [f32; 4]) -> bool {
     let mut areEqual: bool = true;
     let mut i: usize = 0_usize;
     'loop_: while ((i) < (4_u64 as usize)) && (areEqual) {
         areEqual = (unsafe {
-            let _a: f32 = (*(*val1).as_ptr().add(i as usize));
-            let _b: f32 = (*(*val2).as_ptr().add(i as usize));
+            let _a: f32 = (&(*val1))[(i)];
+            let _b: f32 = (&(*val2))[(i)];
             inexactEquals_111(_a, _b)
         });
         i.prefix_inc();
     }
     return areEqual;
 }
-pub unsafe fn inexactEquals_479(val1: *const Vec<f32>, val2: *const Vec<f32>) -> bool {
+pub unsafe fn inexactEquals_479(val1: *const [f32; 2], val2: *const [f32; 2]) -> bool {
     let mut areEqual: bool = true;
     let mut i: usize = 0_usize;
     'loop_: while ((i) < (2_u64 as usize)) && (areEqual) {
         areEqual = (unsafe {
-            let _a: f32 = (*(*val1).as_ptr().add(i as usize));
-            let _b: f32 = (*(*val2).as_ptr().add(i as usize));
+            let _a: f32 = (&(*val1))[(i)];
+            let _b: f32 = (&(*val2))[(i)];
             inexactEquals_111(_a, _b)
         });
         i.prefix_inc();
@@ -17406,24 +17664,24 @@ impl facebook_yoga_LayoutResults {
     pub unsafe fn operator_eq(&self, mut layout: facebook_yoga_LayoutResults) -> bool {
         let mut isEqual: bool =
             (((((((((((unsafe {
-                let _val1: *const Vec<f32> = &self.position_;
-                let _val2: *const Vec<f32> = &layout.position_;
+                let _val1: *const [f32; 4] = &self.position_;
+                let _val2: *const [f32; 4] = &layout.position_;
                 inexactEquals_478(_val1, _val2)
             }) && (unsafe {
-                let _val1: *const Vec<f32> = &self.dimensions_;
-                let _val2: *const Vec<f32> = &layout.dimensions_;
+                let _val1: *const [f32; 2] = &self.dimensions_;
+                let _val2: *const [f32; 2] = &layout.dimensions_;
                 inexactEquals_479(_val1, _val2)
             })) && (unsafe {
-                let _val1: *const Vec<f32> = &self.margin_;
-                let _val2: *const Vec<f32> = &layout.margin_;
+                let _val1: *const [f32; 4] = &self.margin_;
+                let _val2: *const [f32; 4] = &layout.margin_;
                 inexactEquals_478(_val1, _val2)
             })) && (unsafe {
-                let _val1: *const Vec<f32> = &self.border_;
-                let _val2: *const Vec<f32> = &layout.border_;
+                let _val1: *const [f32; 4] = &self.border_;
+                let _val2: *const [f32; 4] = &layout.border_;
                 inexactEquals_478(_val1, _val2)
             })) && (unsafe {
-                let _val1: *const Vec<f32> = &self.padding_;
-                let _val2: *const Vec<f32> = &layout.padding_;
+                let _val1: *const [f32; 4] = &self.padding_;
+                let _val2: *const [f32; 4] = &layout.padding_;
                 inexactEquals_478(_val1, _val2)
             })) && ((unsafe { facebook_yoga_LayoutResults::direction(self) })
                 == (unsafe { facebook_yoga_LayoutResults::direction(&layout) })))
@@ -17443,41 +17701,31 @@ impl facebook_yoga_LayoutResults {
                     operator_eq_114(_lhs, _rhs)
                 });
         let mut i: u32 = 0_u32;
-        'loop_: while ((i)
-            < ((*std::cell::LazyCell::force_mut(&mut *&raw mut MaxCachedMeasurements_123)) as u32))
-            && (isEqual)
-        {
+        'loop_: while ((i) < (MaxCachedMeasurements_123 as u32)) && (isEqual) {
             isEqual = (isEqual)
                 && (unsafe {
-                    let _measurement: facebook_yoga_CachedMeasurement = (*(&mut (layout
-                        .cachedMeasurements)[(i as usize) as usize]
-                        as *mut facebook_yoga_CachedMeasurement));
+                    let _measurement: facebook_yoga_CachedMeasurement =
+                        layout.cachedMeasurements[(i as usize)];
                     facebook_yoga_CachedMeasurement::operator_eq(
-                        &(*(self.cachedMeasurements)
-                            .as_ptr()
-                            .add((i as usize) as usize)),
+                        &self.cachedMeasurements[(i as usize)],
                         _measurement,
                     )
                 });
             i.prefix_inc();
         }
-        if (!(unsafe {
-            isUndefined_105((*(self.measuredDimensions_).as_ptr().add(0_usize as usize)))
-        })) || (!(unsafe {
-            isUndefined_105((*(&mut (layout.measuredDimensions_)[0_usize as usize] as *mut f32)))
-        })) {
+        if (!(unsafe { isUndefined_105(self.measuredDimensions_[(0_usize)]) }))
+            || (!(unsafe { isUndefined_105(layout.measuredDimensions_[(0_usize)]) }))
+        {
             isEqual = (isEqual)
-                && ((*(self.measuredDimensions_).as_ptr().add(0_usize as usize))
-                    == (*(&mut (layout.measuredDimensions_)[0_usize as usize] as *mut f32)));
+                && ((self.measuredDimensions_[(0_usize)])
+                    == (layout.measuredDimensions_[(0_usize)]));
         }
-        if (!(unsafe {
-            isUndefined_105((*(self.measuredDimensions_).as_ptr().add(1_usize as usize)))
-        })) || (!(unsafe {
-            isUndefined_105((*(&mut (layout.measuredDimensions_)[1_usize as usize] as *mut f32)))
-        })) {
+        if (!(unsafe { isUndefined_105(self.measuredDimensions_[(1_usize)]) }))
+            || (!(unsafe { isUndefined_105(layout.measuredDimensions_[(1_usize)]) }))
+        {
             isEqual = (isEqual)
-                && ((*(self.measuredDimensions_).as_ptr().add(1_usize as usize))
-                    == (*(&mut (layout.measuredDimensions_)[1_usize as usize] as *mut f32)));
+                && ((self.measuredDimensions_[(1_usize)])
+                    == (layout.measuredDimensions_[(1_usize)]));
         }
         return isEqual;
     }
@@ -17504,10 +17752,10 @@ impl facebook_yoga_Node {
             owner_: std::ptr::null_mut(),
             children_: Default::default(),
             config_: std::ptr::null(),
-            processedDimensions_: Vec::from([
+            processedDimensions_: [
                 (unsafe { facebook_yoga_StyleSizeLength::undefined() }),
                 (unsafe { facebook_yoga_StyleSizeLength::undefined() }),
-            ]),
+            ],
         };
         this
     }
@@ -17532,10 +17780,10 @@ impl facebook_yoga_Node {
             owner_: std::ptr::null_mut(),
             children_: Vec::new(),
             config_: config,
-            processedDimensions_: Vec::from([
+            processedDimensions_: [
                 (unsafe { facebook_yoga_StyleSizeLength::undefined() }),
                 (unsafe { facebook_yoga_StyleSizeLength::undefined() }),
-            ]),
+            ],
         };
         (unsafe {
             assertFatal_201(
@@ -18255,14 +18503,10 @@ impl facebook_yoga_Node {
                     (unsafe { facebook_yoga_Style::minDimension(&self.style_, dim) });
                 inexactEquals_171(&mut _a, &mut _b)
             }) {
-                (*(&mut (self.processedDimensions_)
-                    [((unsafe { to_underlying_47(dim) }) as usize) as usize]
-                    as *mut facebook_yoga_StyleSizeLength)) =
+                self.processedDimensions_[((unsafe { to_underlying_47(dim) }) as usize)] =
                     (unsafe { facebook_yoga_Style::maxDimension(&self.style_, dim) });
             } else {
-                (*(&mut (self.processedDimensions_)
-                    [((unsafe { to_underlying_47(dim) }) as usize) as usize]
-                    as *mut facebook_yoga_StyleSizeLength)) =
+                self.processedDimensions_[((unsafe { to_underlying_47(dim) }) as usize)] =
                     (unsafe { facebook_yoga_Style::dimension(&self.style_, dim) });
             }
         }
@@ -18433,7 +18677,7 @@ impl facebook_yoga_Node {
                 )
             });
         }
-        return (*std::cell::LazyCell::force_mut(&mut *&raw mut DefaultFlexGrow_177));
+        return DefaultFlexGrow_177;
     }
 }
 impl facebook_yoga_Node {
@@ -18471,9 +18715,9 @@ impl facebook_yoga_Node {
             });
         }
         return if (unsafe { facebook_yoga_Config::useWebDefaults(&(*self.config_)) }) {
-            (*std::cell::LazyCell::force_mut(&mut *&raw mut WebDefaultFlexShrink_179))
+            WebDefaultFlexShrink_179
         } else {
-            (*std::cell::LazyCell::force_mut(&mut *&raw mut DefaultFlexShrink_178))
+            DefaultFlexShrink_178
         };
     }
 }
@@ -18510,15 +18754,7 @@ impl facebook_yoga_Node {
     }
 }
 pub unsafe fn __cpp2rust_init_globals() {
-    std::cell::LazyCell::force(&*&raw const YGUndefined_23);
     std::cell::LazyCell::force(&*&raw const defaultConfig__71);
-    std::cell::LazyCell::force(&*&raw const MaxCachedMeasurements_123);
-    std::cell::LazyCell::force(&*&raw const kHandleTypeMask_174);
-    std::cell::LazyCell::force(&*&raw const kHandleIndexedMask_175);
-    std::cell::LazyCell::force(&*&raw const kHandleValueMask_176);
-    std::cell::LazyCell::force(&*&raw const DefaultFlexGrow_177);
-    std::cell::LazyCell::force(&*&raw const DefaultFlexShrink_178);
-    std::cell::LazyCell::force(&*&raw const WebDefaultFlexShrink_179);
     std::cell::LazyCell::force(&*&raw const YGValueZero_2);
     std::cell::LazyCell::force(&*&raw const YGValueUndefined_1);
     std::cell::LazyCell::force(&*&raw const YGValueAuto_0);
