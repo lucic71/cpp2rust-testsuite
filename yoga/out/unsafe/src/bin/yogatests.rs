@@ -878,10 +878,10 @@ pub unsafe fn isDefined_33(mut value: f64) -> bool {
 #[inline]
 pub unsafe fn maxOrDefined_34(mut a: f32, mut b: f32) -> f32 {
     if (unsafe { isDefined_32(a) }) && (unsafe { isDefined_32(b) }) {
-        return (*{
-            let __a: *const _ = &mut a;
-            let __b: *const _ = &mut b;
-            if *__a < *__b { __b } else { __a }
+        return ({
+            let __a = a;
+            let __b = b;
+            if __a < __b { __b } else { __a }
         });
     }
     return if (unsafe { isUndefined_30(a) }) { b } else { a };
@@ -30117,11 +30117,14 @@ pub unsafe fn gtest_shim_test__YogaTest__rounding_measured_height_is_exact_acros
         ((4052_f32) + ((2_f32) / (3_f32))),
     ]);
     let __range1: *mut Vec<f32> = &mut __tmp_0;
-    'loop_: for spacer in IterRange::new(
-        (*__range1).as_ptr(),
-        (*__range1).as_ptr().add((*__range1).len()),
-    ) {
-        let spacer: f32 = (*spacer);
+    'loop_: for spacer in [
+        ((1012_f32) + ((1_f32) / (3_f32))),
+        ((1012_f32) + ((2_f32) / (3_f32))),
+        ((2004_f32) + ((1_f32) / (3_f32))),
+        ((2028_f32) + ((2_f32) / (3_f32))),
+        ((4052_f32) + ((2_f32) / (3_f32))),
+    ] {
+        let spacer: f32 = spacer;
         let mut config: *mut YGConfig = (unsafe { YGConfigNew_15() });
         (unsafe { YGConfigSetPointScaleFactor_490(config, 3_f32) });
         let mut root: *mut YGNode = (unsafe { YGNodeNewWithConfig_16((config).cast_const()) });
@@ -301559,12 +301562,10 @@ pub unsafe fn IntrinsicSizeMeasure_967(
     if ((widthMode as i32) == (YGMeasureMode_YGMeasureModeExactly as i32)) {
         measuredWidth = width;
     } else if ((widthMode as i32) == (YGMeasureMode_YGMeasureModeAtMost as i32)) {
-        measuredWidth = (*match ((&mut ((innerText.1 as f32) * (widthPerChar)) as *const f32),) {
-            (__tmp_0,) => {
-                let __a: *const _ = __tmp_0;
-                let __b: *const _ = &mut width;
-                if *__b < *__a { __b } else { __a }
-            }
+        measuredWidth = ({
+            let __a = ((innerText.1 as f32) * (widthPerChar));
+            let __b = width;
+            if __b < __a { __b } else { __a }
         });
     } else {
         measuredWidth = ((innerText.1 as f32) * (widthPerChar));
@@ -301572,34 +301573,31 @@ pub unsafe fn IntrinsicSizeMeasure_967(
     if ((heightMode as i32) == (YGMeasureMode_YGMeasureModeExactly as i32)) {
         measuredHeight = height;
     } else if ((heightMode as i32) == (YGMeasureMode_YGMeasureModeAtMost as i32)) {
-        measuredHeight = (*match ((&mut (unsafe {
-            let _text: (*const libc::c_char, usize) = innerText;
-            let _measuredWidth: f32 = if (((unsafe { YGNodeStyleGetFlexDirection_363(node) })
-                as i32)
-                == (YGFlexDirection_YGFlexDirectionColumn as i32))
-            {
-                measuredWidth
-            } else {
-                (*match (
-                    (&mut (unsafe { longestWordWidth_1186(innerText, widthPerChar) })
-                        as *const f32),
-                ) {
-                    (__tmp_2,) => {
-                        let __a: *const _ = __tmp_2;
-                        let __b: *const _ = &mut measuredWidth;
-                        if *__a < *__b { __b } else { __a }
-                    }
-                })
-            };
-            let _widthPerChar: f32 = widthPerChar;
-            calculateHeight_1187(_text, _measuredWidth, _widthPerChar, heightPerChar)
-        }) as *const f32),)
-        {
-            (__tmp_1,) => {
-                let __a: *const _ = __tmp_1;
-                let __b: *const _ = &mut height;
-                if *__b < *__a { __b } else { __a }
-            }
+        measuredHeight = ({
+            let __a = (unsafe {
+                let _text: (*const libc::c_char, usize) = innerText;
+                let _measuredWidth: f32 = if (((unsafe { YGNodeStyleGetFlexDirection_363(node) })
+                    as i32)
+                    == (YGFlexDirection_YGFlexDirectionColumn as i32))
+                {
+                    measuredWidth
+                } else {
+                    (*match (
+                        (&mut (unsafe { longestWordWidth_1186(innerText, widthPerChar) })
+                            as *const f32),
+                    ) {
+                        (__tmp_0,) => {
+                            let __a: *const _ = __tmp_0;
+                            let __b: *const _ = &mut measuredWidth;
+                            if *__a < *__b { __b } else { __a }
+                        }
+                    })
+                };
+                let _widthPerChar: f32 = widthPerChar;
+                calculateHeight_1187(_text, _measuredWidth, _widthPerChar, heightPerChar)
+            });
+            let __b = height;
+            if __b < __a { __b } else { __a }
         });
     } else {
         measuredHeight = (unsafe {
@@ -301614,8 +301612,8 @@ pub unsafe fn IntrinsicSizeMeasure_967(
                     (&mut (unsafe { longestWordWidth_1186(innerText, widthPerChar) })
                         as *const f32),
                 ) {
-                    (__tmp_3,) => {
-                        let __a: *const _ = __tmp_3;
+                    (__tmp_1,) => {
+                        let __a: *const _ = __tmp_1;
                         let __b: *const _ = &mut measuredWidth;
                         if *__a < *__b { __b } else { __a }
                     }
@@ -301639,20 +301637,20 @@ pub unsafe fn longestWordWidth_1186(
     'loop_: for c in IterRange::new(text.0, text.0.add(text.1)) {
         let mut c: libc::c_char = (*c);
         if ((c as i32) == ((' ' as libc::c_char) as i32)) {
-            maxLength = (*{
-                let __a: *const _ = &mut currentLength;
-                let __b: *const _ = &mut maxLength;
-                if *__a < *__b { __b } else { __a }
+            maxLength = ({
+                let __a = currentLength;
+                let __b = maxLength;
+                if __a < __b { __b } else { __a }
             });
             currentLength = 0;
         } else {
             currentLength.postfix_inc();
         }
     }
-    return (((*{
-        let __a: *const _ = &mut currentLength;
-        let __b: *const _ = &mut maxLength;
-        if *__a < *__b { __b } else { __a }
+    return ((({
+        let __a = currentLength;
+        let __b = maxLength;
+        if __a < __b { __b } else { __a }
     }) as f32)
         * (widthPerChar));
 }
@@ -301672,7 +301670,7 @@ pub unsafe fn calculateHeight_1187(
         __v
     } as *mut Vec<libc::c_char>),)
     {
-        (__tmp_4,) => IStringStream::new(&(&(*__tmp_4))[..(*__tmp_4).len() - 1]),
+        (__tmp_2,) => IStringStream::new(&(&(*__tmp_2))[..(*__tmp_2).len() - 1]),
     };
     let mut currentWord: Vec<libc::c_char> = vec![0];
     'loop_: while !(*({
@@ -311692,10 +311690,10 @@ impl facebook_yoga_Event_Data {
 #[inline]
 pub unsafe fn minOrDefined_1331(mut a: f32, mut b: f32) -> f32 {
     if (unsafe { isDefined_32(a) }) && (unsafe { isDefined_32(b) }) {
-        return (*{
-            let __a: *const _ = &mut a;
-            let __b: *const _ = &mut b;
-            if *__b < *__a { __b } else { __a }
+        return ({
+            let __a = a;
+            let __b = b;
+            if __b < __a { __b } else { __a }
         });
     }
     return if (unsafe { isUndefined_30(a) }) { b } else { a };
@@ -311760,11 +311758,8 @@ pub unsafe fn hasAutoHorizontalMargin_1333(style: *const facebook_yoga_Style) ->
     let mut __tmp_0: Vec<facebook_yoga_Direction> =
         Vec::from([facebook_yoga_Direction_LTR, facebook_yoga_Direction_RTL]);
     let __range2: *mut Vec<facebook_yoga_Direction> = &mut __tmp_0;
-    'loop_: for direction in IterRange::new(
-        (*__range2).as_ptr(),
-        (*__range2).as_ptr().add((*__range2).len()),
-    ) {
-        let direction: facebook_yoga_Direction = (*direction);
+    'loop_: for direction in [facebook_yoga_Direction_LTR, facebook_yoga_Direction_RTL] {
+        let direction: facebook_yoga_Direction = direction;
         if (unsafe {
             let _direction: facebook_yoga_Direction = direction;
             facebook_yoga_Style::flexStartMarginIsAuto(
@@ -313490,10 +313485,10 @@ pub unsafe fn computeMinContentMainSize_1351(
             )
         });
         mainTotal += childMain;
-        crossMax = (*{
-            let __a: *const _ = &mut crossMax;
-            let __b: *const _ = &mut childCross;
-            if *__a < *__b { __b } else { __a }
+        crossMax = ({
+            let __a = crossMax;
+            let __b = childCross;
+            if __a < __b { __b } else { __a }
         });
         i.postfix_inc();
     }
@@ -316600,15 +316595,11 @@ pub unsafe fn calculateLayoutInternal_1323(
             )
         });
         if (cachedResults).is_null() {
-            (*layoutMarkerData).maxMeasureCache = {
-                let mut __tmp_4: u32 =
-                    ((*layout).nextCachedMeasurementsIndex).wrapping_add((1_u32 as u32));
-                (*{
-                    let __a: *const _ = &mut (*layoutMarkerData).maxMeasureCache;
-                    let __b: *const _ = &mut __tmp_4;
-                    if *__a < *__b { __b } else { __a }
-                })
-            };
+            (*layoutMarkerData).maxMeasureCache = ({
+                let __a = (*layoutMarkerData).maxMeasureCache;
+                let __b = ((*layout).nextCachedMeasurementsIndex).wrapping_add((1_u32 as u32));
+                if __a < __b { __b } else { __a }
+            });
             if (((*layout).nextCachedMeasurementsIndex) == (MaxCachedMeasurements_433 as u32)) {
                 (*layout).nextCachedMeasurementsIndex = 0_u32;
             }
@@ -318663,11 +318654,11 @@ impl facebook_yoga_Node {
             facebook_yoga_Dimension_Height,
         ]);
         let __range2: *mut Vec<facebook_yoga_Dimension> = &mut __tmp_0;
-        'loop_: for dim in IterRange::new(
-            (*__range2).as_ptr(),
-            (*__range2).as_ptr().add((*__range2).len()),
-        ) {
-            let mut dim: facebook_yoga_Dimension = (*dim);
+        'loop_: for dim in [
+            facebook_yoga_Dimension_Width,
+            facebook_yoga_Dimension_Height,
+        ] {
+            let mut dim: facebook_yoga_Dimension = dim;
             if (unsafe {
                 facebook_yoga_StyleSizeLength::isDefined(
                     &(unsafe { facebook_yoga_Style::maxDimension(&self.style_, dim) }),

@@ -659,9 +659,7 @@ pub fn operator_bitxor_assign_22(a: Ptr<YGErrata>, mut b: YGErrata) -> Ptr<YGErr
     }
     .reinterpret_cast::<YGErrata>();
 }
-thread_local!(
-    pub static YGUndefined_23: Value<f32> = Rc::new(RefCell::new(f32::NAN));
-);
+pub static YGUndefined_23: f32 = f32::NAN;
 #[inline]
 pub fn operator_eq_24(lhs: Ptr<YGValue>, rhs: Ptr<YGValue>) -> bool {
     if ({ (lhs.with(|__s| __s.unit) as i32) } != { (rhs.with(|__s| __s.unit) as i32) }) {
@@ -1239,22 +1237,15 @@ pub fn isinf_109(mut value: f32) -> bool {
     return (value == f32::INFINITY) || (value == -f32::INFINITY);
 }
 #[inline]
-pub fn maxOrDefined_110(a: f32, b: f32) -> f32 {
-    let a: Value<f32> = Rc::new(RefCell::new(a));
-    let b: Value<f32> = Rc::new(RefCell::new(b));
-    if ({ isDefined_107((*a.borrow())) }) && ({ isDefined_107((*b.borrow())) }) {
+pub fn maxOrDefined_110(mut a: f32, mut b: f32) -> f32 {
+    if ({ isDefined_107(a) }) && ({ isDefined_107(b) }) {
         return ({
-            let __a = a.as_pointer();
-            let __b = b.as_pointer();
-            if CppLess::less(&__a, &__b) { __b } else { __a }
-        }
-        .read());
+            let __a = a;
+            let __b = b;
+            if __a < __b { __b } else { __a }
+        });
     }
-    return if ({ isUndefined_105((*a.borrow())) }) {
-        (*b.borrow())
-    } else {
-        (*a.borrow())
-    };
+    return if ({ isUndefined_105(a) }) { b } else { a };
 }
 #[inline]
 pub fn inexactEquals_111(mut a: f32, mut b: f32) -> bool {
@@ -1460,9 +1451,7 @@ pub fn inexactEquals_122(
         inexactEquals_111(_a, _b)
     });
 }
-thread_local!(
-    pub static MaxCachedMeasurements_123: Value<i32> = Rc::new(RefCell::new(8));
-);
+pub static MaxCachedMeasurements_123: i32 = 8_i32;
 #[derive(Clone, Record, ByteRepr, VaArg, FnPtrArg)]
 #[byte_size(432)]
 pub struct facebook_yoga_LayoutResults {
@@ -1571,14 +1560,8 @@ impl Default for facebook_yoga_LayoutResults {
                 computedFlexBasis: <facebook_yoga_FloatOptional>::default(),
                 computedAutoMinMainSize: <facebook_yoga_FloatOptional>::default(),
                 minContentGeneration: std::array::from_fn::<_, 2, _>(|_| 0_u32),
-                minContentOwnerWidth: [
-                    YGUndefined_23.with(|rc| *rc.borrow()),
-                    YGUndefined_23.with(|rc| *rc.borrow()),
-                ],
-                minContent: [
-                    YGUndefined_23.with(|rc| *rc.borrow()),
-                    YGUndefined_23.with(|rc| *rc.borrow()),
-                ],
+                minContentOwnerWidth: [YGUndefined_23, YGUndefined_23],
+                minContent: [YGUndefined_23, YGUndefined_23],
                 generationCount: 0_u32,
                 configVersion: 0_u32,
                 lastOwnerDirection: facebook_yoga_Direction_Inherit,
@@ -1589,18 +1572,9 @@ impl Default for facebook_yoga_LayoutResults {
                 cachedLayout: <facebook_yoga_CachedMeasurement>::default(),
                 direction_: facebook_yoga_Direction_Inherit,
                 hadOverflow_: false,
-                dimensions_: [
-                    YGUndefined_23.with(|rc| *rc.borrow()),
-                    YGUndefined_23.with(|rc| *rc.borrow()),
-                ],
-                measuredDimensions_: [
-                    YGUndefined_23.with(|rc| *rc.borrow()),
-                    YGUndefined_23.with(|rc| *rc.borrow()),
-                ],
-                rawDimensions_: [
-                    YGUndefined_23.with(|rc| *rc.borrow()),
-                    YGUndefined_23.with(|rc| *rc.borrow()),
-                ],
+                dimensions_: [YGUndefined_23, YGUndefined_23],
+                measuredDimensions_: [YGUndefined_23, YGUndefined_23],
+                rawDimensions_: [YGUndefined_23, YGUndefined_23],
                 position_: std::array::from_fn::<_, 4, _>(|_| 0_f32),
                 margin_: std::array::from_fn::<_, 4, _>(|_| 0_f32),
                 border_: std::array::from_fn::<_, 4, _>(|_| 0_f32),
@@ -2596,15 +2570,9 @@ impl Default for facebook_yoga_SmallValueBuffer_4_ {
         }
     }
 }
-thread_local!(
-    static kHandleTypeMask_174: Value<u16> = Rc::new(RefCell::new(7_u16));
-);
-thread_local!(
-    static kHandleIndexedMask_175: Value<u16> = Rc::new(RefCell::new(8_u16));
-);
-thread_local!(
-    static kHandleValueMask_176: Value<u16> = Rc::new(RefCell::new(65520_u16));
-);
+static kHandleTypeMask_174: u16 = 7_u16;
+static kHandleIndexedMask_175: u16 = 8_u16;
+static kHandleValueMask_176: u16 = 65520_u16;
 pub type facebook_yoga_StyleValueHandle_Type = u8;
 pub const facebook_yoga_StyleValueHandle_Type_Undefined: facebook_yoga_StyleValueHandle_Type = 0;
 pub const facebook_yoga_StyleValueHandle_Type_Point: facebook_yoga_StyleValueHandle_Type = 1;
@@ -2671,7 +2639,7 @@ impl facebook_yoga_StyleValueHandle {
     }
     #[inline]
     fn type_(&self) -> facebook_yoga_StyleValueHandle_Type {
-        return (((self.repr_ as i32) & (kHandleTypeMask_174.with(|rc| *rc.borrow()) as i32))
+        return (((self.repr_ as i32) & (kHandleTypeMask_174 as i32))
             as facebook_yoga_StyleValueHandle_Type);
     }
     #[inline]
@@ -2680,8 +2648,7 @@ impl facebook_yoga_StyleValueHandle {
     }
     #[inline]
     fn isValueIndexed(&self) -> bool {
-        return (((self.repr_ as i32) & (kHandleIndexedMask_175.with(|rc| *rc.borrow()) as i32))
-            != 0);
+        return (((self.repr_ as i32) & (kHandleIndexedMask_175 as i32)) != 0);
     }
 }
 impl Default for facebook_yoga_StyleValueHandle {
@@ -2906,15 +2873,9 @@ impl facebook_yoga_StyleValuePool {
         }
     }
 }
-thread_local!(
-    pub static DefaultFlexGrow_177: Value<f32> = Rc::new(RefCell::new(0_f32));
-);
-thread_local!(
-    pub static DefaultFlexShrink_178: Value<f32> = Rc::new(RefCell::new(0_f32));
-);
-thread_local!(
-    pub static WebDefaultFlexShrink_179: Value<f32> = Rc::new(RefCell::new(1_f32));
-);
+pub static DefaultFlexGrow_177: f32 = 0_f32;
+pub static DefaultFlexShrink_178: f32 = 0_f32;
+pub static WebDefaultFlexShrink_179: f32 = 1_f32;
 #[derive(Clone, Record, ByteRepr, VaArg, FnPtrArg, MoveCtor, CopyAssign, MoveAssign)]
 #[byte_size(160)]
 pub struct facebook_yoga_Style {
@@ -4820,6 +4781,13 @@ impl facebook_yoga_Node {
         return (self.owner_).clone();
     }
     #[inline]
+    pub fn getChild(&self, mut index: usize) -> Ptr<facebook_yoga_Node> {
+        return match self.children_.get(index as usize) {
+            Some(__e) => __e.clone(),
+            None => panic!("out of bounds access"),
+        };
+    }
+    #[inline]
     pub fn getChildCount(&self) -> usize {
         return self.children_.len();
     }
@@ -4878,6 +4846,24 @@ impl facebook_yoga_Node {
                 }),
             )
         });
+    }
+}
+impl facebook_yoga_Node {
+    #[inline]
+    pub fn style_24(&self) -> &facebook_yoga_Style {
+        return &self.style_;
+    }
+    #[inline]
+    pub fn style_25(&self) -> &facebook_yoga_Style {
+        return &self.style_;
+    }
+    #[inline]
+    pub fn getLayout_26(&self) -> &facebook_yoga_LayoutResults {
+        return &self.layout_;
+    }
+    #[inline]
+    pub fn getLayout_27(&self) -> &facebook_yoga_LayoutResults {
+        return &self.layout_;
     }
 }
 impl Default for facebook_yoga_Node {
@@ -5694,7 +5680,8 @@ pub fn YGNodeFree_203(mut nodeRef: Ptr<YGNode>) {
     let mut childCount: usize = ({ facebook_yoga_Node::getChildCount(&(*node.upgrade().deref())) });
     let mut i: usize = 0_usize;
     'loop_: while (i < childCount) {
-        let mut child: Ptr<facebook_yoga_Node> = ({ facebook_yoga_NodeImpl::getChild(&node, i) });
+        let mut child: Ptr<facebook_yoga_Node> =
+            ({ facebook_yoga_Node::getChild(&(*node.upgrade().deref()), i) });
         ({ facebook_yoga_NodeImpl::setOwner(&child, Ptr::<facebook_yoga_Node>::null()) });
         i.postfix_inc();
     }
@@ -5718,7 +5705,7 @@ pub fn YGNodeFreeRecursive_13(mut rootRef: Ptr<YGNode>) {
         skipped
     }) {
         let mut child: Ptr<facebook_yoga_Node> =
-            ({ facebook_yoga_NodeImpl::getChild(&root, skipped) });
+            ({ facebook_yoga_Node::getChild(&(*root.upgrade().deref()), skipped) });
         if ({ ({ facebook_yoga_Node::getOwner(&(*child.upgrade().deref())) }) } != {
             (root).clone()
         }) {
@@ -5878,14 +5865,14 @@ pub fn YGNodeRemoveAllChildren_217(mut ownerRef: Ptr<YGNode>) {
         return;
     }
     let mut firstChild: Ptr<facebook_yoga_Node> =
-        ({ facebook_yoga_NodeImpl::getChild(&owner, 0_usize) });
+        ({ facebook_yoga_Node::getChild(&(*owner.upgrade().deref()), 0_usize) });
     if ({ ({ facebook_yoga_Node::getOwner(&(*firstChild.upgrade().deref())) }) } == {
         (owner).clone()
     }) {
         let mut i: usize = 0_usize;
         'loop_: while (i < childCount) {
             let mut oldChild: Ptr<facebook_yoga_Node> =
-                ({ facebook_yoga_NodeImpl::getChild(&owner, i) });
+                ({ facebook_yoga_Node::getChild(&(*owner.upgrade().deref()), i) });
             ({
                 let _layout: Value<facebook_yoga_LayoutResults> =
                     Rc::new(RefCell::new(<facebook_yoga_LayoutResults>::default()));
@@ -5999,7 +5986,8 @@ pub fn YGNodeGetChild_219(mut nodeRef: Ptr<YGNode>, mut index: usize) -> Ptr<YGN
             .deref())
         .len()
     }) {
-        return ({ facebook_yoga_NodeImpl::getChild(&node, index) }).reinterpret_cast::<YGNode>();
+        return ({ facebook_yoga_Node::getChild(&(*node.upgrade().deref()), index) })
+            .reinterpret_cast::<YGNode>();
     }
     return Ptr::<YGNode>::null();
 }
@@ -6096,7 +6084,7 @@ pub fn YGNodeGetMinContentWidth_231(mut node: Ptr<YGNode>) -> f32 {
                     &(*({ resolveRef_181(node) }).upgrade().deref()),
                 )
             }),
-            YGUndefined_23.with(|rc| *rc.borrow()),
+            YGUndefined_23,
         )
     });
 }
@@ -6108,7 +6096,7 @@ pub fn YGNodeGetMinContentHeight_232(mut node: Ptr<YGNode>) -> f32 {
                     &(*({ resolveRef_181(node) }).upgrade().deref()),
                 )
             }),
-            YGUndefined_23.with(|rc| *rc.borrow()),
+            YGUndefined_23,
         )
     });
 }
@@ -6232,12 +6220,12 @@ pub fn getResolvedLayoutProperty_243(
         )
     });
     if (edge == facebook_yoga_Edge_Start) {
-        if (({
-            facebook_yoga_LayoutResults::direction(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (node.with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::direction(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                )
+            })
         }) == facebook_yoga_Direction_RTL)
         {
             return ({
@@ -6260,12 +6248,12 @@ pub fn getResolvedLayoutProperty_243(
         }
     }
     if (edge == facebook_yoga_Edge_End) {
-        if (({
-            facebook_yoga_LayoutResults::direction(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (node.with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::direction(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                )
+            })
         }) == facebook_yoga_Direction_RTL)
         {
             return ({
@@ -6311,12 +6299,12 @@ pub fn getResolvedLayoutProperty_244(
         )
     });
     if (edge == facebook_yoga_Edge_Start) {
-        if (({
-            facebook_yoga_LayoutResults::direction(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (node.with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::direction(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                )
+            })
         }) == facebook_yoga_Direction_RTL)
         {
             return ({
@@ -6339,12 +6327,12 @@ pub fn getResolvedLayoutProperty_244(
         }
     }
     if (edge == facebook_yoga_Edge_End) {
-        if (({
-            facebook_yoga_LayoutResults::direction(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (node.with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::direction(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                )
+            })
         }) == facebook_yoga_Direction_RTL)
         {
             return ({
@@ -6390,12 +6378,12 @@ pub fn getResolvedLayoutProperty_245(
         )
     });
     if (edge == facebook_yoga_Edge_Start) {
-        if (({
-            facebook_yoga_LayoutResults::direction(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (node.with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::direction(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                )
+            })
         }) == facebook_yoga_Direction_RTL)
         {
             return ({
@@ -6418,12 +6406,12 @@ pub fn getResolvedLayoutProperty_245(
         }
     }
     if (edge == facebook_yoga_Edge_End) {
-        if (({
-            facebook_yoga_LayoutResults::direction(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (node.with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::direction(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                )
+            })
         }) == facebook_yoga_Direction_RTL)
         {
             return ({
@@ -7312,26 +7300,18 @@ pub fn YGNodeStyleGetFlex_313(mut nodeRef: Ptr<YGNode>) -> f32 {
     let mut node: Ptr<facebook_yoga_Node> = ({ resolveRef_181((nodeRef).clone()) });
     return if ({
         facebook_yoga_FloatOptional::isUndefined(
-            &({
-                facebook_yoga_Style::flex(
-                    &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                        .upgrade()
-                        .deref()),
-                )
-            }),
+            &(node.with(|__n0| {
+                ({ facebook_yoga_Style::flex(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
+            })),
         )
     }) {
-        YGUndefined_23.with(|rc| *rc.borrow())
+        YGUndefined_23
     } else {
         ({
             facebook_yoga_FloatOptional::unwrap(
-                &({
-                    facebook_yoga_Style::flex(
-                        &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                            .upgrade()
-                            .deref()),
-                    )
-                }),
+                &(node.with(|__n0| {
+                    ({ facebook_yoga_Style::flex(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
+                })),
             )
         })
     };
@@ -7348,26 +7328,20 @@ pub fn YGNodeStyleGetFlexGrow_314(mut nodeRef: Ptr<YGNode>) -> f32 {
     let mut node: Ptr<facebook_yoga_Node> = ({ resolveRef_181((nodeRef).clone()) });
     return if ({
         facebook_yoga_FloatOptional::isUndefined(
-            &({
-                facebook_yoga_Style::flexGrow(
-                    &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                        .upgrade()
-                        .deref()),
-                )
-            }),
+            &(node.with(|__n0| {
+                ({ facebook_yoga_Style::flexGrow(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
+            })),
         )
     }) {
-        DefaultFlexGrow_177.with(|rc| *rc.borrow())
+        DefaultFlexGrow_177
     } else {
         ({
             facebook_yoga_FloatOptional::unwrap(
-                &({
-                    facebook_yoga_Style::flexGrow(
-                        &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                            .upgrade()
-                            .deref()),
-                    )
-                }),
+                &(node.with(|__n0| {
+                    ({
+                        facebook_yoga_Style::flexGrow(&(*({ facebook_yoga_Node::style_25(__n0) })))
+                    })
+                })),
             )
         })
     };
@@ -7384,13 +7358,9 @@ pub fn YGNodeStyleGetFlexShrink_316(mut nodeRef: Ptr<YGNode>) -> f32 {
     let mut node: Ptr<facebook_yoga_Node> = ({ resolveRef_181((nodeRef).clone()) });
     return if ({
         facebook_yoga_FloatOptional::isUndefined(
-            &({
-                facebook_yoga_Style::flexShrink(
-                    &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                        .upgrade()
-                        .deref()),
-                )
-            }),
+            &(node.with(|__n0| {
+                ({ facebook_yoga_Style::flexShrink(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
+            })),
         )
     }) {
         (if ({
@@ -7398,20 +7368,20 @@ pub fn YGNodeStyleGetFlexShrink_316(mut nodeRef: Ptr<YGNode>) -> f32 {
                 &({ facebook_yoga_Node::getConfig(&(*node.upgrade().deref())) }),
             )
         }) {
-            WebDefaultFlexShrink_179.with(|rc| *rc.borrow())
+            WebDefaultFlexShrink_179
         } else {
-            DefaultFlexShrink_178.with(|rc| *rc.borrow())
+            DefaultFlexShrink_178
         })
     } else {
         ({
             facebook_yoga_FloatOptional::unwrap(
-                &({
-                    facebook_yoga_Style::flexShrink(
-                        &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                            .upgrade()
-                            .deref()),
-                    )
-                }),
+                &(node.with(|__n0| {
+                    ({
+                        facebook_yoga_Style::flexShrink(
+                            &(*({ facebook_yoga_Node::style_25(__n0) })),
+                        )
+                    })
+                })),
             )
         })
     };
@@ -7630,7 +7600,7 @@ pub fn YGNodeStyleGetBorder_336(mut node: Ptr<YGNode>, mut edge: YGEdge) -> f32 
     if ({ facebook_yoga_StyleLength::isUndefined(&(*border.as_pointer().upgrade().deref())) })
         || ({ facebook_yoga_StyleLength::isAuto(&(*border.as_pointer().upgrade().deref())) })
     {
-        return YGUndefined_23.with(|rc| *rc.borrow());
+        return YGUndefined_23;
     }
     return { ({ facebook_yoga_StyleLengthImpl::to_YGValue(&border.as_pointer()) }).value };
 }
@@ -7686,7 +7656,7 @@ pub fn YGNodeStyleGetAspectRatio_341(mut node: Ptr<YGNode>) -> f32 {
         )
     });
     return if ({ facebook_yoga_FloatOptional::isUndefined(&op) }) {
-        YGUndefined_23.with(|rc| *rc.borrow())
+        YGUndefined_23
     } else {
         ({ facebook_yoga_FloatOptional::unwrap(&op) })
     };
@@ -8459,13 +8429,13 @@ thread_local!(
 );
 thread_local!(
     pub static YGValueUndefined_1: Value<YGValue> = Rc::new(RefCell::new(YGValue {
-        value: YGUndefined_23.with(|rc| *rc.borrow()),
+        value: YGUndefined_23,
         unit: YGUnit_YGUnitUndefined,
     }));
 );
 thread_local!(
     pub static YGValueAuto_0: Value<YGValue> = Rc::new(RefCell::new(YGValue {
-        value: YGUndefined_23.with(|rc| *rc.borrow()),
+        value: YGUndefined_23,
         unit: YGUnit_YGUnitAuto,
     }));
 );
@@ -8477,48 +8447,28 @@ pub fn resolveChildAlignment_413(
     mut node: Ptr<facebook_yoga_Node>,
     mut child: Ptr<facebook_yoga_Node>,
 ) -> facebook_yoga_Align {
-    let mut align: facebook_yoga_Align = if (({
-        facebook_yoga_Style::alignSelf(
-            &(*({ facebook_yoga_NodeImpl::style_25(&child) })
-                .upgrade()
-                .deref()),
-        )
+    let mut align: facebook_yoga_Align = if (child.with(|__n0| {
+        ({ facebook_yoga_Style::alignSelf(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
     }) == facebook_yoga_Align_Auto)
     {
-        ({
-            facebook_yoga_Style::alignItems(
-                &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        node.with(|__n0| {
+            ({ facebook_yoga_Style::alignItems(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
         })
     } else {
-        ({
-            facebook_yoga_Style::alignSelf(
-                &(*({ facebook_yoga_NodeImpl::style_25(&child) })
-                    .upgrade()
-                    .deref()),
-            )
+        child.with(|__n0| {
+            ({ facebook_yoga_Style::alignSelf(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
         })
     };
-    if ((({
-        facebook_yoga_Style::display(
-            &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                .upgrade()
-                .deref()),
-        )
+    if ((node.with(|__n0| {
+        ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
     }) == facebook_yoga_Display_Flex)
         && (align == facebook_yoga_Align_Baseline))
         && ({
-            isColumn_129(
+            isColumn_129(node.with(|__n0| {
                 ({
-                    facebook_yoga_Style::flexDirection(
-                        &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                            .upgrade()
-                            .deref()),
-                    )
-                }),
-            )
+                    facebook_yoga_Style::flexDirection(&(*({ facebook_yoga_Node::style_25(__n0) })))
+                })
+            }))
         })
     {
         return facebook_yoga_Align_FlexStart;
@@ -8530,28 +8480,16 @@ pub fn resolveChildJustification_414(
     mut node: Ptr<facebook_yoga_Node>,
     mut child: Ptr<facebook_yoga_Node>,
 ) -> facebook_yoga_Justify {
-    return if (({
-        facebook_yoga_Style::justifySelf(
-            &(*({ facebook_yoga_NodeImpl::style_25(&child) })
-                .upgrade()
-                .deref()),
-        )
+    return if (child.with(|__n0| {
+        ({ facebook_yoga_Style::justifySelf(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
     }) == facebook_yoga_Justify_Auto)
     {
-        ({
-            facebook_yoga_Style::justifyItems(
-                &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        node.with(|__n0| {
+            ({ facebook_yoga_Style::justifyItems(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
         })
     } else {
-        ({
-            facebook_yoga_Style::justifySelf(
-                &(*({ facebook_yoga_NodeImpl::style_25(&child) })
-                    .upgrade()
-                    .deref()),
-            )
+        child.with(|__n0| {
+            ({ facebook_yoga_Style::justifySelf(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
         })
     };
 }
@@ -8603,26 +8541,26 @@ pub fn paddingAndBorderForAxis_417(
     mut widthSize: f32,
 ) -> f32 {
     return ({
-        ({
-            facebook_yoga_Style::computeInlineStartPaddingAndBorder(
-                &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                    .upgrade()
-                    .deref()),
-                axis,
-                direction,
-                widthSize,
-            )
+        node.with(|__n0| {
+            ({
+                facebook_yoga_Style::computeInlineStartPaddingAndBorder(
+                    &(*({ facebook_yoga_Node::style_25(__n0) })),
+                    axis,
+                    direction,
+                    widthSize,
+                )
+            })
         })
     } + {
-        ({
-            facebook_yoga_Style::computeInlineEndPaddingAndBorder(
-                &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                    .upgrade()
-                    .deref()),
-                axis,
-                direction,
-                widthSize,
-            )
+        node.with(|__n0| {
+            ({
+                facebook_yoga_Style::computeInlineEndPaddingAndBorder(
+                    &(*({ facebook_yoga_Node::style_25(__n0) })),
+                    axis,
+                    direction,
+                    widthSize,
+                )
+            })
         })
     });
 }
@@ -8638,50 +8576,50 @@ pub fn boundAxisWithinMinAndMax_418(
     let mut min: facebook_yoga_FloatOptional = <facebook_yoga_FloatOptional>::default();
     let mut max: facebook_yoga_FloatOptional = <facebook_yoga_FloatOptional>::default();
     if ({ isColumn_129(axis) }) {
-        min = ({
-            facebook_yoga_Style::resolvedMinDimension(
-                &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                    .upgrade()
-                    .deref()),
-                direction,
-                facebook_yoga_Dimension_Height,
-                axisSize,
-                widthSize,
-            )
+        min = node.with(|__n0| {
+            ({
+                facebook_yoga_Style::resolvedMinDimension(
+                    &(*({ facebook_yoga_Node::style_25(__n0) })),
+                    direction,
+                    facebook_yoga_Dimension_Height,
+                    axisSize,
+                    widthSize,
+                )
+            })
         });
-        max = ({
-            facebook_yoga_Style::resolvedMaxDimension(
-                &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                    .upgrade()
-                    .deref()),
-                direction,
-                facebook_yoga_Dimension_Height,
-                axisSize,
-                widthSize,
-            )
+        max = node.with(|__n0| {
+            ({
+                facebook_yoga_Style::resolvedMaxDimension(
+                    &(*({ facebook_yoga_Node::style_25(__n0) })),
+                    direction,
+                    facebook_yoga_Dimension_Height,
+                    axisSize,
+                    widthSize,
+                )
+            })
         });
     } else if ({ isRow_128(axis) }) {
-        min = ({
-            facebook_yoga_Style::resolvedMinDimension(
-                &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                    .upgrade()
-                    .deref()),
-                direction,
-                facebook_yoga_Dimension_Width,
-                axisSize,
-                widthSize,
-            )
+        min = node.with(|__n0| {
+            ({
+                facebook_yoga_Style::resolvedMinDimension(
+                    &(*({ facebook_yoga_Node::style_25(__n0) })),
+                    direction,
+                    facebook_yoga_Dimension_Width,
+                    axisSize,
+                    widthSize,
+                )
+            })
         });
-        max = ({
-            facebook_yoga_Style::resolvedMaxDimension(
-                &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                    .upgrade()
-                    .deref()),
-                direction,
-                facebook_yoga_Dimension_Width,
-                axisSize,
-                widthSize,
-            )
+        max = node.with(|__n0| {
+            ({
+                facebook_yoga_Style::resolvedMaxDimension(
+                    &(*({ facebook_yoga_Node::style_25(__n0) })),
+                    direction,
+                    facebook_yoga_Dimension_Width,
+                    axisSize,
+                    widthSize,
+                )
+            })
         });
     }
     if ({
@@ -8741,22 +8679,22 @@ pub fn getPositionOfOppositeEdge_420(
 ) -> f32 {
     return ({
         ({
-            ({
-                facebook_yoga_LayoutResults::measuredDimension(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_27(&containingNode) })
-                        .upgrade()
-                        .deref()),
-                    ({ dimension_136(axis) }),
-                )
+            containingNode.with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::measuredDimension(
+                        &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                        ({ dimension_136(axis) }),
+                    )
+                })
             })
         } - {
-            ({
-                facebook_yoga_LayoutResults::measuredDimension(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_27(&node) })
-                        .upgrade()
-                        .deref()),
-                    ({ dimension_136(axis) }),
-                )
+            node.with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::measuredDimension(
+                        &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                        ({ dimension_136(axis) }),
+                    )
+                })
             })
         })
     } - { position });
@@ -8769,13 +8707,13 @@ pub fn setChildTrailingPosition_421(
 ) {
     ({
         let _position: f32 = ({
-            let _position: f32 = ({
-                facebook_yoga_LayoutResults::position(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                        .upgrade()
-                        .deref()),
-                    ({ flexStartEdge_132(axis) }),
-                )
+            let _position: f32 = child.with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::position(
+                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                        ({ flexStartEdge_132(axis) }),
+                    )
+                })
             });
             let _axis: facebook_yoga_FlexDirection = axis;
             let _node: Ptr<facebook_yoga_Node> = (child).clone();
@@ -8792,278 +8730,267 @@ pub fn needsTrailingPosition_422(mut axis: facebook_yoga_FlexDirection) -> bool 
 }
 #[inline]
 pub fn setFlexStartLayoutPosition_423(
-    mut parent: Ptr<facebook_yoga_Node>,
-    mut child: Ptr<facebook_yoga_Node>,
+    parent: &Ptr<facebook_yoga_Node>,
+    child: &Ptr<facebook_yoga_Node>,
     mut direction: facebook_yoga_Direction,
     mut axis: facebook_yoga_FlexDirection,
     mut containingBlockWidth: f32,
 ) {
     let mut position: f32 = ({
-        ({
-            facebook_yoga_Style::computeFlexStartMargin(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                axis,
-                direction,
-                containingBlockWidth,
-            )
+        (*child).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeFlexStartMargin(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    axis,
+                    direction,
+                    containingBlockWidth,
+                )
+            })
         })
     } + {
-        ({
-            facebook_yoga_LayoutResults::border(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&parent) })
-                    .upgrade()
-                    .deref()),
-                ({ flexStartEdge_132(axis) }),
-            )
+        (*parent).with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::border(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                    ({ flexStartEdge_132(axis) }),
+                )
+            })
         })
     });
     if (!({
         facebook_yoga_NodeImpl::hasErrata(
-            &child,
+            &(*child),
             facebook_yoga_Errata_AbsolutePositionWithoutInsetsExcludesPadding,
         )
-    })) && (({
-        facebook_yoga_Style::display(
-            &(*({ facebook_yoga_NodeImpl::style_25(&parent) })
-                .upgrade()
-                .deref()),
-        )
+    })) && ((*parent).with(|__n0| {
+        ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
     }) != facebook_yoga_Display_Grid)
     {
-        position += ({
-            facebook_yoga_LayoutResults::padding(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&parent) })
-                    .upgrade()
-                    .deref()),
-                ({ flexStartEdge_132(axis) }),
-            )
+        position += (*parent).with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::padding(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                    ({ flexStartEdge_132(axis) }),
+                )
+            })
         });
     }
     ({
-        facebook_yoga_NodeImpl::setLayoutPosition(&child, position, ({ flexStartEdge_132(axis) }))
+        facebook_yoga_NodeImpl::setLayoutPosition(
+            &(*child),
+            position,
+            ({ flexStartEdge_132(axis) }),
+        )
     });
 }
 #[inline]
 pub fn setFlexEndLayoutPosition_424(
-    mut parent: Ptr<facebook_yoga_Node>,
-    mut child: Ptr<facebook_yoga_Node>,
+    parent: &Ptr<facebook_yoga_Node>,
+    child: &Ptr<facebook_yoga_Node>,
     mut direction: facebook_yoga_Direction,
     mut axis: facebook_yoga_FlexDirection,
     mut containingBlockWidth: f32,
 ) {
     let mut flexEndPosition: f32 = ({
-        ({
-            facebook_yoga_LayoutResults::border(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&parent) })
-                    .upgrade()
-                    .deref()),
-                ({ flexEndEdge_133(axis) }),
-            )
+        (*parent).with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::border(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                    ({ flexEndEdge_133(axis) }),
+                )
+            })
         })
     } + {
-        ({
-            facebook_yoga_Style::computeFlexEndMargin(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                axis,
-                direction,
-                containingBlockWidth,
-            )
+        (*child).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeFlexEndMargin(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    axis,
+                    direction,
+                    containingBlockWidth,
+                )
+            })
         })
     });
     if (!({
         facebook_yoga_NodeImpl::hasErrata(
-            &child,
+            &(*child),
             facebook_yoga_Errata_AbsolutePositionWithoutInsetsExcludesPadding,
         )
-    })) && (({
-        facebook_yoga_Style::display(
-            &(*({ facebook_yoga_NodeImpl::style_25(&parent) })
-                .upgrade()
-                .deref()),
-        )
+    })) && ((*parent).with(|__n0| {
+        ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
     }) != facebook_yoga_Display_Grid)
     {
-        flexEndPosition += ({
-            facebook_yoga_LayoutResults::padding(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&parent) })
-                    .upgrade()
-                    .deref()),
-                ({ flexEndEdge_133(axis) }),
-            )
+        flexEndPosition += (*parent).with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::padding(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                    ({ flexEndEdge_133(axis) }),
+                )
+            })
         });
     }
     ({
         let _position: f32 = ({
-            getPositionOfOppositeEdge_420(flexEndPosition, axis, (parent).clone(), (child).clone())
+            getPositionOfOppositeEdge_420(
+                flexEndPosition,
+                axis,
+                (*parent).clone(),
+                (*child).clone(),
+            )
         });
         let _edge: facebook_yoga_PhysicalEdge = ({ flexStartEdge_132(axis) });
-        facebook_yoga_NodeImpl::setLayoutPosition(&child, _position, _edge)
+        facebook_yoga_NodeImpl::setLayoutPosition(&(*child), _position, _edge)
     });
 }
 #[inline]
 pub fn setCenterLayoutPosition_425(
-    mut parent: Ptr<facebook_yoga_Node>,
-    mut child: Ptr<facebook_yoga_Node>,
+    parent: &Ptr<facebook_yoga_Node>,
+    child: &Ptr<facebook_yoga_Node>,
     mut direction: facebook_yoga_Direction,
     mut axis: facebook_yoga_FlexDirection,
     mut containingBlockWidth: f32,
 ) {
     let mut parentContentBoxSize: f32 = ({
         ({
-            ({
-                facebook_yoga_LayoutResults::measuredDimension(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_27(&parent) })
-                        .upgrade()
-                        .deref()),
-                    ({ dimension_136(axis) }),
-                )
+            (*parent).with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::measuredDimension(
+                        &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                        ({ dimension_136(axis) }),
+                    )
+                })
             })
         } - {
-            ({
-                facebook_yoga_LayoutResults::border(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_27(&parent) })
-                        .upgrade()
-                        .deref()),
-                    ({ flexStartEdge_132(axis) }),
-                )
+            (*parent).with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::border(
+                        &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                        ({ flexStartEdge_132(axis) }),
+                    )
+                })
             })
         })
     } - {
-        ({
-            facebook_yoga_LayoutResults::border(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&parent) })
-                    .upgrade()
-                    .deref()),
-                ({ flexEndEdge_133(axis) }),
-            )
+        (*parent).with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::border(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                    ({ flexEndEdge_133(axis) }),
+                )
+            })
         })
     });
     if (!({
         facebook_yoga_NodeImpl::hasErrata(
-            &child,
+            &(*child),
             facebook_yoga_Errata_AbsolutePositionWithoutInsetsExcludesPadding,
         )
-    })) && (({
-        facebook_yoga_Style::display(
-            &(*({ facebook_yoga_NodeImpl::style_25(&parent) })
-                .upgrade()
-                .deref()),
-        )
+    })) && ((*parent).with(|__n0| {
+        ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
     }) != facebook_yoga_Display_Grid)
     {
-        parentContentBoxSize -= ({
-            facebook_yoga_LayoutResults::padding(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&parent) })
-                    .upgrade()
-                    .deref()),
-                ({ flexStartEdge_132(axis) }),
-            )
+        parentContentBoxSize -= (*parent).with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::padding(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                    ({ flexStartEdge_132(axis) }),
+                )
+            })
         });
-        parentContentBoxSize -= ({
-            facebook_yoga_LayoutResults::padding(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&parent) })
-                    .upgrade()
-                    .deref()),
-                ({ flexEndEdge_133(axis) }),
-            )
+        parentContentBoxSize -= (*parent).with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::padding(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                    ({ flexEndEdge_133(axis) }),
+                )
+            })
         });
     }
     let mut childOuterSize: f32 = ({
-        ({
-            facebook_yoga_LayoutResults::measuredDimension(
-                &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                    .upgrade()
-                    .deref()),
-                ({ dimension_136(axis) }),
-            )
+        (*child).with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::measuredDimension(
+                    &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                    ({ dimension_136(axis) }),
+                )
+            })
         })
     } + {
-        ({
-            facebook_yoga_Style::computeMarginForAxis(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                axis,
-                containingBlockWidth,
-            )
+        (*child).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeMarginForAxis(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    axis,
+                    containingBlockWidth,
+                )
+            })
         })
     });
     let mut position: f32 = ({
         ({ ((parentContentBoxSize - childOuterSize) / 2_f32) } + {
-            ({
-                facebook_yoga_LayoutResults::border(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_27(&parent) })
-                        .upgrade()
-                        .deref()),
-                    ({ flexStartEdge_132(axis) }),
-                )
+            (*parent).with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::border(
+                        &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                        ({ flexStartEdge_132(axis) }),
+                    )
+                })
             })
         })
     } + {
-        ({
-            facebook_yoga_Style::computeFlexStartMargin(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                axis,
-                direction,
-                containingBlockWidth,
-            )
+        (*child).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeFlexStartMargin(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    axis,
+                    direction,
+                    containingBlockWidth,
+                )
+            })
         })
     });
     if (!({
         facebook_yoga_NodeImpl::hasErrata(
-            &child,
+            &(*child),
             facebook_yoga_Errata_AbsolutePositionWithoutInsetsExcludesPadding,
         )
-    })) && (({
-        facebook_yoga_Style::display(
-            &(*({ facebook_yoga_NodeImpl::style_25(&parent) })
-                .upgrade()
-                .deref()),
-        )
+    })) && ((*parent).with(|__n0| {
+        ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
     }) != facebook_yoga_Display_Grid)
     {
-        position += ({
-            facebook_yoga_LayoutResults::padding(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&parent) })
-                    .upgrade()
-                    .deref()),
-                ({ flexStartEdge_132(axis) }),
-            )
+        position += (*parent).with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::padding(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                    ({ flexStartEdge_132(axis) }),
+                )
+            })
         });
     }
     ({
-        facebook_yoga_NodeImpl::setLayoutPosition(&child, position, ({ flexStartEdge_132(axis) }))
+        facebook_yoga_NodeImpl::setLayoutPosition(
+            &(*child),
+            position,
+            ({ flexStartEdge_132(axis) }),
+        )
     });
 }
 pub fn justifyAbsoluteChild_426(
-    mut parent: Ptr<facebook_yoga_Node>,
-    mut child: Ptr<facebook_yoga_Node>,
+    parent: &Ptr<facebook_yoga_Node>,
+    child: &Ptr<facebook_yoga_Node>,
     mut direction: facebook_yoga_Direction,
     mut mainAxis: facebook_yoga_FlexDirection,
     mut containingBlockWidth: f32,
 ) {
-    let mut justify: facebook_yoga_Justify = if (({
-        facebook_yoga_Style::display(
-            &(*({ facebook_yoga_NodeImpl::style_25(&parent) })
-                .upgrade()
-                .deref()),
-        )
+    let mut justify: facebook_yoga_Justify = if ((*parent).with(|__n0| {
+        ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
     }) == facebook_yoga_Display_Grid)
     {
-        ({ resolveChildJustification_414((parent).clone(), (child).clone()) })
+        ({ resolveChildJustification_414((*parent).clone(), (*child).clone()) })
     } else {
-        ({
-            facebook_yoga_Style::justifyContent(
-                &(*({ facebook_yoga_NodeImpl::style_25(&parent) })
-                    .upgrade()
-                    .deref()),
-            )
+        (*parent).with(|__n0| {
+            ({ facebook_yoga_Style::justifyContent(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
         })
     };
     'switch: {
@@ -9076,8 +9003,8 @@ pub fn justifyAbsoluteChild_426(
             {
                 ({
                     setFlexStartLayoutPosition_423(
-                        (parent).clone(),
-                        (child).clone(),
+                        &(*parent),
+                        &(*child),
                         direction,
                         mainAxis,
                         containingBlockWidth,
@@ -9088,8 +9015,8 @@ pub fn justifyAbsoluteChild_426(
             __v if __v == facebook_yoga_Justify_End || __v == facebook_yoga_Justify_FlexEnd => {
                 ({
                     setFlexEndLayoutPosition_424(
-                        (parent).clone(),
-                        (child).clone(),
+                        &(*parent),
+                        &(*child),
                         direction,
                         mainAxis,
                         containingBlockWidth,
@@ -9103,8 +9030,8 @@ pub fn justifyAbsoluteChild_426(
             {
                 ({
                     setCenterLayoutPosition_425(
-                        (parent).clone(),
-                        (child).clone(),
+                        &(*parent),
+                        &(*child),
                         direction,
                         mainAxis,
                         containingBlockWidth,
@@ -9117,20 +9044,16 @@ pub fn justifyAbsoluteChild_426(
     };
 }
 pub fn alignAbsoluteChild_427(
-    mut parent: Ptr<facebook_yoga_Node>,
-    mut child: Ptr<facebook_yoga_Node>,
+    parent: &Ptr<facebook_yoga_Node>,
+    child: &Ptr<facebook_yoga_Node>,
     mut direction: facebook_yoga_Direction,
     mut crossAxis: facebook_yoga_FlexDirection,
     mut containingBlockWidth: f32,
 ) {
     let mut itemAlign: facebook_yoga_Align =
-        ({ resolveChildAlignment_413((parent).clone(), (child).clone()) });
-    let mut parentWrap: facebook_yoga_Wrap = ({
-        facebook_yoga_Style::flexWrap(
-            &(*({ facebook_yoga_NodeImpl::style_25(&parent) })
-                .upgrade()
-                .deref()),
-        )
+        ({ resolveChildAlignment_413((*parent).clone(), (*child).clone()) });
+    let mut parentWrap: facebook_yoga_Wrap = (*parent).with(|__n0| {
+        ({ facebook_yoga_Style::flexWrap(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
     });
     if (parentWrap == facebook_yoga_Wrap_WrapReverse) {
         if (itemAlign == facebook_yoga_Align_FlexEnd) {
@@ -9152,8 +9075,8 @@ pub fn alignAbsoluteChild_427(
             {
                 ({
                     setFlexStartLayoutPosition_423(
-                        (parent).clone(),
-                        (child).clone(),
+                        &(*parent),
+                        &(*child),
                         direction,
                         crossAxis,
                         containingBlockWidth,
@@ -9164,8 +9087,8 @@ pub fn alignAbsoluteChild_427(
             __v if __v == facebook_yoga_Align_End || __v == facebook_yoga_Align_FlexEnd => {
                 ({
                     setFlexEndLayoutPosition_424(
-                        (parent).clone(),
-                        (child).clone(),
+                        &(*parent),
+                        &(*child),
                         direction,
                         crossAxis,
                         containingBlockWidth,
@@ -9176,8 +9099,8 @@ pub fn alignAbsoluteChild_427(
             __v if __v == facebook_yoga_Align_Center => {
                 ({
                     setCenterLayoutPosition_425(
-                        (parent).clone(),
-                        (child).clone(),
+                        &(*parent),
+                        &(*child),
                         direction,
                         crossAxis,
                         containingBlockWidth,
@@ -9190,9 +9113,9 @@ pub fn alignAbsoluteChild_427(
     };
 }
 pub fn positionAbsoluteChild_428(
-    mut containingNode: Ptr<facebook_yoga_Node>,
-    mut parent: Ptr<facebook_yoga_Node>,
-    mut child: Ptr<facebook_yoga_Node>,
+    containingNode: &Ptr<facebook_yoga_Node>,
+    parent: &Ptr<facebook_yoga_Node>,
+    child: &Ptr<facebook_yoga_Node>,
     mut direction: facebook_yoga_Direction,
     mut axis: facebook_yoga_FlexDirection,
     mut isMainAxis: bool,
@@ -9205,150 +9128,56 @@ pub fn positionAbsoluteChild_428(
     } else {
         containingBlockHeight
     };
-    if ({
-        facebook_yoga_Style::isInlineStartPositionDefined(
-            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                .upgrade()
-                .deref()),
-            axis,
-            direction,
-        )
-    }) && (!({
-        facebook_yoga_Style::isInlineStartPositionAuto(
-            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                .upgrade()
-                .deref()),
-            axis,
-            direction,
-        )
-    })) {
+    if ((*child).with(|__n0| {
+        ({
+            facebook_yoga_Style::isInlineStartPositionDefined(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                axis,
+                direction,
+            )
+        })
+    })) && (!((*child).with(|__n0| {
+        ({
+            facebook_yoga_Style::isInlineStartPositionAuto(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                axis,
+                direction,
+            )
+        })
+    }))) {
         let mut positionRelativeToInlineStart: f32 = ({
             ({
-                ({
-                    facebook_yoga_Style::computeInlineStartPosition(
-                        &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                            .upgrade()
-                            .deref()),
-                        axis,
-                        direction,
-                        containingBlockSize,
-                    )
+                (*child).with(|__n0| {
+                    ({
+                        facebook_yoga_Style::computeInlineStartPosition(
+                            &(*({ facebook_yoga_Node::style_24(__n0) })),
+                            axis,
+                            direction,
+                            containingBlockSize,
+                        )
+                    })
                 })
             } + {
-                ({
-                    facebook_yoga_Style::computeInlineStartBorder(
-                        &(*({ facebook_yoga_NodeImpl::style_25(&containingNode) })
-                            .upgrade()
-                            .deref()),
-                        axis,
-                        direction,
-                    )
-                })
-            })
-        } + {
-            ({
-                facebook_yoga_Style::computeInlineStartMargin(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                    axis,
-                    direction,
-                    containingBlockSize,
-                )
-            })
-        });
-        let mut positionRelativeToFlexStart: f32 =
-            if (({ inlineStartEdge_134(axis, direction) }) != ({ flexStartEdge_132(axis) })) {
-                ({
-                    getPositionOfOppositeEdge_420(
-                        positionRelativeToInlineStart,
-                        axis,
-                        (containingNode).clone(),
-                        (child).clone(),
-                    )
-                })
-            } else {
-                positionRelativeToInlineStart
-            };
-        ({
-            facebook_yoga_NodeImpl::setLayoutPosition(
-                &child,
-                positionRelativeToFlexStart,
-                ({ flexStartEdge_132(axis) }),
-            )
-        });
-    } else if ({
-        facebook_yoga_Style::isInlineEndPositionDefined(
-            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                .upgrade()
-                .deref()),
-            axis,
-            direction,
-        )
-    }) && (!({
-        facebook_yoga_Style::isInlineEndPositionAuto(
-            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                .upgrade()
-                .deref()),
-            axis,
-            direction,
-        )
-    })) {
-        let mut positionRelativeToInlineStart: f32 = ({
-            ({
-                ({
+                (*containingNode).with(|__n0| {
                     ({
-                        ({
-                            facebook_yoga_LayoutResults::measuredDimension(
-                                &(*({ facebook_yoga_NodeImpl::getLayout_27(&containingNode) })
-                                    .upgrade()
-                                    .deref()),
-                                ({ dimension_136(axis) }),
-                            )
-                        })
-                    } - {
-                        ({
-                            facebook_yoga_LayoutResults::measuredDimension(
-                                &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                                    .upgrade()
-                                    .deref()),
-                                ({ dimension_136(axis) }),
-                            )
-                        })
-                    })
-                } - {
-                    ({
-                        facebook_yoga_Style::computeInlineEndBorder(
-                            &(*({ facebook_yoga_NodeImpl::style_25(&containingNode) })
-                                .upgrade()
-                                .deref()),
+                        facebook_yoga_Style::computeInlineStartBorder(
+                            &(*({ facebook_yoga_Node::style_25(__n0) })),
                             axis,
                             direction,
                         )
                     })
                 })
-            } - {
+            })
+        } + {
+            (*child).with(|__n0| {
                 ({
-                    facebook_yoga_Style::computeInlineEndMargin(
-                        &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                            .upgrade()
-                            .deref()),
+                    facebook_yoga_Style::computeInlineStartMargin(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
                         axis,
                         direction,
                         containingBlockSize,
                     )
                 })
-            })
-        } - {
-            ({
-                facebook_yoga_Style::computeInlineEndPosition(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                    axis,
-                    direction,
-                    containingBlockSize,
-                )
             })
         });
         let mut positionRelativeToFlexStart: f32 =
@@ -9357,8 +9186,8 @@ pub fn positionAbsoluteChild_428(
                     getPositionOfOppositeEdge_420(
                         positionRelativeToInlineStart,
                         axis,
-                        (containingNode).clone(),
-                        (child).clone(),
+                        (*containingNode).clone(),
+                        (*child).clone(),
                     )
                 })
             } else {
@@ -9366,7 +9195,101 @@ pub fn positionAbsoluteChild_428(
             };
         ({
             facebook_yoga_NodeImpl::setLayoutPosition(
-                &child,
+                &(*child),
+                positionRelativeToFlexStart,
+                ({ flexStartEdge_132(axis) }),
+            )
+        });
+    } else if ((*child).with(|__n0| {
+        ({
+            facebook_yoga_Style::isInlineEndPositionDefined(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                axis,
+                direction,
+            )
+        })
+    })) && (!((*child).with(|__n0| {
+        ({
+            facebook_yoga_Style::isInlineEndPositionAuto(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                axis,
+                direction,
+            )
+        })
+    }))) {
+        let mut positionRelativeToInlineStart: f32 = ({
+            ({
+                ({
+                    ({
+                        (*containingNode).with(|__n0| {
+                            ({
+                                facebook_yoga_LayoutResults::measuredDimension(
+                                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                                    ({ dimension_136(axis) }),
+                                )
+                            })
+                        })
+                    } - {
+                        (*child).with(|__n0| {
+                            ({
+                                facebook_yoga_LayoutResults::measuredDimension(
+                                    &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                    ({ dimension_136(axis) }),
+                                )
+                            })
+                        })
+                    })
+                } - {
+                    (*containingNode).with(|__n0| {
+                        ({
+                            facebook_yoga_Style::computeInlineEndBorder(
+                                &(*({ facebook_yoga_Node::style_25(__n0) })),
+                                axis,
+                                direction,
+                            )
+                        })
+                    })
+                })
+            } - {
+                (*child).with(|__n0| {
+                    ({
+                        facebook_yoga_Style::computeInlineEndMargin(
+                            &(*({ facebook_yoga_Node::style_24(__n0) })),
+                            axis,
+                            direction,
+                            containingBlockSize,
+                        )
+                    })
+                })
+            })
+        } - {
+            (*child).with(|__n0| {
+                ({
+                    facebook_yoga_Style::computeInlineEndPosition(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        axis,
+                        direction,
+                        containingBlockSize,
+                    )
+                })
+            })
+        });
+        let mut positionRelativeToFlexStart: f32 =
+            if (({ inlineStartEdge_134(axis, direction) }) != ({ flexStartEdge_132(axis) })) {
+                ({
+                    getPositionOfOppositeEdge_420(
+                        positionRelativeToInlineStart,
+                        axis,
+                        (*containingNode).clone(),
+                        (*child).clone(),
+                    )
+                })
+            } else {
+                positionRelativeToInlineStart
+            };
+        ({
+            facebook_yoga_NodeImpl::setLayoutPosition(
+                &(*child),
                 positionRelativeToFlexStart,
                 ({ flexStartEdge_132(axis) }),
             )
@@ -9375,8 +9298,8 @@ pub fn positionAbsoluteChild_428(
         if isMainAxis {
             ({
                 justifyAbsoluteChild_426(
-                    (parent).clone(),
-                    (child).clone(),
+                    &(*parent),
+                    &(*child),
                     direction,
                     axis,
                     containingBlockWidth,
@@ -9384,13 +9307,7 @@ pub fn positionAbsoluteChild_428(
             });
         } else {
             ({
-                alignAbsoluteChild_427(
-                    (parent).clone(),
-                    (child).clone(),
-                    direction,
-                    axis,
-                    containingBlockWidth,
-                )
+                alignAbsoluteChild_427(&(*parent), &(*child), direction, axis, containingBlockWidth)
             });
         };
     }
@@ -9407,35 +9324,27 @@ pub fn layoutAbsoluteChild_429(
     mut depth: u32,
     mut generationCount: u32,
 ) {
-    let mut mainAxis: facebook_yoga_FlexDirection = if (({
-        facebook_yoga_Style::display(
-            &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                .upgrade()
-                .deref()),
-        )
+    let mut mainAxis: facebook_yoga_FlexDirection = if (node.with(|__n0| {
+        ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
     }) == facebook_yoga_Display_Grid)
     {
         ({ resolveDirection_130(facebook_yoga_FlexDirection_Row, direction) })
     } else {
         ({
             resolveDirection_130(
-                ({
-                    facebook_yoga_Style::flexDirection(
-                        &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                            .upgrade()
-                            .deref()),
-                    )
+                node.with(|__n0| {
+                    ({
+                        facebook_yoga_Style::flexDirection(
+                            &(*({ facebook_yoga_Node::style_25(__n0) })),
+                        )
+                    })
                 }),
                 direction,
             )
         })
     };
-    let mut crossAxis: facebook_yoga_FlexDirection = if (({
-        facebook_yoga_Style::display(
-            &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                .upgrade()
-                .deref()),
-        )
+    let mut crossAxis: facebook_yoga_FlexDirection = if (node.with(|__n0| {
+        ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
     }) == facebook_yoga_Display_Grid)
     {
         facebook_yoga_FlexDirection_Column
@@ -9443,27 +9352,27 @@ pub fn layoutAbsoluteChild_429(
         ({ resolveCrossDirection_131(mainAxis, direction) })
     };
     let mut isMainAxisRow: bool = ({ isRow_128(mainAxis) });
-    let mut childWidth: f32 = YGUndefined_23.with(|rc| *rc.borrow());
-    let mut childHeight: f32 = YGUndefined_23.with(|rc| *rc.borrow());
+    let mut childWidth: f32 = YGUndefined_23;
+    let mut childHeight: f32 = YGUndefined_23;
     let mut childWidthSizingMode: facebook_yoga_SizingMode = facebook_yoga_SizingMode_MaxContent;
     let mut childHeightSizingMode: facebook_yoga_SizingMode = facebook_yoga_SizingMode_MaxContent;
-    let mut marginRow: f32 = ({
-        facebook_yoga_Style::computeMarginForAxis(
-            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                .upgrade()
-                .deref()),
-            facebook_yoga_FlexDirection_Row,
-            containingBlockWidth,
-        )
+    let mut marginRow: f32 = child.with(|__n0| {
+        ({
+            facebook_yoga_Style::computeMarginForAxis(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                facebook_yoga_FlexDirection_Row,
+                containingBlockWidth,
+            )
+        })
     });
-    let mut marginColumn: f32 = ({
-        facebook_yoga_Style::computeMarginForAxis(
-            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                .upgrade()
-                .deref()),
-            facebook_yoga_FlexDirection_Column,
-            containingBlockWidth,
-        )
+    let mut marginColumn: f32 = child.with(|__n0| {
+        ({
+            facebook_yoga_Style::computeMarginForAxis(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                facebook_yoga_FlexDirection_Column,
+                containingBlockWidth,
+            )
+        })
     });
     if ({
         facebook_yoga_NodeImpl::hasDefiniteLength(
@@ -9490,94 +9399,96 @@ pub fn layoutAbsoluteChild_429(
             })
         } + { marginRow });
     } else {
-        if ((({
-            facebook_yoga_Style::isFlexStartPositionDefined(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_FlexDirection_Row,
-                direction,
-            )
-        }) && ({
-            facebook_yoga_Style::isFlexEndPositionDefined(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_FlexDirection_Row,
-                direction,
-            )
-        })) && (!({
-            facebook_yoga_Style::isFlexStartPositionAuto(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_FlexDirection_Row,
-                direction,
-            )
-        }))) && (!({
-            facebook_yoga_Style::isFlexEndPositionAuto(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_FlexDirection_Row,
-                direction,
-            )
-        })) {
+        if (((child.with(|__n0| {
+            ({
+                facebook_yoga_Style::isFlexStartPositionDefined(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    facebook_yoga_FlexDirection_Row,
+                    direction,
+                )
+            })
+        })) && (child.with(|__n0| {
+            ({
+                facebook_yoga_Style::isFlexEndPositionDefined(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    facebook_yoga_FlexDirection_Row,
+                    direction,
+                )
+            })
+        }))) && (!(child.with(|__n0| {
+            ({
+                facebook_yoga_Style::isFlexStartPositionAuto(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    facebook_yoga_FlexDirection_Row,
+                    direction,
+                )
+            })
+        }))))
+            && (!(child.with(|__n0| {
+                ({
+                    facebook_yoga_Style::isFlexEndPositionAuto(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        facebook_yoga_FlexDirection_Row,
+                        direction,
+                    )
+                })
+            })))
+        {
             childWidth = ({
                 ({
-                    ({
-                        facebook_yoga_LayoutResults::measuredDimension(
-                            &(*({ facebook_yoga_NodeImpl::getLayout_27(&containingNode) })
-                                .upgrade()
-                                .deref()),
-                            facebook_yoga_Dimension_Width,
-                        )
+                    containingNode.with(|__n0| {
+                        ({
+                            facebook_yoga_LayoutResults::measuredDimension(
+                                &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                                facebook_yoga_Dimension_Width,
+                            )
+                        })
                     })
                 } - {
                     ({
-                        ({
-                            facebook_yoga_Style::computeFlexStartBorder(
-                                &(*({ facebook_yoga_NodeImpl::style_25(&containingNode) })
-                                    .upgrade()
-                                    .deref()),
-                                facebook_yoga_FlexDirection_Row,
-                                direction,
-                            )
+                        containingNode.with(|__n0| {
+                            ({
+                                facebook_yoga_Style::computeFlexStartBorder(
+                                    &(*({ facebook_yoga_Node::style_25(__n0) })),
+                                    facebook_yoga_FlexDirection_Row,
+                                    direction,
+                                )
+                            })
                         })
                     } + {
-                        ({
-                            facebook_yoga_Style::computeFlexEndBorder(
-                                &(*({ facebook_yoga_NodeImpl::style_25(&containingNode) })
-                                    .upgrade()
-                                    .deref()),
-                                facebook_yoga_FlexDirection_Row,
-                                direction,
-                            )
+                        containingNode.with(|__n0| {
+                            ({
+                                facebook_yoga_Style::computeFlexEndBorder(
+                                    &(*({ facebook_yoga_Node::style_25(__n0) })),
+                                    facebook_yoga_FlexDirection_Row,
+                                    direction,
+                                )
+                            })
                         })
                     })
                 })
             } - {
                 ({
-                    ({
-                        facebook_yoga_Style::computeFlexStartPosition(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                            facebook_yoga_FlexDirection_Row,
-                            direction,
-                            containingBlockWidth,
-                        )
+                    child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::computeFlexStartPosition(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                facebook_yoga_FlexDirection_Row,
+                                direction,
+                                containingBlockWidth,
+                            )
+                        })
                     })
                 } + {
-                    ({
-                        facebook_yoga_Style::computeFlexEndPosition(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                            facebook_yoga_FlexDirection_Row,
-                            direction,
-                            containingBlockWidth,
-                        )
+                    child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::computeFlexEndPosition(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                facebook_yoga_FlexDirection_Row,
+                                direction,
+                                containingBlockWidth,
+                            )
+                        })
                     })
                 })
             });
@@ -9619,94 +9530,96 @@ pub fn layoutAbsoluteChild_429(
             })
         } + { marginColumn });
     } else {
-        if ((({
-            facebook_yoga_Style::isFlexStartPositionDefined(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_FlexDirection_Column,
-                direction,
-            )
-        }) && ({
-            facebook_yoga_Style::isFlexEndPositionDefined(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_FlexDirection_Column,
-                direction,
-            )
-        })) && (!({
-            facebook_yoga_Style::isFlexStartPositionAuto(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_FlexDirection_Column,
-                direction,
-            )
-        }))) && (!({
-            facebook_yoga_Style::isFlexEndPositionAuto(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_FlexDirection_Column,
-                direction,
-            )
-        })) {
+        if (((child.with(|__n0| {
+            ({
+                facebook_yoga_Style::isFlexStartPositionDefined(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    facebook_yoga_FlexDirection_Column,
+                    direction,
+                )
+            })
+        })) && (child.with(|__n0| {
+            ({
+                facebook_yoga_Style::isFlexEndPositionDefined(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    facebook_yoga_FlexDirection_Column,
+                    direction,
+                )
+            })
+        }))) && (!(child.with(|__n0| {
+            ({
+                facebook_yoga_Style::isFlexStartPositionAuto(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    facebook_yoga_FlexDirection_Column,
+                    direction,
+                )
+            })
+        }))))
+            && (!(child.with(|__n0| {
+                ({
+                    facebook_yoga_Style::isFlexEndPositionAuto(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        facebook_yoga_FlexDirection_Column,
+                        direction,
+                    )
+                })
+            })))
+        {
             childHeight = ({
                 ({
-                    ({
-                        facebook_yoga_LayoutResults::measuredDimension(
-                            &(*({ facebook_yoga_NodeImpl::getLayout_27(&containingNode) })
-                                .upgrade()
-                                .deref()),
-                            facebook_yoga_Dimension_Height,
-                        )
+                    containingNode.with(|__n0| {
+                        ({
+                            facebook_yoga_LayoutResults::measuredDimension(
+                                &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                                facebook_yoga_Dimension_Height,
+                            )
+                        })
                     })
                 } - {
                     ({
-                        ({
-                            facebook_yoga_Style::computeFlexStartBorder(
-                                &(*({ facebook_yoga_NodeImpl::style_25(&containingNode) })
-                                    .upgrade()
-                                    .deref()),
-                                facebook_yoga_FlexDirection_Column,
-                                direction,
-                            )
+                        containingNode.with(|__n0| {
+                            ({
+                                facebook_yoga_Style::computeFlexStartBorder(
+                                    &(*({ facebook_yoga_Node::style_25(__n0) })),
+                                    facebook_yoga_FlexDirection_Column,
+                                    direction,
+                                )
+                            })
                         })
                     } + {
-                        ({
-                            facebook_yoga_Style::computeFlexEndBorder(
-                                &(*({ facebook_yoga_NodeImpl::style_25(&containingNode) })
-                                    .upgrade()
-                                    .deref()),
-                                facebook_yoga_FlexDirection_Column,
-                                direction,
-                            )
+                        containingNode.with(|__n0| {
+                            ({
+                                facebook_yoga_Style::computeFlexEndBorder(
+                                    &(*({ facebook_yoga_Node::style_25(__n0) })),
+                                    facebook_yoga_FlexDirection_Column,
+                                    direction,
+                                )
+                            })
                         })
                     })
                 })
             } - {
                 ({
-                    ({
-                        facebook_yoga_Style::computeFlexStartPosition(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                            facebook_yoga_FlexDirection_Column,
-                            direction,
-                            containingBlockHeight,
-                        )
+                    child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::computeFlexStartPosition(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                facebook_yoga_FlexDirection_Column,
+                                direction,
+                                containingBlockHeight,
+                            )
+                        })
                     })
                 } + {
-                    ({
-                        facebook_yoga_Style::computeFlexEndPosition(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                            facebook_yoga_FlexDirection_Column,
-                            direction,
-                            containingBlockHeight,
-                        )
+                    child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::computeFlexEndPosition(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                facebook_yoga_FlexDirection_Column,
+                                direction,
+                                containingBlockHeight,
+                            )
+                        })
                     })
                 })
             });
@@ -9811,43 +9724,43 @@ pub fn layoutAbsoluteChild_429(
             )
         });
         childWidth = ({
-            ({
-                facebook_yoga_LayoutResults::measuredDimension(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                        .upgrade()
-                        .deref()),
-                    facebook_yoga_Dimension_Width,
-                )
+            child.with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::measuredDimension(
+                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                        facebook_yoga_Dimension_Width,
+                    )
+                })
             })
         } + {
-            ({
-                facebook_yoga_Style::computeMarginForAxis(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                    facebook_yoga_FlexDirection_Row,
-                    containingBlockWidth,
-                )
+            child.with(|__n0| {
+                ({
+                    facebook_yoga_Style::computeMarginForAxis(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        facebook_yoga_FlexDirection_Row,
+                        containingBlockWidth,
+                    )
+                })
             })
         });
         childHeight = ({
-            ({
-                facebook_yoga_LayoutResults::measuredDimension(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                        .upgrade()
-                        .deref()),
-                    facebook_yoga_Dimension_Height,
-                )
+            child.with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::measuredDimension(
+                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                        facebook_yoga_Dimension_Height,
+                    )
+                })
             })
         } + {
-            ({
-                facebook_yoga_Style::computeMarginForAxis(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                    facebook_yoga_FlexDirection_Column,
-                    containingBlockWidth,
-                )
+            child.with(|__n0| {
+                ({
+                    facebook_yoga_Style::computeMarginForAxis(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        facebook_yoga_FlexDirection_Column,
+                        containingBlockWidth,
+                    )
+                })
             })
         });
     }
@@ -9879,9 +9792,9 @@ pub fn layoutAbsoluteChild_429(
     });
     ({
         positionAbsoluteChild_428(
-            (containingNode).clone(),
-            (node).clone(),
-            (child).clone(),
+            &containingNode,
+            &node,
+            &child,
             direction,
             mainAxis,
             true,
@@ -9891,9 +9804,9 @@ pub fn layoutAbsoluteChild_429(
     });
     ({
         positionAbsoluteChild_428(
-            (containingNode).clone(),
-            (node).clone(),
-            (child).clone(),
+            &containingNode,
+            &node,
+            &child,
             direction,
             crossAxis,
             false,
@@ -9942,12 +9855,8 @@ pub fn layoutAbsoluteDescendants_431(
                 &__begin2.as_pointer(),
             )
         });
-        if (({
-            facebook_yoga_Style::display(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (child.with(|__n0| {
+            ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_Display_None)
         {
             ({
@@ -9956,12 +9865,8 @@ pub fn layoutAbsoluteDescendants_431(
                 )
             });
             continue 'loop_;
-        } else if (({
-            facebook_yoga_Style::positionType(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-            )
+        } else if (child.with(|__n0| {
+            ({ facebook_yoga_Style::positionType(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_PositionType_Absolute)
         {
             let mut absoluteErrata: bool = ({
@@ -9974,22 +9879,22 @@ pub fn layoutAbsoluteDescendants_431(
                 containingNodeAvailableInnerWidth
             } else {
                 ({
-                    ({
-                        facebook_yoga_LayoutResults::measuredDimension(
-                            &(*({ facebook_yoga_NodeImpl::getLayout_26(&containingNode) })
-                                .upgrade()
-                                .deref()),
-                            facebook_yoga_Dimension_Width,
-                        )
+                    containingNode.with(|__n0| {
+                        ({
+                            facebook_yoga_LayoutResults::measuredDimension(
+                                &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                facebook_yoga_Dimension_Width,
+                            )
+                        })
                     })
                 } - {
-                    ({
-                        facebook_yoga_Style::computeBorderForAxis(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&containingNode) })
-                                .upgrade()
-                                .deref()),
-                            facebook_yoga_FlexDirection_Row,
-                        )
+                    containingNode.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::computeBorderForAxis(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                facebook_yoga_FlexDirection_Row,
+                            )
+                        })
                     })
                 })
             };
@@ -9997,22 +9902,22 @@ pub fn layoutAbsoluteDescendants_431(
                 containingNodeAvailableInnerHeight
             } else {
                 ({
-                    ({
-                        facebook_yoga_LayoutResults::measuredDimension(
-                            &(*({ facebook_yoga_NodeImpl::getLayout_26(&containingNode) })
-                                .upgrade()
-                                .deref()),
-                            facebook_yoga_Dimension_Height,
-                        )
+                    containingNode.with(|__n0| {
+                        ({
+                            facebook_yoga_LayoutResults::measuredDimension(
+                                &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                facebook_yoga_Dimension_Height,
+                            )
+                        })
                     })
                 } - {
-                    ({
-                        facebook_yoga_Style::computeBorderForAxis(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&containingNode) })
-                                .upgrade()
-                                .deref()),
-                            facebook_yoga_FlexDirection_Column,
-                        )
+                    containingNode.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::computeBorderForAxis(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                facebook_yoga_FlexDirection_Column,
+                            )
+                        })
                     })
                 })
             };
@@ -10045,12 +9950,12 @@ pub fn layoutAbsoluteDescendants_431(
             hasNewLayout = __rhs;
             let mut parentMainAxis: facebook_yoga_FlexDirection = ({
                 resolveDirection_130(
-                    ({
-                        facebook_yoga_Style::flexDirection(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&currentNode) })
-                                .upgrade()
-                                .deref()),
-                        )
+                    currentNode.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::flexDirection(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                            )
+                        })
                     }),
                     currentNodeDirection,
                 )
@@ -10059,20 +9964,20 @@ pub fn layoutAbsoluteDescendants_431(
                 ({ resolveCrossDirection_131(parentMainAxis, currentNodeDirection) });
             if ({ needsTrailingPosition_422(parentMainAxis) }) {
                 let mut mainInsetsDefined: bool = if ({ isRow_128(parentMainAxis) }) {
-                    ({
-                        facebook_yoga_Style::horizontalInsetsDefined(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                        )
+                    child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::horizontalInsetsDefined(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                            )
+                        })
                     })
                 } else {
-                    ({
-                        facebook_yoga_Style::verticalInsetsDefined(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                        )
+                    child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::verticalInsetsDefined(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                            )
+                        })
                     })
                 };
                 ({
@@ -10089,20 +9994,20 @@ pub fn layoutAbsoluteDescendants_431(
             }
             if ({ needsTrailingPosition_422(parentCrossAxis) }) {
                 let mut crossInsetsDefined: bool = if ({ isRow_128(parentCrossAxis) }) {
-                    ({
-                        facebook_yoga_Style::horizontalInsetsDefined(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                        )
+                    child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::horizontalInsetsDefined(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                            )
+                        })
                     })
                 } else {
-                    ({
-                        facebook_yoga_Style::verticalInsetsDefined(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                        )
+                    child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::verticalInsetsDefined(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                            )
+                        })
                     })
                 };
                 ({
@@ -10117,39 +10022,39 @@ pub fn layoutAbsoluteDescendants_431(
                     )
                 });
             }
-            let mut childLeftPosition: f32 = ({
-                facebook_yoga_LayoutResults::position(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                        .upgrade()
-                        .deref()),
-                    facebook_yoga_PhysicalEdge_Left,
-                )
+            let mut childLeftPosition: f32 = child.with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::position(
+                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                        facebook_yoga_PhysicalEdge_Left,
+                    )
+                })
             });
-            let mut childTopPosition: f32 = ({
-                facebook_yoga_LayoutResults::position(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                        .upgrade()
-                        .deref()),
-                    facebook_yoga_PhysicalEdge_Top,
-                )
+            let mut childTopPosition: f32 = child.with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::position(
+                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                        facebook_yoga_PhysicalEdge_Top,
+                    )
+                })
             });
-            let mut childLeftOffsetFromParent: f32 = if ({
-                facebook_yoga_Style::horizontalInsetsDefined(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                )
+            let mut childLeftOffsetFromParent: f32 = if child.with(|__n0| {
+                ({
+                    facebook_yoga_Style::horizontalInsetsDefined(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    )
+                })
             }) {
                 (childLeftPosition - currentNodeLeftOffsetFromContainingBlock)
             } else {
                 childLeftPosition
             };
-            let mut childTopOffsetFromParent: f32 = if ({
-                facebook_yoga_Style::verticalInsetsDefined(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                )
+            let mut childTopOffsetFromParent: f32 = if child.with(|__n0| {
+                ({
+                    facebook_yoga_Style::verticalInsetsDefined(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    )
+                })
             }) {
                 (childTopPosition - currentNodeTopOffsetFromContainingBlock)
             } else {
@@ -10169,12 +10074,8 @@ pub fn layoutAbsoluteDescendants_431(
                     facebook_yoga_PhysicalEdge_Top,
                 )
             });
-        } else if (({
-            facebook_yoga_Style::positionType(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-            )
+        } else if (child.with(|__n0| {
+            ({ facebook_yoga_Style::positionType(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_PositionType_Static)
             && (!({ facebook_yoga_Node::alwaysFormsContainingBlock(&(*child.upgrade().deref())) }))
         {
@@ -10183,24 +10084,24 @@ pub fn layoutAbsoluteDescendants_431(
                 ({ facebook_yoga_NodeImpl::resolveDirection(&child, currentNodeDirection) });
             let mut childLeftOffsetFromContainingBlock: f32 =
                 ({ currentNodeLeftOffsetFromContainingBlock } + {
-                    ({
-                        facebook_yoga_LayoutResults::position(
-                            &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                                .upgrade()
-                                .deref()),
-                            facebook_yoga_PhysicalEdge_Left,
-                        )
+                    child.with(|__n0| {
+                        ({
+                            facebook_yoga_LayoutResults::position(
+                                &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                facebook_yoga_PhysicalEdge_Left,
+                            )
+                        })
                     })
                 });
             let mut childTopOffsetFromContainingBlock: f32 =
                 ({ currentNodeTopOffsetFromContainingBlock } + {
-                    ({
-                        facebook_yoga_LayoutResults::position(
-                            &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                                .upgrade()
-                                .deref()),
-                            facebook_yoga_PhysicalEdge_Top,
-                        )
+                    child.with(|__n0| {
+                        ({
+                            facebook_yoga_LayoutResults::position(
+                                &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                facebook_yoga_PhysicalEdge_Top,
+                            )
+                        })
                     })
                 });
             let __rhs = ({
@@ -10321,21 +10222,21 @@ pub fn calculateBaseline_433(mut node: Ptr<facebook_yoga_Node>) -> f32 {
     if ({ facebook_yoga_Node::hasBaselineFunc(&(*node.upgrade().deref())) }) {
         ({ facebook_yoga_Event::publish_3_7(node.reinterpret_cast::<YGNode>(), None) });
         let mut baseline: f32 = ({
-            let _width: f32 = ({
-                facebook_yoga_LayoutResults::measuredDimension(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_27(&node) })
-                        .upgrade()
-                        .deref()),
-                    facebook_yoga_Dimension_Width,
-                )
+            let _width: f32 = node.with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::measuredDimension(
+                        &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                        facebook_yoga_Dimension_Width,
+                    )
+                })
             });
-            let _height: f32 = ({
-                facebook_yoga_LayoutResults::measuredDimension(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_27(&node) })
-                        .upgrade()
-                        .deref()),
-                    facebook_yoga_Dimension_Height,
-                )
+            let _height: f32 = node.with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::measuredDimension(
+                        &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                        facebook_yoga_Dimension_Height,
+                    )
+                })
             });
             facebook_yoga_NodeImpl::baseline(&node, _width, _height)
         });
@@ -10381,12 +10282,8 @@ pub fn calculateBaseline_433(mut node: Ptr<facebook_yoga_Node>) -> f32 {
         if (({ facebook_yoga_Node::getLineIndex(&(*child.upgrade().deref())) }) > 0_usize) {
             break;
         }
-        if (({
-            facebook_yoga_Style::positionType(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (child.with(|__n0| {
+            ({ facebook_yoga_Style::positionType(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_PositionType_Absolute)
         {
             ({
@@ -10413,47 +10310,37 @@ pub fn calculateBaseline_433(mut node: Ptr<facebook_yoga_Node>) -> f32 {
         });
     }
     if (baselineChild).is_null() {
-        return ({
-            facebook_yoga_LayoutResults::measuredDimension(
-                &(*({ facebook_yoga_NodeImpl::getLayout_27(&node) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_Dimension_Height,
-            )
+        return node.with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::measuredDimension(
+                    &(*({ facebook_yoga_Node::getLayout_27(__n0) })),
+                    facebook_yoga_Dimension_Height,
+                )
+            })
         });
     }
     let mut baseline: f32 = ({ calculateBaseline_433((baselineChild).clone()) });
     return ({ baseline } + {
-        ({
-            facebook_yoga_LayoutResults::position(
-                &(*({ facebook_yoga_NodeImpl::getLayout_26(&baselineChild) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_PhysicalEdge_Top,
-            )
+        baselineChild.with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::position(
+                    &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                    facebook_yoga_PhysicalEdge_Top,
+                )
+            })
         })
     });
 }
 pub fn isBaselineLayout_434(mut node: Ptr<facebook_yoga_Node>) -> bool {
     if ({
-        isColumn_129(
-            ({
-                facebook_yoga_Style::flexDirection(
-                    &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                        .upgrade()
-                        .deref()),
-                )
-            }),
-        )
+        isColumn_129(node.with(|__n0| {
+            ({ facebook_yoga_Style::flexDirection(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
+        }))
     }) {
         return false;
     }
-    if (({
-        facebook_yoga_Style::alignItems(
-            &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                .upgrade()
-                .deref()),
-        )
+    if (node.with(|__n0| {
+        ({ facebook_yoga_Style::alignItems(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
     }) == facebook_yoga_Align_Baseline)
     {
         return true;
@@ -10484,19 +10371,11 @@ pub fn isBaselineLayout_434(mut node: Ptr<facebook_yoga_Node>) -> bool {
                 &__begin2.as_pointer(),
             )
         });
-        if (({
-            facebook_yoga_Style::positionType(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (child.with(|__n0| {
+            ({ facebook_yoga_Style::positionType(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) != facebook_yoga_PositionType_Absolute)
-            && (({
-                facebook_yoga_Style::alignSelf(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                )
+            && (child.with(|__n0| {
+                ({ facebook_yoga_Style::alignSelf(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
             }) == facebook_yoga_Align_Baseline)
         {
             return true;
@@ -10823,22 +10702,15 @@ impl facebook_yoga_Event_Data {
     }
 }
 #[inline]
-pub fn minOrDefined_438(a: f32, b: f32) -> f32 {
-    let a: Value<f32> = Rc::new(RefCell::new(a));
-    let b: Value<f32> = Rc::new(RefCell::new(b));
-    if ({ isDefined_107((*a.borrow())) }) && ({ isDefined_107((*b.borrow())) }) {
+pub fn minOrDefined_438(mut a: f32, mut b: f32) -> f32 {
+    if ({ isDefined_107(a) }) && ({ isDefined_107(b) }) {
         return ({
-            let __a = a.as_pointer();
-            let __b = b.as_pointer();
-            if CppLess::less(&__b, &__a) { __b } else { __a }
-        }
-        .read());
+            let __a = a;
+            let __b = b;
+            if __b < __a { __b } else { __a }
+        });
     }
-    return if ({ isUndefined_105((*a.borrow())) }) {
-        (*b.borrow())
-    } else {
-        (*a.borrow())
-    };
+    return if ({ isUndefined_105(a) }) { b } else { a };
 }
 #[derive(Clone, Record, ByteRepr, VaArg, FnPtrArg)]
 #[byte_size(20)]
@@ -10913,8 +10785,8 @@ pub fn hasAutoHorizontalMargin_440(style: Ptr<facebook_yoga_Style>) -> bool {
         facebook_yoga_Direction_RTL,
     ])));
     let __range2: Ptr<Vec<facebook_yoga_Direction>> = __tmp_0.as_pointer();
-    'loop_: for direction in IterRange::new(__range2.decay(), __range2.decay().to_end()) {
-        let mut direction: facebook_yoga_Direction = (direction.read());
+    'loop_: for direction in [facebook_yoga_Direction_LTR, facebook_yoga_Direction_RTL] {
+        let mut direction: facebook_yoga_Direction = direction;
         if ({
             let _direction: facebook_yoga_Direction = direction;
             facebook_yoga_Style::flexStartMarginIsAuto(
@@ -10936,17 +10808,17 @@ pub fn hasAutoHorizontalMargin_440(style: Ptr<facebook_yoga_Style>) -> bool {
     return false;
 }
 pub fn isColumnStretchEdge_441(
-    mut owner: Ptr<facebook_yoga_Node>,
-    mut child: Ptr<facebook_yoga_Node>,
+    owner: &Ptr<facebook_yoga_Node>,
+    child: &Ptr<facebook_yoga_Node>,
 ) -> bool {
-    if ((owner).is_null()) || ((child).is_null()) {
+    if ((*owner).is_null()) || ((*child).is_null()) {
         return false;
     }
-    let ownerStyle: Ptr<facebook_yoga_Style> = ({ facebook_yoga_NodeImpl::style_25(&owner) });
-    let childStyle: Ptr<facebook_yoga_Style> = ({ facebook_yoga_NodeImpl::style_25(&child) });
+    let ownerStyle: Ptr<facebook_yoga_Style> = ({ facebook_yoga_NodeImpl::style_25(&(*owner)) });
+    let childStyle: Ptr<facebook_yoga_Style> = ({ facebook_yoga_NodeImpl::style_25(&(*child)) });
     let mut childWidth: facebook_yoga_StyleSizeLength = ({
         facebook_yoga_Node::getProcessedDimension(
-            &(*child.upgrade().deref()),
+            &(*(*child).upgrade().deref()),
             facebook_yoga_Dimension_Width,
         )
     });
@@ -10967,36 +10839,27 @@ pub fn isColumnStretchEdge_441(
         && (({ facebook_yoga_StyleSizeLength::isAuto(&childWidth) })
             || ({ facebook_yoga_StyleSizeLength::isUndefined(&childWidth) })))
         && (!({ hasAutoHorizontalMargin_440((childStyle).clone()) })))
-        && (({ resolveChildAlignment_413(owner, child) }) == facebook_yoga_Align_Stretch);
+        && (({ resolveChildAlignment_413((*owner).clone(), (*child).clone()) })
+            == facebook_yoga_Align_Stretch);
 }
-pub fn isInColumnStretchScrollSubtree_442(mut node: Ptr<facebook_yoga_Node>) -> bool {
-    let mut current: Ptr<facebook_yoga_Node> = (node).clone();
+pub fn isInColumnStretchScrollSubtree_442(node: &Ptr<facebook_yoga_Node>) -> bool {
+    let mut current: Ptr<facebook_yoga_Node> = (*node).clone();
     'loop_: while !((current).is_null()) {
         let mut owner: Ptr<facebook_yoga_Node> =
             ({ facebook_yoga_Node::getOwner(&(*current.upgrade().deref())) });
         'loop_: while (!((owner).is_null()))
-            && (({
-                facebook_yoga_Style::display(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&owner) })
-                        .upgrade()
-                        .deref()),
-                )
+            && (owner.with(|__n0| {
+                ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
             }) == facebook_yoga_Display_Contents)
         {
             let __rhs = ({ facebook_yoga_Node::getOwner(&(*owner.upgrade().deref())) });
             owner = __rhs;
         }
-        if ((owner).is_null())
-            || (!({ isColumnStretchEdge_441((owner).clone(), (current).clone()) }))
-        {
+        if ((owner).is_null()) || (!({ isColumnStretchEdge_441(&owner, &current) })) {
             return false;
         }
-        if (({
-            facebook_yoga_Style::overflow(
-                &(*({ facebook_yoga_NodeImpl::style_24(&owner) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (owner.with(|__n0| {
+            ({ facebook_yoga_Style::overflow(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_Overflow_Scroll)
         {
             return true;
@@ -11422,26 +11285,26 @@ pub fn constrainMaxSizeForMode_449(
     mut size: Ptr<f32>,
 ) {
     let mut maxSize: facebook_yoga_FloatOptional = ({
-        let _lhs: facebook_yoga_FloatOptional = ({
-            facebook_yoga_Style::resolvedMaxDimension(
-                &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                    .upgrade()
-                    .deref()),
-                direction,
-                ({ dimension_136(axis) }),
-                ownerAxisSize,
-                ownerWidth,
-            )
-        });
-        let _rhs: facebook_yoga_FloatOptional = facebook_yoga_FloatOptional::new_1({
+        let _lhs: facebook_yoga_FloatOptional = node.with(|__n0| {
             ({
-                facebook_yoga_Style::computeMarginForAxis(
-                    &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                        .upgrade()
-                        .deref()),
-                    axis,
+                facebook_yoga_Style::resolvedMaxDimension(
+                    &(*({ facebook_yoga_Node::style_25(__n0) })),
+                    direction,
+                    ({ dimension_136(axis) }),
+                    ownerAxisSize,
                     ownerWidth,
                 )
+            })
+        });
+        let _rhs: facebook_yoga_FloatOptional = facebook_yoga_FloatOptional::new_1({
+            node.with(|__n0| {
+                ({
+                    facebook_yoga_Style::computeMarginForAxis(
+                        &(*({ facebook_yoga_Node::style_25(__n0) })),
+                        axis,
+                        ownerWidth,
+                    )
+                })
             })
         });
         operator_add_117(_lhs, _rhs)
@@ -11475,8 +11338,8 @@ pub fn constrainMaxSizeForMode_449(
     };
 }
 pub fn computeFlexBasisForChild_450(
-    mut node: Ptr<facebook_yoga_Node>,
-    mut child: Ptr<facebook_yoga_Node>,
+    node: &Ptr<facebook_yoga_Node>,
+    child: &Ptr<facebook_yoga_Node>,
     mut width: f32,
     mut widthMode: facebook_yoga_SizingMode,
     mut height: f32,
@@ -11490,12 +11353,10 @@ pub fn computeFlexBasisForChild_450(
 ) {
     let mut mainAxis: facebook_yoga_FlexDirection = ({
         resolveDirection_130(
-            ({
-                facebook_yoga_Style::flexDirection(
-                    &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                        .upgrade()
-                        .deref()),
-                )
+            (*node).with(|__n0| {
+                ({
+                    facebook_yoga_Style::flexDirection(&(*({ facebook_yoga_Node::style_25(__n0) })))
+                })
             }),
             direction,
         )
@@ -11507,15 +11368,15 @@ pub fn computeFlexBasisForChild_450(
     } else {
         ownerHeight
     };
-    let childWidth: Value<f32> = Rc::new(RefCell::new(YGUndefined_23.with(|rc| *rc.borrow())));
-    let childHeight: Value<f32> = Rc::new(RefCell::new(YGUndefined_23.with(|rc| *rc.borrow())));
+    let childWidth: Value<f32> = Rc::new(RefCell::new(YGUndefined_23));
+    let childHeight: Value<f32> = Rc::new(RefCell::new(YGUndefined_23));
     let childWidthSizingMode: Value<facebook_yoga_SizingMode> =
         <Value<facebook_yoga_SizingMode>>::default();
     let childHeightSizingMode: Value<facebook_yoga_SizingMode> =
         <Value<facebook_yoga_SizingMode>>::default();
     let mut resolvedFlexBasis: facebook_yoga_FloatOptional = ({
         facebook_yoga_NodeImpl::resolveFlexBasis(
-            &child,
+            &(*child),
             direction,
             mainAxis,
             mainAxisOwnerSize,
@@ -11523,18 +11384,22 @@ pub fn computeFlexBasisForChild_450(
         )
     });
     let mut isRowStyleDimDefined: bool = ({
-        facebook_yoga_NodeImpl::hasDefiniteLength(&child, facebook_yoga_Dimension_Width, ownerWidth)
+        facebook_yoga_NodeImpl::hasDefiniteLength(
+            &(*child),
+            facebook_yoga_Dimension_Width,
+            ownerWidth,
+        )
     });
     let mut isColumnStyleDimDefined: bool = ({
         facebook_yoga_NodeImpl::hasDefiniteLength(
-            &child,
+            &(*child),
             facebook_yoga_Dimension_Height,
             ownerHeight,
         )
     });
     let mut fixFlexBasisFitContent: bool = ({
         facebook_yoga_ConfigImpl::isExperimentalFeatureEnabled(
-            &({ facebook_yoga_Node::getConfig(&(*node.upgrade().deref())) }),
+            &({ facebook_yoga_Node::getConfig(&(*(*node).upgrade().deref())) }),
             facebook_yoga_ExperimentalFeature_FixFlexBasisFitContent,
         )
     });
@@ -11542,30 +11407,28 @@ pub fn computeFlexBasisForChild_450(
         ({ facebook_yoga_FloatOptional::isDefined(&resolvedFlexBasis) })
             && ({ isDefined_107(mainAxisSize) });
     if useResolvedFlexBasis {
-        if ({
-            facebook_yoga_FloatOptional::isUndefined(
-                &(*field_ptr!(
-                    ({ facebook_yoga_NodeImpl::getLayout_26(&child,) }),
-                    computedFlexBasis
+        if ((*child).with(|__n0| {
+            ({
+                facebook_yoga_FloatOptional::isUndefined(
+                    &(*({ facebook_yoga_Node::getLayout_26(__n0) })).computedFlexBasis,
                 )
-                .upgrade()
-                .deref()),
-            )
-        }) || (({
+            })
+        })) || (({
             facebook_yoga_ConfigImpl::isExperimentalFeatureEnabled(
-                &({ facebook_yoga_Node::getConfig(&(*child.upgrade().deref())) }),
+                &({ facebook_yoga_Node::getConfig(&(*(*child).upgrade().deref())) }),
                 facebook_yoga_ExperimentalFeature_WebFlexBasis,
             )
         }) && ({
-            ({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                .with(|__s| __s.computedFlexBasisGeneration)
+            (*child).with(|__n0| {
+                (*({ facebook_yoga_Node::getLayout_26(__n0) })).computedFlexBasisGeneration
+            })
         } != { generationCount }))
         {
             let mut paddingAndBorder: facebook_yoga_FloatOptional =
                 facebook_yoga_FloatOptional::new_1({
                     ({
                         paddingAndBorderForAxis_417(
-                            (child).clone(),
+                            (*child).clone(),
                             mainAxis,
                             direction,
                             ownerWidth,
@@ -11574,7 +11437,7 @@ pub fn computeFlexBasisForChild_450(
                 });
             ({
                 facebook_yoga_NodeImpl::setLayoutComputedFlexBasis(
-                    &child,
+                    &(*child),
                     ({ maxOrDefined_121((resolvedFlexBasis).clone(), (paddingAndBorder).clone()) }),
                 )
             });
@@ -11584,7 +11447,7 @@ pub fn computeFlexBasisForChild_450(
             facebook_yoga_FloatOptional::new_1({
                 ({
                     paddingAndBorderForAxis_417(
-                        (child).clone(),
+                        (*child).clone(),
                         facebook_yoga_FlexDirection_Row,
                         direction,
                         ownerWidth,
@@ -11598,7 +11461,7 @@ pub fn computeFlexBasisForChild_450(
                         let _referenceLength: f32 = ownerWidth;
                         let _ownerWidth: f32 = ownerWidth;
                         facebook_yoga_Node::getResolvedDimension(
-                            &(*child.upgrade().deref()),
+                            &(*(*child).upgrade().deref()),
                             direction,
                             facebook_yoga_Dimension_Width,
                             _referenceLength,
@@ -11608,14 +11471,14 @@ pub fn computeFlexBasisForChild_450(
                     (paddingAndBorder).clone(),
                 )
             });
-            facebook_yoga_NodeImpl::setLayoutComputedFlexBasis(&child, _computedFlexBasis)
+            facebook_yoga_NodeImpl::setLayoutComputedFlexBasis(&(*child), _computedFlexBasis)
         });
     } else if (!(isMainAxisRow)) && (isColumnStyleDimDefined) {
         let mut paddingAndBorder: facebook_yoga_FloatOptional =
             facebook_yoga_FloatOptional::new_1({
                 ({
                     paddingAndBorderForAxis_417(
-                        (child).clone(),
+                        (*child).clone(),
                         facebook_yoga_FlexDirection_Column,
                         direction,
                         ownerWidth,
@@ -11627,7 +11490,7 @@ pub fn computeFlexBasisForChild_450(
                 maxOrDefined_121(
                     ({
                         facebook_yoga_Node::getResolvedDimension(
-                            &(*child.upgrade().deref()),
+                            &(*(*child).upgrade().deref()),
                             direction,
                             facebook_yoga_Dimension_Height,
                             ownerHeight,
@@ -11637,28 +11500,28 @@ pub fn computeFlexBasisForChild_450(
                     (paddingAndBorder).clone(),
                 )
             });
-            facebook_yoga_NodeImpl::setLayoutComputedFlexBasis(&child, _computedFlexBasis)
+            facebook_yoga_NodeImpl::setLayoutComputedFlexBasis(&(*child), _computedFlexBasis)
         });
     } else {
         (*childWidthSizingMode.borrow_mut()) = facebook_yoga_SizingMode_MaxContent;
         (*childHeightSizingMode.borrow_mut()) = facebook_yoga_SizingMode_MaxContent;
-        let mut marginRow: f32 = ({
-            facebook_yoga_Style::computeMarginForAxis(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_FlexDirection_Row,
-                ownerWidth,
-            )
+        let mut marginRow: f32 = (*child).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeMarginForAxis(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    facebook_yoga_FlexDirection_Row,
+                    ownerWidth,
+                )
+            })
         });
-        let mut marginColumn: f32 = ({
-            facebook_yoga_Style::computeMarginForAxis(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_FlexDirection_Column,
-                ownerWidth,
-            )
+        let mut marginColumn: f32 = (*child).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeMarginForAxis(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    facebook_yoga_FlexDirection_Column,
+                    ownerWidth,
+                )
+            })
         });
         if isRowStyleDimDefined {
             (*childWidth.borrow_mut()) = ({
@@ -11668,7 +11531,7 @@ pub fn computeFlexBasisForChild_450(
                             let _referenceLength: f32 = ownerWidth;
                             let _ownerWidth: f32 = ownerWidth;
                             facebook_yoga_Node::getResolvedDimension(
-                                &(*child.upgrade().deref()),
+                                &(*(*child).upgrade().deref()),
                                 direction,
                                 facebook_yoga_Dimension_Width,
                                 _referenceLength,
@@ -11686,7 +11549,7 @@ pub fn computeFlexBasisForChild_450(
                     facebook_yoga_FloatOptional::unwrap(
                         &({
                             facebook_yoga_Node::getResolvedDimension(
-                                &(*child.upgrade().deref()),
+                                &(*(*child).upgrade().deref()),
                                 direction,
                                 facebook_yoga_Dimension_Height,
                                 ownerHeight,
@@ -11699,19 +11562,11 @@ pub fn computeFlexBasisForChild_450(
             (*childHeightSizingMode.borrow_mut()) = facebook_yoga_SizingMode_StretchFit;
         }
         if ((!(isMainAxisRow))
-            && (({
-                facebook_yoga_Style::overflow(
-                    &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                        .upgrade()
-                        .deref()),
-                )
+            && ((*node).with(|__n0| {
+                ({ facebook_yoga_Style::overflow(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
             }) == facebook_yoga_Overflow_Scroll))
-            || (({
-                facebook_yoga_Style::overflow(
-                    &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                        .upgrade()
-                        .deref()),
-                )
+            || ((*node).with(|__n0| {
+                ({ facebook_yoga_Style::overflow(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
             }) != facebook_yoga_Overflow_Scroll)
         {
             if ({ isUndefined_105((*childWidth.borrow())) }) && ({ isDefined_107(width) }) {
@@ -11719,35 +11574,32 @@ pub fn computeFlexBasisForChild_450(
                 (*childWidthSizingMode.borrow_mut()) = facebook_yoga_SizingMode_FitContent;
             }
         }
-        let mut parentDoesNotScroll: bool = (!((node).is_null()))
-            && (({
-                facebook_yoga_Style::overflow(
-                    &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                        .upgrade()
-                        .deref()),
-                )
+        let mut parentDoesNotScroll: bool = (!((*node).is_null()))
+            && ((*node).with(|__n0| {
+                ({ facebook_yoga_Style::overflow(&(*({ facebook_yoga_Node::style_25(__n0) }))) })
             }) != facebook_yoga_Overflow_Scroll);
         let mut applyHeightFitContent: bool = (isMainAxisRow) || (parentDoesNotScroll);
         if fixFlexBasisFitContent {
-            let mut childHadOverflow: bool = ((!((child).is_null()))
-                && ({ facebook_yoga_Node::isDirty(&(*child.upgrade().deref())) }))
-                && ({
-                    facebook_yoga_LayoutResults::hadOverflow(
-                        &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                            .upgrade()
-                            .deref()),
-                    )
-                });
-            let mut hasHeightIndependentSubtree: bool =
-                ((((((((!((node).is_null())) && (!((child).is_null()))) && (!(isMainAxisRow)))
-                    && (parentDoesNotScroll))
-                    && ({ isUndefined_105((*childHeight.borrow())) }))
-                    && ({ isDefined_107(height) }))
-                    && ({ isColumnStretchEdge_441((node).clone(), (child).clone()) }))
-                    && ({ isInColumnStretchScrollSubtree_442((node).clone()) }))
-                    && ({ canSkipHeightFitContent_448((child).clone()) });
+            let mut childHadOverflow: bool = ((!((*child).is_null()))
+                && ({ facebook_yoga_Node::isDirty(&(*(*child).upgrade().deref())) }))
+                && ((*child).with(|__n0| {
+                    ({
+                        facebook_yoga_LayoutResults::hadOverflow(
+                            &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                        )
+                    })
+                }));
+            let mut hasHeightIndependentSubtree: bool = ((((((((!((*node).is_null()))
+                && (!((*child).is_null())))
+                && (!(isMainAxisRow)))
+                && (parentDoesNotScroll))
+                && ({ isUndefined_105((*childHeight.borrow())) }))
+                && ({ isDefined_107(height) }))
+                && ({ isColumnStretchEdge_441(&(*node), &(*child)) }))
+                && ({ isInColumnStretchScrollSubtree_442(&(*node)) }))
+                && ({ canSkipHeightFitContent_448((*child).clone()) });
             if (hasHeightIndependentSubtree) && (childHadOverflow) {
-                ({ facebook_yoga_NodeImpl::setLayoutHadOverflow(&child, false) });
+                ({ facebook_yoga_NodeImpl::setLayoutHadOverflow(&(*child), false) });
             }
             if hasHeightIndependentSubtree {
                 applyHeightFitContent = false;
@@ -11759,7 +11611,8 @@ pub fn computeFlexBasisForChild_450(
             (*childHeight.borrow_mut()) = height;
             (*childHeightSizingMode.borrow_mut()) = facebook_yoga_SizingMode_FitContent;
         }
-        let childStyle: Ptr<facebook_yoga_Style> = ({ facebook_yoga_NodeImpl::style_24(&child) });
+        let childStyle: Ptr<facebook_yoga_Style> =
+            ({ facebook_yoga_NodeImpl::style_24(&(*child)) });
         if ({
             facebook_yoga_FloatOptional::isDefined(
                 &({ facebook_yoga_Style::aspectRatio(&(*childStyle.upgrade().deref())) }),
@@ -11804,7 +11657,7 @@ pub fn computeFlexBasisForChild_450(
         let mut hasExactWidth: bool =
             ({ isDefined_107(width) }) && (widthMode == facebook_yoga_SizingMode_StretchFit);
         let mut childWidthStretch: bool =
-            (({ resolveChildAlignment_413((node).clone(), (child).clone()) })
+            (({ resolveChildAlignment_413((*node).clone(), (*child).clone()) })
                 == facebook_yoga_Align_Stretch)
                 && ((*childWidthSizingMode.borrow()) != facebook_yoga_SizingMode_StretchFit);
         if (((!(isMainAxisRow)) && (!(isRowStyleDimDefined))) && (hasExactWidth))
@@ -11832,7 +11685,7 @@ pub fn computeFlexBasisForChild_450(
         let mut hasExactHeight: bool =
             ({ isDefined_107(height) }) && (heightMode == facebook_yoga_SizingMode_StretchFit);
         let mut childHeightStretch: bool =
-            (({ resolveChildAlignment_413((node).clone(), (child).clone()) })
+            (({ resolveChildAlignment_413((*node).clone(), (*child).clone()) })
                 == facebook_yoga_Align_Stretch)
                 && ((*childHeightSizingMode.borrow()) != facebook_yoga_SizingMode_StretchFit);
         if (((isMainAxisRow) && (!(isColumnStyleDimDefined))) && (hasExactHeight))
@@ -11861,7 +11714,7 @@ pub fn computeFlexBasisForChild_450(
             let _ownerAxisSize: f32 = ownerWidth;
             let _ownerWidth: f32 = ownerWidth;
             constrainMaxSizeForMode_449(
-                (child).clone(),
+                (*child).clone(),
                 direction,
                 facebook_yoga_FlexDirection_Row,
                 _ownerAxisSize,
@@ -11872,7 +11725,7 @@ pub fn computeFlexBasisForChild_450(
         });
         ({
             constrainMaxSizeForMode_449(
-                (child).clone(),
+                (*child).clone(),
                 direction,
                 facebook_yoga_FlexDirection_Column,
                 ownerHeight,
@@ -11882,7 +11735,7 @@ pub fn computeFlexBasisForChild_450(
             )
         });
         ({
-            let _node: Ptr<facebook_yoga_Node> = (child).clone();
+            let _node: Ptr<facebook_yoga_Node> = (*child).clone();
             let _availableWidth: f32 = (*childWidth.borrow());
             let _availableHeight: f32 = (*childHeight.borrow());
             let _ownerDirection: facebook_yoga_Direction = direction;
@@ -11913,17 +11766,17 @@ pub fn computeFlexBasisForChild_450(
             let _computedFlexBasis: facebook_yoga_FloatOptional =
                 facebook_yoga_FloatOptional::new_1({
                     ({
-                        let _a: f32 = ({
-                            facebook_yoga_LayoutResults::measuredDimension(
-                                &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                                    .upgrade()
-                                    .deref()),
-                                ({ dimension_136(mainAxis) }),
-                            )
+                        let _a: f32 = (*child).with(|__n0| {
+                            ({
+                                facebook_yoga_LayoutResults::measuredDimension(
+                                    &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                    ({ dimension_136(mainAxis) }),
+                                )
+                            })
                         });
                         let _b: f32 = ({
                             paddingAndBorderForAxis_417(
-                                (child).clone(),
+                                (*child).clone(),
                                 mainAxis,
                                 direction,
                                 ownerWidth,
@@ -11932,13 +11785,13 @@ pub fn computeFlexBasisForChild_450(
                         maxOrDefined_110(_a, _b)
                     })
                 });
-            facebook_yoga_NodeImpl::setLayoutComputedFlexBasis(&child, _computedFlexBasis)
+            facebook_yoga_NodeImpl::setLayoutComputedFlexBasis(&(*child), _computedFlexBasis)
         });
     }
-    ({ facebook_yoga_NodeImpl::setLayoutComputedFlexBasisGeneration(&child, generationCount) });
+    ({ facebook_yoga_NodeImpl::setLayoutComputedFlexBasisGeneration(&(*child), generationCount) });
 }
 pub fn measureNodeWithMeasureFunc_451(
-    mut node: Ptr<facebook_yoga_Node>,
+    node: &Ptr<facebook_yoga_Node>,
     mut direction: facebook_yoga_Direction,
     mut availableWidth: f32,
     mut availableHeight: f32,
@@ -11950,8 +11803,9 @@ pub fn measureNodeWithMeasureFunc_451(
     mut reason: facebook_yoga_LayoutPassReason,
 ) {
     ({
-        let _node: Ptr<facebook_yoga_Node> = (node).clone();
-        let _condition: bool = ({ facebook_yoga_Node::hasMeasureFunc(&(*node.upgrade().deref())) });
+        let _node: Ptr<facebook_yoga_Node> = (*node).clone();
+        let _condition: bool =
+            ({ facebook_yoga_Node::hasMeasureFunc(&(*(*node).upgrade().deref())) });
         assertFatalWithNode_213(
             _node,
             _condition,
@@ -11959,13 +11813,13 @@ pub fn measureNodeWithMeasureFunc_451(
         )
     });
     if (widthSizingMode == facebook_yoga_SizingMode_MaxContent) {
-        availableWidth = YGUndefined_23.with(|rc| *rc.borrow());
+        availableWidth = YGUndefined_23;
     }
     if (heightSizingMode == facebook_yoga_SizingMode_MaxContent) {
-        availableHeight = YGUndefined_23.with(|rc| *rc.borrow());
+        availableHeight = YGUndefined_23;
     }
     let layout: Ptr<facebook_yoga_LayoutResults> =
-        ({ facebook_yoga_NodeImpl::getLayout_26(&node) });
+        ({ facebook_yoga_NodeImpl::getLayout_26(&(*node)) });
     let mut paddingAndBorderAxisRow: f32 = ({
         ({
             (({
@@ -12042,7 +11896,7 @@ pub fn measureNodeWithMeasureFunc_451(
                 let _axisSize: f32 = ownerWidth;
                 let _widthSize: f32 = ownerWidth;
                 boundAxis_419(
-                    (node).clone(),
+                    (*node).clone(),
                     facebook_yoga_FlexDirection_Row,
                     direction,
                     availableWidth,
@@ -12051,7 +11905,7 @@ pub fn measureNodeWithMeasureFunc_451(
                 )
             });
             facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-                &node,
+                &(*node),
                 _measuredDimension,
                 facebook_yoga_Dimension_Width,
             )
@@ -12059,7 +11913,7 @@ pub fn measureNodeWithMeasureFunc_451(
         ({
             let _measuredDimension: f32 = ({
                 boundAxis_419(
-                    (node).clone(),
+                    (*node).clone(),
                     facebook_yoga_FlexDirection_Column,
                     direction,
                     availableHeight,
@@ -12068,17 +11922,23 @@ pub fn measureNodeWithMeasureFunc_451(
                 )
             });
             facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-                &node,
+                &(*node),
                 _measuredDimension,
                 facebook_yoga_Dimension_Height,
             )
         });
     } else {
-        ({ facebook_yoga_Event::publish_3_5(node.reinterpret_cast::<YGNode>(), None) });
+        ({ facebook_yoga_Event::publish_3_5((*node).reinterpret_cast::<YGNode>(), None) });
         let mut measuredSize: YGSize = ({
             let _widthMode: facebook_yoga_MeasureMode = ({ measureMode_102(widthSizingMode) });
             let _heightMode: facebook_yoga_MeasureMode = ({ measureMode_102(heightSizingMode) });
-            facebook_yoga_NodeImpl::measure(&node, innerWidth, _widthMode, innerHeight, _heightMode)
+            facebook_yoga_NodeImpl::measure(
+                &(*node),
+                innerWidth,
+                _widthMode,
+                innerHeight,
+                _heightMode,
+            )
         });
         {
             field!(layoutMarkerData, measureCallbacks).with_mut(|__v| *__v = *__v + 1)
@@ -12108,7 +11968,7 @@ pub fn measureNodeWithMeasureFunc_451(
                 },
             ));
             facebook_yoga_Event::publish_3_6(
-                node.reinterpret_cast::<YGNode>(),
+                (*node).reinterpret_cast::<YGNode>(),
                 _eventData.as_pointer(),
             )
         });
@@ -12117,7 +11977,7 @@ pub fn measureNodeWithMeasureFunc_451(
                 let _axisSize: f32 = ownerWidth;
                 let _widthSize: f32 = ownerWidth;
                 boundAxis_419(
-                    (node).clone(),
+                    (*node).clone(),
                     facebook_yoga_FlexDirection_Row,
                     direction,
                     if ((widthSizingMode == facebook_yoga_SizingMode_MaxContent)
@@ -12132,7 +11992,7 @@ pub fn measureNodeWithMeasureFunc_451(
                 )
             });
             facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-                &node,
+                &(*node),
                 _measuredDimension,
                 facebook_yoga_Dimension_Width,
             )
@@ -12140,7 +12000,7 @@ pub fn measureNodeWithMeasureFunc_451(
         ({
             let _measuredDimension: f32 = ({
                 boundAxis_419(
-                    (node).clone(),
+                    (*node).clone(),
                     facebook_yoga_FlexDirection_Column,
                     direction,
                     if ((heightSizingMode == facebook_yoga_SizingMode_MaxContent)
@@ -12155,7 +12015,7 @@ pub fn measureNodeWithMeasureFunc_451(
                 )
             });
             facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-                &node,
+                &(*node),
                 _measuredDimension,
                 facebook_yoga_Dimension_Height,
             )
@@ -12163,7 +12023,7 @@ pub fn measureNodeWithMeasureFunc_451(
     }
 }
 pub fn measureNodeWithoutChildren_452(
-    mut node: Ptr<facebook_yoga_Node>,
+    node: &Ptr<facebook_yoga_Node>,
     mut direction: facebook_yoga_Direction,
     mut availableWidth: f32,
     mut availableHeight: f32,
@@ -12173,7 +12033,7 @@ pub fn measureNodeWithoutChildren_452(
     mut ownerHeight: f32,
 ) {
     let layout: Ptr<facebook_yoga_LayoutResults> =
-        ({ facebook_yoga_NodeImpl::getLayout_26(&node) });
+        ({ facebook_yoga_NodeImpl::getLayout_26(&(*node)) });
     let mut width: f32 = availableWidth;
     if (widthSizingMode == facebook_yoga_SizingMode_MaxContent)
         || (widthSizingMode == facebook_yoga_SizingMode_FitContent)
@@ -12213,7 +12073,7 @@ pub fn measureNodeWithoutChildren_452(
             let _axisSize: f32 = ownerWidth;
             let _widthSize: f32 = ownerWidth;
             boundAxis_419(
-                (node).clone(),
+                (*node).clone(),
                 facebook_yoga_FlexDirection_Row,
                 direction,
                 width,
@@ -12222,7 +12082,7 @@ pub fn measureNodeWithoutChildren_452(
             )
         });
         facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-            &node,
+            &(*node),
             _measuredDimension,
             facebook_yoga_Dimension_Width,
         )
@@ -12264,7 +12124,7 @@ pub fn measureNodeWithoutChildren_452(
     ({
         let _measuredDimension: f32 = ({
             boundAxis_419(
-                (node).clone(),
+                (*node).clone(),
                 facebook_yoga_FlexDirection_Column,
                 direction,
                 height,
@@ -12273,7 +12133,7 @@ pub fn measureNodeWithoutChildren_452(
             )
         });
         facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-            &node,
+            &(*node),
             _measuredDimension,
             facebook_yoga_Dimension_Height,
         )
@@ -12286,7 +12146,7 @@ pub fn isFixedSize_453(mut dim: f32, mut sizingMode: facebook_yoga_SizingMode) -
             && ((dim as f64) <= 0_f64));
 }
 pub fn measureNodeWithFixedSize_454(
-    mut node: Ptr<facebook_yoga_Node>,
+    node: &Ptr<facebook_yoga_Node>,
     mut direction: facebook_yoga_Direction,
     mut availableWidth: f32,
     mut availableHeight: f32,
@@ -12303,7 +12163,7 @@ pub fn measureNodeWithFixedSize_454(
                 let _axisSize: f32 = ownerWidth;
                 let _widthSize: f32 = ownerWidth;
                 boundAxis_419(
-                    (node).clone(),
+                    (*node).clone(),
                     facebook_yoga_FlexDirection_Row,
                     direction,
                     if ({ isUndefined_105(availableWidth) })
@@ -12319,7 +12179,7 @@ pub fn measureNodeWithFixedSize_454(
                 )
             });
             facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-                &node,
+                &(*node),
                 _measuredDimension,
                 facebook_yoga_Dimension_Width,
             )
@@ -12327,7 +12187,7 @@ pub fn measureNodeWithFixedSize_454(
         ({
             let _measuredDimension: f32 = ({
                 boundAxis_419(
-                    (node).clone(),
+                    (*node).clone(),
                     facebook_yoga_FlexDirection_Column,
                     direction,
                     if ({ isUndefined_105(availableHeight) })
@@ -12343,7 +12203,7 @@ pub fn measureNodeWithFixedSize_454(
                 )
             });
             facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-                &node,
+                &(*node),
                 _measuredDimension,
                 facebook_yoga_Dimension_Height,
             )
@@ -12377,12 +12237,8 @@ pub fn cleanupContentsNodesRecursively_432(
                 ({ facebook_yoga_NodeImpl::getChildren(&node) });
             'loop_: for child in IterRange::new(__range3.decay(), __range3.decay().to_end()) {
                 let mut child: Ptr<facebook_yoga_Node> = (child.read());
-                if (({
-                    facebook_yoga_Style::display(
-                        &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                            .upgrade()
-                            .deref()),
-                    )
+                if (child.with(|__n0| {
+                    ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
                 }) == facebook_yoga_Display_Contents)
                 {
                     let __rhs = <facebook_yoga_LayoutResults>::default();
@@ -12423,16 +12279,16 @@ pub fn calculateAvailableInnerDimension_456(
 ) -> f32 {
     let mut availableInnerDim: f32 = (availableDim - paddingAndBorder);
     if ({ isDefined_107(availableInnerDim) }) {
-        let mut minDimensionOptional: facebook_yoga_FloatOptional = ({
-            facebook_yoga_Style::resolvedMinDimension(
-                &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                    .upgrade()
-                    .deref()),
-                direction,
-                dimension,
-                ownerDim,
-                ownerWidth,
-            )
+        let mut minDimensionOptional: facebook_yoga_FloatOptional = node.with(|__n0| {
+            ({
+                facebook_yoga_Style::resolvedMinDimension(
+                    &(*({ facebook_yoga_Node::style_25(__n0) })),
+                    direction,
+                    dimension,
+                    ownerDim,
+                    ownerWidth,
+                )
+            })
         });
         let mut minInnerDim: f32 = if ({
             facebook_yoga_FloatOptional::isUndefined(&minDimensionOptional)
@@ -12441,16 +12297,16 @@ pub fn calculateAvailableInnerDimension_456(
         } else {
             (({ facebook_yoga_FloatOptional::unwrap(&minDimensionOptional) }) - paddingAndBorder)
         };
-        let mut maxDimensionOptional: facebook_yoga_FloatOptional = ({
-            facebook_yoga_Style::resolvedMaxDimension(
-                &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                    .upgrade()
-                    .deref()),
-                direction,
-                dimension,
-                ownerDim,
-                ownerWidth,
-            )
+        let mut maxDimensionOptional: facebook_yoga_FloatOptional = node.with(|__n0| {
+            ({
+                facebook_yoga_Style::resolvedMaxDimension(
+                    &(*({ facebook_yoga_Node::style_25(__n0) })),
+                    direction,
+                    dimension,
+                    ownerDim,
+                    ownerWidth,
+                )
+            })
         });
         let mut maxInnerDim: f32 = if ({
             facebook_yoga_FloatOptional::isUndefined(&maxDimensionOptional)
@@ -12470,7 +12326,7 @@ pub fn calculateAvailableInnerDimension_456(
     return availableInnerDim;
 }
 pub fn computeFlexBasisForChildren_457(
-    mut node: Ptr<facebook_yoga_Node>,
+    node: &Ptr<facebook_yoga_Node>,
     mut availableInnerWidth: f32,
     mut availableInnerHeight: f32,
     mut ownerWidth: f32,
@@ -12487,7 +12343,7 @@ pub fn computeFlexBasisForChildren_457(
     let mut totalOuterFlexBasis: f32 = 0_f32;
     let mut singleFlexChild: Ptr<YGNode> = Ptr::<YGNode>::null();
     let children: Value<facebook_yoga_LayoutableChildren_facebook_yoga_Node_> = Rc::new(
-        RefCell::new(({ facebook_yoga_NodeImpl::getLayoutChildren(&node) })),
+        RefCell::new(({ facebook_yoga_NodeImpl::getLayoutChildren(&(*node)) })),
     );
     let mut sizingModeMainDim: facebook_yoga_SizingMode = if ({ isRow_128(mainAxis) }) {
         widthSizingMode
@@ -12576,12 +12432,8 @@ pub fn computeFlexBasisForChildren_457(
             )
         });
         ({ facebook_yoga_NodeImpl::processDimensions(&child) });
-        if (({
-            facebook_yoga_Style::display(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (child.with(|__n0| {
+            ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_Display_None)
         {
             if performLayout {
@@ -12608,12 +12460,8 @@ pub fn computeFlexBasisForChildren_457(
                 )
             });
         }
-        if (({
-            facebook_yoga_Style::positionType(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (child.with(|__n0| {
+            ({ facebook_yoga_Style::positionType(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_PositionType_Absolute)
         {
             ({
@@ -12638,8 +12486,8 @@ pub fn computeFlexBasisForChildren_457(
             });
         } else {
             ({
-                let _node: Ptr<facebook_yoga_Node> = (node).clone();
-                let _child: Ptr<facebook_yoga_Node> = (child).clone();
+                let _node: &Ptr<facebook_yoga_Node> = &(*node);
+                let _child: &Ptr<facebook_yoga_Node> = &child;
                 let _width: f32 = availableInnerWidth;
                 let _widthMode: facebook_yoga_SizingMode = widthSizingMode;
                 let _height: f32 = availableInnerHeight;
@@ -12667,25 +12515,22 @@ pub fn computeFlexBasisForChildren_457(
             });
         }
         totalOuterFlexBasis += ({
-            ({
-                facebook_yoga_FloatOptional::unwrap(
-                    &(*field_ptr!(
-                        ({ facebook_yoga_NodeImpl::getLayout_26(&child,) }),
-                        computedFlexBasis
+            child.with(|__n0| {
+                ({
+                    facebook_yoga_FloatOptional::unwrap(
+                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })).computedFlexBasis,
                     )
-                    .upgrade()
-                    .deref()),
-                )
+                })
             })
         } + {
-            ({
-                facebook_yoga_Style::computeMarginForAxis(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                    mainAxis,
-                    availableInnerWidth,
-                )
+            child.with(|__n0| {
+                ({
+                    facebook_yoga_Style::computeMarginForAxis(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        mainAxis,
+                        availableInnerWidth,
+                    )
+                })
             })
         });
         ({
@@ -12697,7 +12542,7 @@ pub fn computeFlexBasisForChildren_457(
     return totalOuterFlexBasis;
 }
 pub fn computeMinContentMainSize_458(
-    mut node: Ptr<facebook_yoga_Node>,
+    node: &Ptr<facebook_yoga_Node>,
     mut requestedAxis: facebook_yoga_FlexDirection,
     mut ownerDirection: facebook_yoga_Direction,
     mut ownerWidth: f32,
@@ -12706,82 +12551,67 @@ pub fn computeMinContentMainSize_458(
 ) -> f32 {
     let mut wantRow: bool = ({ isRow_128(requestedAxis) });
     let mut staticMin: facebook_yoga_FloatOptional = if wantRow {
-        ({ facebook_yoga_Node::getMinContentWidth(&(*node.upgrade().deref())) })
+        ({ facebook_yoga_Node::getMinContentWidth(&(*(*node).upgrade().deref())) })
     } else {
-        ({ facebook_yoga_Node::getMinContentHeight(&(*node.upgrade().deref())) })
+        ({ facebook_yoga_Node::getMinContentHeight(&(*(*node).upgrade().deref())) })
     };
     if ({ facebook_yoga_FloatOptional::isDefined(&staticMin) }) {
         return ({ facebook_yoga_FloatOptional::unwrap(&staticMin) });
     }
     let layout: Ptr<facebook_yoga_LayoutResults> =
-        ({ facebook_yoga_NodeImpl::getLayout_26(&node) });
+        ({ facebook_yoga_NodeImpl::getLayout_26(&(*node)) });
     let mut axisIndex: u8 = ({ to_underlying_47(({ dimension_136(requestedAxis) })) });
-    if ({ facebook_yoga_Node::hasMeasureFunc(&(*node.upgrade().deref())) }) {
+    if ({ facebook_yoga_Node::hasMeasureFunc(&(*(*node).upgrade().deref())) }) {
         if ({ (vec_elem!(layout, minContentGeneration, (axisIndex as usize)).read()) } != {
             generationCount
         }) {
-            let mut size: YGSize =
-                if ({ facebook_yoga_Node::hasMinContentMeasureFunc(&(*node.upgrade().deref())) }) {
-                    ({
-                        let _availableWidth: f32 = if wantRow {
-                            0_f32
-                        } else {
-                            YGUndefined_23.with(|rc| *rc.borrow())
-                        };
-                        let _widthMode: facebook_yoga_MeasureMode = if wantRow {
-                            facebook_yoga_MeasureMode_AtMost
-                        } else {
-                            facebook_yoga_MeasureMode_Undefined
-                        };
-                        let _availableHeight: f32 = if wantRow {
-                            YGUndefined_23.with(|rc| *rc.borrow())
-                        } else {
-                            0_f32
-                        };
-                        let _heightMode: facebook_yoga_MeasureMode = if wantRow {
-                            facebook_yoga_MeasureMode_Undefined
-                        } else {
-                            facebook_yoga_MeasureMode_AtMost
-                        };
-                        facebook_yoga_NodeImpl::measureMinContent(
-                            &node,
-                            _availableWidth,
-                            _widthMode,
-                            _availableHeight,
-                            _heightMode,
-                        )
-                    })
-                } else {
-                    ({
-                        let _availableWidth: f32 = if wantRow {
-                            0_f32
-                        } else {
-                            YGUndefined_23.with(|rc| *rc.borrow())
-                        };
-                        let _widthMode: facebook_yoga_MeasureMode = if wantRow {
-                            facebook_yoga_MeasureMode_AtMost
-                        } else {
-                            facebook_yoga_MeasureMode_Undefined
-                        };
-                        let _availableHeight: f32 = if wantRow {
-                            YGUndefined_23.with(|rc| *rc.borrow())
-                        } else {
-                            0_f32
-                        };
-                        let _heightMode: facebook_yoga_MeasureMode = if wantRow {
-                            facebook_yoga_MeasureMode_Undefined
-                        } else {
-                            facebook_yoga_MeasureMode_AtMost
-                        };
-                        facebook_yoga_NodeImpl::measure(
-                            &node,
-                            _availableWidth,
-                            _widthMode,
-                            _availableHeight,
-                            _heightMode,
-                        )
-                    })
-                };
+            let mut size: YGSize = if ({
+                facebook_yoga_Node::hasMinContentMeasureFunc(&(*(*node).upgrade().deref()))
+            }) {
+                ({
+                    let _availableWidth: f32 = if wantRow { 0_f32 } else { YGUndefined_23 };
+                    let _widthMode: facebook_yoga_MeasureMode = if wantRow {
+                        facebook_yoga_MeasureMode_AtMost
+                    } else {
+                        facebook_yoga_MeasureMode_Undefined
+                    };
+                    let _availableHeight: f32 = if wantRow { YGUndefined_23 } else { 0_f32 };
+                    let _heightMode: facebook_yoga_MeasureMode = if wantRow {
+                        facebook_yoga_MeasureMode_Undefined
+                    } else {
+                        facebook_yoga_MeasureMode_AtMost
+                    };
+                    facebook_yoga_NodeImpl::measureMinContent(
+                        &(*node),
+                        _availableWidth,
+                        _widthMode,
+                        _availableHeight,
+                        _heightMode,
+                    )
+                })
+            } else {
+                ({
+                    let _availableWidth: f32 = if wantRow { 0_f32 } else { YGUndefined_23 };
+                    let _widthMode: facebook_yoga_MeasureMode = if wantRow {
+                        facebook_yoga_MeasureMode_AtMost
+                    } else {
+                        facebook_yoga_MeasureMode_Undefined
+                    };
+                    let _availableHeight: f32 = if wantRow { YGUndefined_23 } else { 0_f32 };
+                    let _heightMode: facebook_yoga_MeasureMode = if wantRow {
+                        facebook_yoga_MeasureMode_Undefined
+                    } else {
+                        facebook_yoga_MeasureMode_AtMost
+                    };
+                    facebook_yoga_NodeImpl::measure(
+                        &(*node),
+                        _availableWidth,
+                        _widthMode,
+                        _availableHeight,
+                        _heightMode,
+                    )
+                })
+            };
             vec_elem!(layout, minContent, (axisIndex as usize)).write(if wantRow {
                 size.width
             } else {
@@ -12790,35 +12620,35 @@ pub fn computeMinContentMainSize_458(
             vec_elem!(layout, minContentGeneration, (axisIndex as usize)).write(generationCount);
         }
         let mut leafDirection: facebook_yoga_Direction =
-            ({ facebook_yoga_NodeImpl::resolveDirection(&node, ownerDirection) });
+            ({ facebook_yoga_NodeImpl::resolveDirection(&(*node), ownerDirection) });
         let mut paddingAndBorder: f32 = ({
-            ({
-                facebook_yoga_Style::computeFlexStartPaddingAndBorder(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                        .upgrade()
-                        .deref()),
-                    requestedAxis,
-                    leafDirection,
-                    ownerWidth,
-                )
+            (*node).with(|__n0| {
+                ({
+                    facebook_yoga_Style::computeFlexStartPaddingAndBorder(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        requestedAxis,
+                        leafDirection,
+                        ownerWidth,
+                    )
+                })
             })
         } + {
-            ({
-                facebook_yoga_Style::computeFlexEndPaddingAndBorder(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                        .upgrade()
-                        .deref()),
-                    requestedAxis,
-                    leafDirection,
-                    ownerWidth,
-                )
+            (*node).with(|__n0| {
+                ({
+                    facebook_yoga_Style::computeFlexEndPaddingAndBorder(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        requestedAxis,
+                        leafDirection,
+                        ownerWidth,
+                    )
+                })
             })
         });
         return ({ (vec_elem!(layout, minContent, (axisIndex as usize)).read()) } + {
             paddingAndBorder
         });
     }
-    if (({ facebook_yoga_Node::getChildCount(&(*node.upgrade().deref())) }) == 0_usize) {
+    if (({ facebook_yoga_Node::getChildCount(&(*(*node).upgrade().deref())) }) == 0_usize) {
         return 0_f32;
     }
     if ({ (vec_elem!(layout, minContentGeneration, (axisIndex as usize)).read()) } == {
@@ -12832,15 +12662,13 @@ pub fn computeMinContentMainSize_458(
         return (vec_elem!(layout, minContent, (axisIndex as usize)).read());
     }
     let mut direction: facebook_yoga_Direction =
-        ({ facebook_yoga_NodeImpl::resolveDirection(&node, ownerDirection) });
+        ({ facebook_yoga_NodeImpl::resolveDirection(&(*node), ownerDirection) });
     let mut nodeMainAxis: facebook_yoga_FlexDirection = ({
         resolveDirection_130(
-            ({
-                facebook_yoga_Style::flexDirection(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                        .upgrade()
-                        .deref()),
-                )
+            (*node).with(|__n0| {
+                ({
+                    facebook_yoga_Style::flexDirection(&(*({ facebook_yoga_Node::style_24(__n0) })))
+                })
             }),
             direction,
         )
@@ -12848,24 +12676,20 @@ pub fn computeMinContentMainSize_458(
     let mut nodeCrossAxis: facebook_yoga_FlexDirection =
         ({ resolveCrossDirection_131(nodeMainAxis, direction) });
     let mut mainTotal: f32 = 0_f32;
-    let crossMax: Value<f32> = Rc::new(RefCell::new(0_f32));
+    let mut crossMax: f32 = 0_f32;
     let mut i: usize = 0_usize;
-    'loop_: while ({ i } < { ({ facebook_yoga_Node::getChildCount(&(*node.upgrade().deref())) }) })
-    {
-        let mut child: Ptr<facebook_yoga_Node> = ({ facebook_yoga_NodeImpl::getChild(&node, i) });
-        if (({
-            facebook_yoga_Style::display(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-            )
+    'loop_: while ({ i } < {
+        ({ facebook_yoga_Node::getChildCount(&(*(*node).upgrade().deref())) })
+    }) {
+        let mut child: Ptr<facebook_yoga_Node> =
+            ({ facebook_yoga_Node::getChild(&(*(*node).upgrade().deref()), i) });
+        if (child.with(|__n0| {
+            ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_Display_None)
-            || (({
-                facebook_yoga_Style::positionType(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                )
+            || (child.with(|__n0| {
+                ({
+                    facebook_yoga_Style::positionType(&(*({ facebook_yoga_Node::style_24(__n0) })))
+                })
             }) == facebook_yoga_PositionType_Absolute)
         {
             i.postfix_inc();
@@ -12873,7 +12697,7 @@ pub fn computeMinContentMainSize_458(
         }
         let mut childMain: f32 = ({
             computeMinContentMainSize_458(
-                (child).clone(),
+                &child,
                 nodeMainAxis,
                 direction,
                 ownerWidth,
@@ -12881,103 +12705,92 @@ pub fn computeMinContentMainSize_458(
                 generationCount,
             )
         });
-        childMain += ({
-            facebook_yoga_Style::computeMarginForAxis(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                nodeMainAxis,
+        childMain += child.with(|__n0| {
+            ({
+                facebook_yoga_Style::computeMarginForAxis(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    nodeMainAxis,
+                    ownerWidth,
+                )
+            })
+        });
+        let mut childCross: f32 = ({
+            computeMinContentMainSize_458(
+                &child,
+                nodeCrossAxis,
+                direction,
                 ownerWidth,
+                ownerHeight,
+                generationCount,
             )
         });
-        let childCross: Value<f32> = Rc::new(RefCell::new(
+        childCross += child.with(|__n0| {
             ({
-                computeMinContentMainSize_458(
-                    (child).clone(),
+                facebook_yoga_Style::computeMarginForAxis(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
                     nodeCrossAxis,
-                    direction,
                     ownerWidth,
-                    ownerHeight,
-                    generationCount,
                 )
-            }),
-        ));
-        (*childCross.borrow_mut()) += ({
-            facebook_yoga_Style::computeMarginForAxis(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                nodeCrossAxis,
-                ownerWidth,
-            )
+            })
         });
         mainTotal += childMain;
         let __rhs = ({
-            let __a = crossMax.as_pointer();
-            let __b = childCross.as_pointer();
-            if CppLess::less(&__a, &__b) { __b } else { __a }
-        }
-        .read());
-        (*crossMax.borrow_mut()) = __rhs;
+            let __a = crossMax;
+            let __b = childCross;
+            if __a < __b { __b } else { __a }
+        });
+        crossMax = __rhs;
         i.postfix_inc();
     }
     mainTotal += ({
-        ({
-            facebook_yoga_Style::computeFlexStartPaddingAndBorder(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                nodeMainAxis,
-                direction,
-                ownerWidth,
-            )
+        (*node).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeFlexStartPaddingAndBorder(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    nodeMainAxis,
+                    direction,
+                    ownerWidth,
+                )
+            })
         })
     } + {
-        ({
-            facebook_yoga_Style::computeFlexEndPaddingAndBorder(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                nodeMainAxis,
-                direction,
-                ownerWidth,
-            )
+        (*node).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeFlexEndPaddingAndBorder(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    nodeMainAxis,
+                    direction,
+                    ownerWidth,
+                )
+            })
         })
     });
-    (*crossMax.borrow_mut()) += ({
-        ({
-            facebook_yoga_Style::computeFlexStartPaddingAndBorder(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                nodeCrossAxis,
-                direction,
-                ownerWidth,
-            )
+    crossMax += ({
+        (*node).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeFlexStartPaddingAndBorder(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    nodeCrossAxis,
+                    direction,
+                    ownerWidth,
+                )
+            })
         })
     } + {
-        ({
-            facebook_yoga_Style::computeFlexEndPaddingAndBorder(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                nodeCrossAxis,
-                direction,
-                ownerWidth,
-            )
+        (*node).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeFlexEndPaddingAndBorder(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    nodeCrossAxis,
+                    direction,
+                    ownerWidth,
+                )
+            })
         })
     });
     let mut nodeMainIsRow: bool = ({ isRow_128(nodeMainAxis) });
-    let mut widthMin: f32 = if nodeMainIsRow {
-        mainTotal
-    } else {
-        (*crossMax.borrow())
-    };
-    let mut heightMin: f32 = if nodeMainIsRow {
-        (*crossMax.borrow())
-    } else {
-        mainTotal
-    };
+    let mut widthMin: f32 = if nodeMainIsRow { mainTotal } else { crossMax };
+    let mut heightMin: f32 = if nodeMainIsRow { crossMax } else { mainTotal };
     let mut minContent: f32 = if wantRow { widthMin } else { heightMin };
     vec_elem!(layout, minContent, (axisIndex as usize)).write(minContent);
     vec_elem!(layout, minContentOwnerWidth, (axisIndex as usize)).write(ownerWidth);
@@ -12985,7 +12798,7 @@ pub fn computeMinContentMainSize_458(
     return minContent;
 }
 pub fn computeAutoMinMainSize_459(
-    mut child: Ptr<facebook_yoga_Node>,
+    child: &Ptr<facebook_yoga_Node>,
     mut mainAxis: facebook_yoga_FlexDirection,
     mut direction: facebook_yoga_Direction,
     mut ownerMainAxisSize: f32,
@@ -12995,42 +12808,34 @@ pub fn computeAutoMinMainSize_459(
 ) -> facebook_yoga_FloatOptional {
     if ({
         facebook_yoga_NodeImpl::hasErrata(
-            &child,
+            &(*child),
             facebook_yoga_Errata_MinSizeUndefinedInsteadOfAuto,
         )
     }) {
         return <facebook_yoga_FloatOptional>::default();
     }
-    if (({
-        facebook_yoga_Style::display(
-            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                .upgrade()
-                .deref()),
-        )
+    if ((*child).with(|__n0| {
+        ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
     }) == facebook_yoga_Display_None)
     {
         return <facebook_yoga_FloatOptional>::default();
     }
     if ({
         facebook_yoga_StyleSizeLength::isDefined(
-            &({
-                facebook_yoga_Style::minDimension(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                    ({ dimension_136(mainAxis) }),
-                )
-            }),
+            &((*child).with(|__n0| {
+                ({
+                    facebook_yoga_Style::minDimension(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        ({ dimension_136(mainAxis) }),
+                    )
+                })
+            })),
         )
     }) {
         return <facebook_yoga_FloatOptional>::default();
     }
-    if (({
-        facebook_yoga_Style::overflow(
-            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                .upgrade()
-                .deref()),
-        )
+    if ((*child).with(|__n0| {
+        ({ facebook_yoga_Style::overflow(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
     }) != facebook_yoga_Overflow_Visible)
     {
         return facebook_yoga_FloatOptional::new_1({ 0_f32 });
@@ -13044,7 +12849,7 @@ pub fn computeAutoMinMainSize_459(
     let mut isMainAxisRow: bool = ({ isRow_128(mainAxis) });
     let mut specifiedMain: facebook_yoga_FloatOptional = ({
         facebook_yoga_Node::getResolvedDimension(
-            &(*child.upgrade().deref()),
+            &(*(*child).upgrade().deref()),
             direction,
             mainDim,
             ownerMainAxisSize,
@@ -13052,12 +12857,8 @@ pub fn computeAutoMinMainSize_459(
         )
     });
     let mut transferredMain: facebook_yoga_FloatOptional = <facebook_yoga_FloatOptional>::default();
-    let mut aspectRatio: facebook_yoga_FloatOptional = ({
-        facebook_yoga_Style::aspectRatio(
-            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                .upgrade()
-                .deref()),
-        )
+    let mut aspectRatio: facebook_yoga_FloatOptional = (*child).with(|__n0| {
+        ({ facebook_yoga_Style::aspectRatio(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
     });
     if ({ facebook_yoga_FloatOptional::isDefined(&aspectRatio) }) {
         let mut crossOwner: f32 = if isMainAxisRow {
@@ -13067,7 +12868,7 @@ pub fn computeAutoMinMainSize_459(
         };
         let mut crossResolved: facebook_yoga_FloatOptional = ({
             facebook_yoga_Node::getResolvedDimension(
-                &(*child.upgrade().deref()),
+                &(*(*child).upgrade().deref()),
                 direction,
                 crossDim,
                 crossOwner,
@@ -13089,7 +12890,7 @@ pub fn computeAutoMinMainSize_459(
     let mut contentMain: facebook_yoga_FloatOptional = facebook_yoga_FloatOptional::new_1({
         ({
             computeMinContentMainSize_458(
-                (child).clone(),
+                &(*child),
                 mainAxis,
                 direction,
                 ownerWidth,
@@ -13118,16 +12919,16 @@ pub fn computeAutoMinMainSize_459(
             floor = (transferredMain).clone();
         }
     }
-    let mut maxMain: facebook_yoga_FloatOptional = ({
-        facebook_yoga_Style::resolvedMaxDimension(
-            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                .upgrade()
-                .deref()),
-            direction,
-            mainDim,
-            ownerMainAxisSize,
-            ownerWidth,
-        )
+    let mut maxMain: facebook_yoga_FloatOptional = (*child).with(|__n0| {
+        ({
+            facebook_yoga_Style::resolvedMaxDimension(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                direction,
+                mainDim,
+                ownerMainAxisSize,
+                ownerWidth,
+            )
+        })
     });
     if ({ facebook_yoga_FloatOptional::isDefined(&maxMain) })
         && ({
@@ -13145,18 +12946,28 @@ pub fn computeAutoMinMainSize_459(
     return floor;
 }
 pub fn boundAxisWithAutoMin_460(
-    mut child: Ptr<facebook_yoga_Node>,
+    child: &Ptr<facebook_yoga_Node>,
     mut axis: facebook_yoga_FlexDirection,
     mut direction: facebook_yoga_Direction,
     mut value: f32,
     mut axisSize: f32,
     mut widthSize: f32,
 ) -> f32 {
-    let mut bounded: f32 =
-        ({ boundAxis_419((child).clone(), axis, direction, value, axisSize, widthSize) });
-    let mut autoMin: facebook_yoga_FloatOptional =
-        ({ facebook_yoga_NodeImpl::getLayout_27(&child) })
-            .with(|__s| __s.computedAutoMinMainSize.clone());
+    let mut bounded: f32 = ({
+        boundAxis_419(
+            (*child).clone(),
+            axis,
+            direction,
+            value,
+            axisSize,
+            widthSize,
+        )
+    });
+    let mut autoMin: facebook_yoga_FloatOptional = (*child).with(|__n0| {
+        (*({ facebook_yoga_Node::getLayout_27(__n0) }))
+            .computedAutoMinMainSize
+            .clone()
+    });
     if ({ facebook_yoga_FloatOptional::isDefined(&autoMin) })
         && (bounded < ({ facebook_yoga_FloatOptional::unwrap(&autoMin) }))
     {
@@ -13166,7 +12977,7 @@ pub fn boundAxisWithAutoMin_460(
 }
 pub fn distributeFreeSpaceSecondPass_461(
     flexLine: Ptr<facebook_yoga_FlexLine>,
-    mut node: Ptr<facebook_yoga_Node>,
+    node: &Ptr<facebook_yoga_Node>,
     mut mainAxis: facebook_yoga_FlexDirection,
     mut crossAxis: facebook_yoga_FlexDirection,
     mut direction: facebook_yoga_Direction,
@@ -13188,12 +12999,8 @@ pub fn distributeFreeSpaceSecondPass_461(
     let mut flexGrowFactor: f32 = 0_f32;
     let mut deltaFreeSpace: f32 = 0_f32;
     let mut isMainAxisRow: bool = ({ isRow_128(mainAxis) });
-    let mut isNodeFlexWrap: bool = (({
-        facebook_yoga_Style::flexWrap(
-            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                .upgrade()
-                .deref()),
-        )
+    let mut isNodeFlexWrap: bool = ((*node).with(|__n0| {
+        ({ facebook_yoga_Style::flexWrap(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
     }) != facebook_yoga_Wrap_NoWrap);
     'loop_: for currentLineChild in IterRange::new(
         field_ref!(flexLine, itemsInFlow).decay(),
@@ -13204,9 +13011,11 @@ pub fn distributeFreeSpaceSecondPass_461(
             facebook_yoga_FloatOptional::unwrap(
                 &({
                     let _node: Ptr<facebook_yoga_Node> = (currentLineChild).clone();
-                    let _value: facebook_yoga_FloatOptional =
-                        ({ facebook_yoga_NodeImpl::getLayout_26(&currentLineChild) })
-                            .with(|__s| __s.computedFlexBasis.clone());
+                    let _value: facebook_yoga_FloatOptional = currentLineChild.with(|__n0| {
+                        (*({ facebook_yoga_Node::getLayout_26(__n0) }))
+                            .computedFlexBasis
+                            .clone()
+                    });
                     boundAxisWithinMinAndMax_418(
                         _node,
                         direction,
@@ -13226,7 +13035,7 @@ pub fn distributeFreeSpaceSecondPass_461(
                 -({ facebook_yoga_NodeImpl::resolveFlexShrink(&currentLineChild) })
             } * { childFlexBasis });
             if (flexShrinkScaledFactor != 0_f32) {
-                let mut childSize: f32 = YGUndefined_23.with(|rc| *rc.borrow());
+                let mut childSize: f32 = YGUndefined_23;
                 let mut shrinkFactorMagnitude: f32 = flexLine
                     .with(|__s| __s.layout.totalFlexShrinkScaledFactors)
                     .abs();
@@ -13246,7 +13055,7 @@ pub fn distributeFreeSpaceSecondPass_461(
                 }
                 updatedMainSize = ({
                     boundAxisWithAutoMin_460(
-                        (currentLineChild).clone(),
+                        &currentLineChild,
                         mainAxis,
                         direction,
                         childSize,
@@ -13262,7 +13071,7 @@ pub fn distributeFreeSpaceSecondPass_461(
             if (!(flexGrowFactor.is_nan())) && (flexGrowFactor != 0_f32) {
                 updatedMainSize = ({
                     boundAxisWithAutoMin_460(
-                        (currentLineChild).clone(),
+                        &currentLineChild,
                         mainAxis,
                         direction,
                         ({ childFlexBasis } + {
@@ -13279,26 +13088,25 @@ pub fn distributeFreeSpaceSecondPass_461(
             }
         }
         deltaFreeSpace += (updatedMainSize - childFlexBasis);
-        let mut marginMain: f32 = ({
-            facebook_yoga_Style::computeMarginForAxis(
-                &(*({ facebook_yoga_NodeImpl::style_24(&currentLineChild) })
-                    .upgrade()
-                    .deref()),
-                mainAxis,
-                availableInnerWidth,
-            )
+        let mut marginMain: f32 = currentLineChild.with(|__n0| {
+            ({
+                facebook_yoga_Style::computeMarginForAxis(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    mainAxis,
+                    availableInnerWidth,
+                )
+            })
         });
-        let mut marginCross: f32 = ({
-            facebook_yoga_Style::computeMarginForAxis(
-                &(*({ facebook_yoga_NodeImpl::style_24(&currentLineChild) })
-                    .upgrade()
-                    .deref()),
-                crossAxis,
-                availableInnerWidth,
-            )
+        let mut marginCross: f32 = currentLineChild.with(|__n0| {
+            ({
+                facebook_yoga_Style::computeMarginForAxis(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    crossAxis,
+                    availableInnerWidth,
+                )
+            })
         });
-        let childCrossSize: Value<f32> =
-            Rc::new(RefCell::new(YGUndefined_23.with(|rc| *rc.borrow())));
+        let childCrossSize: Value<f32> = Rc::new(RefCell::new(YGUndefined_23));
         let childMainSize: Value<f32> = Rc::new(RefCell::new((updatedMainSize + marginMain)));
         let childCrossSizingMode: Value<facebook_yoga_SizingMode> =
             <Value<facebook_yoga_SizingMode>>::default();
@@ -13344,26 +13152,26 @@ pub fn distributeFreeSpaceSecondPass_461(
             })))
             && (sizingModeCrossDim == facebook_yoga_SizingMode_StretchFit))
             && (!((isNodeFlexWrap) && (mainAxisOverflows))))
-            && (({ resolveChildAlignment_413((node).clone(), (currentLineChild).clone()) })
+            && (({ resolveChildAlignment_413((*node).clone(), (currentLineChild).clone()) })
                 == facebook_yoga_Align_Stretch))
-            && (!({
-                facebook_yoga_Style::flexStartMarginIsAuto(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&currentLineChild) })
-                        .upgrade()
-                        .deref()),
-                    crossAxis,
-                    direction,
-                )
+            && (!(currentLineChild.with(|__n0| {
+                ({
+                    facebook_yoga_Style::flexStartMarginIsAuto(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        crossAxis,
+                        direction,
+                    )
+                })
+            }))))
+            && (!(currentLineChild.with(|__n0| {
+                ({
+                    facebook_yoga_Style::flexEndMarginIsAuto(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        crossAxis,
+                        direction,
+                    )
+                })
             })))
-            && (!({
-                facebook_yoga_Style::flexEndMarginIsAuto(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&currentLineChild) })
-                        .upgrade()
-                        .deref()),
-                    crossAxis,
-                    direction,
-                )
-            }))
         {
             (*childCrossSize.borrow_mut()) = availableInnerCrossDim;
             (*childCrossSizingMode.borrow_mut()) = facebook_yoga_SizingMode_StretchFit;
@@ -13446,26 +13254,26 @@ pub fn distributeFreeSpaceSecondPass_461(
                 availableInnerCrossDim,
             )
         })) && (({
-            resolveChildAlignment_413((node).clone(), (currentLineChild).clone())
+            resolveChildAlignment_413((*node).clone(), (currentLineChild).clone())
         }) == facebook_yoga_Align_Stretch))
-            && (!({
-                facebook_yoga_Style::flexStartMarginIsAuto(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&currentLineChild) })
-                        .upgrade()
-                        .deref()),
-                    crossAxis,
-                    direction,
-                )
-            })))
-            && (!({
-                facebook_yoga_Style::flexEndMarginIsAuto(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&currentLineChild) })
-                        .upgrade()
-                        .deref()),
-                    crossAxis,
-                    direction,
-                )
-            }));
+            && (!(currentLineChild.with(|__n0| {
+                ({
+                    facebook_yoga_Style::flexStartMarginIsAuto(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        crossAxis,
+                        direction,
+                    )
+                })
+            }))))
+            && (!(currentLineChild.with(|__n0| {
+                ({
+                    facebook_yoga_Style::flexEndMarginIsAuto(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        crossAxis,
+                        direction,
+                    )
+                })
+            })));
         let mut childWidth: f32 = if isMainAxisRow {
             (*childMainSize.borrow())
         } else {
@@ -13491,12 +13299,12 @@ pub fn distributeFreeSpaceSecondPass_461(
             let _node: Ptr<facebook_yoga_Node> = (currentLineChild).clone();
             let _availableWidth: f32 = childWidth;
             let _availableHeight: f32 = childHeight;
-            let _ownerDirection: facebook_yoga_Direction = ({
-                facebook_yoga_LayoutResults::direction(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&node) })
-                        .upgrade()
-                        .deref()),
-                )
+            let _ownerDirection: facebook_yoga_Direction = (*node).with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::direction(
+                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                    )
+                })
             });
             let _widthSizingMode: facebook_yoga_SizingMode = childWidthSizingMode;
             let _heightSizingMode: facebook_yoga_SizingMode = childHeightSizingMode;
@@ -13528,26 +13336,26 @@ pub fn distributeFreeSpaceSecondPass_461(
             )
         });
         ({
-            let _hadOverflow: bool = ({
-                facebook_yoga_LayoutResults::hadOverflow(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&node) })
-                        .upgrade()
-                        .deref()),
-                )
-            }) || ({
-                facebook_yoga_LayoutResults::hadOverflow(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&currentLineChild) })
-                        .upgrade()
-                        .deref()),
-                )
-            });
-            facebook_yoga_NodeImpl::setLayoutHadOverflow(&node, _hadOverflow)
+            let _hadOverflow: bool = ((*node).with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::hadOverflow(
+                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                    )
+                })
+            })) || (currentLineChild.with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::hadOverflow(
+                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                    )
+                })
+            }));
+            facebook_yoga_NodeImpl::setLayoutHadOverflow(&(*node), _hadOverflow)
         });
     }
     return deltaFreeSpace;
 }
 pub fn distributeFreeSpaceFirstPass_462(
-    mut node: Ptr<facebook_yoga_Node>,
+    node: &Ptr<facebook_yoga_Node>,
     flexLine: Ptr<facebook_yoga_FlexLine>,
     mut direction: facebook_yoga_Direction,
     mut mainAxis: facebook_yoga_FlexDirection,
@@ -13563,7 +13371,7 @@ pub fn distributeFreeSpaceFirstPass_462(
     let mut deltaFreeSpace: f32 = 0_f32;
     let mut useRunningTotals: bool = ({
         facebook_yoga_NodeImpl::hasErrata(
-            &node,
+            &(*node),
             facebook_yoga_Errata_FlexFirstPassUsesRunningTotals,
         )
     });
@@ -13580,9 +13388,11 @@ pub fn distributeFreeSpaceFirstPass_462(
             facebook_yoga_FloatOptional::unwrap(
                 &({
                     let _node: Ptr<facebook_yoga_Node> = (currentLineChild).clone();
-                    let _value: facebook_yoga_FloatOptional =
-                        ({ facebook_yoga_NodeImpl::getLayout_26(&currentLineChild) })
-                            .with(|__s| __s.computedFlexBasis.clone());
+                    let _value: facebook_yoga_FloatOptional = currentLineChild.with(|__n0| {
+                        (*({ facebook_yoga_Node::getLayout_26(__n0) }))
+                            .computedFlexBasis
+                            .clone()
+                    });
                     boundAxisWithinMinAndMax_418(
                         _node,
                         direction,
@@ -13612,7 +13422,7 @@ pub fn distributeFreeSpaceFirstPass_462(
                 });
                 boundMainSize = ({
                     boundAxisWithAutoMin_460(
-                        (currentLineChild).clone(),
+                        &currentLineChild,
                         mainAxis,
                         direction,
                         baseMainSize,
@@ -13628,17 +13438,13 @@ pub fn distributeFreeSpaceFirstPass_462(
                         let __rhs = ({
                             -({ facebook_yoga_NodeImpl::resolveFlexShrink(&currentLineChild) })
                         } * {
-                            ({
-                                facebook_yoga_FloatOptional::unwrap(
-                                    &(*field_ptr!(
-                                        ({
-                                            facebook_yoga_NodeImpl::getLayout_26(&currentLineChild)
-                                        }),
-                                        computedFlexBasis
+                            currentLineChild.with(|__n0| {
+                                ({
+                                    facebook_yoga_FloatOptional::unwrap(
+                                        &(*({ facebook_yoga_Node::getLayout_26(__n0) }))
+                                            .computedFlexBasis,
                                     )
-                                    .upgrade()
-                                    .deref()),
-                                )
+                                })
                             })
                         });
                         field!(field!(flexLine, layout), totalFlexShrinkScaledFactors)
@@ -13691,7 +13497,7 @@ pub fn distributeFreeSpaceFirstPass_462(
     };
 }
 pub fn resolveFlexibleLength_463(
-    mut node: Ptr<facebook_yoga_Node>,
+    node: &Ptr<facebook_yoga_Node>,
     flexLine: Ptr<facebook_yoga_FlexLine>,
     mut mainAxis: facebook_yoga_FlexDirection,
     mut crossAxis: facebook_yoga_FlexDirection,
@@ -13711,7 +13517,10 @@ pub fn resolveFlexibleLength_463(
 ) {
     let mut originalFreeSpace: f32 = flexLine.with(|__s| __s.layout.remainingFreeSpace);
     if !({
-        facebook_yoga_NodeImpl::hasErrata(&node, facebook_yoga_Errata_MinSizeUndefinedInsteadOfAuto)
+        facebook_yoga_NodeImpl::hasErrata(
+            &(*node),
+            facebook_yoga_Errata_MinSizeUndefinedInsteadOfAuto,
+        )
     }) {
         'loop_: for currentLineChild in IterRange::new(
             field_ref!(flexLine, itemsInFlow).decay(),
@@ -13720,7 +13529,7 @@ pub fn resolveFlexibleLength_463(
             let mut currentLineChild: Ptr<facebook_yoga_Node> = (currentLineChild.read());
             let __rhs = ({
                 computeAutoMinMainSize_459(
-                    (currentLineChild).clone(),
+                    &currentLineChild,
                     mainAxis,
                     direction,
                     mainAxisOwnerSize,
@@ -13750,7 +13559,7 @@ pub fn resolveFlexibleLength_463(
         }
     }
     ({
-        let _node: Ptr<facebook_yoga_Node> = (node).clone();
+        let _node: &Ptr<facebook_yoga_Node> = &(*node);
         let _flexLine: Ptr<facebook_yoga_FlexLine> = (flexLine).clone();
         let _direction: facebook_yoga_Direction = direction;
         let _mainAxis: facebook_yoga_FlexDirection = mainAxis;
@@ -13771,7 +13580,7 @@ pub fn resolveFlexibleLength_463(
     });
     let mut distributedFreeSpace: f32 = ({
         let _flexLine: Ptr<facebook_yoga_FlexLine> = (flexLine).clone();
-        let _node: Ptr<facebook_yoga_Node> = (node).clone();
+        let _node: &Ptr<facebook_yoga_Node> = &(*node);
         let _mainAxis: facebook_yoga_FlexDirection = mainAxis;
         let _crossAxis: facebook_yoga_FlexDirection = crossAxis;
         let _direction: facebook_yoga_Direction = direction;
@@ -13811,7 +13620,7 @@ pub fn resolveFlexibleLength_463(
         .write((originalFreeSpace - distributedFreeSpace));
 }
 pub fn justifyMainAxis_464(
-    mut node: Ptr<facebook_yoga_Node>,
+    node: &Ptr<facebook_yoga_Node>,
     flexLine: Ptr<facebook_yoga_FlexLine>,
     mut mainAxis: facebook_yoga_FlexDirection,
     mut crossAxis: facebook_yoga_FlexDirection,
@@ -13825,35 +13634,35 @@ pub fn justifyMainAxis_464(
     mut availableInnerWidth: f32,
     mut performLayout: bool,
 ) {
-    let style: Ptr<facebook_yoga_Style> = ({ facebook_yoga_NodeImpl::style_24(&node) });
-    let mut leadingPaddingAndBorderMain: f32 = ({
-        facebook_yoga_Style::computeFlexStartPaddingAndBorder(
-            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                .upgrade()
-                .deref()),
-            mainAxis,
-            direction,
-            ownerWidth,
-        )
+    let style: Ptr<facebook_yoga_Style> = ({ facebook_yoga_NodeImpl::style_24(&(*node)) });
+    let mut leadingPaddingAndBorderMain: f32 = (*node).with(|__n0| {
+        ({
+            facebook_yoga_Style::computeFlexStartPaddingAndBorder(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                mainAxis,
+                direction,
+                ownerWidth,
+            )
+        })
     });
-    let mut trailingPaddingAndBorderMain: f32 = ({
-        facebook_yoga_Style::computeFlexEndPaddingAndBorder(
-            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                .upgrade()
-                .deref()),
-            mainAxis,
-            direction,
-            ownerWidth,
-        )
+    let mut trailingPaddingAndBorderMain: f32 = (*node).with(|__n0| {
+        ({
+            facebook_yoga_Style::computeFlexEndPaddingAndBorder(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                mainAxis,
+                direction,
+                ownerWidth,
+            )
+        })
     });
-    let mut gap: f32 = ({
-        facebook_yoga_Style::computeGapForAxis(
-            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                .upgrade()
-                .deref()),
-            mainAxis,
-            availableInnerMainDim,
-        )
+    let mut gap: f32 = (*node).with(|__n0| {
+        ({
+            facebook_yoga_Style::computeGapForAxis(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                mainAxis,
+                availableInnerMainDim,
+            )
+        })
     });
     if (sizingModeMainDim == facebook_yoga_SizingMode_FitContent)
         && (flexLine.with(|__s| __s.layout.remainingFreeSpace) > 0_f32)
@@ -13915,28 +13724,24 @@ pub fn justifyMainAxis_464(
     }
     let mut leadingMainDim: f32 = 0_f32;
     let mut betweenMainDim: f32 = gap;
-    let mut justifyContent: facebook_yoga_Justify =
-        if (flexLine.with(|__s| __s.layout.remainingFreeSpace) >= 0_f32) {
-            ({
-                facebook_yoga_Style::justifyContent(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                        .upgrade()
-                        .deref()),
-                )
-            })
-        } else {
-            ({
-                fallbackAlignment_416(
-                    ({
-                        facebook_yoga_Style::justifyContent(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                                .upgrade()
-                                .deref()),
-                        )
-                    }),
-                )
-            })
-        };
+    let mut justifyContent: facebook_yoga_Justify = if (flexLine
+        .with(|__s| __s.layout.remainingFreeSpace)
+        >= 0_f32)
+    {
+        (*node).with(|__n0| {
+            ({ facebook_yoga_Style::justifyContent(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
+        })
+    } else {
+        ({
+            fallbackAlignment_416((*node).with(|__n0| {
+                ({
+                    facebook_yoga_Style::justifyContent(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    )
+                })
+            }))
+        })
+    };
     if (flexLine.with(|__s| __s.numberOfAutoMargins) == 0_usize) {
         'switch: {
             match { justifyContent } {
@@ -13994,7 +13799,7 @@ pub fn justifyMainAxis_464(
     field!(field!(flexLine, layout), crossDim).write(0_f32);
     let mut maxAscentForCurrentLine: f32 = 0_f32;
     let mut maxDescentForCurrentLine: f32 = 0_f32;
-    let mut isNodeBaselineLayout: bool = ({ isBaselineLayout_434((node).clone()) });
+    let mut isNodeBaselineLayout: bool = ({ isBaselineLayout_434((*node).clone()) });
     'loop_: for child in IterRange::new(
         field_ref!(flexLine, itemsInFlow).decay(),
         field_ref!(flexLine, itemsInFlow).decay().to_end(),
@@ -14002,15 +13807,15 @@ pub fn justifyMainAxis_464(
         let mut child: Ptr<facebook_yoga_Node> = (child.read());
         let childLayout: Ptr<facebook_yoga_LayoutResults> =
             ({ facebook_yoga_NodeImpl::getLayout_26(&child) });
-        if ({
-            facebook_yoga_Style::flexStartMarginIsAuto(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                mainAxis,
-                direction,
-            )
-        }) && (flexLine.with(|__s| __s.layout.remainingFreeSpace) > 0_f32)
+        if (child.with(|__n0| {
+            ({
+                facebook_yoga_Style::flexStartMarginIsAuto(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    mainAxis,
+                    direction,
+                )
+            })
+        })) && (flexLine.with(|__s| __s.layout.remainingFreeSpace) > 0_f32)
         {
             {
                 let __rhs = {
@@ -14044,15 +13849,15 @@ pub fn justifyMainAxis_464(
                 field!(field!(flexLine, layout), mainDim).with_mut(|__v| *__v = *__v + __rhs)
             };
         }
-        if ({
-            facebook_yoga_Style::flexEndMarginIsAuto(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                mainAxis,
-                direction,
-            )
-        }) && (flexLine.with(|__s| __s.layout.remainingFreeSpace) > 0_f32)
+        if (child.with(|__n0| {
+            ({
+                facebook_yoga_Style::flexEndMarginIsAuto(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    mainAxis,
+                    direction,
+                )
+            })
+        })) && (flexLine.with(|__s| __s.layout.remainingFreeSpace) > 0_f32)
         {
             {
                 let __rhs = {
@@ -14068,14 +13873,14 @@ pub fn justifyMainAxis_464(
         if canSkipFlex {
             {
                 let __rhs = ({
-                    ({
-                        facebook_yoga_Style::computeMarginForAxis(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                            mainAxis,
-                            availableInnerWidth,
-                        )
+                    child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::computeMarginForAxis(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                mainAxis,
+                                availableInnerWidth,
+                            )
+                        })
                     })
                 } + {
                     ({
@@ -14109,36 +13914,36 @@ pub fn justifyMainAxis_464(
             };
             if isNodeBaselineLayout {
                 let mut ascent: f32 = ({ ({ calculateBaseline_433((child).clone()) }) } + {
-                    ({
-                        facebook_yoga_Style::computeFlexStartMargin(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                            facebook_yoga_FlexDirection_Column,
-                            direction,
-                            availableInnerWidth,
-                        )
+                    child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::computeFlexStartMargin(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                facebook_yoga_FlexDirection_Column,
+                                direction,
+                                availableInnerWidth,
+                            )
+                        })
                     })
                 });
                 let mut descent: f32 = ({
                     ({
-                        ({
-                            facebook_yoga_LayoutResults::measuredDimension(
-                                &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                                    .upgrade()
-                                    .deref()),
-                                facebook_yoga_Dimension_Height,
-                            )
+                        child.with(|__n0| {
+                            ({
+                                facebook_yoga_LayoutResults::measuredDimension(
+                                    &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                    facebook_yoga_Dimension_Height,
+                                )
+                            })
                         })
                     } + {
-                        ({
-                            facebook_yoga_Style::computeMarginForAxis(
-                                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                    .upgrade()
-                                    .deref()),
-                                facebook_yoga_FlexDirection_Column,
-                                availableInnerWidth,
-                            )
+                        child.with(|__n0| {
+                            ({
+                                facebook_yoga_Style::computeMarginForAxis(
+                                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                    facebook_yoga_FlexDirection_Column,
+                                    availableInnerWidth,
+                                )
+                            })
                         })
                     })
                 } - { ascent });
@@ -14173,7 +13978,7 @@ pub fn justifyMainAxis_464(
     }
 }
 pub fn calculateLayoutImpl_465(
-    mut node: Ptr<facebook_yoga_Node>,
+    node: &Ptr<facebook_yoga_Node>,
     mut availableWidth: f32,
     mut availableHeight: f32,
     mut ownerDirection: facebook_yoga_Direction,
@@ -14189,7 +13994,7 @@ pub fn calculateLayoutImpl_465(
 ) {
     ({
         assertFatalWithNode_213(
-            (node).clone(),
+            (*node).clone(),
             if ({ isUndefined_105(availableWidth) }) {
                 (widthSizingMode == facebook_yoga_SizingMode_MaxContent)
             } else {
@@ -14202,7 +14007,7 @@ pub fn calculateLayoutImpl_465(
     });
     ({
         assertFatalWithNode_213(
-            (node).clone(),
+            (*node).clone(),
             if ({ isUndefined_105(availableHeight) }) {
                 (heightSizingMode == facebook_yoga_SizingMode_MaxContent)
             } else {
@@ -14222,16 +14027,16 @@ pub fn calculateLayoutImpl_465(
         .with_mut(|__v| *__v = *__v + 1)
     };
     let mut direction: facebook_yoga_Direction =
-        ({ facebook_yoga_NodeImpl::resolveDirection(&node, ownerDirection) });
-    ({ facebook_yoga_NodeImpl::setLayoutDirection(&node, direction) });
+        ({ facebook_yoga_NodeImpl::resolveDirection(&(*node), ownerDirection) });
+    ({ facebook_yoga_NodeImpl::setLayoutDirection(&(*node), direction) });
     let mut fixFlexBasisFitContent: bool = ({
         facebook_yoga_ConfigImpl::isExperimentalFeatureEnabled(
-            &({ facebook_yoga_Node::getConfig(&(*node.upgrade().deref())) }),
+            &({ facebook_yoga_Node::getConfig(&(*(*node).upgrade().deref())) }),
             facebook_yoga_ExperimentalFeature_FixFlexBasisFitContent,
         )
     });
     if (fixFlexBasisFitContent) && (performLayout) {
-        ({ facebook_yoga_NodeImpl::setLayoutHadOverflow(&node, false) });
+        ({ facebook_yoga_NodeImpl::setLayoutHadOverflow(&(*node), false) });
     }
     let mut flexRowDirection: facebook_yoga_FlexDirection =
         ({ resolveDirection_130(facebook_yoga_FlexDirection_Row, direction) });
@@ -14247,58 +14052,58 @@ pub fn calculateLayoutImpl_465(
     } else {
         facebook_yoga_PhysicalEdge_Left
     };
-    let mut marginRowLeading: f32 = ({
-        facebook_yoga_Style::computeInlineStartMargin(
-            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                .upgrade()
-                .deref()),
-            flexRowDirection,
-            direction,
-            ownerWidth,
-        )
+    let mut marginRowLeading: f32 = (*node).with(|__n0| {
+        ({
+            facebook_yoga_Style::computeInlineStartMargin(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                flexRowDirection,
+                direction,
+                ownerWidth,
+            )
+        })
     });
-    ({ facebook_yoga_NodeImpl::setLayoutMargin(&node, marginRowLeading, startEdge) });
-    let mut marginRowTrailing: f32 = ({
-        facebook_yoga_Style::computeInlineEndMargin(
-            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                .upgrade()
-                .deref()),
-            flexRowDirection,
-            direction,
-            ownerWidth,
-        )
+    ({ facebook_yoga_NodeImpl::setLayoutMargin(&(*node), marginRowLeading, startEdge) });
+    let mut marginRowTrailing: f32 = (*node).with(|__n0| {
+        ({
+            facebook_yoga_Style::computeInlineEndMargin(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                flexRowDirection,
+                direction,
+                ownerWidth,
+            )
+        })
     });
-    ({ facebook_yoga_NodeImpl::setLayoutMargin(&node, marginRowTrailing, endEdge) });
-    let mut marginColumnLeading: f32 = ({
-        facebook_yoga_Style::computeInlineStartMargin(
-            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                .upgrade()
-                .deref()),
-            flexColumnDirection,
-            direction,
-            ownerWidth,
-        )
+    ({ facebook_yoga_NodeImpl::setLayoutMargin(&(*node), marginRowTrailing, endEdge) });
+    let mut marginColumnLeading: f32 = (*node).with(|__n0| {
+        ({
+            facebook_yoga_Style::computeInlineStartMargin(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                flexColumnDirection,
+                direction,
+                ownerWidth,
+            )
+        })
     });
     ({
         facebook_yoga_NodeImpl::setLayoutMargin(
-            &node,
+            &(*node),
             marginColumnLeading,
             facebook_yoga_PhysicalEdge_Top,
         )
     });
-    let mut marginColumnTrailing: f32 = ({
-        facebook_yoga_Style::computeInlineEndMargin(
-            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                .upgrade()
-                .deref()),
-            flexColumnDirection,
-            direction,
-            ownerWidth,
-        )
+    let mut marginColumnTrailing: f32 = (*node).with(|__n0| {
+        ({
+            facebook_yoga_Style::computeInlineEndMargin(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                flexColumnDirection,
+                direction,
+                ownerWidth,
+            )
+        })
     });
     ({
         facebook_yoga_NodeImpl::setLayoutMargin(
-            &node,
+            &(*node),
             marginColumnTrailing,
             facebook_yoga_PhysicalEdge_Bottom,
         )
@@ -14306,108 +14111,116 @@ pub fn calculateLayoutImpl_465(
     let mut marginAxisRow: f32 = (marginRowLeading + marginRowTrailing);
     let mut marginAxisColumn: f32 = (marginColumnLeading + marginColumnTrailing);
     ({
-        let _border: f32 = ({
-            facebook_yoga_Style::computeInlineStartBorder(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                flexRowDirection,
-                direction,
-            )
+        let _border: f32 = (*node).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeInlineStartBorder(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    flexRowDirection,
+                    direction,
+                )
+            })
         });
-        facebook_yoga_NodeImpl::setLayoutBorder(&node, _border, startEdge)
+        facebook_yoga_NodeImpl::setLayoutBorder(&(*node), _border, startEdge)
     });
     ({
-        let _border: f32 = ({
-            facebook_yoga_Style::computeInlineEndBorder(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                flexRowDirection,
-                direction,
-            )
+        let _border: f32 = (*node).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeInlineEndBorder(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    flexRowDirection,
+                    direction,
+                )
+            })
         });
-        facebook_yoga_NodeImpl::setLayoutBorder(&node, _border, endEdge)
+        facebook_yoga_NodeImpl::setLayoutBorder(&(*node), _border, endEdge)
     });
     ({
-        let _border: f32 = ({
-            facebook_yoga_Style::computeInlineStartBorder(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                flexColumnDirection,
-                direction,
-            )
+        let _border: f32 = (*node).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeInlineStartBorder(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    flexColumnDirection,
+                    direction,
+                )
+            })
         });
-        facebook_yoga_NodeImpl::setLayoutBorder(&node, _border, facebook_yoga_PhysicalEdge_Top)
+        facebook_yoga_NodeImpl::setLayoutBorder(&(*node), _border, facebook_yoga_PhysicalEdge_Top)
     });
     ({
-        let _border: f32 = ({
-            facebook_yoga_Style::computeInlineEndBorder(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                flexColumnDirection,
-                direction,
-            )
+        let _border: f32 = (*node).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeInlineEndBorder(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    flexColumnDirection,
+                    direction,
+                )
+            })
         });
-        facebook_yoga_NodeImpl::setLayoutBorder(&node, _border, facebook_yoga_PhysicalEdge_Bottom)
+        facebook_yoga_NodeImpl::setLayoutBorder(
+            &(*node),
+            _border,
+            facebook_yoga_PhysicalEdge_Bottom,
+        )
     });
     ({
-        let _padding: f32 = ({
-            facebook_yoga_Style::computeInlineStartPadding(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                flexRowDirection,
-                direction,
-                ownerWidth,
-            )
+        let _padding: f32 = (*node).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeInlineStartPadding(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    flexRowDirection,
+                    direction,
+                    ownerWidth,
+                )
+            })
         });
-        facebook_yoga_NodeImpl::setLayoutPadding(&node, _padding, startEdge)
+        facebook_yoga_NodeImpl::setLayoutPadding(&(*node), _padding, startEdge)
     });
     ({
-        let _padding: f32 = ({
-            facebook_yoga_Style::computeInlineEndPadding(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                flexRowDirection,
-                direction,
-                ownerWidth,
-            )
+        let _padding: f32 = (*node).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeInlineEndPadding(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    flexRowDirection,
+                    direction,
+                    ownerWidth,
+                )
+            })
         });
-        facebook_yoga_NodeImpl::setLayoutPadding(&node, _padding, endEdge)
+        facebook_yoga_NodeImpl::setLayoutPadding(&(*node), _padding, endEdge)
     });
     ({
-        let _padding: f32 = ({
-            facebook_yoga_Style::computeInlineStartPadding(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                flexColumnDirection,
-                direction,
-                ownerWidth,
-            )
+        let _padding: f32 = (*node).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeInlineStartPadding(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    flexColumnDirection,
+                    direction,
+                    ownerWidth,
+                )
+            })
         });
-        facebook_yoga_NodeImpl::setLayoutPadding(&node, _padding, facebook_yoga_PhysicalEdge_Top)
+        facebook_yoga_NodeImpl::setLayoutPadding(&(*node), _padding, facebook_yoga_PhysicalEdge_Top)
     });
     ({
-        let _padding: f32 = ({
-            facebook_yoga_Style::computeInlineEndPadding(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                flexColumnDirection,
-                direction,
-                ownerWidth,
-            )
+        let _padding: f32 = (*node).with(|__n0| {
+            ({
+                facebook_yoga_Style::computeInlineEndPadding(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    flexColumnDirection,
+                    direction,
+                    ownerWidth,
+                )
+            })
         });
-        facebook_yoga_NodeImpl::setLayoutPadding(&node, _padding, facebook_yoga_PhysicalEdge_Bottom)
+        facebook_yoga_NodeImpl::setLayoutPadding(
+            &(*node),
+            _padding,
+            facebook_yoga_PhysicalEdge_Bottom,
+        )
     });
-    if ({ facebook_yoga_Node::hasMeasureFunc(&(*node.upgrade().deref())) }) {
+    if ({ facebook_yoga_Node::hasMeasureFunc(&(*(*node).upgrade().deref())) }) {
         ({
-            let _node: Ptr<facebook_yoga_Node> = (node).clone();
+            let _node: &Ptr<facebook_yoga_Node> = &(*node);
             let _direction: facebook_yoga_Direction = direction;
             let _availableWidth: f32 = (availableWidth - marginAxisRow);
             let _availableHeight: f32 = (availableHeight - marginAxisColumn);
@@ -14430,14 +14243,14 @@ pub fn calculateLayoutImpl_465(
                 _reason,
             )
         });
-        ({ cleanupContentsNodesRecursively_432((node).clone(), performLayout) });
+        ({ cleanupContentsNodesRecursively_432((*node).clone(), performLayout) });
         return;
     }
-    let mut childCount: usize = ({ facebook_yoga_NodeImpl::getLayoutChildCount(&node) });
+    let mut childCount: usize = ({ facebook_yoga_NodeImpl::getLayoutChildCount(&(*node)) });
     if (childCount == 0_usize) {
         ({
             measureNodeWithoutChildren_452(
-                (node).clone(),
+                &(*node),
                 direction,
                 (availableWidth - marginAxisRow),
                 (availableHeight - marginAxisColumn),
@@ -14447,13 +14260,13 @@ pub fn calculateLayoutImpl_465(
                 ownerHeight,
             )
         });
-        ({ cleanupContentsNodesRecursively_432((node).clone(), performLayout) });
+        ({ cleanupContentsNodesRecursively_432((*node).clone(), performLayout) });
         return;
     }
     if (!(performLayout))
         && ({
             measureNodeWithFixedSize_454(
-                (node).clone(),
+                &(*node),
                 direction,
                 (availableWidth - marginAxisRow),
                 (availableHeight - marginAxisColumn),
@@ -14464,22 +14277,20 @@ pub fn calculateLayoutImpl_465(
             )
         })
     {
-        ({ cleanupContentsNodesRecursively_432((node).clone(), false) });
+        ({ cleanupContentsNodesRecursively_432((*node).clone(), false) });
         return;
     }
-    ({ facebook_yoga_NodeImpl::cloneChildrenIfNeeded(&node) });
+    ({ facebook_yoga_NodeImpl::cloneChildrenIfNeeded(&(*node)) });
     if (!(fixFlexBasisFitContent)) || (!(performLayout)) {
-        ({ facebook_yoga_NodeImpl::setLayoutHadOverflow(&node, false) });
+        ({ facebook_yoga_NodeImpl::setLayoutHadOverflow(&(*node), false) });
     }
-    ({ cleanupContentsNodesRecursively_432((node).clone(), performLayout) });
+    ({ cleanupContentsNodesRecursively_432((*node).clone(), performLayout) });
     let mut mainAxis: facebook_yoga_FlexDirection = ({
         resolveDirection_130(
-            ({
-                facebook_yoga_Style::flexDirection(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                        .upgrade()
-                        .deref()),
-                )
+            (*node).with(|__n0| {
+                ({
+                    facebook_yoga_Style::flexDirection(&(*({ facebook_yoga_Node::style_24(__n0) })))
+                })
             }),
             direction,
         )
@@ -14487,12 +14298,8 @@ pub fn calculateLayoutImpl_465(
     let mut crossAxis: facebook_yoga_FlexDirection =
         ({ resolveCrossDirection_131(mainAxis, direction) });
     let mut isMainAxisRow: bool = ({ isRow_128(mainAxis) });
-    let mut isNodeFlexWrap: bool = (({
-        facebook_yoga_Style::flexWrap(
-            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                .upgrade()
-                .deref()),
-        )
+    let mut isNodeFlexWrap: bool = ((*node).with(|__n0| {
+        ({ facebook_yoga_Style::flexWrap(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
     }) != facebook_yoga_Wrap_NoWrap);
     let mut mainAxisOwnerSize: f32 = if isMainAxisRow {
         ownerWidth
@@ -14505,18 +14312,18 @@ pub fn calculateLayoutImpl_465(
         ownerWidth
     };
     let mut paddingAndBorderAxisMain: f32 =
-        ({ paddingAndBorderForAxis_417((node).clone(), mainAxis, direction, ownerWidth) });
+        ({ paddingAndBorderForAxis_417((*node).clone(), mainAxis, direction, ownerWidth) });
     let mut paddingAndBorderAxisCross: f32 =
-        ({ paddingAndBorderForAxis_417((node).clone(), crossAxis, direction, ownerWidth) });
-    let mut leadingPaddingAndBorderCross: f32 = ({
-        facebook_yoga_Style::computeFlexStartPaddingAndBorder(
-            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                .upgrade()
-                .deref()),
-            crossAxis,
-            direction,
-            ownerWidth,
-        )
+        ({ paddingAndBorderForAxis_417((*node).clone(), crossAxis, direction, ownerWidth) });
+    let mut leadingPaddingAndBorderCross: f32 = (*node).with(|__n0| {
+        ({
+            facebook_yoga_Style::computeFlexStartPaddingAndBorder(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                crossAxis,
+                direction,
+                ownerWidth,
+            )
+        })
     });
     let mut sizingModeMainDim: facebook_yoga_SizingMode = if isMainAxisRow {
         widthSizingMode
@@ -14542,7 +14349,7 @@ pub fn calculateLayoutImpl_465(
         let _ownerDim: f32 = ownerWidth;
         let _ownerWidth: f32 = ownerWidth;
         calculateAvailableInnerDimension_456(
-            (node).clone(),
+            (*node).clone(),
             direction,
             facebook_yoga_Dimension_Width,
             (availableWidth - marginAxisRow),
@@ -14553,7 +14360,7 @@ pub fn calculateLayoutImpl_465(
     });
     let mut availableInnerHeight: f32 = ({
         calculateAvailableInnerDimension_456(
-            (node).clone(),
+            (*node).clone(),
             direction,
             facebook_yoga_Dimension_Height,
             (availableHeight - marginAxisColumn),
@@ -14574,7 +14381,7 @@ pub fn calculateLayoutImpl_465(
     };
     let mut totalMainDim: f32 = 0_f32;
     totalMainDim += ({
-        let _node: Ptr<facebook_yoga_Node> = (node).clone();
+        let _node: &Ptr<facebook_yoga_Node> = &(*node);
         let _availableInnerWidth: f32 = availableInnerWidth;
         let _availableInnerHeight: f32 = availableInnerHeight;
         let _ownerWidth: f32 = availableInnerWidth;
@@ -14605,14 +14412,14 @@ pub fn calculateLayoutImpl_465(
     });
     if (childCount > 1_usize) {
         totalMainDim += ({
-            ({
-                facebook_yoga_Style::computeGapForAxis(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                        .upgrade()
-                        .deref()),
-                    mainAxis,
-                    availableInnerMainDim,
-                )
+            (*node).with(|__n0| {
+                ({
+                    facebook_yoga_Style::computeGapForAxis(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        mainAxis,
+                        availableInnerMainDim,
+                    )
+                })
             })
         } * { (((childCount).wrapping_sub(1_usize)) as f32) });
     }
@@ -14628,7 +14435,7 @@ pub fn calculateLayoutImpl_465(
             ({
                 facebook_yoga_LayoutableChildren_facebook_yoga_Node_Impl::begin(
                     &Rc::new(RefCell::new(
-                        ({ facebook_yoga_NodeImpl::getLayoutChildren(&node) }),
+                        ({ facebook_yoga_NodeImpl::getLayoutChildren(&(*node)) }),
                     ))
                     .as_pointer(),
                 )
@@ -14636,14 +14443,14 @@ pub fn calculateLayoutImpl_465(
         ));
     let mut lineCount: usize = 0_usize;
     let mut totalLineCrossDim: f32 = 0_f32;
-    let mut crossAxisGap: f32 = ({
-        facebook_yoga_Style::computeGapForAxis(
-            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                .upgrade()
-                .deref()),
-            crossAxis,
-            availableInnerCrossDim,
-        )
+    let mut crossAxisGap: f32 = (*node).with(|__n0| {
+        ({
+            facebook_yoga_Style::computeGapForAxis(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                crossAxis,
+                availableInnerCrossDim,
+            )
+        })
     });
     let mut maxLineMainDim: f32 = 0_f32;
     'loop_: while ({
@@ -14653,7 +14460,7 @@ pub fn calculateLayoutImpl_465(
             Rc::new(RefCell::new(
                 ({
                     facebook_yoga_LayoutableChildren_facebook_yoga_Node_::end(
-                        &({ facebook_yoga_NodeImpl::getLayoutChildren(&node) }),
+                        &({ facebook_yoga_NodeImpl::getLayoutChildren(&(*node)) }),
                     )
                 }),
             ));
@@ -14662,7 +14469,7 @@ pub fn calculateLayoutImpl_465(
         let flexLine: Value<facebook_yoga_FlexLine> = Rc::new(RefCell::new(
             ({
                 calculateFlexLine_466(
-                    (node).clone(),
+                    (*node).clone(),
                     ownerDirection,
                     ownerWidth,
                     mainAxisOwnerSize,
@@ -14677,7 +14484,7 @@ pub fn calculateLayoutImpl_465(
             (!(performLayout)) && (sizingModeCrossDim == facebook_yoga_SizingMode_StretchFit);
         let mut sizeBasedOnContent: bool = false;
         if (sizingModeMainDim != facebook_yoga_SizingMode_StretchFit) {
-            let style: Ptr<facebook_yoga_Style> = ({ facebook_yoga_NodeImpl::style_24(&node) });
+            let style: Ptr<facebook_yoga_Style> = ({ facebook_yoga_NodeImpl::style_24(&(*node)) });
             let mut minInnerWidth: f32 = ({
                 ({
                     facebook_yoga_FloatOptional::unwrap(
@@ -14770,14 +14577,18 @@ pub fn calculateLayoutImpl_465(
                 availableInnerMainDim = maxInnerMainDim;
             } else {
                 let mut useLegacyStretchBehaviour: bool = ({
-                    facebook_yoga_NodeImpl::hasErrata(&node, facebook_yoga_Errata_StretchFlexBasis)
+                    facebook_yoga_NodeImpl::hasErrata(
+                        &(*node),
+                        facebook_yoga_Errata_StretchFlexBasis,
+                    )
                 });
                 if (!(useLegacyStretchBehaviour))
                     && ((({ isDefined_107({ (*flexLine.borrow()).layout.totalFlexGrowFactors }) })
                         && ({ (*flexLine.borrow()).layout.totalFlexGrowFactors } == 0_f32))
                         || (({
-                            isDefined_107(({ facebook_yoga_NodeImpl::resolveFlexGrow(&node) }))
-                        }) && (({ facebook_yoga_NodeImpl::resolveFlexGrow(&node) }) == 0_f32)))
+                            isDefined_107(({ facebook_yoga_NodeImpl::resolveFlexGrow(&(*node)) }))
+                        }) && (({ facebook_yoga_NodeImpl::resolveFlexGrow(&(*node)) })
+                            == 0_f32)))
                 {
                     availableInnerMainDim = { (*flexLine.borrow()).sizeConsumed };
                 }
@@ -14793,7 +14604,7 @@ pub fn calculateLayoutImpl_465(
         }
         if !(canSkipFlex) {
             ({
-                let _node: Ptr<facebook_yoga_Node> = (node).clone();
+                let _node: &Ptr<facebook_yoga_Node> = &(*node);
                 let _flexLine: Ptr<facebook_yoga_FlexLine> = flexLine.as_pointer();
                 let _mainAxis: facebook_yoga_FlexDirection = mainAxis;
                 let _crossAxis: facebook_yoga_FlexDirection = crossAxis;
@@ -14832,19 +14643,19 @@ pub fn calculateLayoutImpl_465(
             });
         }
         ({
-            let _hadOverflow: bool = ({
-                facebook_yoga_LayoutResults::hadOverflow(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&node) })
-                        .upgrade()
-                        .deref()),
-                )
-            }) || ({ (*flexLine.borrow()).layout.remainingFreeSpace }
+            let _hadOverflow: bool = ((*node).with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::hadOverflow(
+                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                    )
+                })
+            })) || ({ (*flexLine.borrow()).layout.remainingFreeSpace }
                 < 0_f32);
-            facebook_yoga_NodeImpl::setLayoutHadOverflow(&node, _hadOverflow)
+            facebook_yoga_NodeImpl::setLayoutHadOverflow(&(*node), _hadOverflow)
         });
         ({
             justifyMainAxis_464(
-                (node).clone(),
+                &(*node),
                 flexLine.as_pointer(),
                 mainAxis,
                 crossAxis,
@@ -14866,7 +14677,7 @@ pub fn calculateLayoutImpl_465(
             containerCrossAxis = ({
                 ({
                     boundAxis_419(
-                        (node).clone(),
+                        (*node).clone(),
                         crossAxis,
                         direction,
                         ({ (*flexLine.borrow()).layout.crossDim } + paddingAndBorderAxisCross),
@@ -14883,7 +14694,7 @@ pub fn calculateLayoutImpl_465(
             let __rhs = ({
                 ({
                     boundAxis_419(
-                        (node).clone(),
+                        (*node).clone(),
                         crossAxis,
                         direction,
                         ({ (*flexLine.borrow()).layout.crossDim } + paddingAndBorderAxisCross),
@@ -14904,26 +14715,26 @@ pub fn calculateLayoutImpl_465(
                 let mut child: Ptr<facebook_yoga_Node> = (child.read());
                 let mut leadingCrossDim: f32 = leadingPaddingAndBorderCross;
                 let mut alignItem: facebook_yoga_Align =
-                    ({ resolveChildAlignment_413((node).clone(), (child).clone()) });
+                    ({ resolveChildAlignment_413((*node).clone(), (child).clone()) });
                 if ((alignItem == facebook_yoga_Align_Stretch)
-                    && (!({
-                        facebook_yoga_Style::flexStartMarginIsAuto(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                            crossAxis,
-                            direction,
-                        )
+                    && (!(child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::flexStartMarginIsAuto(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                crossAxis,
+                                direction,
+                            )
+                        })
+                    }))))
+                    && (!(child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::flexEndMarginIsAuto(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                crossAxis,
+                                direction,
+                            )
+                        })
                     })))
-                    && (!({
-                        facebook_yoga_Style::flexEndMarginIsAuto(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                            crossAxis,
-                            direction,
-                        )
-                    }))
                 {
                     if !({
                         facebook_yoga_NodeImpl::hasDefiniteLength(
@@ -14932,16 +14743,14 @@ pub fn calculateLayoutImpl_465(
                             availableInnerCrossDim,
                         )
                     }) {
-                        let childMainSize: Value<f32> = Rc::new(RefCell::new(
+                        let childMainSize: Value<f32> = Rc::new(RefCell::new(child.with(|__n0| {
                             ({
                                 facebook_yoga_LayoutResults::measuredDimension(
-                                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                                        .upgrade()
-                                        .deref()),
+                                    &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
                                     ({ dimension_136(mainAxis) }),
                                 )
-                            }),
-                        ));
+                            })
+                        })));
                         let childStyle: Ptr<facebook_yoga_Style> =
                             ({ facebook_yoga_NodeImpl::style_24(&child) });
                         let childCrossSize: Value<f32> = Rc::new(RefCell::new(
@@ -14955,14 +14764,14 @@ pub fn calculateLayoutImpl_465(
                                 )
                             }) {
                                 ({
-                                    ({
-                                        facebook_yoga_Style::computeMarginForAxis(
-                                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                                .upgrade()
-                                                .deref()),
-                                            crossAxis,
-                                            availableInnerWidth,
-                                        )
+                                    child.with(|__n0| {
+                                        ({
+                                            facebook_yoga_Style::computeMarginForAxis(
+                                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                                crossAxis,
+                                                availableInnerWidth,
+                                            )
+                                        })
                                     })
                                 } + {
                                     (if isMainAxisRow {
@@ -14995,14 +14804,14 @@ pub fn calculateLayoutImpl_465(
                                 { (*flexLine.borrow()).layout.crossDim }
                             },
                         ));
-                        (*childMainSize.borrow_mut()) += ({
-                            facebook_yoga_Style::computeMarginForAxis(
-                                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                    .upgrade()
-                                    .deref()),
-                                mainAxis,
-                                availableInnerWidth,
-                            )
+                        (*childMainSize.borrow_mut()) += child.with(|__n0| {
+                            ({
+                                facebook_yoga_Style::computeMarginForAxis(
+                                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                    mainAxis,
+                                    availableInnerWidth,
+                                )
+                            })
                         });
                         let childMainSizingMode: Value<facebook_yoga_SizingMode> =
                             Rc::new(RefCell::new(facebook_yoga_SizingMode_StretchFit));
@@ -15040,12 +14849,12 @@ pub fn calculateLayoutImpl_465(
                         } else {
                             (*childCrossSize.borrow())
                         };
-                        let mut alignContent: facebook_yoga_Align = ({
-                            facebook_yoga_Style::alignContent(
-                                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                                    .upgrade()
-                                    .deref()),
-                            )
+                        let mut alignContent: facebook_yoga_Align = (*node).with(|__n0| {
+                            ({
+                                facebook_yoga_Style::alignContent(
+                                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                )
+                            })
                         });
                         let mut crossAxisDoesNotGrow: bool =
                             (alignContent != facebook_yoga_Align_Stretch) && (isNodeFlexWrap);
@@ -15105,42 +14914,42 @@ pub fn calculateLayoutImpl_465(
                             )
                         })
                     });
-                    if ({
-                        facebook_yoga_Style::flexStartMarginIsAuto(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                            crossAxis,
-                            direction,
-                        )
-                    }) && ({
-                        facebook_yoga_Style::flexEndMarginIsAuto(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                            crossAxis,
-                            direction,
-                        )
-                    }) {
+                    if (child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::flexStartMarginIsAuto(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                crossAxis,
+                                direction,
+                            )
+                        })
+                    })) && (child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::flexEndMarginIsAuto(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                crossAxis,
+                                direction,
+                            )
+                        })
+                    })) {
                         leadingCrossDim +=
                             ({ maxOrDefined_110(0_f32, (remainingCrossDim / 2_f32)) });
-                    } else if ({
-                        facebook_yoga_Style::flexEndMarginIsAuto(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                            crossAxis,
-                            direction,
-                        )
+                    } else if child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::flexEndMarginIsAuto(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                crossAxis,
+                                direction,
+                            )
+                        })
                     }) {
-                    } else if ({
-                        facebook_yoga_Style::flexStartMarginIsAuto(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                            crossAxis,
-                            direction,
-                        )
+                    } else if child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::flexStartMarginIsAuto(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                crossAxis,
+                                direction,
+                            )
+                        })
                     }) {
                         leadingCrossDim += ({ maxOrDefined_110(0_f32, remainingCrossDim) });
                     } else if (alignItem == facebook_yoga_Align_FlexStart) {
@@ -15153,13 +14962,13 @@ pub fn calculateLayoutImpl_465(
                 ({
                     let _position: f32 = ({
                         ({
-                            ({
-                                facebook_yoga_LayoutResults::position(
-                                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                                        .upgrade()
-                                        .deref()),
-                                    ({ flexStartEdge_132(crossAxis) }),
-                                )
+                            child.with(|__n0| {
+                                ({
+                                    facebook_yoga_LayoutResults::position(
+                                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                        ({ flexStartEdge_132(crossAxis) }),
+                                    )
+                                })
                             })
                         } + { totalLineCrossDim })
                     } + { leadingCrossDim });
@@ -15178,7 +14987,7 @@ pub fn calculateLayoutImpl_465(
         maxLineMainDim = __rhs;
         lineCount.postfix_inc();
     }
-    if (performLayout) && ((isNodeFlexWrap) || ({ isBaselineLayout_434((node).clone()) })) {
+    if (performLayout) && ((isNodeFlexWrap) || ({ isBaselineLayout_434((*node).clone()) })) {
         let mut leadPerLine: f32 = 0_f32;
         let mut currentLead: f32 = leadingPaddingAndBorderCross;
         let mut extraSpacePerLine: f32 = 0_f32;
@@ -15188,7 +14997,7 @@ pub fn calculateLayoutImpl_465(
             } else {
                 if ({
                     facebook_yoga_NodeImpl::hasDefiniteLength(
-                        &node,
+                        &(*node),
                         ({ dimension_136(crossAxis) }),
                         crossAxisOwnerSize,
                     )
@@ -15197,7 +15006,7 @@ pub fn calculateLayoutImpl_465(
                         facebook_yoga_FloatOptional::unwrap(
                             &({
                                 facebook_yoga_Node::getResolvedDimension(
-                                    &(*node.upgrade().deref()),
+                                    &(*(*node).upgrade().deref()),
                                     direction,
                                     ({ dimension_136(crossAxis) }),
                                     crossAxisOwnerSize,
@@ -15213,7 +15022,7 @@ pub fn calculateLayoutImpl_465(
         let mut innerCrossDim: f32 = ({
             ({
                 boundAxis_419(
-                    (node).clone(),
+                    (*node).clone(),
                     crossAxis,
                     direction,
                     unclampedCrossDim,
@@ -15224,24 +15033,20 @@ pub fn calculateLayoutImpl_465(
         } - { paddingAndBorderAxisCross });
         let mut remainingAlignContentDim: f32 = (innerCrossDim - totalLineCrossDim);
         let mut alignContent: facebook_yoga_Align = if (remainingAlignContentDim >= 0_f32) {
-            ({
-                facebook_yoga_Style::alignContent(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                        .upgrade()
-                        .deref()),
-                )
+            (*node).with(|__n0| {
+                ({
+                    facebook_yoga_Style::alignContent(&(*({ facebook_yoga_Node::style_24(__n0) })))
+                })
             })
         } else {
             ({
-                fallbackAlignment_415(
+                fallbackAlignment_415((*node).with(|__n0| {
                     ({
                         facebook_yoga_Style::alignContent(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                                .upgrade()
-                                .deref()),
+                            &(*({ facebook_yoga_Node::style_24(__n0) })),
                         )
-                    }),
-                )
+                    })
+                }))
             })
         };
         'switch: {
@@ -15294,7 +15099,7 @@ pub fn calculateLayoutImpl_465(
                 ({
                     facebook_yoga_LayoutableChildren_facebook_yoga_Node_Impl::begin(
                         &Rc::new(RefCell::new(
-                            ({ facebook_yoga_NodeImpl::getLayoutChildren(&node) }),
+                            ({ facebook_yoga_NodeImpl::getLayoutChildren(&(*node)) }),
                         ))
                         .as_pointer(),
                     )
@@ -15317,7 +15122,7 @@ pub fn calculateLayoutImpl_465(
                     Rc::new(RefCell::new(
                         ({
                             facebook_yoga_LayoutableChildren_facebook_yoga_Node_::end(
-                                &({ facebook_yoga_NodeImpl::getLayoutChildren(&node) }),
+                                &({ facebook_yoga_NodeImpl::getLayoutChildren(&(*node)) }),
                             )
                         }),
                     ));
@@ -15326,12 +15131,8 @@ pub fn calculateLayoutImpl_465(
                 let mut child: Ptr<facebook_yoga_Node> = ({
                     facebook_yoga_LayoutableChildren_facebook_yoga_Node__IteratorImpl :: operator_deref ( &iterator .as_pointer()  , )
                 });
-                if (({
-                    facebook_yoga_Style::display(
-                        &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                            .upgrade()
-                            .deref()),
-                    )
+                if (child.with(|__n0| {
+                    ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
                 }) == facebook_yoga_Display_None)
                 {
                     ({
@@ -15339,12 +15140,12 @@ pub fn calculateLayoutImpl_465(
                     });
                     continue 'loop_;
                 }
-                if (({
-                    facebook_yoga_Style::positionType(
-                        &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                            .upgrade()
-                            .deref()),
-                    )
+                if (child.with(|__n0| {
+                    ({
+                        facebook_yoga_Style::positionType(
+                            &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        )
+                    })
                 }) != facebook_yoga_PositionType_Absolute)
                 {
                     if ({ ({ facebook_yoga_Node::getLineIndex(&(*child.upgrade().deref())) }) }
@@ -15357,64 +15158,64 @@ pub fn calculateLayoutImpl_465(
                             maxOrDefined_110(
                                 lineHeight,
                                 ({
-                                    ({
-                                        facebook_yoga_LayoutResults::measuredDimension(
-                                            &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                                                .upgrade()
-                                                .deref()),
-                                            ({ dimension_136(crossAxis) }),
-                                        )
+                                    child.with(|__n0| {
+                                        ({
+                                            facebook_yoga_LayoutResults::measuredDimension(
+                                                &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                                ({ dimension_136(crossAxis) }),
+                                            )
+                                        })
                                     })
                                 } + {
-                                    ({
-                                        facebook_yoga_Style::computeMarginForAxis(
-                                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                                .upgrade()
-                                                .deref()),
-                                            crossAxis,
-                                            availableInnerWidth,
-                                        )
+                                    child.with(|__n0| {
+                                        ({
+                                            facebook_yoga_Style::computeMarginForAxis(
+                                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                                crossAxis,
+                                                availableInnerWidth,
+                                            )
+                                        })
                                     })
                                 }),
                             )
                         });
                         lineHeight = __rhs;
                     }
-                    if (({ resolveChildAlignment_413((node).clone(), (child).clone()) })
+                    if (({ resolveChildAlignment_413((*node).clone(), (child).clone()) })
                         == facebook_yoga_Align_Baseline)
                     {
                         let mut ascent: f32 = ({ ({ calculateBaseline_433((child).clone()) }) }
                             + {
-                                ({
-                                    facebook_yoga_Style::computeFlexStartMargin(
-                                        &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                            .upgrade()
-                                            .deref()),
-                                        facebook_yoga_FlexDirection_Column,
-                                        direction,
-                                        availableInnerWidth,
-                                    )
+                                child.with(|__n0| {
+                                    ({
+                                        facebook_yoga_Style::computeFlexStartMargin(
+                                            &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                            facebook_yoga_FlexDirection_Column,
+                                            direction,
+                                            availableInnerWidth,
+                                        )
+                                    })
                                 })
                             });
                         let mut descent: f32 = ({
                             ({
-                                ({
-                                    facebook_yoga_LayoutResults::measuredDimension(
-                                        &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                                            .upgrade()
-                                            .deref()),
-                                        facebook_yoga_Dimension_Height,
-                                    )
+                                child.with(|__n0| {
+                                    ({
+                                        facebook_yoga_LayoutResults::measuredDimension(
+                                            &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                            facebook_yoga_Dimension_Height,
+                                        )
+                                    })
                                 })
                             } + {
-                                ({
-                                    facebook_yoga_Style::computeMarginForAxis(
-                                        &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                            .upgrade()
-                                            .deref()),
-                                        facebook_yoga_FlexDirection_Column,
-                                        availableInnerWidth,
-                                    )
+                                child.with(|__n0| {
+                                    ({
+                                        facebook_yoga_Style::computeMarginForAxis(
+                                            &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                            facebook_yoga_FlexDirection_Column,
+                                            availableInnerWidth,
+                                        )
+                                    })
                                 })
                             })
                         } - { ascent });
@@ -15447,12 +15248,8 @@ pub fn calculateLayoutImpl_465(
                 let mut child: Ptr<facebook_yoga_Node> = ({
                     facebook_yoga_LayoutableChildren_facebook_yoga_Node__IteratorImpl :: operator_deref ( &iterator .as_pointer()  , )
                 });
-                if (({
-                    facebook_yoga_Style::display(
-                        &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                            .upgrade()
-                            .deref()),
-                    )
+                if (child.with(|__n0| {
+                    ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
                 }) == facebook_yoga_Display_None)
                 {
                     ({
@@ -15460,16 +15257,17 @@ pub fn calculateLayoutImpl_465(
                     });
                     continue 'loop_;
                 }
-                if (({
-                    facebook_yoga_Style::positionType(
-                        &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                            .upgrade()
-                            .deref()),
-                    )
+                if (child.with(|__n0| {
+                    ({
+                        facebook_yoga_Style::positionType(
+                            &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        )
+                    })
                 }) != facebook_yoga_PositionType_Absolute)
                 {
                     'switch: {
-                        match { ({ resolveChildAlignment_413((node).clone(), (child).clone()) }) } {
+                        match { ({ resolveChildAlignment_413((*node).clone(), (child).clone()) }) }
+                        {
                             __v if __v == facebook_yoga_Align_Start
                                 || __v == facebook_yoga_Align_End =>
                             {
@@ -15478,15 +15276,15 @@ pub fn calculateLayoutImpl_465(
                             __v if __v == facebook_yoga_Align_FlexStart => {
                                 ({
                                     let _position: f32 = ({ currentLead } + {
-                                        ({
-                                            facebook_yoga_Style::computeFlexStartPosition(
-                                                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                                    .upgrade()
-                                                    .deref()),
-                                                crossAxis,
-                                                direction,
-                                                availableInnerWidth,
-                                            )
+                                        child.with(|__n0| {
+                                            ({
+                                                facebook_yoga_Style::computeFlexStartPosition(
+                                                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                                    crossAxis,
+                                                    direction,
+                                                    availableInnerWidth,
+                                                )
+                                            })
                                         })
                                     });
                                     let _edge: facebook_yoga_PhysicalEdge =
@@ -15501,29 +15299,29 @@ pub fn calculateLayoutImpl_465(
                                 ({
                                     let _position: f32 = ({
                                         ({ (currentLead + lineHeight) } - {
-                                            ({
-                                                facebook_yoga_Style::computeFlexEndMargin(
-                                                    &(*({
-                                                        facebook_yoga_NodeImpl::style_24(&child)
-                                                    })
-                                                    .upgrade()
-                                                    .deref()),
-                                                    crossAxis,
-                                                    direction,
-                                                    availableInnerWidth,
-                                                )
+                                            child.with(|__n0| {
+                                                ({
+                                                    facebook_yoga_Style::computeFlexEndMargin(
+                                                        &(*({
+                                                            facebook_yoga_Node::style_24(__n0)
+                                                        })),
+                                                        crossAxis,
+                                                        direction,
+                                                        availableInnerWidth,
+                                                    )
+                                                })
                                             })
                                         })
                                     } - {
-                                        ({
-                                            facebook_yoga_LayoutResults::measuredDimension(
-                                                &(*({
-                                                    facebook_yoga_NodeImpl::getLayout_26(&child)
-                                                })
-                                                .upgrade()
-                                                .deref()),
-                                                ({ dimension_136(crossAxis) }),
-                                            )
+                                        child.with(|__n0| {
+                                            ({
+                                                facebook_yoga_LayoutResults::measuredDimension(
+                                                    &(*({
+                                                        facebook_yoga_Node::getLayout_26(__n0)
+                                                    })),
+                                                    ({ dimension_136(crossAxis) }),
+                                                )
+                                            })
                                         })
                                     });
                                     let _edge: facebook_yoga_PhysicalEdge =
@@ -15535,13 +15333,13 @@ pub fn calculateLayoutImpl_465(
                                 break 'switch;
                             }
                             __v if __v == facebook_yoga_Align_Center => {
-                                let mut childHeight: f32 = ({
-                                    facebook_yoga_LayoutResults::measuredDimension(
-                                        &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                                            .upgrade()
-                                            .deref()),
-                                        ({ dimension_136(crossAxis) }),
-                                    )
+                                let mut childHeight: f32 = child.with(|__n0| {
+                                    ({
+                                        facebook_yoga_LayoutResults::measuredDimension(
+                                            &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                            ({ dimension_136(crossAxis) }),
+                                        )
+                                    })
                                 });
                                 ({
                                     facebook_yoga_NodeImpl::setLayoutPosition(
@@ -15555,15 +15353,15 @@ pub fn calculateLayoutImpl_465(
                             __v if __v == facebook_yoga_Align_Stretch => {
                                 ({
                                     let _position: f32 = ({ currentLead } + {
-                                        ({
-                                            facebook_yoga_Style::computeFlexStartMargin(
-                                                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                                    .upgrade()
-                                                    .deref()),
-                                                crossAxis,
-                                                direction,
-                                                availableInnerWidth,
-                                            )
+                                        child.with(|__n0| {
+                                            ({
+                                                facebook_yoga_Style::computeFlexStartMargin(
+                                                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                                    crossAxis,
+                                                    direction,
+                                                    availableInnerWidth,
+                                                )
+                                            })
                                         })
                                     });
                                     let _edge: facebook_yoga_PhysicalEdge =
@@ -15581,27 +15379,27 @@ pub fn calculateLayoutImpl_465(
                                 }) {
                                     let mut childWidth: f32 = if isMainAxisRow {
                                         ({
-                                            ({
-                                                facebook_yoga_LayoutResults::measuredDimension(
-                                                    &(*({
-                                                        facebook_yoga_NodeImpl::getLayout_26(&child)
-                                                    })
-                                                    .upgrade()
-                                                    .deref()),
-                                                    facebook_yoga_Dimension_Width,
-                                                )
+                                            child.with(|__n0| {
+                                                ({
+                                                    facebook_yoga_LayoutResults::measuredDimension(
+                                                        &(*({
+                                                            facebook_yoga_Node::getLayout_26(__n0)
+                                                        })),
+                                                        facebook_yoga_Dimension_Width,
+                                                    )
+                                                })
                                             })
                                         } + {
-                                            ({
-                                                facebook_yoga_Style::computeMarginForAxis(
-                                                    &(*({
-                                                        facebook_yoga_NodeImpl::style_24(&child)
-                                                    })
-                                                    .upgrade()
-                                                    .deref()),
-                                                    mainAxis,
-                                                    availableInnerWidth,
-                                                )
+                                            child.with(|__n0| {
+                                                ({
+                                                    facebook_yoga_Style::computeMarginForAxis(
+                                                        &(*({
+                                                            facebook_yoga_Node::style_24(__n0)
+                                                        })),
+                                                        mainAxis,
+                                                        availableInnerWidth,
+                                                    )
+                                                })
                                             })
                                         })
                                     } else {
@@ -15609,27 +15407,27 @@ pub fn calculateLayoutImpl_465(
                                     };
                                     let mut childHeight: f32 = if !(isMainAxisRow) {
                                         ({
-                                            ({
-                                                facebook_yoga_LayoutResults::measuredDimension(
-                                                    &(*({
-                                                        facebook_yoga_NodeImpl::getLayout_26(&child)
-                                                    })
-                                                    .upgrade()
-                                                    .deref()),
-                                                    facebook_yoga_Dimension_Height,
-                                                )
+                                            child.with(|__n0| {
+                                                ({
+                                                    facebook_yoga_LayoutResults::measuredDimension(
+                                                        &(*({
+                                                            facebook_yoga_Node::getLayout_26(__n0)
+                                                        })),
+                                                        facebook_yoga_Dimension_Height,
+                                                    )
+                                                })
                                             })
                                         } + {
-                                            ({
-                                                facebook_yoga_Style::computeMarginForAxis(
-                                                    &(*({
-                                                        facebook_yoga_NodeImpl::style_24(&child)
-                                                    })
-                                                    .upgrade()
-                                                    .deref()),
-                                                    crossAxis,
-                                                    availableInnerWidth,
-                                                )
+                                            child.with(|__n0| {
+                                                ({
+                                                    facebook_yoga_Style::computeMarginForAxis(
+                                                        &(*({
+                                                            facebook_yoga_Node::style_24(__n0)
+                                                        })),
+                                                        crossAxis,
+                                                        availableInnerWidth,
+                                                    )
+                                                })
                                             })
                                         })
                                     } else {
@@ -15638,29 +15436,29 @@ pub fn calculateLayoutImpl_465(
                                     if !(({
                                         inexactEquals_111(
                                             childWidth,
-                                            ({
-                                                facebook_yoga_LayoutResults::measuredDimension(
-                                                    &(*({
-                                                        facebook_yoga_NodeImpl::getLayout_26(&child)
-                                                    })
-                                                    .upgrade()
-                                                    .deref()),
-                                                    facebook_yoga_Dimension_Width,
-                                                )
+                                            child.with(|__n0| {
+                                                ({
+                                                    facebook_yoga_LayoutResults::measuredDimension(
+                                                        &(*({
+                                                            facebook_yoga_Node::getLayout_26(__n0)
+                                                        })),
+                                                        facebook_yoga_Dimension_Width,
+                                                    )
+                                                })
                                             }),
                                         )
                                     }) && ({
                                         inexactEquals_111(
                                             childHeight,
-                                            ({
-                                                facebook_yoga_LayoutResults::measuredDimension(
-                                                    &(*({
-                                                        facebook_yoga_NodeImpl::getLayout_26(&child)
-                                                    })
-                                                    .upgrade()
-                                                    .deref()),
-                                                    facebook_yoga_Dimension_Height,
-                                                )
+                                            child.with(|__n0| {
+                                                ({
+                                                    facebook_yoga_LayoutResults::measuredDimension(
+                                                        &(*({
+                                                            facebook_yoga_Node::getLayout_26(__n0)
+                                                        })),
+                                                        facebook_yoga_Dimension_Height,
+                                                    )
+                                                })
                                             }),
                                         )
                                     })) {
@@ -15703,15 +15501,15 @@ pub fn calculateLayoutImpl_465(
                                             ({ calculateBaseline_433((child).clone()) })
                                         })
                                     } + {
-                                        ({
-                                            facebook_yoga_Style::computeFlexStartPosition(
-                                                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                                    .upgrade()
-                                                    .deref()),
-                                                facebook_yoga_FlexDirection_Column,
-                                                direction,
-                                                availableInnerCrossDim,
-                                            )
+                                        child.with(|__n0| {
+                                            ({
+                                                facebook_yoga_Style::computeFlexStartPosition(
+                                                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                                                    facebook_yoga_FlexDirection_Column,
+                                                    direction,
+                                                    availableInnerCrossDim,
+                                                )
+                                            })
                                         })
                                     });
                                     facebook_yoga_NodeImpl::setLayoutPosition(
@@ -15746,7 +15544,7 @@ pub fn calculateLayoutImpl_465(
             let _axisSize: f32 = ownerWidth;
             let _widthSize: f32 = ownerWidth;
             boundAxis_419(
-                (node).clone(),
+                (*node).clone(),
                 facebook_yoga_FlexDirection_Row,
                 direction,
                 (availableWidth - marginAxisRow),
@@ -15755,7 +15553,7 @@ pub fn calculateLayoutImpl_465(
             )
         });
         facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-            &node,
+            &(*node),
             _measuredDimension,
             facebook_yoga_Dimension_Width,
         )
@@ -15763,7 +15561,7 @@ pub fn calculateLayoutImpl_465(
     ({
         let _measuredDimension: f32 = ({
             boundAxis_419(
-                (node).clone(),
+                (*node).clone(),
                 facebook_yoga_FlexDirection_Column,
                 direction,
                 (availableHeight - marginAxisColumn),
@@ -15772,25 +15570,21 @@ pub fn calculateLayoutImpl_465(
             )
         });
         facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-            &node,
+            &(*node),
             _measuredDimension,
             facebook_yoga_Dimension_Height,
         )
     });
     if (sizingModeMainDim == facebook_yoga_SizingMode_MaxContent)
-        || ((({
-            facebook_yoga_Style::overflow(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        || (((*node).with(|__n0| {
+            ({ facebook_yoga_Style::overflow(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) != facebook_yoga_Overflow_Scroll)
             && (sizingModeMainDim == facebook_yoga_SizingMode_FitContent))
     {
         ({
             let _measuredDimension: f32 = ({
                 boundAxis_419(
-                    (node).clone(),
+                    (*node).clone(),
                     mainAxis,
                     direction,
                     maxLineMainDim,
@@ -15800,18 +15594,14 @@ pub fn calculateLayoutImpl_465(
             });
             let _dimension: facebook_yoga_Dimension = ({ dimension_136(mainAxis) });
             facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-                &node,
+                &(*node),
                 _measuredDimension,
                 _dimension,
             )
         });
     } else if (sizingModeMainDim == facebook_yoga_SizingMode_FitContent)
-        && (({
-            facebook_yoga_Style::overflow(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        && ((*node).with(|__n0| {
+            ({ facebook_yoga_Style::overflow(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_Overflow_Scroll)
     {
         ({
@@ -15823,7 +15613,7 @@ pub fn calculateLayoutImpl_465(
                             facebook_yoga_FloatOptional::unwrap(
                                 &({
                                     boundAxisWithinMinAndMax_418(
-                                        (node).clone(),
+                                        (*node).clone(),
                                         direction,
                                         mainAxis,
                                         facebook_yoga_FloatOptional::new_1({ maxLineMainDim }),
@@ -15840,26 +15630,22 @@ pub fn calculateLayoutImpl_465(
             });
             let _dimension: facebook_yoga_Dimension = ({ dimension_136(mainAxis) });
             facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-                &node,
+                &(*node),
                 _measuredDimension,
                 _dimension,
             )
         });
     }
     if (sizingModeCrossDim == facebook_yoga_SizingMode_MaxContent)
-        || ((({
-            facebook_yoga_Style::overflow(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        || (((*node).with(|__n0| {
+            ({ facebook_yoga_Style::overflow(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) != facebook_yoga_Overflow_Scroll)
             && (sizingModeCrossDim == facebook_yoga_SizingMode_FitContent))
     {
         ({
             let _measuredDimension: f32 = ({
                 boundAxis_419(
-                    (node).clone(),
+                    (*node).clone(),
                     crossAxis,
                     direction,
                     (totalLineCrossDim + paddingAndBorderAxisCross),
@@ -15869,18 +15655,14 @@ pub fn calculateLayoutImpl_465(
             });
             let _dimension: facebook_yoga_Dimension = ({ dimension_136(crossAxis) });
             facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-                &node,
+                &(*node),
                 _measuredDimension,
                 _dimension,
             )
         });
     } else if (sizingModeCrossDim == facebook_yoga_SizingMode_FitContent)
-        && (({
-            facebook_yoga_Style::overflow(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        && ((*node).with(|__n0| {
+            ({ facebook_yoga_Style::overflow(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_Overflow_Scroll)
     {
         ({
@@ -15891,7 +15673,7 @@ pub fn calculateLayoutImpl_465(
                         facebook_yoga_FloatOptional::unwrap(
                             &({
                                 boundAxisWithinMinAndMax_418(
-                                    (node).clone(),
+                                    (*node).clone(),
                                     direction,
                                     crossAxis,
                                     facebook_yoga_FloatOptional::new_1({
@@ -15910,23 +15692,19 @@ pub fn calculateLayoutImpl_465(
             });
             let _dimension: facebook_yoga_Dimension = ({ dimension_136(crossAxis) });
             facebook_yoga_NodeImpl::setLayoutMeasuredDimension(
-                &node,
+                &(*node),
                 _measuredDimension,
                 _dimension,
             )
         });
     }
     if (performLayout)
-        && (({
-            facebook_yoga_Style::flexWrap(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        && ((*node).with(|__n0| {
+            ({ facebook_yoga_Style::flexWrap(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_Wrap_WrapReverse)
     {
         let __tmp_2: Value<facebook_yoga_LayoutableChildren_facebook_yoga_Node_> = Rc::new(
-            RefCell::new(({ facebook_yoga_NodeImpl::getLayoutChildren(&node) })),
+            RefCell::new(({ facebook_yoga_NodeImpl::getLayoutChildren(&(*node)) })),
         );
         let __range3: Ptr<facebook_yoga_LayoutableChildren_facebook_yoga_Node_> =
             __tmp_2.as_pointer();
@@ -15952,43 +15730,41 @@ pub fn calculateLayoutImpl_465(
                     &__begin3.as_pointer(),
                 )
             });
-            if (({
-                facebook_yoga_Style::positionType(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                )
+            if (child.with(|__n0| {
+                ({
+                    facebook_yoga_Style::positionType(&(*({ facebook_yoga_Node::style_24(__n0) })))
+                })
             }) != facebook_yoga_PositionType_Absolute)
             {
                 ({
                     let _position: f32 = ({
                         ({
-                            ({
-                                facebook_yoga_LayoutResults::measuredDimension(
-                                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&node) })
-                                        .upgrade()
-                                        .deref()),
-                                    ({ dimension_136(crossAxis) }),
-                                )
+                            (*node).with(|__n0| {
+                                ({
+                                    facebook_yoga_LayoutResults::measuredDimension(
+                                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                        ({ dimension_136(crossAxis) }),
+                                    )
+                                })
                             })
                         } - {
-                            ({
-                                facebook_yoga_LayoutResults::position(
-                                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                                        .upgrade()
-                                        .deref()),
-                                    ({ flexStartEdge_132(crossAxis) }),
-                                )
+                            child.with(|__n0| {
+                                ({
+                                    facebook_yoga_LayoutResults::position(
+                                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                        ({ flexStartEdge_132(crossAxis) }),
+                                    )
+                                })
                             })
                         })
                     } - {
-                        ({
-                            facebook_yoga_LayoutResults::measuredDimension(
-                                &(*({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                                    .upgrade()
-                                    .deref()),
-                                ({ dimension_136(crossAxis) }),
-                            )
+                        child.with(|__n0| {
+                            ({
+                                facebook_yoga_LayoutResults::measuredDimension(
+                                    &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                                    ({ dimension_136(crossAxis) }),
+                                )
+                            })
                         })
                     });
                     let _edge: facebook_yoga_PhysicalEdge = ({ flexStartEdge_132(crossAxis) });
@@ -16007,7 +15783,7 @@ pub fn calculateLayoutImpl_465(
         let mut needsCrossTrailingPos: bool = ({ needsTrailingPosition_422(crossAxis) });
         if (needsMainTrailingPos) || (needsCrossTrailingPos) {
             let __tmp_3: Value<facebook_yoga_LayoutableChildren_facebook_yoga_Node_> = Rc::new(
-                RefCell::new(({ facebook_yoga_NodeImpl::getLayoutChildren(&node) })),
+                RefCell::new(({ facebook_yoga_NodeImpl::getLayoutChildren(&(*node)) })),
             );
             let __range4: Ptr<facebook_yoga_LayoutableChildren_facebook_yoga_Node_> =
                 __tmp_3.as_pointer();
@@ -16033,19 +15809,15 @@ pub fn calculateLayoutImpl_465(
                 let mut child: Ptr<facebook_yoga_Node> = ({
                     facebook_yoga_LayoutableChildren_facebook_yoga_Node__IteratorImpl :: operator_deref ( &__begin4 .as_pointer()  , )
                 });
-                if (({
-                    facebook_yoga_Style::display(
-                        &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                            .upgrade()
-                            .deref()),
-                    )
+                if (child.with(|__n0| {
+                    ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
                 }) == facebook_yoga_Display_None)
-                    || (({
-                        facebook_yoga_Style::positionType(
-                            &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                                .upgrade()
-                                .deref()),
-                        )
+                    || (child.with(|__n0| {
+                        ({
+                            facebook_yoga_Style::positionType(
+                                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                            )
+                        })
                     }) == facebook_yoga_PositionType_Absolute)
                 {
                     ({
@@ -16054,29 +15826,25 @@ pub fn calculateLayoutImpl_465(
                     continue 'loop_;
                 }
                 if needsMainTrailingPos {
-                    ({ setChildTrailingPosition_421((node).clone(), (child).clone(), mainAxis) });
+                    ({ setChildTrailingPosition_421((*node).clone(), (child).clone(), mainAxis) });
                 }
                 if needsCrossTrailingPos {
-                    ({ setChildTrailingPosition_421((node).clone(), (child).clone(), crossAxis) });
+                    ({ setChildTrailingPosition_421((*node).clone(), (child).clone(), crossAxis) });
                 }
                 ({
                     facebook_yoga_LayoutableChildren_facebook_yoga_Node__IteratorImpl :: operator_inc_4 ( &__begin4 .as_pointer()  , )
                 });
             }
         }
-        if ((({
-            facebook_yoga_Style::positionType(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (((*node).with(|__n0| {
+            ({ facebook_yoga_Style::positionType(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) != facebook_yoga_PositionType_Static)
-            || ({ facebook_yoga_Node::alwaysFormsContainingBlock(&(*node.upgrade().deref())) }))
+            || ({ facebook_yoga_Node::alwaysFormsContainingBlock(&(*(*node).upgrade().deref())) }))
             || (depth == 1_u32)
         {
             ({
-                let _containingNode: Ptr<facebook_yoga_Node> = (node).clone();
-                let _currentNode: Ptr<facebook_yoga_Node> = (node).clone();
+                let _containingNode: Ptr<facebook_yoga_Node> = (*node).clone();
+                let _currentNode: Ptr<facebook_yoga_Node> = (*node).clone();
                 let _widthSizingMode: facebook_yoga_SizingMode = if isMainAxisRow {
                     sizingModeMainDim
                 } else {
@@ -16106,24 +15874,24 @@ pub fn calculateLayoutImpl_465(
     }
 }
 pub fn isCachedForOwnerSize_467(
-    mut node: Ptr<facebook_yoga_Node>,
+    node: &Ptr<facebook_yoga_Node>,
     cachedMeasurement: Ptr<facebook_yoga_CachedMeasurement>,
     mut ownerWidth: f32,
     mut ownerHeight: f32,
 ) -> bool {
     return ((!({
         facebook_yoga_StyleImpl::resolvesAgainstOwnerWidth(
-            &({ facebook_yoga_NodeImpl::style_25(&node) }),
+            &({ facebook_yoga_NodeImpl::style_25(&(*node)) }),
         )
     })) || ({
         inexactEquals_111(cachedMeasurement.with(|__s| __s.ownerWidth), ownerWidth)
-    })) && ((!({
-        facebook_yoga_Style::resolvesAgainstOwnerHeight(
-            &(*({ facebook_yoga_NodeImpl::style_25(&node) })
-                .upgrade()
-                .deref()),
-        )
-    })) || ({
+    })) && ((!((*node).with(|__n0| {
+        ({
+            facebook_yoga_Style::resolvesAgainstOwnerHeight(
+                &(*({ facebook_yoga_Node::style_25(__n0) })),
+            )
+        })
+    }))) || ({
         inexactEquals_111(cachedMeasurement.with(|__s| __s.ownerHeight), ownerHeight)
     }));
 }
@@ -16172,23 +15940,23 @@ pub fn calculateLayoutInternal_430(
     let mut cachedResults: Ptr<facebook_yoga_CachedMeasurement> =
         Ptr::<facebook_yoga_CachedMeasurement>::null();
     if ({ facebook_yoga_Node::hasMeasureFunc(&(*node.upgrade().deref())) }) {
-        let mut marginAxisRow: f32 = ({
-            facebook_yoga_Style::computeMarginForAxis(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_FlexDirection_Row,
-                ownerWidth,
-            )
+        let mut marginAxisRow: f32 = node.with(|__n0| {
+            ({
+                facebook_yoga_Style::computeMarginForAxis(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    facebook_yoga_FlexDirection_Row,
+                    ownerWidth,
+                )
+            })
         });
-        let mut marginAxisColumn: f32 = ({
-            facebook_yoga_Style::computeMarginForAxis(
-                &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                    .upgrade()
-                    .deref()),
-                facebook_yoga_FlexDirection_Column,
-                ownerWidth,
-            )
+        let mut marginAxisColumn: f32 = node.with(|__n0| {
+            ({
+                facebook_yoga_Style::computeMarginForAxis(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    facebook_yoga_FlexDirection_Column,
+                    ownerWidth,
+                )
+            })
         });
         if ({
             let _lastWidthMode: facebook_yoga_SizingMode =
@@ -16216,7 +15984,7 @@ pub fn calculateLayoutInternal_430(
             )
         }) && ({
             isCachedForOwnerSize_467(
-                (node).clone(),
+                &node,
                 field_ptr!(layout, cachedLayout),
                 ownerWidth,
                 ownerHeight,
@@ -16258,7 +16026,7 @@ pub fn calculateLayoutInternal_430(
                     )
                 }) && ({
                     isCachedForOwnerSize_467(
-                        (node).clone(),
+                        &node,
                         field_ref!(layout, cachedMeasurements).decay().offset(i),
                         ownerWidth,
                         ownerHeight,
@@ -16287,7 +16055,7 @@ pub fn calculateLayoutInternal_430(
             heightSizingMode
         })) && ({
             isCachedForOwnerSize_467(
-                (node).clone(),
+                &node,
                 field_ptr!(layout, cachedLayout),
                 ownerWidth,
                 ownerHeight,
@@ -16319,7 +16087,7 @@ pub fn calculateLayoutInternal_430(
                 } == { heightSizingMode }))
                 && ({
                     isCachedForOwnerSize_467(
-                        (node).clone(),
+                        &node,
                         field_ref!(layout, cachedMeasurements)
                             .decay()
                             .offset((i as usize)),
@@ -16361,7 +16129,7 @@ pub fn calculateLayoutInternal_430(
         };
     } else {
         ({
-            let _node: Ptr<facebook_yoga_Node> = (node).clone();
+            let _node: &Ptr<facebook_yoga_Node> = &node;
             let _availableWidth: f32 = availableWidth;
             let _availableHeight: f32 = availableHeight;
             let _ownerDirection: facebook_yoga_Direction = ownerDirection;
@@ -16398,21 +16166,15 @@ pub fn calculateLayoutInternal_430(
         });
         field!(layout, configVersion).write(__rhs);
         if (cachedResults).is_null() {
-            let __rhs = {
-                let __tmp_4: Value<u32> = Rc::new(RefCell::new(
-                    (layout.with(|__s| __s.nextCachedMeasurementsIndex))
-                        .wrapping_add((1_u32 as u32)),
-                ));
-                ({
-                    let __a = field_ptr!(layoutMarkerData, maxMeasureCache);
-                    let __b = __tmp_4.as_pointer();
-                    if CppLess::less(&__a, &__b) { __b } else { __a }
-                }
-                .read())
-            };
+            let __rhs = ({
+                let __a = layoutMarkerData.with(|__s| __s.maxMeasureCache);
+                let __b = (layout.with(|__s| __s.nextCachedMeasurementsIndex))
+                    .wrapping_add((1_u32 as u32));
+                if __a < __b { __b } else { __a }
+            });
             field!(layoutMarkerData, maxMeasureCache).write(__rhs);
             if ({ layout.with(|__s| __s.nextCachedMeasurementsIndex) } == {
-                (MaxCachedMeasurements_123.with(|rc| *rc.borrow()) as u32)
+                (MaxCachedMeasurements_123 as u32)
             }) {
                 field!(layout, nextCachedMeasurementsIndex).write(0_u32);
             }
@@ -16450,13 +16212,13 @@ pub fn calculateLayoutInternal_430(
     }
     if performLayout {
         ({
-            let _lengthValue: f32 = ({
-                facebook_yoga_LayoutResults::measuredDimension(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&node) })
-                        .upgrade()
-                        .deref()),
-                    facebook_yoga_Dimension_Width,
-                )
+            let _lengthValue: f32 = node.with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::measuredDimension(
+                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                        facebook_yoga_Dimension_Width,
+                    )
+                })
             });
             facebook_yoga_NodeImpl::setLayoutDimension(
                 &node,
@@ -16465,13 +16227,13 @@ pub fn calculateLayoutInternal_430(
             )
         });
         ({
-            let _lengthValue: f32 = ({
-                facebook_yoga_LayoutResults::measuredDimension(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&node) })
-                        .upgrade()
-                        .deref()),
-                    facebook_yoga_Dimension_Height,
-                )
+            let _lengthValue: f32 = node.with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::measuredDimension(
+                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                        facebook_yoga_Dimension_Height,
+                    )
+                })
             });
             facebook_yoga_NodeImpl::setLayoutDimension(
                 &node,
@@ -16528,7 +16290,7 @@ pub fn calculateLayout_208(
     ({ facebook_yoga_NodeImpl::processDimensions(&node) });
     let mut direction: facebook_yoga_Direction =
         ({ facebook_yoga_NodeImpl::resolveDirection(&node, ownerDirection) });
-    let mut width: f32 = YGUndefined_23.with(|rc| *rc.borrow());
+    let mut width: f32 = YGUndefined_23;
     let mut widthSizingMode: facebook_yoga_SizingMode = facebook_yoga_SizingMode_MaxContent;
     let style: Ptr<facebook_yoga_Style> = ({ facebook_yoga_NodeImpl::style_24(&node) });
     if ({
@@ -16551,14 +16313,14 @@ pub fn calculateLayout_208(
                 )
             })
         } + {
-            ({
-                facebook_yoga_Style::computeMarginForAxis(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                        .upgrade()
-                        .deref()),
-                    facebook_yoga_FlexDirection_Row,
-                    ownerWidth,
-                )
+            node.with(|__n0| {
+                ({
+                    facebook_yoga_Style::computeMarginForAxis(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        facebook_yoga_FlexDirection_Row,
+                        ownerWidth,
+                    )
+                })
             })
         });
         widthSizingMode = facebook_yoga_SizingMode_StretchFit;
@@ -16603,7 +16365,7 @@ pub fn calculateLayout_208(
             facebook_yoga_SizingMode_StretchFit
         };
     }
-    let mut height: f32 = YGUndefined_23.with(|rc| *rc.borrow());
+    let mut height: f32 = YGUndefined_23;
     let mut heightSizingMode: facebook_yoga_SizingMode = facebook_yoga_SizingMode_MaxContent;
     if ({
         facebook_yoga_NodeImpl::hasDefiniteLength(
@@ -16627,14 +16389,14 @@ pub fn calculateLayout_208(
                 )
             })
         } + {
-            ({
-                facebook_yoga_Style::computeMarginForAxis(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                        .upgrade()
-                        .deref()),
-                    facebook_yoga_FlexDirection_Column,
-                    ownerWidth,
-                )
+            node.with(|__n0| {
+                ({
+                    facebook_yoga_Style::computeMarginForAxis(
+                        &(*({ facebook_yoga_Node::style_24(__n0) })),
+                        facebook_yoga_FlexDirection_Column,
+                        ownerWidth,
+                    )
+                })
             })
         });
         heightSizingMode = facebook_yoga_SizingMode_StretchFit;
@@ -16707,12 +16469,12 @@ pub fn calculateLayout_208(
         )
     }) {
         ({
-            let _direction: facebook_yoga_Direction = ({
-                facebook_yoga_LayoutResults::direction(
-                    &(*({ facebook_yoga_NodeImpl::getLayout_26(&node) })
-                        .upgrade()
-                        .deref()),
-                )
+            let _direction: facebook_yoga_Direction = node.with(|__n0| {
+                ({
+                    facebook_yoga_LayoutResults::direction(
+                        &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                    )
+                })
             });
             facebook_yoga_NodeImpl::setPosition(&node, _direction, ownerWidth, ownerHeight)
         });
@@ -16757,31 +16519,25 @@ pub fn calculateFlexLine_466(
         ({ facebook_yoga_NodeImpl::resolveDirection(&node, ownerDirection) });
     let mut mainAxis: facebook_yoga_FlexDirection = ({
         resolveDirection_130(
-            ({
-                facebook_yoga_Style::flexDirection(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                        .upgrade()
-                        .deref()),
-                )
+            node.with(|__n0| {
+                ({
+                    facebook_yoga_Style::flexDirection(&(*({ facebook_yoga_Node::style_24(__n0) })))
+                })
             }),
             direction,
         )
     });
-    let mut isNodeFlexWrap: bool = (({
-        facebook_yoga_Style::flexWrap(
-            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                .upgrade()
-                .deref()),
-        )
+    let mut isNodeFlexWrap: bool = (node.with(|__n0| {
+        ({ facebook_yoga_Style::flexWrap(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
     }) != facebook_yoga_Wrap_NoWrap);
-    let mut gap: f32 = ({
-        facebook_yoga_Style::computeGapForAxis(
-            &(*({ facebook_yoga_NodeImpl::style_24(&node) })
-                .upgrade()
-                .deref()),
-            mainAxis,
-            availableInnerMainDim,
-        )
+    let mut gap: f32 = node.with(|__n0| {
+        ({
+            facebook_yoga_Style::computeGapForAxis(
+                &(*({ facebook_yoga_Node::style_24(__n0) })),
+                mainAxis,
+                availableInnerMainDim,
+            )
+        })
     });
     let childrenEnd: Value<facebook_yoga_LayoutableChildren_facebook_yoga_Node__Iterator> =
         Rc::new(RefCell::new(
@@ -16803,19 +16559,13 @@ pub fn calculateFlexLine_466(
                 &iterator,
             )
         });
-        if (({
-            facebook_yoga_Style::display(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (child.with(|__n0| {
+            ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_Display_None)
-            || (({
-                facebook_yoga_Style::positionType(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                )
+            || (child.with(|__n0| {
+                ({
+                    facebook_yoga_Style::positionType(&(*({ facebook_yoga_Node::style_24(__n0) })))
+                })
             }) == facebook_yoga_PositionType_Absolute)
         {
             ({
@@ -16826,37 +16576,37 @@ pub fn calculateFlexLine_466(
         if (firstElementInLine).is_null() {
             firstElementInLine = (child).clone();
         }
-        if ({
-            facebook_yoga_Style::flexStartMarginIsAuto(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                mainAxis,
-                ownerDirection,
-            )
+        if child.with(|__n0| {
+            ({
+                facebook_yoga_Style::flexStartMarginIsAuto(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    mainAxis,
+                    ownerDirection,
+                )
+            })
         }) {
             numberOfAutoMargins.postfix_inc();
         }
-        if ({
-            facebook_yoga_Style::flexEndMarginIsAuto(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                mainAxis,
-                ownerDirection,
-            )
+        if child.with(|__n0| {
+            ({
+                facebook_yoga_Style::flexEndMarginIsAuto(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    mainAxis,
+                    ownerDirection,
+                )
+            })
         }) {
             numberOfAutoMargins.postfix_inc();
         }
         ({ facebook_yoga_NodeImpl::setLineIndex(&child, lineCount) });
-        let mut childMarginMainAxis: f32 = ({
-            facebook_yoga_Style::computeMarginForAxis(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-                mainAxis,
-                availableInnerWidth,
-            )
+        let mut childMarginMainAxis: f32 = child.with(|__n0| {
+            ({
+                facebook_yoga_Style::computeMarginForAxis(
+                    &(*({ facebook_yoga_Node::style_24(__n0) })),
+                    mainAxis,
+                    availableInnerWidth,
+                )
+            })
         });
         let mut childLeadingGapMainAxis: f32 =
             if ({ (child).clone() } == { (firstElementInLine).clone() }) {
@@ -16868,9 +16618,11 @@ pub fn calculateFlexLine_466(
             facebook_yoga_FloatOptional::unwrap(
                 &({
                     let _node: Ptr<facebook_yoga_Node> = (child).clone();
-                    let _value: facebook_yoga_FloatOptional =
-                        ({ facebook_yoga_NodeImpl::getLayout_26(&child) })
-                            .with(|__s| __s.computedFlexBasis.clone());
+                    let _value: facebook_yoga_FloatOptional = child.with(|__n0| {
+                        (*({ facebook_yoga_Node::getLayout_26(__n0) }))
+                            .computedFlexBasis
+                            .clone()
+                    });
                     boundAxisWithinMinAndMax_418(
                         _node,
                         direction,
@@ -16901,15 +16653,12 @@ pub fn calculateFlexLine_466(
             totalFlexGrowFactors += ({ facebook_yoga_NodeImpl::resolveFlexGrow(&child) });
             totalFlexShrinkScaledFactors +=
                 ({ -({ facebook_yoga_NodeImpl::resolveFlexShrink(&child) }) } * {
-                    ({
-                        facebook_yoga_FloatOptional::unwrap(
-                            &(*field_ptr!(
-                                ({ facebook_yoga_NodeImpl::getLayout_26(&child,) }),
-                                computedFlexBasis
+                    child.with(|__n0| {
+                        ({
+                            facebook_yoga_FloatOptional::unwrap(
+                                &(*({ facebook_yoga_Node::getLayout_26(__n0) })).computedFlexBasis,
                             )
-                            .upgrade()
-                            .deref()),
-                        )
+                        })
                     })
                 });
         }
@@ -16970,7 +16719,7 @@ pub fn roundValueToPixelGridDouble_469(
         scaledValue = __rhs;
     }
     return if ((scaledValue.is_nan()) || (pointScaleFactor.is_nan())) {
-        (YGUndefined_23.with(|rc| *rc.borrow()) as f64)
+        (YGUndefined_23 as f64)
     } else {
         (scaledValue / pointScaleFactor)
     };
@@ -16994,38 +16743,38 @@ pub fn roundLayoutResultsToPixelGrid_468(
             &({ facebook_yoga_Node::getConfig(&(*node.upgrade().deref())) }),
         )
     }) as f64);
-    let mut nodeLeft: f64 = (({
-        facebook_yoga_LayoutResults::position(
-            &(*({ facebook_yoga_NodeImpl::getLayout_26(&node) })
-                .upgrade()
-                .deref()),
-            facebook_yoga_PhysicalEdge_Left,
-        )
-    }) as f64);
-    let mut nodeTop: f64 = (({
-        facebook_yoga_LayoutResults::position(
-            &(*({ facebook_yoga_NodeImpl::getLayout_26(&node) })
-                .upgrade()
-                .deref()),
-            facebook_yoga_PhysicalEdge_Top,
-        )
-    }) as f64);
-    let mut nodeWidth: f64 = (({
-        facebook_yoga_LayoutResults::dimension(
-            &(*({ facebook_yoga_NodeImpl::getLayout_26(&node) })
-                .upgrade()
-                .deref()),
-            facebook_yoga_Dimension_Width,
-        )
-    }) as f64);
-    let mut nodeHeight: f64 = (({
-        facebook_yoga_LayoutResults::dimension(
-            &(*({ facebook_yoga_NodeImpl::getLayout_26(&node) })
-                .upgrade()
-                .deref()),
-            facebook_yoga_Dimension_Height,
-        )
-    }) as f64);
+    let mut nodeLeft: f64 = node.with(|__n0| {
+        (({
+            facebook_yoga_LayoutResults::position(
+                &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                facebook_yoga_PhysicalEdge_Left,
+            )
+        }) as f64)
+    });
+    let mut nodeTop: f64 = node.with(|__n0| {
+        (({
+            facebook_yoga_LayoutResults::position(
+                &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                facebook_yoga_PhysicalEdge_Top,
+            )
+        }) as f64)
+    });
+    let mut nodeWidth: f64 = node.with(|__n0| {
+        (({
+            facebook_yoga_LayoutResults::dimension(
+                &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                facebook_yoga_Dimension_Width,
+            )
+        }) as f64)
+    });
+    let mut nodeHeight: f64 = node.with(|__n0| {
+        (({
+            facebook_yoga_LayoutResults::dimension(
+                &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                facebook_yoga_Dimension_Height,
+            )
+        }) as f64)
+    });
     let mut absoluteNodeLeft: f64 = (absoluteLeft + nodeLeft);
     let mut absoluteNodeTop: f64 = (absoluteTop + nodeTop);
     let mut absoluteNodeRight: f64 = (absoluteNodeLeft + nodeWidth);
@@ -17188,31 +16937,30 @@ pub fn assertFatalWithConfig_189(
     }
 }
 pub fn vlog_474(
-    mut config: Ptr<facebook_yoga_Config>,
-    mut node: Ptr<facebook_yoga_Node>,
+    config: &Ptr<facebook_yoga_Config>,
+    node: &Ptr<facebook_yoga_Node>,
     mut level: facebook_yoga_LogLevel,
     mut format: Ptr<i8>,
-    args: Ptr<VaArg>,
+    args: &Ptr<VaArg>,
 ) {
-    let args: Value<Ptr<VaArg>> = Rc::new(RefCell::new(args));
-    if (config).is_null() {
+    if (*config).is_null() {
         ({
             ({ getDefaultLogger_183() }).call(
                 Ptr::<YGConfig>::null(),
-                node.reinterpret_cast::<YGNode>(),
+                (*node).reinterpret_cast::<YGNode>(),
                 ({ unscopedEnum_68(level) }),
                 (format).clone(),
-                (*args.borrow()).clone(),
+                (*args).clone(),
             )
         });
     } else {
         ({
             facebook_yoga_ConfigImpl::log(
-                &config,
-                (node).clone(),
+                &(*config),
+                (*node).clone(),
                 level,
                 (format).clone(),
-                (*args.borrow()).clone(),
+                (*args).clone(),
             )
         });
     }
@@ -17224,11 +16972,11 @@ pub fn log_471(mut level: facebook_yoga_LogLevel, format: Ptr<i8>, __args: Box<[
     (*args.borrow_mut()) = __args.as_pointer();
     ({
         vlog_474(
-            Ptr::<facebook_yoga_Config>::null(),
-            Ptr::<facebook_yoga_Node>::null(),
+            &(Ptr::<facebook_yoga_Config>::null()),
+            &(Ptr::<facebook_yoga_Node>::null()),
             level,
             (*format.borrow()).clone(),
-            (*args.borrow()).clone(),
+            &((*args.borrow()).clone()),
         )
     });
 }
@@ -17243,18 +16991,18 @@ pub fn log_472(
     let args: Value<Ptr<VaArg>> = Rc::new(RefCell::new(Ptr::<VaArg>::default()));
     (*args.borrow_mut()) = __args.as_pointer();
     ({
-        let _config: Ptr<facebook_yoga_Config> = if (node).is_null() {
+        let _config: &Ptr<facebook_yoga_Config> = &(if (node).is_null() {
             Ptr::<facebook_yoga_Config>::null()
         } else {
             ({ facebook_yoga_Node::getConfig(&(*node.upgrade().deref())) })
-        };
-        let _node: Ptr<facebook_yoga_Node> = (node).clone();
+        });
+        let _node: &Ptr<facebook_yoga_Node> = &node;
         vlog_474(
             _config,
             _node,
             level,
             (*format.borrow()).clone(),
-            (*args.borrow()).clone(),
+            &((*args.borrow()).clone()),
         )
     });
 }
@@ -17270,11 +17018,11 @@ pub fn log_473(
     (*args.borrow_mut()) = __args.as_pointer();
     ({
         vlog_474(
-            (config).clone(),
-            Ptr::<facebook_yoga_Node>::null(),
+            &config,
+            &(Ptr::<facebook_yoga_Node>::null()),
             level,
             (*format.borrow()).clone(),
-            (*args.borrow()).clone(),
+            &((*args.borrow()).clone()),
         )
     });
 }
@@ -17408,14 +17156,14 @@ thread_local!(
     );
 );
 pub fn push_477(
-    mut newHead: Ptr<facebook_yoga__anonymous_namespace__Node>,
+    newHead: &Ptr<facebook_yoga__anonymous_namespace__Node>,
 ) -> Ptr<facebook_yoga__anonymous_namespace__Node> {
     let mut oldHead: Ptr<facebook_yoga__anonymous_namespace__Node> =
         Ptr::<facebook_yoga__anonymous_namespace__Node>::null();
     let mut __do_while = true;
     'loop_: while __do_while
         || (!(if ({ (*subscribers_476.with(Value::clone).borrow()).clone() }) == (oldHead).clone() {
-            (*subscribers_476.with(Value::clone).borrow_mut()) = (newHead).clone();
+            (*subscribers_476.with(Value::clone).borrow_mut()) = (*newHead).clone();
             true
         } else {
             oldHead = (*subscribers_476.with(Value::clone).borrow()).clone();
@@ -17424,8 +17172,8 @@ pub fn push_477(
     {
         __do_while = false;
         oldHead = (*subscribers_476.with(Value::clone).borrow()).clone();
-        if !((newHead).is_null()) {
-            field!(newHead, next).write((oldHead).clone());
+        if !((*newHead).is_null()) {
+            field!((*newHead), next).write((oldHead).clone());
         }
     }
     return oldHead;
@@ -17433,7 +17181,7 @@ pub fn push_477(
 impl facebook_yoga_Event {
     pub fn reset() {
         let mut head: Ptr<facebook_yoga__anonymous_namespace__Node> =
-            ({ push_477(Ptr::<facebook_yoga__anonymous_namespace__Node>::null()) });
+            ({ push_477(&(Ptr::<facebook_yoga__anonymous_namespace__Node>::null())) });
         'loop_: while !((head).is_null()) {
             let mut current: Ptr<facebook_yoga__anonymous_namespace__Node> = (head).clone();
             head = { head.with(|__s| __s.next.clone()) };
@@ -17448,9 +17196,13 @@ impl facebook_yoga_Event {
         >,
     ) {
         ({
-            push_477(Ptr::alloc(facebook_yoga__anonymous_namespace__Node::new({
-                (subscriber ).reinterpret_cast::<FnPtr<fn(Ptr< YGNode  >  , facebook_yoga_Event_Type  , facebook_yoga_Event_Data  ) -> ()  >  >()
-            })))
+            push_477(
+                &(Ptr::alloc(facebook_yoga__anonymous_namespace__Node::new({
+                    (subscriber).reinterpret_cast::<FnPtr<
+                        fn(Ptr<YGNode>, facebook_yoga_Event_Type, facebook_yoga_Event_Data) -> (),
+                    >>()
+                }))),
+            )
         });
     }
 }
@@ -18223,8 +17975,7 @@ impl facebook_yoga_LayoutResultsImpl for Ptr<facebook_yoga_LayoutResults> {
                 operator_eq_114(_lhs, _rhs)
             });
         let mut i: u32 = 0_u32;
-        'loop_: while (i < (MaxCachedMeasurements_123.with(|rc| *rc.borrow()) as u32)) && (isEqual)
-        {
+        'loop_: while (i < (MaxCachedMeasurements_123 as u32)) && (isEqual) {
             let __rhs = (isEqual)
                 && ({
                     let _measurement: facebook_yoga_CachedMeasurement =
@@ -18292,8 +18043,8 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node_Impl
                     &(*({
                         facebook_yoga_NodeImpl::style_24(
                             &({
-                                facebook_yoga_NodeImpl::getChild(
-                                    &(*self).with(|__s| __s.node_.clone()),
+                                facebook_yoga_Node::getChild(
+                                    &(*(*self).with(|__s| __s.node_.clone()).upgrade().deref()),
                                     0_usize,
                                 )
                             }),
@@ -18392,8 +18143,8 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node__IteratorImpl
                         facebook_yoga_NodeImpl::style_24(
                             &({
                                 let _index: usize = (*self).with(|__s| __s.childIndex_);
-                                facebook_yoga_NodeImpl::getChild(
-                                    &(*self).with(|__s| __s.node_.clone()),
+                                facebook_yoga_Node::getChild(
+                                    &(*(*self).with(|__s| __s.node_.clone()).upgrade().deref()),
                                     _index,
                                 )
                             }),
@@ -18416,14 +18167,13 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node__IteratorImpl
     fn skipContentsNodes(&self) {
         let mut currentNode: Ptr<facebook_yoga_Node> = ({
             let _index: usize = (*self).with(|__s| __s.childIndex_);
-            facebook_yoga_NodeImpl::getChild(&(*self).with(|__s| __s.node_.clone()), _index)
-        });
-        'loop_: while (({
-            facebook_yoga_Style::display(
-                &(*({ facebook_yoga_NodeImpl::style_24(&currentNode) })
-                    .upgrade()
-                    .deref()),
+            facebook_yoga_Node::getChild(
+                &(*(*self).with(|__s| __s.node_.clone()).upgrade().deref()),
+                _index,
             )
+        });
+        'loop_: while (currentNode.with(|__n0| {
+            ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_Display_Contents)
             && (({ facebook_yoga_Node::getChildCount(&(*currentNode.upgrade().deref())) })
                 > 0_usize)
@@ -18440,16 +18190,15 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node__IteratorImpl
             field!((*self), node_).write((currentNode).clone());
             field!((*self), childIndex_).write(0_usize);
             let __rhs = ({
-                facebook_yoga_NodeImpl::getChild(&currentNode, (*self).with(|__s| __s.childIndex_))
+                facebook_yoga_Node::getChild(
+                    &(*currentNode.upgrade().deref()),
+                    (*self).with(|__s| __s.childIndex_),
+                )
             });
             currentNode = __rhs;
         }
-        if (({
-            facebook_yoga_Style::display(
-                &(*({ facebook_yoga_NodeImpl::style_24(&currentNode) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (currentNode.with(|__n0| {
+            ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_Display_Contents)
         {
             ({ facebook_yoga_LayoutableChildren_facebook_yoga_Node__IteratorImpl::next(self) });
@@ -18471,7 +18220,10 @@ impl facebook_yoga_LayoutableChildren_facebook_yoga_Node__IteratorImpl
     fn operator_deref(&self) -> Ptr<facebook_yoga_Node> {
         return ({
             let _index: usize = (*self).with(|__s| __s.childIndex_);
-            facebook_yoga_NodeImpl::getChild(&(*self).with(|__s| __s.node_.clone()), _index)
+            facebook_yoga_Node::getChild(
+                &(*(*self).with(|__s| __s.node_.clone()).upgrade().deref()),
+                _index,
+            )
         });
     }
 }
@@ -18514,7 +18266,6 @@ pub trait facebook_yoga_NodeImpl {
     fn getLayout_26(&self) -> Ptr<facebook_yoga_LayoutResults>;
     fn getLayout_27(&self) -> Ptr<facebook_yoga_LayoutResults>;
     fn getChildren(&self) -> Ptr<Vec<Ptr<facebook_yoga_Node>>>;
-    fn getChild(&self, index: usize) -> Ptr<facebook_yoga_Node>;
     fn getLayoutChildren(&self) -> facebook_yoga_LayoutableChildren_facebook_yoga_Node_;
     fn getLayoutChildCount(&self) -> usize;
     fn setContext(&self, context: AnyPtr);
@@ -18718,27 +18469,6 @@ impl facebook_yoga_NodeImpl for Ptr<facebook_yoga_Node> {
         return field_ref!((*self), children_).as_pointer();
     }
     #[inline]
-    fn getChild(&self, mut index: usize) -> Ptr<facebook_yoga_Node> {
-        return ({
-            let __idx = index;
-            if __idx as usize
-                >= (*field_ref!((*self), children_)
-                    .as_pointer()
-                    .upgrade()
-                    .deref())
-                .len()
-            {
-                panic!("out of bounds access")
-            } else {
-                field_ref!((*self), children_)
-                    .as_pointer()
-                    .decay()
-                    .offset(__idx as isize)
-            }
-        }
-        .read());
-    }
-    #[inline]
     fn getLayoutChildren(&self) -> facebook_yoga_LayoutableChildren_facebook_yoga_Node_ {
         return facebook_yoga_LayoutableChildren_facebook_yoga_Node_::new({ (*self).clone() });
     }
@@ -18940,13 +18670,13 @@ impl facebook_yoga_NodeImpl for Ptr<facebook_yoga_Node> {
         mut axis: facebook_yoga_FlexDirection,
         mut widthSize: f32,
     ) -> f32 {
-        return (({
-            facebook_yoga_LayoutResults::measuredDimension(
-                &(*({ facebook_yoga_NodeImpl::getLayout_26(self) })
-                    .upgrade()
-                    .deref()),
-                ({ dimension_136(axis) }),
-            )
+        return ((*self).with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::measuredDimension(
+                    &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                    ({ dimension_136(axis) }),
+                )
+            })
         }) + ({
             facebook_yoga_Style::computeMarginForAxis(
                 &(*field_ptr!((*self), style_).upgrade().deref()),
@@ -18956,13 +18686,13 @@ impl facebook_yoga_NodeImpl for Ptr<facebook_yoga_Node> {
         }));
     }
     fn isLayoutDimensionDefined(&self, mut axis: facebook_yoga_FlexDirection) -> bool {
-        let mut value: f32 = ({
-            facebook_yoga_LayoutResults::measuredDimension(
-                &(*({ facebook_yoga_NodeImpl::getLayout_26(self) })
-                    .upgrade()
-                    .deref()),
-                ({ dimension_136(axis) }),
-            )
+        let mut value: f32 = (*self).with(|__n0| {
+            ({
+                facebook_yoga_LayoutResults::measuredDimension(
+                    &(*({ facebook_yoga_Node::getLayout_26(__n0) })),
+                    ({ dimension_136(axis) }),
+                )
+            })
         });
         return ({ isDefined_107(value) }) && (value >= 0_f32);
     }
@@ -18987,35 +18717,19 @@ impl facebook_yoga_NodeImpl for Ptr<facebook_yoga_Node> {
             .decay()
             .offset(index as isize)
             .read());
-        if (({
-            facebook_yoga_Style::display(
-                &(*({ facebook_yoga_NodeImpl::style_24(&previousChild) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (previousChild.with(|__n0| {
+            ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_Display_Contents)
-            && (({
-                facebook_yoga_Style::display(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                )
+            && (child.with(|__n0| {
+                ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
             }) != facebook_yoga_Display_Contents)
         {
             field!((*self), contentsChildrenCount_).with_mut(|__v| __v.postfix_dec());
-        } else if (({
-            facebook_yoga_Style::display(
-                &(*({ facebook_yoga_NodeImpl::style_24(&previousChild) })
-                    .upgrade()
-                    .deref()),
-            )
+        } else if (previousChild.with(|__n0| {
+            ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) != facebook_yoga_Display_Contents)
-            && (({
-                facebook_yoga_Style::display(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                )
+            && (child.with(|__n0| {
+                ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
             }) == facebook_yoga_Display_Contents)
         {
             field!((*self), contentsChildrenCount_).with_mut(|__v| __v.postfix_inc());
@@ -19030,35 +18744,19 @@ impl facebook_yoga_NodeImpl for Ptr<facebook_yoga_Node> {
         mut oldChild: Ptr<facebook_yoga_Node>,
         mut newChild: Ptr<facebook_yoga_Node>,
     ) {
-        if (({
-            facebook_yoga_Style::display(
-                &(*({ facebook_yoga_NodeImpl::style_24(&oldChild) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (oldChild.with(|__n0| {
+            ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_Display_Contents)
-            && (({
-                facebook_yoga_Style::display(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&newChild) })
-                        .upgrade()
-                        .deref()),
-                )
+            && (newChild.with(|__n0| {
+                ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
             }) != facebook_yoga_Display_Contents)
         {
             field!((*self), contentsChildrenCount_).with_mut(|__v| __v.postfix_dec());
-        } else if (({
-            facebook_yoga_Style::display(
-                &(*({ facebook_yoga_NodeImpl::style_24(&oldChild) })
-                    .upgrade()
-                    .deref()),
-            )
+        } else if (oldChild.with(|__n0| {
+            ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) != facebook_yoga_Display_Contents)
-            && (({
-                facebook_yoga_Style::display(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&newChild) })
-                        .upgrade()
-                        .deref()),
-                )
+            && (newChild.with(|__n0| {
+                ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
             }) == facebook_yoga_Display_Contents)
         {
             field!((*self), contentsChildrenCount_).with_mut(|__v| __v.postfix_inc());
@@ -19077,12 +18775,8 @@ impl facebook_yoga_NodeImpl for Ptr<facebook_yoga_Node> {
         };
     }
     fn insertChild(&self, mut child: Ptr<facebook_yoga_Node>, mut index: usize) {
-        if (({
-            facebook_yoga_Style::display(
-                &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                    .upgrade()
-                    .deref()),
-            )
+        if (child.with(|__n0| {
+            ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
         }) == facebook_yoga_Display_Contents)
         {
             field!((*self), contentsChildrenCount_).with_mut(|__v| __v.postfix_inc());
@@ -19185,12 +18879,8 @@ impl facebook_yoga_NodeImpl for Ptr<facebook_yoga_Node> {
             __it
         }));
         if !((*p.borrow()) == field_ref!((*self), children_).decay().to_end()) {
-            if (({
-                facebook_yoga_Style::display(
-                    &(*({ facebook_yoga_NodeImpl::style_24(&child) })
-                        .upgrade()
-                        .deref()),
-                )
+            if (child.with(|__n0| {
+                ({ facebook_yoga_Style::display(&(*({ facebook_yoga_Node::style_24(__n0) }))) })
             }) == facebook_yoga_Display_Contents)
             {
                 field!((*self), contentsChildrenCount_).with_mut(|__v| __v.postfix_dec());
@@ -19556,8 +19246,11 @@ impl facebook_yoga_NodeImpl for Ptr<facebook_yoga_Node> {
             facebook_yoga_Dimension_Height,
         ])));
         let __range2: Ptr<Vec<facebook_yoga_Dimension>> = __tmp_0.as_pointer();
-        'loop_: for dim in IterRange::new(__range2.decay(), __range2.decay().to_end()) {
-            let mut dim: facebook_yoga_Dimension = (dim.read());
+        'loop_: for dim in [
+            facebook_yoga_Dimension_Width,
+            facebook_yoga_Dimension_Height,
+        ] {
+            let mut dim: facebook_yoga_Dimension = dim;
             if ({
                 facebook_yoga_StyleSizeLength::isDefined(
                     &({
@@ -19786,7 +19479,7 @@ impl facebook_yoga_NodeImpl for Ptr<facebook_yoga_Node> {
                 )
             });
         }
-        return DefaultFlexGrow_177.with(|rc| *rc.borrow());
+        return DefaultFlexGrow_177;
     }
     fn resolveFlexShrink(&self) -> f32 {
         if ((*self).with(|__s| __s.owner_.clone())).is_null() {
@@ -19834,9 +19527,9 @@ impl facebook_yoga_NodeImpl for Ptr<facebook_yoga_Node> {
         return if ({
             facebook_yoga_ConfigImpl::useWebDefaults(&(*self).with(|__s| __s.config_.clone()))
         }) {
-            WebDefaultFlexShrink_179.with(|rc| *rc.borrow())
+            WebDefaultFlexShrink_179
         } else {
-            DefaultFlexShrink_178.with(|rc| *rc.borrow())
+            DefaultFlexShrink_178
         };
     }
     fn isNodeFlexible(&self) -> bool {
@@ -20882,8 +20575,7 @@ impl facebook_yoga_StyleValueHandleImpl for Ptr<facebook_yoga_StyleValueHandle> 
     #[inline]
     fn setType(&self, mut handleType: facebook_yoga_StyleValueHandle_Type) {
         field!((*self), repr_).write({
-            (((*self).with(|__s| __s.repr_) as i32)
-                & (!(kHandleTypeMask_174.with(|rc| *rc.borrow()) as i32))) as u16
+            (((*self).with(|__s| __s.repr_) as i32) & (!(kHandleTypeMask_174 as i32))) as u16
         });
         field!((*self), repr_).write({
             (((*self).with(|__s| __s.repr_) as i32) | ((handleType as u8) as i32)) as u16
@@ -20892,8 +20584,7 @@ impl facebook_yoga_StyleValueHandleImpl for Ptr<facebook_yoga_StyleValueHandle> 
     #[inline]
     fn setValue(&self, mut value: u16) {
         field!((*self), repr_).write({
-            (((*self).with(|__s| __s.repr_) as i32)
-                & (!(kHandleValueMask_176.with(|rc| *rc.borrow()) as i32))) as u16
+            (((*self).with(|__s| __s.repr_) as i32) & (!(kHandleValueMask_176 as i32))) as u16
         });
         field!((*self), repr_)
             .write({ (((*self).with(|__s| __s.repr_) as i32) | ((value as i32) << 4)) as u16 });
@@ -20901,8 +20592,7 @@ impl facebook_yoga_StyleValueHandleImpl for Ptr<facebook_yoga_StyleValueHandle> 
     #[inline]
     fn setValueIsIndexed(&self) {
         field!((*self), repr_).write({
-            (((*self).with(|__s| __s.repr_) as i32)
-                | (kHandleIndexedMask_175.with(|rc| *rc.borrow()) as i32)) as u16
+            (((*self).with(|__s| __s.repr_) as i32) | (kHandleIndexedMask_175 as i32)) as u16
         });
     }
 }
@@ -21199,15 +20889,7 @@ impl facebook_yoga__anonymous_namespace__NodeImpl
     }
 }
 pub fn __cpp2rust_init_globals() {
-    let _ = YGUndefined_23.with(|_| ());
     let _ = defaultConfig__71.with(|_| ());
-    let _ = MaxCachedMeasurements_123.with(|_| ());
-    let _ = kHandleTypeMask_174.with(|_| ());
-    let _ = kHandleIndexedMask_175.with(|_| ());
-    let _ = kHandleValueMask_176.with(|_| ());
-    let _ = DefaultFlexGrow_177.with(|_| ());
-    let _ = DefaultFlexShrink_178.with(|_| ());
-    let _ = WebDefaultFlexShrink_179.with(|_| ());
     let _ = YGValueZero_2.with(|_| ());
     let _ = YGValueUndefined_1.with(|_| ());
     let _ = YGValueAuto_0.with(|_| ());

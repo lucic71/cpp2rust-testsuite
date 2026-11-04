@@ -1258,10 +1258,10 @@ pub unsafe fn isinf_109(mut value: f32) -> bool {
 #[inline]
 pub unsafe fn maxOrDefined_110(mut a: f32, mut b: f32) -> f32 {
     if (unsafe { isDefined_107(a) }) && (unsafe { isDefined_107(b) }) {
-        return (*{
-            let __a: *const _ = &mut a;
-            let __b: *const _ = &mut b;
-            if *__a < *__b { __b } else { __a }
+        return ({
+            let __a = a;
+            let __b = b;
+            if __a < __b { __b } else { __a }
         });
     }
     return if (unsafe { isUndefined_105(a) }) {
@@ -11519,10 +11519,10 @@ impl facebook_yoga_Event_Data {
 #[inline]
 pub unsafe fn minOrDefined_438(mut a: f32, mut b: f32) -> f32 {
     if (unsafe { isDefined_107(a) }) && (unsafe { isDefined_107(b) }) {
-        return (*{
-            let __a: *const _ = &mut a;
-            let __b: *const _ = &mut b;
-            if *__b < *__a { __b } else { __a }
+        return ({
+            let __a = a;
+            let __b = b;
+            if __b < __a { __b } else { __a }
         });
     }
     return if (unsafe { isUndefined_105(a) }) {
@@ -11591,11 +11591,8 @@ pub unsafe fn hasAutoHorizontalMargin_440(style: *const facebook_yoga_Style) -> 
     let mut __tmp_0: Vec<facebook_yoga_Direction> =
         Vec::from([facebook_yoga_Direction_LTR, facebook_yoga_Direction_RTL]);
     let __range2: *mut Vec<facebook_yoga_Direction> = &mut __tmp_0;
-    'loop_: for direction in IterRange::new(
-        (*__range2).as_ptr(),
-        (*__range2).as_ptr().add((*__range2).len()),
-    ) {
-        let direction: facebook_yoga_Direction = (*direction);
+    'loop_: for direction in [facebook_yoga_Direction_LTR, facebook_yoga_Direction_RTL] {
+        let direction: facebook_yoga_Direction = direction;
         if (unsafe {
             let _direction: facebook_yoga_Direction = direction;
             facebook_yoga_Style::flexStartMarginIsAuto(
@@ -13320,10 +13317,10 @@ pub unsafe fn computeMinContentMainSize_458(
             )
         });
         mainTotal += childMain;
-        crossMax = (*{
-            let __a: *const _ = &mut crossMax;
-            let __b: *const _ = &mut childCross;
-            if *__a < *__b { __b } else { __a }
+        crossMax = ({
+            let __a = crossMax;
+            let __b = childCross;
+            if __a < __b { __b } else { __a }
         });
         i.postfix_inc();
     }
@@ -16425,15 +16422,11 @@ pub unsafe fn calculateLayoutInternal_430(
             )
         });
         if (cachedResults).is_null() {
-            (*layoutMarkerData).maxMeasureCache = {
-                let mut __tmp_4: u32 =
-                    ((*layout).nextCachedMeasurementsIndex).wrapping_add((1_u32 as u32));
-                (*{
-                    let __a: *const _ = &mut (*layoutMarkerData).maxMeasureCache;
-                    let __b: *const _ = &mut __tmp_4;
-                    if *__a < *__b { __b } else { __a }
-                })
-            };
+            (*layoutMarkerData).maxMeasureCache = ({
+                let __a = (*layoutMarkerData).maxMeasureCache;
+                let __b = ((*layout).nextCachedMeasurementsIndex).wrapping_add((1_u32 as u32));
+                if __a < __b { __b } else { __a }
+            });
             if (((*layout).nextCachedMeasurementsIndex) == (MaxCachedMeasurements_123 as u32)) {
                 (*layout).nextCachedMeasurementsIndex = 0_u32;
             }
@@ -18487,11 +18480,11 @@ impl facebook_yoga_Node {
             facebook_yoga_Dimension_Height,
         ]);
         let __range2: *mut Vec<facebook_yoga_Dimension> = &mut __tmp_0;
-        'loop_: for dim in IterRange::new(
-            (*__range2).as_ptr(),
-            (*__range2).as_ptr().add((*__range2).len()),
-        ) {
-            let mut dim: facebook_yoga_Dimension = (*dim);
+        'loop_: for dim in [
+            facebook_yoga_Dimension_Width,
+            facebook_yoga_Dimension_Height,
+        ] {
+            let mut dim: facebook_yoga_Dimension = dim;
             if (unsafe {
                 facebook_yoga_StyleSizeLength::isDefined(
                     &(unsafe { facebook_yoga_Style::maxDimension(&self.style_, dim) }),
