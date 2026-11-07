@@ -17297,9 +17297,8 @@ impl facebook_yoga_Config {
     }
 }
 pub unsafe fn fatalWithMessage_103(mut message: *const libc::c_char) {
-    ::std::ffi::CStr::from_ptr(message)
-        .to_string_lossy()
-        .into_owned();
+    &(message);
+    ::std::process::abort();
 }
 pub unsafe fn assertFatal_201(condition: bool, mut message: *const libc::c_char) {
     if !(condition) {

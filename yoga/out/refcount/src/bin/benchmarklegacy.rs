@@ -16888,7 +16888,8 @@ pub fn configUpdateInvalidatesLayout_470(
         });
 }
 pub fn fatalWithMessage_103(mut message: Ptr<i8>) {
-    message.to_rust_string();
+    &(message);
+    ::std::process::abort();
 }
 pub fn assertFatal_201(mut condition: bool, mut message: Ptr<i8>) {
     if !(condition) {

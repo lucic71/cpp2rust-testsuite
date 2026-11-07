@@ -10,12 +10,14 @@ add_custom_target("build-yoga-original"
                            -G Ninja
                            -DCMAKE_BUILD_TYPE=Release
                            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+                           -DCMAKE_PROJECT_INCLUDE=${CMAKE_CURRENT_SOURCE_DIR}/yoga/no-exceptions.cmake
   COMMAND ${CMAKE_COMMAND} --build ${YOGA_SRC_DIR}/build --target benchmarklegacy
   COMMAND ${CMAKE_COMMAND} -S ${YOGA_GTEST_DIR}
                            -B ${YOGA_GTEST_DIR}/build
                            -G Ninja
                            -DCMAKE_BUILD_TYPE=Release
                            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+                           -DCMAKE_PROJECT_INCLUDE=${CMAKE_CURRENT_SOURCE_DIR}/yoga/no-exceptions.cmake
   COMMAND ${CMAKE_COMMAND} --build ${YOGA_GTEST_DIR}/build
   WORKING_DIRECTORY "${YOGA_SRC_DIR}"
 )
